@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 /// Removes itself from the component tree after [_duration] seconds.
 class BurstComponent extends PositionComponent {
   BurstComponent({required Vector2 burstPosition})
-      : super(position: burstPosition, priority: 3);
+    : super(position: burstPosition, priority: 3);
 
   double _elapsed = 0;
   static const double _duration = 1.2;

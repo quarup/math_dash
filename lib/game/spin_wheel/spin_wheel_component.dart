@@ -200,8 +200,7 @@ class SpinWheelComponent extends PositionComponent {
     Offset center, {
     bool dimmed = false,
   }) {
-    final color =
-        dimmed ? Colors.white.withValues(alpha: 0.3) : Colors.white;
+    final color = dimmed ? Colors.white.withValues(alpha: 0.3) : Colors.white;
     final tp = TextPainter(
       text: TextSpan(
         text: text,

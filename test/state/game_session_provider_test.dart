@@ -1,12 +1,26 @@
+import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:math_dash/data/database.dart';
 import 'package:math_dash/state/game_session_provider.dart';
+import 'package:math_dash/state/proficiency_provider.dart';
+
+AppDatabase _testDb() {
+  // Each test gets an isolated in-memory DB; multiple instances intentional.
+  driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
+  return AppDatabase(NativeDatabase.memory());
+}
 
 void main() {
   group('TotalStarsNotifier', () {
     late ProviderContainer container;
 
-    setUp(() => container = ProviderContainer());
+    setUp(
+      () => container = ProviderContainer(
+        overrides: [appDatabaseProvider.overrideWithValue(_testDb())],
+      ),
+    );
     tearDown(() => container.dispose());
 
     test('starts at zero', () {

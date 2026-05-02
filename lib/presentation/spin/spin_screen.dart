@@ -3,9 +3,40 @@ import 'dart:async';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:math_dash/domain/concepts/concept.dart';
+import 'package:math_dash/game/spin_wheel/spin_wheel_component.dart';
 import 'package:math_dash/game/spin_wheel/spin_wheel_game.dart';
 import 'package:math_dash/presentation/question/question_screen.dart';
 import 'package:math_dash/state/game_session_provider.dart';
+import 'package:math_dash/state/proficiency_provider.dart';
+
+// ---------------------------------------------------------------------------
+// Concept → wheel colour (presentation concern; not in domain layer).
+// ---------------------------------------------------------------------------
+
+Color _colorForConcept(String conceptId) => switch (conceptId) {
+  'add_1digit' => Colors.orange.shade600,
+  'sub_1digit' => Colors.blue.shade600,
+  'add_2digit' => Colors.green.shade600,
+  'sub_2digit' => Colors.purple.shade600,
+  'mul_1digit' => Colors.red.shade600,
+  'div_1digit' => Colors.teal.shade600,
+  _ => Colors.grey.shade600,
+};
+
+List<WheelSegment> _buildSegments(List<Concept> concepts) => concepts
+    .map(
+      (c) => WheelSegment(
+        conceptId: c.id,
+        label: c.shortLabel,
+        color: _colorForConcept(c.id),
+      ),
+    )
+    .toList();
+
+// ---------------------------------------------------------------------------
+// SpinScreen
+// ---------------------------------------------------------------------------
 
 class SpinScreen extends ConsumerStatefulWidget {
   const SpinScreen({this.pulseStars = false, super.key});
@@ -18,14 +49,13 @@ class SpinScreen extends ConsumerStatefulWidget {
 
 class _SpinScreenState extends ConsumerState<SpinScreen>
     with TickerProviderStateMixin {
-  late final SpinWheelGame _game;
+  SpinWheelGame? _game;
   late final AnimationController _pulseCtrl;
   late final Animation<double> _pulseScale;
 
   @override
   void initState() {
     super.initState();
-    _game = SpinWheelGame(onConceptSelected: _onConceptSelected);
     _pulseCtrl = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
@@ -36,7 +66,6 @@ class _SpinScreenState extends ConsumerState<SpinScreen>
     ]).animate(CurvedAnimation(parent: _pulseCtrl, curve: Curves.easeOut));
 
     if (widget.pulseStars) {
-      // Delay so the pulse coincides with the flying star arriving.
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
         unawaited(
@@ -55,13 +84,18 @@ class _SpinScreenState extends ConsumerState<SpinScreen>
   }
 
   void _onConceptSelected(String conceptId) {
-    // Defer navigation to avoid touching the widget tree mid-frame.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
+
+      final profMap = ref.read(proficiencyProvider).asData?.value ?? {};
+      final playerGrade =
+          ref.read(defaultPlayerProvider).asData?.value.gradeLevel ?? 2;
+      final band = bandForConcept(conceptId, profMap, playerGrade);
+
       unawaited(
         Navigator.of(context).pushReplacement(
           MaterialPageRoute<void>(
-            builder: (_) => QuestionScreen(conceptId: conceptId),
+            builder: (_) => QuestionScreen(conceptId: conceptId, band: band),
           ),
         ),
       );
@@ -71,7 +105,18 @@ class _SpinScreenState extends ConsumerState<SpinScreen>
   @override
   Widget build(BuildContext context) {
     final stars = ref.watch(totalStarsProvider);
+    final wheelAsync = ref.watch(wheelConceptsProvider);
     final theme = Theme.of(context);
+
+    // Create the game once, the first build where concepts are available.
+    final concepts = wheelAsync.asData?.value;
+    if (_game == null && concepts != null) {
+      _game = SpinWheelGame(
+        onConceptSelected: _onConceptSelected,
+        segments: _buildSegments(concepts),
+      );
+    }
+
     return Scaffold(
       backgroundColor: theme.colorScheme.surfaceContainerLowest,
       appBar: AppBar(
@@ -100,7 +145,9 @@ class _SpinScreenState extends ConsumerState<SpinScreen>
         ],
       ),
       body: SafeArea(
-        child: GameWidget(game: _game),
+        child: _game == null
+            ? const Center(child: CircularProgressIndicator())
+            : GameWidget(game: _game!),
       ),
     );
   }

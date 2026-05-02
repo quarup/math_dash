@@ -7,10 +7,10 @@
 
 ## Status
 
-- **Phase:** Phase 1 complete. Ready for Phase 2.
-- **Last updated:** 2026-04-29
-- **Last action:** Added unit tests for ConceptRegistry, Question.allChoices, and TotalStarsNotifier. Fixed lint warning in warp_background.dart. Real-kid play test passed.
-- **Next action:** Start Phase 2 — Drift schema, proficiency update logic, band classifier, adaptive wheel.
+- **Phase:** Phase 2 complete. Ready for Phase 3.
+- **Last updated:** 2026-05-01
+- **Last action:** Implemented full Phase 2: Drift schema (Player + ConceptProficiency), proficiency EMA update, band classifier, adaptive wheel, 4 new algorithmic concepts (add_2digit, sub_2digit, mul_1digit, div_1digit), number-pad input for comfortable band. All 47 tests pass, analyzer clean.
+- **Next action:** Start Phase 3 — player creation flow, profile picker, avatar.
 - **Deferred:** Audio SFX + background music (CC0 assets not sourced yet — stub in place). iOS verification. Both revisit before Phase 7 at latest.
 
 ---
@@ -98,6 +98,19 @@ Phase 1 ships **two concepts**, both pure single-digit arithmetic:
 Both are algorithmically generated at runtime (no curated dataset needed). Distractors for multiple-choice are constructed from common mistakes: off-by-one (±1), swapped operands, and a randomly-chosen value within ±5 of the correct answer.
 
 Why these two: universally familiar across the entire 6–14 target age, trivially generatable, and two-concepts-on-the-wheel is enough to make the spin feel like a real choice without needing the full catalog.
+
+### Phase 2 concepts
+
+| Concept ID | Description | Operand range | Result range | Notes |
+|---|---|---|---|---|
+| `mul_1digit` | Single-digit multiplication | a, b ∈ [1, 9] | product ∈ [1, 81] | Skip ×0 and ×1 as trivial |
+| `div_1digit` | Single-digit division (exact) | divisor ∈ [2, 9], quotient ∈ [1, 9] | quotient ∈ [1, 9] | Generated as quotient×divisor=dividend; no remainders |
+| `add_2digit` | 2-digit addition | a, b ∈ [10, 99] | sum ∈ [20, 198] | |
+| `sub_2digit` | 2-digit subtraction (no negatives) | minuend ∈ [10, 99], subtrahend ∈ [10, 99], a ≥ b | diff ∈ [0, 89] | |
+
+All four are algorithmically generated at runtime. Distractors use the same strategy as Phase 1 (off-by-one, operand swap, random ±5).
+
+Fractions, geometry, and word problems are deferred to Phase 6.
 
 ### Proficiency update formula (sketch — refine in Phase 2)
 
@@ -203,13 +216,19 @@ Each phase ends with something demonstrable. We do **not** start a phase until t
 - [x] **Exit criteria:** Test with a real kid in the target age range — passed.
 
 ### Phase 2 — Adaptive Concept System (target: ~2–3 weeks)
-- [ ] Drift schema for `Player`, `ConceptProficiency`, `Question` (catalog seeding)
-- [ ] Proficiency update logic (correct → up, wrong → down with floor); unit tests
-- [ ] Band classifier (mastered / comfortable / challenging / not yet) with grade-aware thresholds
-- [ ] Wheel selection: weighted sample of comfortable + challenging bands only
-- [ ] Typed-input mode for comfortable-band concepts
-- [ ] Expand to ~5 concept categories (add multiplication, fractions, geometry — start with placeholder questions)
-- [ ] **Exit criteria:** A returning player sees the wheel adapt — easy concepts disappear, harder ones appear, typed input shows up for concepts they've practiced
+
+**Design decisions (locked):**
+- **Player:** A single default player is seeded into Drift on first launch. Full player creation / profile picker is Phase 3.
+- **Numeric input UX:** Comfortable-band questions use an on-screen number pad (calculator-style) with an explicit submit button. Device keyboard not used. Text-answer question types deferred.
+- **Concept expansion:** Only algorithmically generatable concepts added this phase (see *Domain Specs — Phase 2 concepts* below). Fractions, geometry, and word problems deferred to Phase 6.
+
+- [x] Drift schema for `Player` and `ConceptProficiency`; seed default player on first launch
+- [x] Proficiency update logic (correct → up, wrong → down with floor); unit tests
+- [x] Band classifier (mastered / comfortable / challenging / not yet) with grade-aware thresholds
+- [x] Wheel selection: weighted sample of comfortable + challenging bands only
+- [x] Number-pad input mode for comfortable-band concepts (on-screen pad + submit button)
+- [x] Add 4 new concepts: `mul_1digit`, `div_1digit`, `add_2digit`, `sub_2digit` (all algorithmic)
+- [ ] **Exit criteria:** A returning player sees the wheel adapt — easy concepts disappear, harder ones appear, number-pad input shows up for concepts they've practiced
 
 ### Phase 3 — Player Profiles & Avatar (target: ~2 weeks)
 - [ ] Player creation flow (name, grade, basic avatar)

@@ -1,23 +1,36 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:math_dash/domain/concepts/concept_registry.dart';
+import 'package:math_dash/domain/proficiency/proficiency_band.dart';
 import 'package:math_dash/domain/questions/arithmetic_generator.dart';
 import 'package:math_dash/domain/questions/question.dart';
+import 'package:math_dash/presentation/question/number_pad_widget.dart';
 import 'package:math_dash/presentation/result/result_screen.dart';
+import 'package:math_dash/state/proficiency_provider.dart';
 
-class QuestionScreen extends StatefulWidget {
-  const QuestionScreen({required this.conceptId, super.key});
+class QuestionScreen extends ConsumerStatefulWidget {
+  const QuestionScreen({
+    required this.conceptId,
+    required this.band,
+    super.key,
+  });
 
   final String conceptId;
 
+  /// The proficiency band at the time the wheel landed.
+  /// Determines input mode (MC vs number pad) and stars awarded.
+  final ProficiencyBand band;
+
   @override
-  State<QuestionScreen> createState() => _QuestionScreenState();
+  ConsumerState<QuestionScreen> createState() => _QuestionScreenState();
 }
 
-class _QuestionScreenState extends State<QuestionScreen> {
+class _QuestionScreenState extends ConsumerState<QuestionScreen> {
   late final Question _question;
   late final List<String> _shuffledChoices;
+  bool _answered = false;
 
   @override
   void initState() {
@@ -26,16 +39,27 @@ class _QuestionScreenState extends State<QuestionScreen> {
     _shuffledChoices = List.of(_question.allChoices)..shuffle();
   }
 
-  void _onChoiceTapped(String choice) {
-    final isCorrect = choice == _question.correctAnswer;
+  Future<void> _onAnswerSubmitted(String answer) async {
+    if (_answered) return;
+    _answered = true;
+
+    final isCorrect = answer == _question.correctAnswer;
+
+    // Persist proficiency update before navigating.
+    await ref
+        .read(proficiencyProvider.notifier)
+        .recordAnswer(widget.conceptId, correct: isCorrect);
+
+    if (!mounted) return;
+
     unawaited(
       Navigator.of(context).pushReplacement(
         MaterialPageRoute<void>(
           builder: (_) => ResultScreen(
             question: _question,
-            selectedAnswer: choice,
+            selectedAnswer: answer,
             isCorrect: isCorrect,
-            starsEarned: isCorrect ? 5 : 0,
+            starsEarned: isCorrect ? starsForBand(widget.band) : 0,
           ),
         ),
       ),
@@ -47,6 +71,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
     final theme = Theme.of(context);
     final conceptName =
         findConceptById(widget.conceptId)?.name ?? widget.conceptId;
+    final useNumberPad = widget.band == ProficiencyBand.comfortable;
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surfaceContainerLowest,
@@ -65,15 +90,18 @@ class _QuestionScreenState extends State<QuestionScreen> {
               const Spacer(),
               _PromptCard(prompt: _question.prompt),
               const Spacer(),
-              ..._shuffledChoices.map(
-                (choice) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 6),
-                  child: _ChoiceButton(
-                    label: choice,
-                    onTap: () => _onChoiceTapped(choice),
+              if (useNumberPad)
+                NumberPadWidget(onSubmit: _onAnswerSubmitted)
+              else
+                ..._shuffledChoices.map(
+                  (choice) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    child: _ChoiceButton(
+                      label: choice,
+                      onTap: () => _onAnswerSubmitted(choice),
+                    ),
                   ),
                 ),
-              ),
               const SizedBox(height: 16),
             ],
           ),
@@ -82,6 +110,10 @@ class _QuestionScreenState extends State<QuestionScreen> {
     );
   }
 }
+
+// ---------------------------------------------------------------------------
+// Shared sub-widgets
+// ---------------------------------------------------------------------------
 
 class _PromptCard extends StatelessWidget {
   const _PromptCard({required this.prompt});

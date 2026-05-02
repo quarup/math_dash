@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flutter/material.dart';
-import 'package:math_dash/domain/concepts/concept_registry.dart';
 import 'package:math_dash/game/spin_wheel/burst_component.dart';
 import 'package:math_dash/game/spin_wheel/spin_wheel_component.dart';
 import 'package:math_dash/game/spin_wheel/warp_background.dart';
@@ -20,9 +18,13 @@ import 'package:math_dash/game/spin_wheel/warp_background.dart';
 ///     by nudging the wheel to a desired segment.
 ///   - Throws above [_maxAngularVelocity] are clamped.
 class SpinWheelGame extends FlameGame with DragCallbacks {
-  SpinWheelGame({required this.onConceptSelected});
+  SpinWheelGame({
+    required this.onConceptSelected,
+    required List<WheelSegment> segments,
+  }) : _segments = segments;
 
   final void Function(String conceptId) onConceptSelected;
+  final List<WheelSegment> _segments;
   late SpinWheelComponent _wheel;
   late WarpBackground _warp;
 
@@ -36,30 +38,6 @@ class SpinWheelGame extends FlameGame with DragCallbacks {
   static const double _minBoostVelocity = 3;
   static const double _maxAngularVelocity = 30;
 
-  // 4 segments: each concept appears twice so the wheel looks full.
-  static final _segments = [
-    WheelSegment(
-      conceptId: add1Digit.id,
-      label: add1Digit.shortLabel,
-      color: Colors.orange.shade600,
-    ),
-    WheelSegment(
-      conceptId: sub1Digit.id,
-      label: sub1Digit.shortLabel,
-      color: Colors.blue.shade600,
-    ),
-    WheelSegment(
-      conceptId: add1Digit.id,
-      label: add1Digit.shortLabel,
-      color: Colors.orange.shade400,
-    ),
-    WheelSegment(
-      conceptId: sub1Digit.id,
-      label: sub1Digit.shortLabel,
-      color: Colors.blue.shade400,
-    ),
-  ];
-
   @override
   Future<void> onLoad() async {
     await super.onLoad();
@@ -67,13 +45,14 @@ class SpinWheelGame extends FlameGame with DragCallbacks {
       ..size = size
       ..position = Vector2.zero();
     add(_warp);
-    _wheel = SpinWheelComponent(
-      segments: _segments,
-      onLanded: _onWheelLanded,
-    )
-      ..size = size
-      ..position = Vector2.zero()
-      ..priority = 1;
+    _wheel =
+        SpinWheelComponent(
+            segments: _segments,
+            onLanded: _onWheelLanded,
+          )
+          ..size = size
+          ..position = Vector2.zero()
+          ..priority = 1;
     add(_wheel);
   }
 
