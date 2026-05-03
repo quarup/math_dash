@@ -9,9 +9,9 @@
 
 - **Phase:** Phase 3 complete. Ready for Phase 4.
 - **Last updated:** 2026-05-03
-- **Last action:** Implemented full Phase 3: AvatarConfig domain object (5 colour slots), Drift schema v2 (avatarConfig column + migration), PlayerCreationScreen (name + grade + live avatar preview), PlayerLauncherScreen (profile picker / first-launch gate), AvatarWidget (CustomPainter chibi avatar), activePlayerIdProvider + activePlayerProvider replacing hardcoded default player, TotalStarsNotifier now watches activePlayerProvider, SpinScreen player-switcher in AppBar. All 47 tests pass, analyzer clean.
-- **Next action:** Start Phase 4 — persistent star totals, milestone detection + celebration, shop / wardrobe UI, cosmetic item set.
-- **Deferred:** Audio SFX + background music (CC0 assets not sourced yet — stub in place). iOS verification. Both revisit before Phase 7 at latest.
+- **Last action:** Refactored Phase 4+ roadmap and PRD cosmetics design. The old "Stars, Milestones, Shop" phase splits into: Phase 4 (persistent stars + avatar accessories via off-the-shelf library), Phase 5 (city-builder foundations), Phase 6 (city-builder depth). Milestone-threshold system dropped — replaced by per-item star prices and total-stars-earned unlocks. Phase 3's CustomPainter avatar will be replaced by an off-the-shelf library (DiceBear / Multiavatar / avatar_maker — picked in Phase 4 spike).
+- **Next action:** Phase 4, step 1 — spike: evaluate DiceBear, Multiavatar, and avatar_maker for full-body avatar with multi-slot accessory support; pick one.
+- **Deferred:** Audio SFX + background music (CC0 assets not sourced yet — stub in place). iOS verification. Both revisit before Phase 9 at latest.
 
 ---
 
@@ -26,6 +26,10 @@
 | **Audio** | [`flame_audio`](https://pub.dev/packages/flame_audio) (wrapper over `audioplayers`) | Natural fit with Flame; supports SFX pools and background music |
 | **Cloud save** | [`games_services`](https://pub.dev/packages/games_services) package — Google Play Games (Android) + Game Center / iCloud (iOS) | Only solution that satisfies the PRD's "no custom server" requirement on both platforms with a single API. Last updated Dec 2025 |
 | **Concept granularity** | Track proficiency at **sub-concept** level (e.g. "2-digit addition with carry"), not at category level. Roll up to category for display only | Otherwise the adaptive wheel is too coarse: a kid who's mastered single-digit addition would falsely look ready for multi-digit. See PRD's Concept System section for the category→concept taxonomy |
+| **Cosmetics economy** | Two sinks for stars: (a) avatar accessories, (b) city builder. Player chooses how to balance | Two distinct goal types — short-term ("buy a hat now") and long-arc ("grow my city over months") — keeps motivation varied for kids |
+| **Avatar rendering** | Off-the-shelf library (DiceBear / Multiavatar / avatar_maker — final pick in Phase 4 spike). Replaces Phase 3 CustomPainter | Libraries provide rich accessory variety for free; Phase 3 painter was always a placeholder ("avatar art source TBD") |
+| **City rendering** | Isometric tiles, fixed grid, **auto-generated roads** between buildings | Mobile-friendly: tile-snap + auto-roads avoid fiddly placement; established CC0 isometric packs (e.g. Kenney City Kit) cover the style |
+| **Milestones** | **Removed.** Replaced by per-item star prices and total-stars-earned thresholds for unlocking new building types and themed maps | Milestones were dead weight once the city builder provides natural long-arc progression — every land expansion or new building tier *is* a milestone moment |
 | **Repo plan doc** | `plan.md` at repo root | Simple, greppable, lives next to `prd.md` |
 | **AI agent doc** | `CLAUDE.md` at repo root | Emerging convention; auto-loaded by Claude Code each session |
 
@@ -44,16 +48,15 @@ State management (Riverpod) sits at the boundary between presentation and domain
 
 ---
 
-## Data Model (sketch — refine in Phase 1)
+## Data Model (sketch — refined per phase as we go)
 
 ```
 Player
   id, name, gradeLevel, createdAt
-  avatarConfig (skinTone, hair, eyes, baseClothing)
-  totalStars, currentStreak, lastPlayedDate
-  unlockedRewardCategories (list)
-  ownedItems (list of itemIds)
-  equippedItems (map of slot → itemId)
+  avatarConfig          // library-specific avatar parameters (replaces Phase 3 chibi config in Phase 4)
+  currentStars          // spendable balance
+  lifetimeStarsEarned   // never decreases — drives progressive unlocks
+  currentStreak, lastPlayedDate
 
 ConceptProficiency
   playerId, conceptId, proficiency (0.0–1.0), lastUpdatedAt
@@ -71,16 +74,49 @@ Question (static catalog for non-arithmetic concepts; arithmetic generated at ru
   distractors (for multiple-choice), explanation (for wrong-answer screen)
   source (algorithmic | curated | ai_generated), license
 
-Item (static catalog — cosmetics)
-  id, categoryId, name, starCost, assetPath, slot
+// --- Avatar accessories (Phase 4) ---
 
-Milestone (static catalog)
-  index, starThreshold, unlockedAt (per-player, in PlayerProgress table)
+AvatarAccessory (static catalog)
+  id, slot (hat | glasses | costume | shoes | backpack | cape | prop | facePaint),
+  name, starCost,
+  libraryRef            // parameters for the chosen avatar library
+
+OwnedAccessory
+  playerId, accessoryId, equipped (bool)
+
+// --- City builder (Phase 5+) ---
+
+City (per player, per map)
+  id, playerId, mapId,
+  gridWidth, gridHeight,         // grows on land expansion (Phase 6)
+  population
+
+CityMap (static catalog)
+  id, name, theme (countryside | city | futuristic | …),
+  baseGridWidth, baseGridHeight,
+  starCostToUnlock (0 for the beginner map),
+  terrainSeed                    // deterministic terrain layout
+
+BuildingType (static catalog)
+  id, name, category (residential | services | utilities | commercial),
+  starCost,
+  unlockedAtLifetimeStars,
+  populationContribution,         // residents this building can house, if any
+  serviceProvision,               // map of {school: N, hospital: N, power: N, …}
+  maxTier, assetRefByTier
+
+BuildingPlacement
+  id, cityId, buildingTypeId, currentTier, gridX, gridY, placedAt
 
 GameSession (in-memory only)
   startedAt, players (list), roundsPlayed
   // Streak lives on Player, not here
 ```
+
+**Notes:**
+- `Item` and `Milestone` from earlier sketches are removed. The cosmetics system splits into `AvatarAccessory` and city tables.
+- `currentStars` vs. `lifetimeStarsEarned`: spending stars decreases `currentStars`; both correct *and* spent stars count toward `lifetimeStarsEarned` for unlock gating (so spending doesn't lock players out of progression).
+- `serviceProvision` lets the city growth model use simple aggregate ratios (e.g. "1 school per 50 residents") rather than per-building dependency graphs.
 
 ---
 
@@ -159,20 +195,23 @@ math_dash/
 │   ├── presentation/      # Flutter widgets: screens, navigation
 │   │   ├── home/
 │   │   ├── player/
-│   │   ├── shop/
+│   │   ├── shop/          # avatar-accessory shop (Phase 4)
+│   │   ├── city/          # city-builder screen (Phase 5+)
 │   │   ├── progress/
 │   │   └── settings/
 │   ├── game/              # Flame components
 │   │   ├── spin_wheel/
 │   │   ├── avatar/
+│   │   ├── city/          # isometric city renderer (Phase 5+)
 │   │   ├── question_view/
 │   │   └── effects/
 │   ├── domain/            # pure Dart: rules, no Flutter imports
 │   │   ├── concepts/
 │   │   ├── proficiency/
 │   │   ├── questions/
-│   │   ├── milestones/
-│   │   └── stars/
+│   │   ├── stars/
+│   │   ├── accessories/   # accessory catalog, equip rules (Phase 4)
+│   │   └── city/          # buildings, growth model, population math (Phase 5+)
 │   ├── data/              # Drift schema, repositories, cloud-save bridge
 │   │   ├── database.dart
 │   │   ├── repositories/
@@ -239,42 +278,110 @@ Each phase ends with something demonstrable. We do **not** start a phase until t
 
 **Open question resolved:** Avatar art sourced as pure Flutter CustomPainter (no external sprites). Simple geometric "chibi" style — works at all sizes, zero asset licensing burden.
 
-### Phase 4 — Stars, Milestones, Shop (target: ~2 weeks)
-- [ ] Persistent star totals per player
-- [ ] Milestone detection + celebration screen with category choice
-- [ ] Shop / wardrobe UI with affordability filtering
-- [ ] Initial cosmetic item set (pets, hats, vehicles — minimum 5 per category)
-- [ ] Equip/unequip with avatar live preview
-- [ ] **Exit criteria:** A kid can earn stars, hit a milestone, choose a category, buy something, and see it on their character
+### Phase 4 — Persistent Stars + Avatar Accessories (target: ~2–3 weeks)
 
-### Phase 5 — Player Progress Screen (target: ~1 week)
-- [ ] Concept proficiency visualization (radar chart or color grid)
+**Goal:** Stars persist across app restarts. Player can spend them on visible avatar accessories.
+
+- [ ] **Spike (first day or two):** Build throwaway prototypes of DiceBear, Multiavatar, and `avatar_maker` with the same target outfit (skin + hair + hat + glasses + costume). Pick one based on: full-body coverage, slot variety, license, render perf on Android emulator. Document the choice in *Locked Decisions*.
+- [ ] Drift schema migration (v3): split `totalStars` into `currentStars` + `lifetimeStarsEarned`; add `OwnedAccessory` table; replace `avatarConfig` shape with library-specific parameters
+- [ ] Replace Phase 3 CustomPainter avatar with the chosen library (delete `lib/game/avatar/` chibi painter once new path is wired)
+- [ ] `AvatarAccessory` static catalog seeded from JSON: ~5 items per slot for v1 (hat, glasses, costume, shoes, backpack — propsl/cape/face paint can wait)
+- [ ] Star-award flow writes through to Drift on each round (no more in-memory star total)
+- [ ] Shop screen: browse all accessories, filter to affordable, "buy" (debits `currentStars`), "equip"/"unequip"
+- [ ] Live avatar preview while browsing the shop
+- [ ] Avatar (with equipped accessories) visible on home screen, spin screen, and result screen
+- [ ] **Exit criteria:** Kid plays a round, earns stars, opens the shop, buys a hat, equips it, returns to the spin screen and sees the hat on their avatar. Closes app, reopens — stars and equipped hat are still there.
+
+**Open questions for Phase 4:**
+- Which library? (Spike output)
+- If the chosen library doesn't cover all 8 slots, do we drop the missing slots from v1 or augment with sprite overlays? Decide after spike.
+
+---
+
+### Phase 5 — City Builder: Foundations (target: ~3–4 weeks)
+
+**Goal:** Each player has their own persistent isometric city. They spend stars to place buildings; population grows when the right mix is built.
+
+- [ ] Source/curate isometric building art (start: Kenney City Kit Industrial; supplement if needed). Confirm CC0 status, log in eventual `LICENSES_THIRD_PARTY.md`
+- [ ] Drift schema (v4): `City`, `CityMap`, `BuildingType`, `BuildingPlacement` tables
+- [ ] One beginner `CityMap` definition: ~10×10 tile grid, fixed terrain (grass + decorative water/stone)
+- [ ] Initial `BuildingType` catalog (5 types): own house, apartment, school, hospital, power plant
+- [ ] Isometric tile renderer (Flame component) — render terrain + placed buildings, support pinch-zoom and pan
+- [ ] Build-mode UI: building catalog at the bottom, tap building → tap free tile → placed; insufficient stars greys out the option
+- [ ] Move-mode UI: pick up an existing building, tap a new free tile to drop it (no star cost)
+- [ ] Auto-road generation: roads automatically connect every placed building (recompute on placement / move). Render under buildings on the road tiles
+- [ ] Population counter clearly visible on the city screen
+- [ ] Population growth model (pure-Dart, well unit-tested): population grows toward `sum(populationContribution)` capped by service ratios (e.g. 1 school per 50 residents, 1 hospital per 100, 1 power plant per 200). Below the lowest-satisfied ratio, growth stalls
+- [ ] One feedback message when stalled (cycle through if multiple constraints fail): "Your residents need a school to keep growing"
+- [ ] "My City" screen accessible from the home screen
+- [ ] **Exit criteria:** Player places 5 buildings, sees population grow, hits a service-ratio cap, reads the feedback message, builds the missing service, sees population resume growth — all surviving an app restart
+
+---
+
+### Phase 6 — City Builder: Depth (target: ~2–3 weeks)
+
+**Goal:** City has long-arc progression — bigger land, more building types, themed maps, events.
+
+- [ ] Land expansion: spend stars to grow the grid symmetrically outward by 2 tiles per side. Cap at, say, 20×20 for v1
+- [ ] Progressive `BuildingType` unlocks gated by `lifetimeStarsEarned` (e.g. coffee shop at 200, gas station at 400, hotel at 800)
+- [ ] Expand catalog to ~12–15 building types (add: coffee shop, restaurant, gas station, hotel, waste management, office, fire station — final list set during the phase)
+- [ ] Building upgrade tiers: each `BuildingType` has up to 3 tiers; upgrading costs stars; **footprint stays the same**, only the texture/style changes
+- [ ] Additional `CityMap`s with themes (countryside, big-city, futuristic) — each has its own `starCostToUnlock` and its own independent placement state per player
+- [ ] Map switcher UI on the city screen
+- [ ] Star-funded events: "Festival" (+population for X rounds), "Marketing campaign" (boosts attractiveness), 2–3 event types
+- [ ] Aggregate-needs system extended: parameterize service ratios from `serviceProvision` data, so adding a new building type is data-only
+- [ ] **Exit criteria:** A returning player has unlocked at least one new building type via lifetime stars, expanded their land once, switched between two map themes, and run an event
+
+---
+
+### Phase 7 — Player Progress Screen (target: ~1 week)
+- [ ] Concept proficiency visualization (radar chart or color grid) — rolled up to category
 - [ ] Strengths and growing edges sections with positive framing
-- [ ] Milestone timeline
+- [ ] Lifetime stats: stars earned, sessions, questions answered
 - [ ] **Exit criteria:** Player can see and feel proud of their own progress
 
-### Phase 6 — Sound, Polish, Engagement (target: ~2 weeks)
-- [ ] Final SFX library (CC0/royalty-free); per-event audio
-- [ ] Animation polish (character reactions, screen transitions)
+---
+
+### Phase 8 — Sound, Polish, Engagement (target: ~2–3 weeks)
+- [ ] Final SFX library (CC0/royalty-free); per-event audio (spin, correct, wrong, building-placed, level-up)
+- [ ] Background music (looping, with mute toggle)
+- [ ] Animation polish (character reactions on correct/wrong; screen transitions)
 - [ ] Daily streak tracking + bonus stars
 - [ ] Daily challenge mechanic
-- [ ] First-launch tutorial
-- [ ] Settings screen (audio mute, reset profile, etc.)
+- [ ] First-launch tutorial (skippable)
+- [ ] Settings screen (audio mute, reset profile, change grade level, dyslexia-friendly font toggle if time)
+- [ ] **Extra credit — animated city** (drop if time runs short, defer to post-launch):
+  - [ ] Cars driving along the auto-roads
+  - [ ] Pedestrians on sidewalks
+  - [ ] Building lights turning on/off
+  - [ ] Day/night cycle on the city screen
 - [ ] **Exit criteria:** It feels like a real game, not a prototype
 
-### Phase 7 — Cloud Save (target: ~1–2 weeks)
+---
+
+### Phase 9 — Cloud Save (target: ~1–2 weeks)
 - [ ] Integrate `games_services` save game API
 - [ ] Sign-in flow (Game Center / Play Games) — graceful skip if signed out
-- [ ] Save-on-meaningful-event (round end, milestone, item purchase)
+- [ ] Save-on-meaningful-event (round end, accessory purchase, building placed, map unlocked)
 - [ ] Load on app start; conflict resolution (prefer most recent)
-- [ ] **Exit criteria:** Install on a second device, sign in, see same player data
+- [ ] iOS verification (deferred from Phase 0 — `flutter run` on iOS simulator must succeed before this phase ships)
+- [ ] **Exit criteria:** Install on a second device, sign in, see same player data including avatar, stars, and city state
 
-### Phase 8 — Beta + Store Submission (ongoing)
-- [ ] TestFlight (iOS) and Play Console internal testing channel
-- [ ] Privacy policy (required by both stores even for free apps)
-- [ ] App Store / Play Store listings, screenshots, icon
-- [ ] Iterate on real beta feedback
-- [ ] Submit to stores
+---
+
+### Phase 10 — Beta + Store Submission (ongoing)
+- [ ] **Apple Developer Program** enrollment ($99/yr) — only when ready to submit; not blocking earlier work
+- [ ] **Google Play Console** enrollment ($25 one-time)
+- [ ] App Store Connect: register bundle ID, fill listing metadata, age rating questionnaire, kids-category settings ("Made for Kids")
+- [ ] Play Console: register the app, fill listing metadata, "Designed for Families" enrollment, target-audience declaration
+- [ ] Build artifacts: signed Android AAB; signed iOS archive (requires macOS + Xcode)
+- [ ] App icon, screenshots (Android + iOS at multiple sizes), feature graphic, store description copy
+- [ ] Privacy policy (minimal — we collect ~nothing — but COPPA-aware language; either template-based or briefly legal-reviewed)
+- [ ] TestFlight (iOS) internal testing
+- [ ] Play Console internal-testing channel
+- [ ] Iterate on real beta feedback (1–2 cycles)
+- [ ] Submit to stores; respond to reviewer feedback
+- [ ] **Exit criteria:** App is live on both stores
 
 ---
 
@@ -282,12 +389,15 @@ Each phase ends with something demonstrable. We do **not** start a phase until t
 
 These are not blockers for Phase 0 or 1 but need to be resolved by the phase noted:
 
-- **By Phase 2:** What's the exact proficiency update formula? Bayesian update? Simple exponential moving average? Pick simplest that works.
-- **By Phase 2:** Question dataset sourcing strategy — for arithmetic concepts, algorithmic generation is fine. For word problems, do we curate from [GSM8K](https://github.com/openai/grade-school-math) (MIT license) and [MathDataset-ElementarySchool](https://github.com/RamonKaspar/MathDataset-ElementarySchool), or generate via batch LLM? Probably both — start with curation.
-- **By Phase 3:** Avatar art source — commission, find on [OpenGameArt.org](https://opengameart.org/), or generate? Constrains visual style.
-- **By Phase 6:** Music + SFX sourcing (CC0 from Freesound.org and OpenGameArt.org).
-- **By Phase 7:** Are we OK requiring the user to sign in to Game Center / Play Games for cloud save? Otherwise local-only is the only option.
-- **By Phase 8:** Privacy policy text — minimal since we collect ~nothing, but COPPA considerations for under-13 audience need legal review or a template.
+- **By Phase 2 (resolved):** Proficiency update formula — using simple exponential moving average; see *Domain Specs*.
+- **By Phase 2:** Question dataset sourcing strategy for non-arithmetic concepts — curate from [GSM8K](https://github.com/openai/grade-school-math) (MIT license) and [MathDataset-ElementarySchool](https://github.com/RamonKaspar/MathDataset-ElementarySchool), or generate via batch LLM? Probably both — start with curation. Defer to Phase 6+ when fractions/word problems are added.
+- **By Phase 4:** **Avatar library pick** — DiceBear (which styles? does any one style cover all our slots?), Multiavatar, or `avatar_maker`? First action of Phase 4 is the spike that answers this.
+- **By Phase 4 (after spike):** If chosen library doesn't cover all 8 accessory slots, drop missing slots from v1 *or* layer sprite overlays from a CC0 pack. Decide based on spike.
+- **By Phase 5:** Specific isometric-asset packs — Kenney's [City Kit Industrial](https://kenney.nl/assets/city-kit-industrial) is a strong starting point but coverage is limited. Identify supplementary packs (Kenney's other city packs, [OpenGameArt isometric tag](https://opengameart.org/art-search-advanced?keys=isometric)) before catalog work begins.
+- **By Phase 6:** Specific list of building types and their service-ratio numbers (residents-per-school, etc.) — can only be tuned by play-testing.
+- **By Phase 8:** Music + SFX sourcing (CC0 from Freesound.org and OpenGameArt.org).
+- **By Phase 9:** Are we OK requiring the user to sign in to Game Center / Play Games for cloud save? Otherwise local-only is the only option.
+- **By Phase 10:** Privacy policy text — minimal since we collect ~nothing, but COPPA considerations for under-13 audience need legal review or a template.
 
 ---
 
@@ -295,15 +405,19 @@ These are not blockers for Phase 0 or 1 but need to be resolved by the phase not
 
 | Risk | Likelihood | Impact | Mitigation |
 |---|---|---|---|
-| Core loop isn't fun for kids | Medium | Critical | Phase 1 explicitly tests this with a real kid before any further investment |
+| Core loop isn't fun for kids | Medium | Critical | Phase 1 explicitly tested this with a real kid before any further investment — passed |
 | Question dataset gap | Medium | High | Algorithmic generation handles arithmetic; for everything else, multiple datasets identified (GSM8K, MathDataset-ElementarySchool, Illustrative Mathematics) |
-| Avatar layering complexity | Medium | Medium | Constrain to fixed slots; lean on sprite layering, not 3D |
-| Cloud save platform divergence | Low (single package) | Medium | `games_services` abstracts both — but test on both platforms early in Phase 7 |
+| Avatar library doesn't cover all 8 slots | Medium | Medium | Spike at start of Phase 4 evaluates 3 candidates; fallback is to drop sparse slots from v1 or layer sprite overlays |
+| City UX on small screens (placement, panning, zoom on a phone) | Medium | High | Auto-roads (no precision needed); tile-snap with generous tap targets; pinch-zoom + pan; play-test on smallest target device early in Phase 5 |
+| Isometric asset coverage gap | Medium | Medium | Kenney's City Kit packs are the starting point but limited; identify 1–2 supplementary CC0 packs in early Phase 5. If coverage is still sparse, narrow the v1 building catalog rather than ship inconsistent art |
+| Population growth model feels arbitrary or unmotivating | Medium | Medium | Keep model simple (aggregate ratios, not per-building dependency graphs); tune via play-testing. Vague-but-themed feedback messages keep the player oriented even if numbers shift |
+| City save state migration as schema evolves across phases | Medium | Medium | Drift migrations are version-checked; player's city is purely cosmetic so a wipe is a survivable last resort. Bias toward additive schema changes |
+| Cloud save platform divergence | Low (single package) | Medium | `games_services` abstracts both — but test on both platforms early in Phase 9 |
 | `games_services` package abandonment | Low | Medium | If it goes stale, fall back to platform-specific packages (`cloud_kit` for iOS, `googleapis` Drive for Android) |
 | Hive/Isar abandonment pattern repeats with Drift | Low | Low | Drift is built on SQLite; worst-case migration to raw `sqflite` is straightforward |
-| COPPA / children's-app compliance | Medium | High (could block store submission) | No data collection; address this explicitly in Phase 8 with a minimal privacy policy and store-listing kids-category settings |
+| COPPA / children's-app compliance | Medium | High (could block store submission) | No data collection; address this explicitly in Phase 10 with a minimal privacy policy and store-listing kids-category settings |
 | Apple Developer Program ($99/yr) and Play Console ($25 one-time) fees | Certain | Low–Medium | Real ongoing cost for a "free hobby project." If the Apple membership lapses, the iOS build is delisted from the App Store. Budget accordingly; consider whether one platform-only launch buys more time |
-| Sub-concept catalog explosion | Medium | Medium | The category→concept taxonomy in PRD lists ~40+ concepts already; full K–8 could push past 100. Mitigate by defining only what's needed per phase (Phase 1: 2 concepts; Phase 2: ~10; Phase 6+: full) and keeping the schema flexible |
+| Sub-concept catalog explosion | Medium | Medium | The category→concept taxonomy in PRD lists ~40+ concepts already; full K–8 could push past 100. Mitigate by defining only what's needed per phase (Phase 1: 2 concepts; Phase 2: ~10; Phase 8+: full) and keeping the schema flexible |
 
 ---
 
@@ -322,15 +436,31 @@ Since this is a two-person project (you + Claude), some norms to keep us efficie
 
 ## References
 
+**Engine / framework**
 - [Flame Engine docs](https://docs.flame-engine.org/)
 - [Flutter Casual Games Toolkit](https://docs.flutter.dev/resources/games-toolkit)
 - [Riverpod docs](https://riverpod.dev/)
 - [Drift docs](https://drift.simonbinder.eu/)
 - [games_services package](https://pub.dev/packages/games_services)
 - [flame_audio package](https://pub.dev/packages/flame_audio)
+
+**Avatar library candidates (Phase 4 spike)**
+- [DiceBear](https://www.dicebear.com/) — CC0 designs, MIT code; check accessory coverage per style
+- [`dice_bear` Flutter package](https://pub.dev/packages/dice_bear)
+- [Multiavatar](https://multiavatar.com/) (via [`avatar_plus` package](https://pub.dev/packages/avatar_plus))
+- [`avatar_maker` package](https://pub.dev/packages/avatar_maker)
+
+**City builder asset candidates (Phase 5)**
+- [Kenney City Kit Industrial](https://kenney.nl/assets/city-kit-industrial) — CC0 isometric
+- [Kenney all assets](https://kenney.nl/assets) — search "city" / "isometric"
+- [OpenGameArt isometric tag](https://opengameart.org/art-search-advanced?keys=isometric) — CC0 / CC-BY mix
+
+**Math content sources**
 - [GSM8K dataset](https://github.com/openai/grade-school-math) (MIT)
 - [MathDataset-ElementarySchool](https://github.com/RamonKaspar/MathDataset-ElementarySchool)
 - [Illustrative Mathematics](https://illustrativemathematics.org/math-curriculum/) (CC BY-NC)
 - [Open Up Resources 6–8 Math](https://openupresources.org/) (CC BY-NC 4.0)
+
+**Audio / general assets**
 - [OpenGameArt.org](https://opengameart.org/) — CC0/CC-BY art assets
 - [Freesound.org](https://freesound.org/) — CC-licensed audio
