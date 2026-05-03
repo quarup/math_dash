@@ -7,10 +7,10 @@
 
 ## Status
 
-- **Phase:** Phase 2 complete. Ready for Phase 3.
-- **Last updated:** 2026-05-01
-- **Last action:** Implemented full Phase 2: Drift schema (Player + ConceptProficiency), proficiency EMA update, band classifier, adaptive wheel, 4 new algorithmic concepts (add_2digit, sub_2digit, mul_1digit, div_1digit), number-pad input for comfortable band. All 47 tests pass, analyzer clean.
-- **Next action:** Start Phase 3 — player creation flow, profile picker, avatar.
+- **Phase:** Phase 3 complete. Ready for Phase 4.
+- **Last updated:** 2026-05-03
+- **Last action:** Implemented full Phase 3: AvatarConfig domain object (5 colour slots), Drift schema v2 (avatarConfig column + migration), PlayerCreationScreen (name + grade + live avatar preview), PlayerLauncherScreen (profile picker / first-launch gate), AvatarWidget (CustomPainter chibi avatar), activePlayerIdProvider + activePlayerProvider replacing hardcoded default player, TotalStarsNotifier now watches activePlayerProvider, SpinScreen player-switcher in AppBar. All 47 tests pass, analyzer clean.
+- **Next action:** Start Phase 4 — persistent star totals, milestone detection + celebration, shop / wardrobe UI, cosmetic item set.
 - **Deferred:** Audio SFX + background music (CC0 assets not sourced yet — stub in place). iOS verification. Both revisit before Phase 7 at latest.
 
 ---
@@ -230,12 +230,14 @@ Each phase ends with something demonstrable. We do **not** start a phase until t
 - [x] Add 4 new concepts: `mul_1digit`, `div_1digit`, `add_2digit`, `sub_2digit` (all algorithmic)
 - [ ] **Exit criteria:** A returning player sees the wheel adapt — easy concepts disappear, harder ones appear, number-pad input shows up for concepts they've practiced
 
-### Phase 3 — Player Profiles & Avatar (target: ~2 weeks)
-- [ ] Player creation flow (name, grade, basic avatar)
-- [ ] Profile picker on app launch
-- [ ] Mid-session player switching at start of each round
-- [ ] Sprite-layer-based avatar (slots: skin, hair, eyes, top, bottom — each a layer)
-- [ ] **Exit criteria:** Two kids can share the device with separate stats and avatars
+### Phase 3 — Player Profiles & Avatar (complete)
+- [x] Player creation flow (name, grade, basic avatar)
+- [x] Profile picker on app launch
+- [x] Mid-session player switching at start of each round (SpinScreen AppBar)
+- [x] CustomPainter chibi avatar (slots: skin tone, hair, eyes, shirt, pants — drawn in Flutter, no external assets)
+- [x] **Exit criteria:** Two kids can share the device with separate stats and avatars
+
+**Open question resolved:** Avatar art sourced as pure Flutter CustomPainter (no external sprites). Simple geometric "chibi" style — works at all sizes, zero asset licensing burden.
 
 ### Phase 4 — Stars, Milestones, Shop (target: ~2 weeks)
 - [ ] Persistent star totals per player

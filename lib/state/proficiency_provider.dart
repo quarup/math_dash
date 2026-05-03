@@ -1,43 +1,26 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:math_dash/data/database.dart';
 import 'package:math_dash/domain/concepts/concept.dart';
 import 'package:math_dash/domain/concepts/concept_registry.dart';
 import 'package:math_dash/domain/proficiency/proficiency_band.dart';
+import 'package:math_dash/state/player_provider.dart';
 
 // ---------------------------------------------------------------------------
-// Database provider — overridden in main() with the real AppDatabase instance.
-// ---------------------------------------------------------------------------
-
-final appDatabaseProvider = Provider<AppDatabase>(
-  (_) => throw UnimplementedError('appDatabaseProvider must be overridden'),
-);
-
-// ---------------------------------------------------------------------------
-// Default player — loaded once on startup; seeded if the table is empty.
-// ---------------------------------------------------------------------------
-
-final defaultPlayerProvider = FutureProvider<Player>((ref) {
-  final db = ref.watch(appDatabaseProvider);
-  return db.ensureDefaultPlayer();
-});
-
-// ---------------------------------------------------------------------------
-// Proficiency map — conceptId → p value for the default player.
-// Backed by Drift; can be mutated via [ProficiencyNotifier.recordAnswer].
+// Proficiency map — conceptId → p value for the active player.
+// Backed by Drift; rebuilt when the active player changes.
 // ---------------------------------------------------------------------------
 
 class ProficiencyNotifier extends AsyncNotifier<Map<String, double>> {
   @override
   Future<Map<String, double>> build() async {
-    final player = await ref.watch(defaultPlayerProvider.future);
+    final player = await ref.watch(activePlayerProvider.future);
     final db = ref.watch(appDatabaseProvider);
     return db.proficiencyMapForPlayer(player.id);
   }
 
   Future<void> recordAnswer(String conceptId, {required bool correct}) async {
-    final player = await ref.read(defaultPlayerProvider.future);
+    final player = await ref.read(activePlayerProvider.future);
     final db = ref.read(appDatabaseProvider);
 
     final current =
@@ -71,7 +54,7 @@ final proficiencyProvider =
 
 final wheelConceptsProvider = FutureProvider<List<Concept>>((ref) async {
   final profMap = await ref.watch(proficiencyProvider.future);
-  final player = await ref.watch(defaultPlayerProvider.future);
+  final player = await ref.watch(activePlayerProvider.future);
 
   final onWheel = allConcepts.where((c) {
     final p =

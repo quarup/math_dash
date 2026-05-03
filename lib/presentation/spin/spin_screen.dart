@@ -3,11 +3,16 @@ import 'dart:async';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:math_dash/data/database.dart';
+import 'package:math_dash/domain/avatar/avatar_config.dart';
 import 'package:math_dash/domain/concepts/concept.dart';
 import 'package:math_dash/game/spin_wheel/spin_wheel_component.dart';
 import 'package:math_dash/game/spin_wheel/spin_wheel_game.dart';
+import 'package:math_dash/presentation/player/avatar_widget.dart';
+import 'package:math_dash/presentation/player/player_launcher_screen.dart';
 import 'package:math_dash/presentation/question/question_screen.dart';
 import 'package:math_dash/state/game_session_provider.dart';
+import 'package:math_dash/state/player_provider.dart';
 import 'package:math_dash/state/proficiency_provider.dart';
 
 // ---------------------------------------------------------------------------
@@ -89,7 +94,7 @@ class _SpinScreenState extends ConsumerState<SpinScreen>
 
       final profMap = ref.read(proficiencyProvider).asData?.value ?? {};
       final playerGrade =
-          ref.read(defaultPlayerProvider).asData?.value.gradeLevel ?? 2;
+          ref.read(activePlayerProvider).asData?.value.gradeLevel ?? 2;
       final band = bandForConcept(conceptId, profMap, playerGrade);
 
       unawaited(
@@ -102,11 +107,28 @@ class _SpinScreenState extends ConsumerState<SpinScreen>
     });
   }
 
+  void _switchPlayer() {
+    ref.read(activePlayerIdProvider.notifier).selected = null;
+    unawaited(
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute<void>(
+          builder: (_) => const PlayerLauncherScreen(),
+        ),
+        (route) => false,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final stars = ref.watch(totalStarsProvider);
     final wheelAsync = ref.watch(wheelConceptsProvider);
+    final playerAsync = ref.watch(activePlayerProvider);
     final theme = Theme.of(context);
+
+    final playerName = playerAsync.asData?.value.name ?? '';
+    final avatarConfig =
+        playerAsync.asData?.value.avatar ?? const AvatarConfig();
 
     // Create the game once, the first build where concepts are available.
     final concepts = wheelAsync.asData?.value;
@@ -120,9 +142,24 @@ class _SpinScreenState extends ConsumerState<SpinScreen>
     return Scaffold(
       backgroundColor: theme.colorScheme.surfaceContainerLowest,
       appBar: AppBar(
-        title: const Text('Spin the Wheel'),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        title: GestureDetector(
+          onTap: _switchPlayer,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AvatarWidget(config: avatarConfig, size: 32),
+              const SizedBox(width: 8),
+              Text(
+                playerName,
+                style: theme.textTheme.titleMedium,
+              ),
+              const SizedBox(width: 4),
+              const Icon(Icons.swap_horiz_rounded, size: 18),
+            ],
+          ),
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),

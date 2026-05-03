@@ -68,6 +68,17 @@ class $PlayersTable extends Players with TableInfo<$PlayersTable, Player> {
     type: DriftSqlType.dateTime,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _avatarConfigMeta = const VerificationMeta(
+    'avatarConfig',
+  );
+  @override
+  late final GeneratedColumn<String> avatarConfig = GeneratedColumn<String>(
+    'avatar_config',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -75,6 +86,7 @@ class $PlayersTable extends Players with TableInfo<$PlayersTable, Player> {
     gradeLevel,
     totalStars,
     createdAt,
+    avatarConfig,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -121,6 +133,15 @@ class $PlayersTable extends Players with TableInfo<$PlayersTable, Player> {
     } else if (isInserting) {
       context.missing(_createdAtMeta);
     }
+    if (data.containsKey('avatar_config')) {
+      context.handle(
+        _avatarConfigMeta,
+        avatarConfig.isAcceptableOrUnknown(
+          data['avatar_config']!,
+          _avatarConfigMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -150,6 +171,10 @@ class $PlayersTable extends Players with TableInfo<$PlayersTable, Player> {
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
       )!,
+      avatarConfig: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}avatar_config'],
+      ),
     );
   }
 
@@ -165,12 +190,14 @@ class Player extends DataClass implements Insertable<Player> {
   final int gradeLevel;
   final int totalStars;
   final DateTime createdAt;
+  final String? avatarConfig;
   const Player({
     required this.id,
     required this.name,
     required this.gradeLevel,
     required this.totalStars,
     required this.createdAt,
+    this.avatarConfig,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -180,6 +207,9 @@ class Player extends DataClass implements Insertable<Player> {
     map['grade_level'] = Variable<int>(gradeLevel);
     map['total_stars'] = Variable<int>(totalStars);
     map['created_at'] = Variable<DateTime>(createdAt);
+    if (!nullToAbsent || avatarConfig != null) {
+      map['avatar_config'] = Variable<String>(avatarConfig);
+    }
     return map;
   }
 
@@ -190,6 +220,9 @@ class Player extends DataClass implements Insertable<Player> {
       gradeLevel: Value(gradeLevel),
       totalStars: Value(totalStars),
       createdAt: Value(createdAt),
+      avatarConfig: avatarConfig == null && nullToAbsent
+          ? const Value.absent()
+          : Value(avatarConfig),
     );
   }
 
@@ -204,6 +237,7 @@ class Player extends DataClass implements Insertable<Player> {
       gradeLevel: serializer.fromJson<int>(json['gradeLevel']),
       totalStars: serializer.fromJson<int>(json['totalStars']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      avatarConfig: serializer.fromJson<String?>(json['avatarConfig']),
     );
   }
   @override
@@ -215,6 +249,7 @@ class Player extends DataClass implements Insertable<Player> {
       'gradeLevel': serializer.toJson<int>(gradeLevel),
       'totalStars': serializer.toJson<int>(totalStars),
       'createdAt': serializer.toJson<DateTime>(createdAt),
+      'avatarConfig': serializer.toJson<String?>(avatarConfig),
     };
   }
 
@@ -224,12 +259,14 @@ class Player extends DataClass implements Insertable<Player> {
     int? gradeLevel,
     int? totalStars,
     DateTime? createdAt,
+    Value<String?> avatarConfig = const Value.absent(),
   }) => Player(
     id: id ?? this.id,
     name: name ?? this.name,
     gradeLevel: gradeLevel ?? this.gradeLevel,
     totalStars: totalStars ?? this.totalStars,
     createdAt: createdAt ?? this.createdAt,
+    avatarConfig: avatarConfig.present ? avatarConfig.value : this.avatarConfig,
   );
   Player copyWithCompanion(PlayersCompanion data) {
     return Player(
@@ -242,6 +279,9 @@ class Player extends DataClass implements Insertable<Player> {
           ? data.totalStars.value
           : this.totalStars,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      avatarConfig: data.avatarConfig.present
+          ? data.avatarConfig.value
+          : this.avatarConfig,
     );
   }
 
@@ -252,13 +292,15 @@ class Player extends DataClass implements Insertable<Player> {
           ..write('name: $name, ')
           ..write('gradeLevel: $gradeLevel, ')
           ..write('totalStars: $totalStars, ')
-          ..write('createdAt: $createdAt')
+          ..write('createdAt: $createdAt, ')
+          ..write('avatarConfig: $avatarConfig')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, gradeLevel, totalStars, createdAt);
+  int get hashCode =>
+      Object.hash(id, name, gradeLevel, totalStars, createdAt, avatarConfig);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -267,7 +309,8 @@ class Player extends DataClass implements Insertable<Player> {
           other.name == this.name &&
           other.gradeLevel == this.gradeLevel &&
           other.totalStars == this.totalStars &&
-          other.createdAt == this.createdAt);
+          other.createdAt == this.createdAt &&
+          other.avatarConfig == this.avatarConfig);
 }
 
 class PlayersCompanion extends UpdateCompanion<Player> {
@@ -276,12 +319,14 @@ class PlayersCompanion extends UpdateCompanion<Player> {
   final Value<int> gradeLevel;
   final Value<int> totalStars;
   final Value<DateTime> createdAt;
+  final Value<String?> avatarConfig;
   const PlayersCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.gradeLevel = const Value.absent(),
     this.totalStars = const Value.absent(),
     this.createdAt = const Value.absent(),
+    this.avatarConfig = const Value.absent(),
   });
   PlayersCompanion.insert({
     this.id = const Value.absent(),
@@ -289,6 +334,7 @@ class PlayersCompanion extends UpdateCompanion<Player> {
     required int gradeLevel,
     this.totalStars = const Value.absent(),
     required DateTime createdAt,
+    this.avatarConfig = const Value.absent(),
   }) : name = Value(name),
        gradeLevel = Value(gradeLevel),
        createdAt = Value(createdAt);
@@ -298,6 +344,7 @@ class PlayersCompanion extends UpdateCompanion<Player> {
     Expression<int>? gradeLevel,
     Expression<int>? totalStars,
     Expression<DateTime>? createdAt,
+    Expression<String>? avatarConfig,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -305,6 +352,7 @@ class PlayersCompanion extends UpdateCompanion<Player> {
       if (gradeLevel != null) 'grade_level': gradeLevel,
       if (totalStars != null) 'total_stars': totalStars,
       if (createdAt != null) 'created_at': createdAt,
+      if (avatarConfig != null) 'avatar_config': avatarConfig,
     });
   }
 
@@ -314,6 +362,7 @@ class PlayersCompanion extends UpdateCompanion<Player> {
     Value<int>? gradeLevel,
     Value<int>? totalStars,
     Value<DateTime>? createdAt,
+    Value<String?>? avatarConfig,
   }) {
     return PlayersCompanion(
       id: id ?? this.id,
@@ -321,6 +370,7 @@ class PlayersCompanion extends UpdateCompanion<Player> {
       gradeLevel: gradeLevel ?? this.gradeLevel,
       totalStars: totalStars ?? this.totalStars,
       createdAt: createdAt ?? this.createdAt,
+      avatarConfig: avatarConfig ?? this.avatarConfig,
     );
   }
 
@@ -342,6 +392,9 @@ class PlayersCompanion extends UpdateCompanion<Player> {
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
+    if (avatarConfig.present) {
+      map['avatar_config'] = Variable<String>(avatarConfig.value);
+    }
     return map;
   }
 
@@ -352,7 +405,8 @@ class PlayersCompanion extends UpdateCompanion<Player> {
           ..write('name: $name, ')
           ..write('gradeLevel: $gradeLevel, ')
           ..write('totalStars: $totalStars, ')
-          ..write('createdAt: $createdAt')
+          ..write('createdAt: $createdAt, ')
+          ..write('avatarConfig: $avatarConfig')
           ..write(')'))
         .toString();
   }
@@ -824,6 +878,7 @@ typedef $$PlayersTableCreateCompanionBuilder =
       required int gradeLevel,
       Value<int> totalStars,
       required DateTime createdAt,
+      Value<String?> avatarConfig,
     });
 typedef $$PlayersTableUpdateCompanionBuilder =
     PlayersCompanion Function({
@@ -832,6 +887,7 @@ typedef $$PlayersTableUpdateCompanionBuilder =
       Value<int> gradeLevel,
       Value<int> totalStars,
       Value<DateTime> createdAt,
+      Value<String?> avatarConfig,
     });
 
 final class $$PlayersTableReferences
@@ -901,6 +957,11 @@ class $$PlayersTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get avatarConfig => $composableBuilder(
+    column: $table.avatarConfig,
+    builder: (column) => ColumnFilters(column),
+  );
+
   Expression<bool> conceptProficienciesRefs(
     Expression<bool> Function($$ConceptProficienciesTableFilterComposer f) f,
   ) {
@@ -960,6 +1021,11 @@ class $$PlayersTableOrderingComposer
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get avatarConfig => $composableBuilder(
+    column: $table.avatarConfig,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$PlayersTableAnnotationComposer
@@ -989,6 +1055,11 @@ class $$PlayersTableAnnotationComposer
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get avatarConfig => $composableBuilder(
+    column: $table.avatarConfig,
+    builder: (column) => column,
+  );
 
   Expression<T> conceptProficienciesRefs<T extends Object>(
     Expression<T> Function($$ConceptProficienciesTableAnnotationComposer a) f,
@@ -1050,12 +1121,14 @@ class $$PlayersTableTableManager
                 Value<int> gradeLevel = const Value.absent(),
                 Value<int> totalStars = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
+                Value<String?> avatarConfig = const Value.absent(),
               }) => PlayersCompanion(
                 id: id,
                 name: name,
                 gradeLevel: gradeLevel,
                 totalStars: totalStars,
                 createdAt: createdAt,
+                avatarConfig: avatarConfig,
               ),
           createCompanionCallback:
               ({
@@ -1064,12 +1137,14 @@ class $$PlayersTableTableManager
                 required int gradeLevel,
                 Value<int> totalStars = const Value.absent(),
                 required DateTime createdAt,
+                Value<String?> avatarConfig = const Value.absent(),
               }) => PlayersCompanion.insert(
                 id: id,
                 name: name,
                 gradeLevel: gradeLevel,
                 totalStars: totalStars,
                 createdAt: createdAt,
+                avatarConfig: avatarConfig,
               ),
           withReferenceMapper: (p0) => p0
               .map(

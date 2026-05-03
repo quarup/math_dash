@@ -1,23 +1,31 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:math_dash/state/proficiency_provider.dart';
+import 'package:math_dash/state/player_provider.dart';
+
+// ---------------------------------------------------------------------------
+// Total stars for the active player.
+//
+// build() watches activePlayerProvider so the count resets whenever a
+// different player is selected.  add() increments in-memory state and
+// persists asynchronously using the active player's ID.
+// ---------------------------------------------------------------------------
 
 class TotalStarsNotifier extends Notifier<int> {
-  TotalStarsNotifier([this._initial = 0]);
-
-  final int _initial;
-
   @override
-  int build() => _initial;
+  int build() {
+    final playerAsync = ref.watch(activePlayerProvider);
+    return playerAsync.asData?.value.totalStars ?? 0;
+  }
 
   void add(int stars) {
     state += stars;
-    // Persist asynchronously; player ID 1 is the default player (Phase 2).
-    // Phase 3 will make this dynamic when multi-player is added.
-    unawaited(
-      ref.read(appDatabaseProvider).updatePlayerStars(1, state),
-    );
+    final playerId = ref.read(activePlayerIdProvider);
+    if (playerId != null) {
+      unawaited(
+        ref.read(appDatabaseProvider).updatePlayerStars(playerId, state),
+      );
+    }
   }
 }
 

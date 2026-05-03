@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:math_dash/domain/avatar/avatar_config.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
@@ -17,6 +18,14 @@ class Players extends Table {
   IntColumn get gradeLevel => integer()();
   IntColumn get totalStars => integer().withDefault(const Constant(0))();
   DateTimeColumn get createdAt => dateTime()();
+  // Stored as JSON string; null = default avatar.
+  TextColumn get avatarConfig => text().nullable()();
+}
+
+extension PlayerAvatarExt on Player {
+  AvatarConfig get avatar => avatarConfig != null
+      ? AvatarConfig.fromJsonString(avatarConfig!)
+      : const AvatarConfig();
 }
 
 class ConceptProficiencies extends Table {
@@ -40,23 +49,38 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+    onUpgrade: (m, from, to) async {
+      if (from < 2) {
+        await m.addColumn(players, players.avatarConfig);
+      }
+    },
+  );
 
   // ---- Player helpers ----
 
-  /// Returns the default player, creating one if none exists.
-  Future<Player> ensureDefaultPlayer() async {
-    final existing = await (select(players)..limit(1)).getSingleOrNull();
-    if (existing != null) return existing;
+  Future<List<Player>> getAllPlayers() => select(players).get();
 
+  Future<Player> getPlayerById(int id) =>
+      (select(players)..where((t) => t.id.equals(id))).getSingle();
+
+  Future<Player> createPlayer({
+    required String name,
+    required int gradeLevel,
+    required String avatarConfigJson,
+  }) async {
     final id = await into(players).insert(
       PlayersCompanion.insert(
-        name: 'Player',
-        gradeLevel: 2,
+        name: name,
+        gradeLevel: gradeLevel,
+        avatarConfig: Value(avatarConfigJson),
         createdAt: DateTime.now(),
       ),
     );
-    return (select(players)..where((t) => t.id.equals(id))).getSingle();
+    return getPlayerById(id);
   }
 
   Future<void> updatePlayerStars(int playerId, int totalStars) =>
