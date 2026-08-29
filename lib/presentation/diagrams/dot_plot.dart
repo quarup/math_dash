@@ -48,8 +48,11 @@ class DotPlot extends StatelessWidget {
           }
         }
         // Dots shrink with the tick spacing so neighbouring stacks never
-        // merge into each other on a squeezed axis.
-        final r = math.min(dotRadius, math.max(ts / 2 - 0.5, 2.5));
+        // merge into each other on a squeezed axis. 0.38·ts keeps a
+        // visible gap (~a quarter of the spacing) between stacks at
+        // consecutive ticks — at ts/2 the dots touched and two singles
+        // read as one two-dot stack.
+        final r = math.min(dotRadius, math.max(ts * 0.38, 2.5));
         final dotGap = r * 2.2;
         final plotHeight = math.max(tallestStack * dotGap, dotGap);
         final usableW = (ticks - 1) * ts;

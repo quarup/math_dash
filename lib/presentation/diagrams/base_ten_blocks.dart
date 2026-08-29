@@ -8,7 +8,7 @@ import 'package:math_city/domain/questions/diagram_spec.dart';
 class BaseTenBlocks extends StatelessWidget {
   const BaseTenBlocks({
     required this.spec,
-    this.cellSize = 8,
+    this.cellSize = 13,
     super.key,
   });
 
@@ -19,7 +19,7 @@ class BaseTenBlocks extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final edge = theme.colorScheme.onSurface;
-    final fill = theme.colorScheme.primary.withValues(alpha: 0.18);
+    final fill = theme.colorScheme.primary.withValues(alpha: 0.45);
     final children = <Widget>[
       for (var i = 0; i < spec.hundreds; i++)
         _Flat(cellSize: cellSize, edge: edge, fill: fill),

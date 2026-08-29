@@ -201,10 +201,12 @@ class _QuestionScreenState extends ConsumerState<QuestionScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // With a diagram: the prompt card is never flexed — it gets
-              // its full intrinsic height, and the diagram shrinks
-              // (FittedBox) into whatever vertical space remains instead
-              // of pushing the question text off-screen.
+              // With a diagram: the diagram slot keeps a readable minimum
+              // height and the prompt card is capped at the remainder
+              // (scrolling when a long prompt exceeds it). The old scheme
+              // — card at full intrinsic height, diagram FittedBox-shrunk
+              // into the leftover — squeezed diagrams under long prompts
+              // into illegible specks, worst above the keypad.
               //
               // Without one: the card scrolls if a long word problem
               // exceeds the space above the keypad (an unflexed card
@@ -216,38 +218,61 @@ class _QuestionScreenState extends ConsumerState<QuestionScreen> {
                           child: _PromptCard(prompt: question.prompt),
                         ),
                       )
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Flexible(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                              ),
-                              child: LayoutBuilder(
-                                builder: (context, constraints) => FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: ConstrainedBox(
-                                    // Bound the width so self-sizing diagram
-                                    // widgets lay out at phone width;
-                                    // FittedBox then scales the result down
-                                    // to fit the height left over by the
-                                    // prompt card.
-                                    constraints: BoxConstraints(
-                                      maxWidth: constraints.maxWidth,
-                                    ),
-                                    child: DiagramRenderer(
-                                      spec: question.diagram!,
-                                    ),
+                    : LayoutBuilder(
+                        builder: (context, box) {
+                          final minDiagram = min(box.maxHeight * 0.45, 240);
+                          final maxCard = max(
+                            box.maxHeight - minDiagram - 16,
+                            0,
+                          ).toDouble();
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Flexible(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                  ),
+                                  child: LayoutBuilder(
+                                    builder: (context, constraints) =>
+                                        FittedBox(
+                                          // Default `contain`, not
+                                          // `scaleDown`: small-natural-size
+                                          // diagrams (angles, spinners,
+                                          // sparse plots) grow — labels
+                                          // included — to use the slot;
+                                          // wide ones are width-bound and
+                                          // unchanged.
+                                          child: ConstrainedBox(
+                                            // Bound the width so
+                                            // self-sizing diagram widgets
+                                            // lay out at phone width;
+                                            // FittedBox then scales the
+                                            // result to the slot.
+                                            constraints: BoxConstraints(
+                                              maxWidth: constraints.maxWidth,
+                                            ),
+                                            child: DiagramRenderer(
+                                              spec: question.diagram!,
+                                            ),
+                                          ),
+                                        ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          _PromptCard(prompt: question.prompt),
-                        ],
+                              const SizedBox(height: 16),
+                              ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxHeight: maxCard,
+                                ),
+                                child: SingleChildScrollView(
+                                  child: _PromptCard(prompt: question.prompt),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
                       ),
               ),
               const SizedBox(height: 16),

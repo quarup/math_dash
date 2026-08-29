@@ -8,7 +8,7 @@ import 'package:math_city/domain/questions/diagram_spec.dart';
 class DoubleNumberLine extends StatelessWidget {
   const DoubleNumberLine({
     required this.spec,
-    this.height = 140,
+    this.height = 150,
     this.minWidth = 240,
     super.key,
   });
@@ -37,9 +37,9 @@ class DoubleNumberLine extends StatelessWidget {
               spec: spec,
               edge: theme.colorScheme.onSurface,
               labelStyle:
-                  theme.textTheme.labelSmall ?? const TextStyle(fontSize: 11),
+                  theme.textTheme.bodyMedium ?? const TextStyle(fontSize: 14),
               titleStyle:
-                  theme.textTheme.labelMedium ?? const TextStyle(fontSize: 12),
+                  theme.textTheme.labelLarge ?? const TextStyle(fontSize: 14),
             ),
           ),
         );
