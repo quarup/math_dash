@@ -1,0 +1,15 @@
+{"id": "read_write_multidigit", "verdict": "ok", "notes": ""}
+{"id": "compare_multidigit", "verdict": "ok", "notes": ""}
+{"id": "round_multidigit_any_place", "verdict": "improve", "notes": "MC distractors 100997 and 100999 are not multiples of 1000, so they can be eliminated without rounding, and the wrong-screen explanation only restates the answer with no method; prompt also shows 100960 without the comma separators compare_multidigit uses. datasetPool=200, so this single probe may not represent the pool."}
+{"id": "place_value_relationship_10x", "verdict": "ok", "notes": ""}
+{"id": "factors_of_n", "verdict": "ok", "notes": ""}
+{"id": "multiples_of_n", "verdict": "ok", "notes": ""}
+{"id": "prime_or_composite", "verdict": "ok", "notes": ""}
+{"id": "gcf_two_numbers", "verdict": "ok", "notes": ""}
+{"id": "lcm_two_numbers", "verdict": "ok", "notes": ""}
+{"id": "distributive_with_gcf", "verdict": "ok", "notes": ""}
+{"id": "powers_of_10", "verdict": "ok", "notes": ""}
+{"id": "exponents_whole_number", "verdict": "ok", "notes": ""}
+{"id": "integer_exponent_props", "verdict": "ok", "notes": ""}
+{"id": "sqrt_perfect_squares", "verdict": "ok", "notes": ""}
+{"id": "cbrt_perfect_cubes", "verdict": "ok", "notes": ""}

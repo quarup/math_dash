@@ -1,0 +1,15 @@
+{"id": "scientific_notation_read", "verdict": "ok", "notes": ""}
+{"id": "scientific_notation_write", "verdict": "ok", "notes": ""}
+{"id": "scientific_notation_ops", "verdict": "ok", "notes": ""}
+{"id": "add_within_5", "verdict": "improve", "notes": "Distractor 6 sits outside the within-5 band for 0 + 1 = ? and reads as random rather than a plausible slip, and the wrong-screen explanation only restates 0 + 1 = 1 (both modes). datasetPool=1, so this single generator sample may not represent the dataset items."}
+{"id": "sub_within_5", "verdict": "improve", "notes": "Wrong-screen explanation just restates 4 - 4 = 0 with no strategy (both modes). datasetPool=5, so this one probe may not represent the dataset items."}
+{"id": "add_within_10", "verdict": "improve", "notes": "Wrong-screen explanation just restates 6 + 3 = 9 with no counting-on strategy (both modes). datasetPool=5, so this one probe may not represent the dataset items."}
+{"id": "sub_within_10", "verdict": "improve", "notes": "Wrong-screen explanation just restates 6 - 2 = 4 with no strategy (both modes). datasetPool=3, so this one probe may not represent the dataset items."}
+{"id": "make_10_pair", "verdict": "ok", "notes": ""}
+{"id": "decompose_10", "verdict": "improve", "notes": "Wrong-screen explanation gives only 7 + 3 = 10 without the subtraction step (10 - 7 = 3) that make_10_pair's explanation models; applies to both modes."}
+{"id": "add_3_addends_within_20", "verdict": "ok", "notes": ""}
+{"id": "add_within_20", "verdict": "improve", "notes": "Wrong-screen explanation just restates 17 + 0 = 17, and this seed hit a trivial +0 identity item. datasetPool=20, so this one probe says little about the mostly-dataset pool."}
+{"id": "sub_within_20", "verdict": "improve", "notes": "Wrong-screen explanation just restates 14 - 3 = 11 with no strategy (both modes). datasetPool=23, so this one probe says little about the mostly-dataset pool."}
+{"id": "add_sub_unknown_position", "verdict": "ok", "notes": ""}
+{"id": "equal_sign_meaning", "verdict": "ok", "notes": ""}
+{"id": "commutative_add", "verdict": "ok", "notes": ""}

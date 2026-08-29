@@ -1,0 +1,15 @@
+{"id": "rational_to_decimal_repeating", "verdict": "ok", "notes": ""}
+{"id": "irrational_recognize", "verdict": "ok", "notes": ""}
+{"id": "approximate_irrational", "verdict": "ok", "notes": ""}
+{"id": "missing_addend_within_20", "verdict": "improve", "notes": "Wrong-answer explanation is just the completed fact '10 + 9 = 19' with no method (e.g. 19 - 10 = 9); applies to both modes."}
+{"id": "missing_factor", "verdict": "improve", "notes": "Wrong-answer explanation only restates '5 x 4 = 20' without showing the division 20 / 5 = 4; applies to both modes."}
+{"id": "numerical_pattern_rule", "verdict": "ok", "notes": ""}
+{"id": "two_pattern_relationships", "verdict": "improve", "notes": "Coordinate-plane diagram renders very small (roughly a sixth of screen width) with tiny axis numbers and A/B point labels overlapping near the origin, hard to read at ages 10-11; the prompt is answerable without it, but as shown the diagram adds clutter rather than help."}
+{"id": "write_expression_from_words", "verdict": "improve", "notes": "Wrong-answer explanation is just the mapping '\"3 less than n\" -> n - 3' with no reasoning about word order, which is exactly the n-3 vs 3+n confusion the distractors target."}
+{"id": "evaluate_expression", "verdict": "ok", "notes": ""}
+{"id": "identify_parts_expression", "verdict": "ok", "notes": ""}
+{"id": "equivalent_expressions_props", "verdict": "ok", "notes": ""}
+{"id": "substitute_to_check", "verdict": "ok", "notes": ""}
+{"id": "solve_one_step_eq_addition", "verdict": "ok", "notes": ""}
+{"id": "solve_one_step_eq_mult", "verdict": "ok", "notes": ""}
+{"id": "inequality_one_var_intro", "verdict": "ok", "notes": ""}

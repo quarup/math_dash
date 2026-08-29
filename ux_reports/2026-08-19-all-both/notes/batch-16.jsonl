@@ -1,0 +1,15 @@
+{"id": "positional_words", "verdict": "improve", "notes": "The 'picture' is two labelled rectangles ('box', 'toy'), so a K-age pre-reader cannot tell which shape is the toy without reading the labels; an actual toy/box illustration would make the scene self-evident."}
+{"id": "shape_attributes_basic", "verdict": "ok", "notes": ""}
+{"id": "compose_shapes", "verdict": "ok", "notes": ""}
+{"id": "partition_circle_rect_halves", "verdict": "ok", "notes": ""}
+{"id": "identify_polygons", "verdict": "ok", "notes": ""}
+{"id": "partition_into_rows_columns", "verdict": "ok", "notes": ""}
+{"id": "classify_quadrilaterals", "verdict": "ok", "notes": ""}
+{"id": "identify_lines_rays_segments", "verdict": "ok", "notes": ""}
+{"id": "right_acute_obtuse_angle", "verdict": "ok", "notes": ""}
+{"id": "parallel_perpendicular_lines", "verdict": "ok", "notes": ""}
+{"id": "classify_2d_by_lines_angles", "verdict": "improve", "notes": "Wrong-answer explanation ('Yes — look at the rectangle shown: it does') just restates the answer; it should name what to check, e.g. that all four corners are square 90-degree corners."}
+{"id": "line_of_symmetry", "verdict": "ok", "notes": ""}
+{"id": "measure_angle_protractor", "verdict": "ok", "notes": ""}
+{"id": "draw_angle_protractor", "verdict": "improve", "notes": "The correct answer 55° is printed verbatim inside the wedge, so both modes reduce to reading a label and the near-miss distractors (54, 58) test nothing; ask for the scale reading of the second ray, or drop the label."}
+{"id": "angle_addition", "verdict": "ok", "notes": ""}

@@ -1,0 +1,15 @@
+{"id": "line_plot_whole", "verdict": "ok", "notes": ""}
+{"id": "scaled_bar_graph_read", "verdict": "ok", "notes": ""}
+{"id": "scaled_picture_graph", "verdict": "ok", "notes": ""}
+{"id": "line_plot_fractional", "verdict": "improve", "notes": "Prompt wraps mid-mixed-number in both modes: 'How many worms are 1 / 1/4 centimetres long?' splits '1 1/4' across the line break, so it can read as two separate numbers. A non-breaking space inside the mixed number would fix it."}
+{"id": "line_plot_fraction_word", "verdict": "improve", "notes": "Same mixed-number line break as line_plot_fractional: '...that are 2 / 1/2 inches?' splits '2 1/2' across lines in both modes."}
+{"id": "line_plot_5th_grade_ops", "verdict": "ok", "notes": ""}
+{"id": "statistical_question", "verdict": "ok", "notes": ""}
+{"id": "dot_plot", "verdict": "ok", "notes": ""}
+{"id": "histogram", "verdict": "ok", "notes": ""}
+{"id": "box_plot", "verdict": "ok", "notes": ""}
+{"id": "mean", "verdict": "ok", "notes": ""}
+{"id": "median", "verdict": "improve", "notes": "The dots at 15 and 16 touch each other over ticks labelled only every 2, so they can be misread as a two-dot stack at one value -- and which value the 4th sorted dot sits on is exactly what the median answer depends on. Affects both modes; wider dot spacing or smaller markers would help."}
+{"id": "mode", "verdict": "ok", "notes": ""}
+{"id": "range_data", "verdict": "ok", "notes": ""}
+{"id": "iqr", "verdict": "ok", "notes": ""}

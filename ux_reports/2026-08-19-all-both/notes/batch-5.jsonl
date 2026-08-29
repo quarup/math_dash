@@ -1,0 +1,15 @@
+{"id": "associative_add", "verdict": "ok", "notes": ""}
+{"id": "add_2digit_1digit", "verdict": "ok", "notes": ""}
+{"id": "add_2digit_multiple_of_10", "verdict": "improve", "notes": "Wrong-screen explanation just restates 21 + 60 = 81; the sibling sub_multiples_of_10 teaches the tens method (8 tens - 4 tens) — this concept should do the same (2 tens + 6 tens = 8 tens)."}
+{"id": "sub_multiples_of_10", "verdict": "ok", "notes": ""}
+{"id": "add_within_100", "verdict": "improve", "notes": "Wrong-screen explanation only restates 27 + 68 = 95 with no regrouping steps even though this sample carries. Single generator probe; 195-question dataset pool not sampled."}
+{"id": "sub_within_100", "verdict": "ok", "notes": "Probe clean, but it sampled one no-borrow generator question; the 126-question dataset pool was not sampled."}
+{"id": "add_2digit_carry", "verdict": "improve", "notes": "Concept is regrouping, yet the wrong-screen explanation just restates 45 + 27 = 72 with no carry step (e.g. 5 + 7 = 12, write 2 carry 1). Single probe; 49-question dataset pool not sampled."}
+{"id": "sub_2digit_borrow", "verdict": "improve", "notes": "Concept is regrouping, yet the wrong-screen explanation just restates 82 - 66 = 16 with no borrow step. Single probe; 38-question dataset pool not sampled."}
+{"id": "add_up_to_4_2digit", "verdict": "ok", "notes": ""}
+{"id": "add_within_1000", "verdict": "ok", "notes": "Probe clean (worked column shown on the wrong screen), but this is one generator sample; the 200-question dataset pool was not sampled."}
+{"id": "sub_within_1000", "verdict": "ok", "notes": "Probe clean, but this is one no-borrow generator sample; the 199-question dataset pool was not sampled."}
+{"id": "mental_add_10_or_100", "verdict": "ok", "notes": ""}
+{"id": "add_word_problems_within_100", "verdict": "ok", "notes": ""}
+{"id": "add_sub_2step_word_problems", "verdict": "ok", "notes": "Probe clean with a good stepwise explanation, but this is one generator sample; the 300-question dataset pool was not sampled."}
+{"id": "add_multidigit_standard_alg", "verdict": "ok", "notes": ""}

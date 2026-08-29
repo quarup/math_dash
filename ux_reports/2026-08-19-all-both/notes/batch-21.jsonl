@@ -1,0 +1,14 @@
+{"id": "dependent_independent_vars", "verdict": "ok", "notes": ""}
+{"id": "add_subtract_linear_expressions", "verdict": "ok", "notes": ""}
+{"id": "factor_linear_expression", "verdict": "ok", "notes": ""}
+{"id": "expand_linear_expression", "verdict": "ok", "notes": ""}
+{"id": "solve_two_step_eq", "verdict": "ok", "notes": ""}
+{"id": "solve_two_step_eq_distributive", "verdict": "ok", "notes": ""}
+{"id": "solve_two_step_inequality", "verdict": "ok", "notes": ""}
+{"id": "word_problem_two_step_eq", "verdict": "ok", "notes": ""}
+{"id": "solve_linear_eq_one_solution", "verdict": "improve", "notes": "Wrong-answer explanation is a single line ('Move x terms to one side: x = 4.') that restates the answer without showing the subtract-2x / subtract-4 steps; other equation concepts in this section show each step."}
+{"id": "solve_linear_eq_no_or_inf", "verdict": "ok", "notes": ""}
+{"id": "solve_linear_eq_with_distrib_collect", "verdict": "ok", "notes": ""}
+{"id": "slope_from_two_points", "verdict": "ok", "notes": ""}
+{"id": "linear_function_construct", "verdict": "ok", "notes": ""}
+{"id": "function_evaluate_at_point", "verdict": "improve", "notes": "Wrong-answer explanation gives no arithmetic ('Substitute k = -4: s(-4) = -10.') even though evaluating -3k^2 - 17k - 30 needs a sign-and-squaring walkthrough. Dataset-backed concept (pool 200), so this one probe may not represent the whole pool."}

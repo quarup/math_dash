@@ -1,0 +1,15 @@
+{"id": "length_diff_units", "verdict": "ok", "notes": ""}
+{"id": "measure_to_half_quarter_inch", "verdict": "ok", "notes": ""}
+{"id": "time_to_hour_half", "verdict": "ok", "notes": ""}
+{"id": "time_to_5_min", "verdict": "ok", "notes": ""}
+{"id": "time_to_minute", "verdict": "ok", "notes": ""}
+{"id": "am_pm", "verdict": "improve", "notes": "Prompt says '5:15 at night is ___' but 5:15 p.m. is late afternoon, and 5:15 a.m. is also dark, so 'at night' is a shaky cue at this hour; use 'in the evening' or reserve 'at night' for later hours."}
+{"id": "elapsed_time", "verdict": "ok", "notes": "Generator sample only; datasetPool is 200, so the bundled dataset questions for this concept were not exercised by this probe."}
+{"id": "coins_id_value", "verdict": "ok", "notes": ""}
+{"id": "count_coins", "verdict": "ok", "notes": ""}
+{"id": "count_bills_coins", "verdict": "improve", "notes": "Wrong-answer explanation just says 'Add the bills and coins together -> $20.20' with no worked sum ($10+$10 and 10c+10c), unlike count_coins which shows '25 + 25 + 5 = 55'."}
+{"id": "money_word_problems", "verdict": "ok", "notes": ""}
+{"id": "change_from_purchase", "verdict": "ok", "notes": ""}
+{"id": "liquid_volume_mass", "verdict": "ok", "notes": ""}
+{"id": "convert_units_within_system", "verdict": "ok", "notes": ""}
+{"id": "convert_units_multistep", "verdict": "ok", "notes": ""}

@@ -1,0 +1,14 @@
+{"id": "opposites_and_zero", "verdict": "ok", "notes": ""}
+{"id": "absolute_value", "verdict": "ok", "notes": ""}
+{"id": "compare_order_rationals", "verdict": "ok", "notes": ""}
+{"id": "closest_to_target", "verdict": "ok", "notes": "This probe was clean, but datasetPool=200 means most questions come from the bundled dataset, so one generator sample is not representative."}
+{"id": "sort_rationals", "verdict": "ok", "notes": "This probe was clean, but datasetPool=200 means most questions come from the bundled dataset, so one generator sample is not representative."}
+{"id": "plot_four_quadrants", "verdict": "improve", "notes": "Three of the four points (D, C, A) crowd into one corner of quadrant IV with C and A sitting on the bottom grid edge, and each label floats up-right of its dot, so the C label lands almost midway between the C and A dots -- easy for a kid to mispair label and point."}
+{"id": "coord_distance_same_line", "verdict": "ok", "notes": ""}
+{"id": "integers_add", "verdict": "ok", "notes": ""}
+{"id": "integers_subtract", "verdict": "ok", "notes": ""}
+{"id": "integers_multiply_divide", "verdict": "ok", "notes": ""}
+{"id": "rationals_add_sub", "verdict": "ok", "notes": ""}
+{"id": "rationals_multiply_divide", "verdict": "ok", "notes": ""}
+{"id": "rationals_four_op_word", "verdict": "ok", "notes": ""}
+{"id": "rational_to_decimal_terminating", "verdict": "ok", "notes": ""}

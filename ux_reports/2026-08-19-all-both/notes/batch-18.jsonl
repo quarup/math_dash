@@ -1,0 +1,13 @@
+{"id": "adjacent_angles", "verdict": "improve", "notes": "The angle diagram renders as a tiny strip and its '?' and '24°' labels are barely readable in MC; in keypad mode it shrinks further and the labels become illegible. The question is still answerable from the prompt text alone."}
+{"id": "transformations_translation", "verdict": "ok", "notes": ""}
+{"id": "transformations_reflection", "verdict": "ok", "notes": ""}
+{"id": "transformations_rotation", "verdict": "ok", "notes": ""}
+{"id": "transformations_dilation", "verdict": "ok", "notes": ""}
+{"id": "triangle_angle_sum", "verdict": "ok", "notes": ""}
+{"id": "exterior_angle_triangle", "verdict": "improve", "notes": "The triangle diagram is a minuscule speck (~30 px tall in MC, even smaller in keypad) with completely illegible angle labels, so it adds nothing; the prompt text carries the whole question. Either render it at usable size or drop it."}
+{"id": "parallel_lines_transversal", "verdict": "improve", "notes": "No diagram at all for an inherently visual concept — a child must recall what 'alternate interior' means from words alone. Distractor 286 is also implausible for any angle in this configuration."}
+{"id": "pythagorean_apply_2d", "verdict": "ok", "notes": ""}
+{"id": "pythagorean_apply_3d", "verdict": "ok", "notes": ""}
+{"id": "pythagorean_distance_coords", "verdict": "improve", "notes": "Point A sits at x = -8, the left boundary of the plot, so its dot renders half-clipped against the frame in both modes; keep generated points off the grid edge."}
+{"id": "signed_quantities_context", "verdict": "ok", "notes": ""}
+{"id": "integers_on_number_line", "verdict": "ok", "notes": ""}

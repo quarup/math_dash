@@ -1,0 +1,15 @@
+{"id": "classify_2d_hierarchy", "verdict": "improve", "notes": "Prompt is framed as 'True or False' but the MC list shows four options including 'Cannot tell' and 'Only sometimes', which contradicts the binary framing; either offer just True/False or reword the prompt."}
+{"id": "plot_first_quadrant", "verdict": "ok", "notes": ""}
+{"id": "read_first_quadrant", "verdict": "ok", "notes": ""}
+{"id": "area_triangle", "verdict": "ok", "notes": ""}
+{"id": "area_parallelogram", "verdict": "ok", "notes": ""}
+{"id": "area_trapezoid", "verdict": "ok", "notes": ""}
+{"id": "area_polygon_decompose", "verdict": "improve", "notes": "No diagram, and both sub-areas are given in the text, so the question only exercises 32 + 10 rather than decomposing anything; a polygon diagram with side lengths would make it test the named skill. Applies to both modes."}
+{"id": "polygon_on_coordinate_plane", "verdict": "ok", "notes": ""}
+{"id": "triangle_inequality_recognize", "verdict": "ok", "notes": ""}
+{"id": "cross_section_3d", "verdict": "ok", "notes": ""}
+{"id": "circle_circumference", "verdict": "ok", "notes": ""}
+{"id": "area_circle", "verdict": "ok", "notes": ""}
+{"id": "supplementary_angles", "verdict": "ok", "notes": ""}
+{"id": "complementary_angles", "verdict": "ok", "notes": ""}
+{"id": "vertical_angles", "verdict": "ok", "notes": ""}

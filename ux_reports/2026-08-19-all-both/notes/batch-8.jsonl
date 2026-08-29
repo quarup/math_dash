@@ -1,0 +1,15 @@
+{"id": "mult_multidigit_standard_alg", "verdict": "improve", "notes": "Prompt reads 'Work out 150 * 17.' with an asterisk while the title and wrong-screen explanation use x; use the multiplication sign in the prompt (both modes). datasetPool is 200, so this single generator sample may not represent the bundled items."}
+{"id": "div_4digit_by_2digit", "verdict": "ok", "notes": ""}
+{"id": "mult_div_word_2step", "verdict": "ok", "notes": "Probe is clean, but datasetPool is 300, so this single sample may not represent the bundled word problems."}
+{"id": "arithmetic_patterns_in_tables", "verdict": "ok", "notes": ""}
+{"id": "order_of_operations_no_exp", "verdict": "improve", "notes": "Sampled item '12 x 8 + 4' puts the multiplication first, so plain left-to-right evaluation also gives 100 and the item barely tests precedence; a form like '4 + 12 x 8' would (both modes)."}
+{"id": "order_of_operations_with_exp", "verdict": "ok", "notes": ""}
+{"id": "nested_grouping", "verdict": "improve", "notes": "Concept is 'Brackets and braces' but the sampled question '3 x (10 + 4)' has a single level of parentheses and no nesting; if the generator never nests, the concept name overpromises (both modes)."}
+{"id": "partition_halves_fourths", "verdict": "ok", "notes": ""}
+{"id": "partition_thirds", "verdict": "ok", "notes": ""}
+{"id": "unit_fraction_intro", "verdict": "ok", "notes": ""}
+{"id": "fraction_a_over_b", "verdict": "improve", "notes": "Keypad mode grades exactString '4/6', so a child who types the equally correct simplified 2/3 is marked wrong; either accept equivalent fractions or word the prompt to demand sixths."}
+{"id": "fraction_on_number_line", "verdict": "ok", "notes": ""}
+{"id": "equivalent_fractions_visual", "verdict": "improve", "notes": "The 'with picture' diagram shows only the original 1/2 bar with no sixths partition, so the visual never shows the equivalence the question is about; the prompt is purely procedural ('Multiply top and bottom by 3') (both modes)."}
+{"id": "equivalent_fractions_compute", "verdict": "ok", "notes": ""}
+{"id": "compare_fractions_same_denom", "verdict": "ok", "notes": ""}

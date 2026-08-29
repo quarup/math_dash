@@ -1,0 +1,14 @@
+{"id": "mult_facts_9", "verdict": "ok", "notes": ""}
+{"id": "div_meaning_share", "verdict": "improve", "notes": "The AreaGrid is an undifferentiated 6x4 block of identical cells with no group boundaries, so it reads equally as 6 groups of 4 or 4 groups of 6 -- and 6 is one of the MC distractors. Marking the 6 groups visually (gaps or alternating color) would make the diagram support the question instead of ambiguously hinting at a wrong choice."}
+{"id": "div_meaning_grouping", "verdict": "improve", "notes": "Same undifferentiated grid: 12 cells in 2 rows of 6 with no group separation, so reading columns gives 6 groups of 2 and steers toward the distractor 6 (the wrong answer the probe submitted). Visually separating the groups of 6 would fix it; applies to both modes."}
+{"id": "div_facts_within_100", "verdict": "ok", "notes": ""}
+{"id": "div_as_unknown_factor", "verdict": "ok", "notes": ""}
+{"id": "commutative_mult", "verdict": "ok", "notes": ""}
+{"id": "associative_mult", "verdict": "ok", "notes": ""}
+{"id": "distributive_mult_over_add", "verdict": "ok", "notes": ""}
+{"id": "mult_1digit_by_multiple_of_10", "verdict": "improve", "notes": "Sampled item 'What is 1 times 90?' bypasses the concept (x1 needs no multiple-of-10 reasoning) and the distractors 87/89/91 are off-by-one noise rather than plausible multiplication errors. Dataset-sourced (pool 86), so this one probe may not represent the pool -- worth filtering x1 items and near-miss distractors from it."}
+{"id": "interpret_remainder_word", "verdict": "ok", "notes": ""}
+{"id": "mult_compare_word", "verdict": "ok", "notes": "Sampled question is clean in both modes, but it is dataset-backed (pool 300), so this single probe does not cover the pool."}
+{"id": "mult_4digit_by_1digit", "verdict": "ok", "notes": "Sampled question is clean in both modes, but it is dataset-backed (pool 200), so this single probe does not cover the pool."}
+{"id": "mult_2digit_by_2digit", "verdict": "ok", "notes": "Sampled item 'Multiply 82 and 10.' is on the easy edge of 2-digit x 2-digit (times-10 shortcut) but is answerable and correct; dataset-backed (pool 200), so this single probe does not cover the pool."}
+{"id": "div_4digit_by_1digit", "verdict": "ok", "notes": ""}

@@ -1,0 +1,15 @@
+{"id": "area_rectangle_count_squares", "verdict": "ok", "notes": ""}
+{"id": "area_rectangle_formula", "verdict": "ok", "notes": ""}
+{"id": "perimeter_polygon", "verdict": "ok", "notes": ""}
+{"id": "perimeter_unknown_side", "verdict": "ok", "notes": ""}
+{"id": "area_perimeter_word", "verdict": "ok", "notes": ""}
+{"id": "volume_unit_cubes", "verdict": "improve", "notes": "The dimension labels on the Box3D diagram (4, 5, 5) render very small relative to the figure, and the diagram shrinks further in keypad mode; the prompt says 'with these dimensions' so the answer depends on reading them."}
+{"id": "volume_rect_prism_formula", "verdict": "ok", "notes": ""}
+{"id": "volume_composite", "verdict": "improve", "notes": "Prompt wording 'The first is 4 x 5 x 2 cubic units' attaches 'cubic units' to the dimensions rather than the volume; 'measures 4 x 5 x 2 units' would be correct. Both modes."}
+{"id": "volume_prism_fractional_edges", "verdict": "ok", "notes": ""}
+{"id": "surface_area_from_net", "verdict": "ok", "notes": ""}
+{"id": "volume_cylinder", "verdict": "ok", "notes": ""}
+{"id": "volume_cone", "verdict": "ok", "notes": ""}
+{"id": "volume_sphere", "verdict": "ok", "notes": ""}
+{"id": "identify_shape_2d", "verdict": "ok", "notes": ""}
+{"id": "identify_shape_3d", "verdict": "ok", "notes": ""}

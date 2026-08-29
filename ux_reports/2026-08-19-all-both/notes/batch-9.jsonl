@@ -1,0 +1,15 @@
+{"id": "compare_fractions_same_num", "verdict": "ok", "notes": ""}
+{"id": "compare_fractions_unlike", "verdict": "ok", "notes": ""}
+{"id": "whole_number_as_fraction", "verdict": "ok", "notes": ""}
+{"id": "simplify_fraction", "verdict": "ok", "notes": ""}
+{"id": "improper_to_mixed", "verdict": "ok", "notes": ""}
+{"id": "mixed_to_improper", "verdict": "ok", "notes": ""}
+{"id": "add_fractions_like_denom", "verdict": "ok", "notes": ""}
+{"id": "sub_fractions_like_denom", "verdict": "ok", "notes": ""}
+{"id": "add_mixed_like_denom", "verdict": "improve", "notes": "MC distractor '11/1' is degenerate: a denominator-1 fraction equal to 11, far from the ~4 1/3 answer and in notation no kid would produce; swap for a plausible near-miss like 3 1/3 or 4 4/3 unreduced."}
+{"id": "sub_mixed_like_denom", "verdict": "improve", "notes": "Wrong-answer explanation jumps from '3 - 1 wholes, 7 - 3 tops' straight to 'Result: 2 2/3', silently simplifying 2 4/6 to thirds; the intermediate 2 4/6 = 2 2/3 step is missing, confusing for a problem posed entirely in sixths."}
+{"id": "mult_fraction_by_whole", "verdict": "improve", "notes": "MC: prompt demands lowest terms but all three distractors (6/6, 3/18, 9/18) are unreduced, so 3/2 is the only choice satisfying the stated constraint and can be picked without computing."}
+{"id": "add_fractions_unlike_denom", "verdict": "ok", "notes": ""}
+{"id": "sub_fractions_unlike_denom", "verdict": "improve", "notes": "MC distractor '0/1' is odd notation (kids write 0, not 0/1) and '2/13' has no plausible derivation from 2/3 - 2/4; both read as filler rather than believable mistakes."}
+{"id": "add_mixed_unlike_denom", "verdict": "ok", "notes": ""}
+{"id": "sub_mixed_unlike_denom", "verdict": "ok", "notes": ""}

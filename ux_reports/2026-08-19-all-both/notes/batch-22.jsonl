@@ -1,0 +1,15 @@
+{"id": "graph_linear_equation", "verdict": "ok", "notes": ""}
+{"id": "identify_linear_vs_nonlinear", "verdict": "ok", "notes": ""}
+{"id": "function_definition_check", "verdict": "improve", "notes": "Distractor 'Sometimes' is never a plausible answer to whether a fixed set of pairs is a function; replace it (and arguably 'Can't tell') with something a student could actually believe."}
+{"id": "compare_functions_representations", "verdict": "ok", "notes": ""}
+{"id": "qualitative_graph_features", "verdict": "ok", "notes": ""}
+{"id": "solve_system_by_graphing", "verdict": "ok", "notes": ""}
+{"id": "solve_system_substitution", "verdict": "ok", "notes": ""}
+{"id": "solve_system_elimination", "verdict": "ok", "notes": ""}
+{"id": "inspect_system_no_solution", "verdict": "improve", "notes": "App-bar title shows the concept name 'System with no solution' while this instance's correct answer is 'Exactly one solution' -- the heading actively misleads; use a neutral title like 'How many solutions?'."}
+{"id": "system_word_problem", "verdict": "ok", "notes": ""}
+{"id": "classify_count_categories", "verdict": "ok", "notes": ""}
+{"id": "three_category_data", "verdict": "improve", "notes": "Chart title 'Today's weather log' contradicts a prompt counting 11 days of weather; also the prompt reads 'sunny days, cloudy days, rainy days' with no 'and'. Both modes."}
+{"id": "picture_graph_read", "verdict": "improve", "notes": "Same 'Today's weather log' title over a multi-day picture graph (7 sunny days etc.) -- the title should say something like 'This month's weather'. Both modes."}
+{"id": "bar_graph_read", "verdict": "improve", "notes": "X-axis category label is truncated to 'paint c...' in both modes; the asked-about 'signs' bar is intact so the question stays answerable, but the clipped label should be shortened or wrapped."}
+{"id": "bar_graph_compare", "verdict": "ok", "notes": ""}

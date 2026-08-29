@@ -1,0 +1,15 @@
+{"id": "sub_multidigit_standard_alg", "verdict": "ok", "notes": ""}
+{"id": "add_sub_fluency_within_20", "verdict": "ok", "notes": ""}
+{"id": "number_line_add_sub", "verdict": "ok", "notes": ""}
+{"id": "equal_groups_intro", "verdict": "improve", "notes": "Prompt says '2 equal groups, with 3 objects in each group' but the diagram is one fused 2x3 grid rectangle with no visual separation between groups, so the picture reads as an array rather than distinct groups; both modes."}
+{"id": "array_repeated_addition", "verdict": "ok", "notes": ""}
+{"id": "mult_meaning_groups", "verdict": "ok", "notes": ""}
+{"id": "mult_facts_within_100", "verdict": "ok", "notes": "Probe sample (4 x 2) is clean in both modes, but datasetPool is 125 so most of this concept's questions come from the bundled dataset and this single generator sample may not be representative."}
+{"id": "mult_facts_2", "verdict": "ok", "notes": ""}
+{"id": "mult_facts_5", "verdict": "ok", "notes": ""}
+{"id": "mult_facts_10", "verdict": "ok", "notes": ""}
+{"id": "mult_facts_3", "verdict": "ok", "notes": ""}
+{"id": "mult_facts_4", "verdict": "ok", "notes": ""}
+{"id": "mult_facts_6", "verdict": "ok", "notes": ""}
+{"id": "mult_facts_7", "verdict": "ok", "notes": ""}
+{"id": "mult_facts_8", "verdict": "ok", "notes": ""}

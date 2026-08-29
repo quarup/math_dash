@@ -1,0 +1,15 @@
+{"id": "count_to_10", "verdict": "improve", "notes": "Prompt is just \"9, ___\" with no instruction and only one number shown, so nothing establishes counting direction (MC even offers 8); in keypad mode a child could reasonably type 8. Add \"What number comes next?\" or show two prior terms."}
+{"id": "count_to_20", "verdict": "improve", "notes": "Same bare single-number prompt as count_to_10 (\"11, ___\") with no instruction; direction of counting is only implied by the title, and 10 is among the MC distractors. Worst in keypad mode."}
+{"id": "count_to_100_by_1", "verdict": "improve", "notes": "Same bare single-number prompt (\"65, ___\") with no instruction; 64 is a distractor, so counting direction matters but is never stated. Worst in keypad mode."}
+{"id": "count_to_100_by_10", "verdict": "ok", "notes": ""}
+{"id": "count_to_120", "verdict": "improve", "notes": "Same bare single-number prompt (\"119, ___\") with no instruction text; 118 is a distractor, so direction is ambiguous, especially in keypad mode."}
+{"id": "count_forward_from_n", "verdict": "ok", "notes": ""}
+{"id": "read_numerals_0_20", "verdict": "ok", "notes": ""}
+{"id": "write_numerals_0_20", "verdict": "ok", "notes": ""}
+{"id": "count_objects_to_10", "verdict": "improve", "notes": "Wrong-answer explanation says \"There are 8 objects shaded\" but the diagram shows 8 uniformly solid circles with nothing shaded versus unshaded; \"shown\" would match the prompt."}
+{"id": "count_objects_to_20", "verdict": "improve", "notes": "Same \"objects shaded\" wording in the wrong-answer explanation as count_objects_to_10; all 14 circles are solid, so \"shaded\" does not describe the diagram."}
+{"id": "compare_groups_by_count", "verdict": "improve", "notes": "Wrong-answer explanation \"2 vs 3 → 3 is more\" never names Group B, so the child must still map the counts back to the groups themselves; the answer choices are group names, not counts."}
+{"id": "compare_numerals_1_10", "verdict": "ok", "notes": ""}
+{"id": "one_more_one_less_within_20", "verdict": "ok", "notes": ""}
+{"id": "ten_more_ten_less", "verdict": "ok", "notes": ""}
+{"id": "skip_count_2", "verdict": "ok", "notes": ""}

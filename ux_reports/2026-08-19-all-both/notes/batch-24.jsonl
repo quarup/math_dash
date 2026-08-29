@@ -1,0 +1,18 @@
+{"id": "mad", "verdict": "ok", "notes": ""}
+{"id": "describe_distribution", "verdict": "improve", "notes": "The flat histogram is both uniform and symmetric, yet 'Symmetric' sits among the distractors and is marked wrong; drop it from the choice set when the generated shape is uniform."}
+{"id": "compare_two_distributions", "verdict": "ok", "notes": ""}
+{"id": "sampling_representativeness", "verdict": "ok", "notes": ""}
+{"id": "inference_from_sample", "verdict": "ok", "notes": ""}
+{"id": "probability_zero_to_one", "verdict": "ok", "notes": ""}
+{"id": "probability_simple_event", "verdict": "improve", "notes": "In keypad mode the spinner shrinks so far that its white/black sector labels are barely readable; also the explanation line '2/3 reduced = 2/3' is a no-op that should be dropped when the fraction is already reduced."}
+{"id": "experimental_probability", "verdict": "ok", "notes": ""}
+{"id": "theoretical_vs_experimental", "verdict": "ok", "notes": ""}
+{"id": "sample_space_list", "verdict": "ok", "notes": ""}
+{"id": "compound_event_probability", "verdict": "improve", "notes": "In keypad mode the tree diagram shrinks until the H/T branch and leaf labels are barely legible; the MC rendering of the same tree is fine."}
+{"id": "tree_diagram", "verdict": "ok", "notes": ""}
+{"id": "scatter_plot_construct", "verdict": "improve", "notes": "The scatter plot renders tiny (~130px) with unreadable axis numbers, yet the task asks which exact point is missing; also only the correct choice appears in the listed pairs, so the answer is deducible without looking at the plot — distractors should come from the listed pairs."}
+{"id": "scatter_plot_describe", "verdict": "ok", "notes": ""}
+{"id": "informal_line_of_fit", "verdict": "ok", "notes": ""}
+{"id": "interpret_slope_intercept_data", "verdict": "ok", "notes": ""}
+{"id": "two_way_table_construct", "verdict": "ok", "notes": ""}
+{"id": "two_way_relative_frequency", "verdict": "ok", "notes": ""}

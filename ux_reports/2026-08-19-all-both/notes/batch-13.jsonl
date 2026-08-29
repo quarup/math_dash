@@ -1,0 +1,15 @@
+{"id": "ratio_to_coordinate_pairs", "verdict": "ok", "notes": ""}
+{"id": "unit_rate_with_fractions", "verdict": "ok", "notes": ""}
+{"id": "proportional_relationship", "verdict": "improve", "notes": "Wrong-answer explanation says 'Proportional iff y/x is the same constant' — 'iff' reads as a typo of 'if' to a grade-7 kid; spell out 'if and only if' or just 'when'."}
+{"id": "constant_of_proportionality", "verdict": "ok", "notes": ""}
+{"id": "proportional_equation", "verdict": "ok", "notes": ""}
+{"id": "multistep_ratio_word", "verdict": "improve", "notes": "Prompt grammar: 'then at 35 miles per hour for 1 more hours' — generator pluralises 'hours' even when the value is 1 (both modes)."}
+{"id": "scale_drawing", "verdict": "ok", "notes": ""}
+{"id": "describe_attribute", "verdict": "ok", "notes": ""}
+{"id": "compare_two_objects", "verdict": "improve", "notes": "Concept is direct comparison (grade K) but the question is a pure number comparison with stated gram values, and the values are unrealistic — an apple at 4 grams; a real apple is ~100 g."}
+{"id": "order_three_objects_length", "verdict": "improve", "notes": "Wrong-answer explanation is just 'Smallest = 28; biggest = 30.' — it never says rope A is the 28-foot one or how to read the bars, so it barely explains why the chosen answer was wrong."}
+{"id": "measure_length_units", "verdict": "improve", "notes": "Prompt says 'measured with same-size unit blocks' and the explanation says 'count the unit blocks', but the diagram is a numbered 0-8 ruler with no discrete blocks to count (both modes)."}
+{"id": "measure_with_ruler_inches", "verdict": "ok", "notes": ""}
+{"id": "measure_with_ruler_cm", "verdict": "ok", "notes": ""}
+{"id": "estimate_length", "verdict": "ok", "notes": ""}
+{"id": "length_word_problems", "verdict": "ok", "notes": ""}

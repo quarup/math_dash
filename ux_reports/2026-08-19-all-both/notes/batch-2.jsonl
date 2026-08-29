@@ -1,0 +1,15 @@
+{"id": "skip_count_5", "verdict": "ok", "notes": ""}
+{"id": "skip_count_10", "verdict": "ok", "notes": ""}
+{"id": "skip_count_100", "verdict": "ok", "notes": ""}
+{"id": "count_within_1000", "verdict": "improve", "notes": "Prompt is just '333, ___' with one term and no stated direction, so in keypad mode 332 (counting down) is a defensible typed answer that gets marked wrong; say 'Count up' or show two leading terms."}
+{"id": "even_odd", "verdict": "ok", "notes": ""}
+{"id": "teen_numbers_as_ten_plus", "verdict": "improve", "notes": "Both modes: the base-ten diagram is small and low-contrast (pale teal outlines, unit cubes only a few mm wide), yet the task is to count those 6 cubes; enlarge the blocks and darken the fill."}
+{"id": "place_value_2digit", "verdict": "ok", "notes": "Generator sample only; 46 of this concept's questions come from the bundled dataset, which this probe did not cover."}
+{"id": "compare_2digit", "verdict": "improve", "notes": "Wrong-answer explanation ('The smaller of 49 and 60 is 49') only restates the answer; a place-value hint like '4 tens is less than 6 tens' would teach the method."}
+{"id": "place_value_3digit", "verdict": "ok", "notes": "Generator sample only; 200 of this concept's questions come from the bundled dataset, which this probe did not cover."}
+{"id": "read_write_3digit", "verdict": "ok", "notes": ""}
+{"id": "expanded_form_3digit", "verdict": "ok", "notes": ""}
+{"id": "compare_3digit", "verdict": "improve", "notes": "MC mode: prompt asks 'Which number is greater: 378 or 172?' but two of the four choices (550, 206) are numbers not named in the question, which is confusing; explanation also just restates the answer."}
+{"id": "round_to_10", "verdict": "ok", "notes": "Generator sample only; 23 of this concept's questions come from the bundled dataset, which this probe did not cover."}
+{"id": "round_to_100", "verdict": "improve", "notes": "Wrong-answer explanation ('Round 9187 to the nearest 100 gives 9200') restates the answer with no method, unlike round_to_10 which explains closeness; note 85 questions also come from an unsampled dataset pool."}
+{"id": "place_value_multidigit", "verdict": "ok", "notes": "Generator sample only; 200 of this concept's questions come from the bundled dataset, which this probe did not cover."}

@@ -1,0 +1,13 @@
+{
+  "scope": "congruence_via_transformations,similarity_via_transformations,div_with_remainder,graph_proportional_slope,simulate_compound,kth_value_in_list",
+  "band": "both",
+  "limit": 0,
+  "ids": [
+    "congruence_via_transformations",
+    "similarity_via_transformations",
+    "div_with_remainder",
+    "graph_proportional_slope",
+    "simulate_compound",
+    "kth_value_in_list"
+  ]
+}
