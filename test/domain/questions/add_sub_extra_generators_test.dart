@@ -20,13 +20,15 @@ void main() {
   setUp(() => registry = GeneratorRegistry.defaultRegistry());
 
   group('count_within_1000', () {
-    test('answer = n + 1; n ∈ [120, 999]', () {
+    test('two consecutive terms ending in [121, 999]; answer = last + 1', () {
       for (var i = 0; i < _iterations; i++) {
         final q = _gen(registry, 'count_within_1000', i);
-        final m = RegExp(r'^(\d+), ___$').firstMatch(q.prompt);
+        final m = RegExp(r'^(\d+), (\d+), ___$').firstMatch(q.prompt);
         expect(m, isNotNull);
-        final n = int.parse(m!.group(1)!);
-        expect(n, inInclusiveRange(120, 999));
+        final first = int.parse(m!.group(1)!);
+        final n = int.parse(m.group(2)!);
+        expect(n, first + 1);
+        expect(n, inInclusiveRange(121, 999));
         expect(int.parse(q.correctAnswer), n + 1);
         _expectThreeDistinctDistractors(q);
       }

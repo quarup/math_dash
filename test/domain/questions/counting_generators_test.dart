@@ -21,7 +21,7 @@ void main() {
 
   group('count_to_10 / 20 / 100', () {
     test(
-      'answer = n + 1 where n is the prompt number; answer in correct range',
+      'prompt shows two consecutive terms; answer = last + 1, in range',
       () {
         for (final (cid, maxValue) in const [
           ('count_to_10', 10),
@@ -30,11 +30,14 @@ void main() {
         ]) {
           for (var i = 0; i < _iterations; i++) {
             final q = _gen(registry, cid, i);
-            final m = RegExp(r'^(\d+), ___$').firstMatch(q.prompt);
+            final m = RegExp(r'^(\d+), (\d+), ___$').firstMatch(q.prompt);
             expect(m, isNotNull, reason: '$cid prompt: ${q.prompt}');
-            final n = int.parse(m!.group(1)!);
+            final first = int.parse(m!.group(1)!);
+            final n = int.parse(m.group(2)!);
+            expect(n, first + 1, reason: '$cid shows consecutive terms');
+            expect(first, greaterThanOrEqualTo(1));
             expect(int.parse(q.correctAnswer), n + 1);
-            expect(n + 1, inInclusiveRange(2, maxValue));
+            expect(n + 1, inInclusiveRange(3, maxValue));
             _expectThreeDistinctDistractors(q);
           }
         }
@@ -107,13 +110,15 @@ void main() {
   });
 
   group('count_to_120', () {
-    test('predecessor ∈ [100, 119]; answer ∈ [101, 120]', () {
+    test('two consecutive terms ending in [101, 119]; answer = last + 1', () {
       for (var i = 0; i < _iterations; i++) {
         final q = _gen(registry, 'count_to_120', i);
-        final m = RegExp(r'^(\d+), ___$').firstMatch(q.prompt);
+        final m = RegExp(r'^(\d+), (\d+), ___$').firstMatch(q.prompt);
         expect(m, isNotNull);
-        final n = int.parse(m!.group(1)!);
-        expect(n, inInclusiveRange(100, 119));
+        final first = int.parse(m!.group(1)!);
+        final n = int.parse(m.group(2)!);
+        expect(n, first + 1);
+        expect(n, inInclusiveRange(101, 119));
         expect(int.parse(q.correctAnswer), n + 1);
         _expectThreeDistinctDistractors(q);
       }

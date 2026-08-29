@@ -29,23 +29,25 @@ List<String> _distinctIntStrings(int correct, List<String> candidates) {
 // count_within_1000 (G2)
 // ─────────────────────────────────────────────────────────────────────────
 
-/// "`n`, ___" — the next number counting by 1, for `n ∈ [120, 999]`.
-/// Same shape as `count_to_120` but extended into the 3-digit range.
+/// "`n−1`, `n`, ___" — the next number counting by 1, for
+/// `n ∈ [121, 999]`. Same shape as `count_to_120` but extended into
+/// the 3-digit range. Two leading terms establish the counting-up
+/// direction — a bare "n, ___" made typing n−1 a defensible answer.
 GeneratedQuestion countWithin1000(Random rand) {
-  final n = rand.nextInt(880) + 120; // 120..999
+  final n = rand.nextInt(879) + 121; // 121..999
   final correct = n + 1;
   final candidates = <String>[
-    '${n - 1}',
+    '${n - 1}', // counted down instead of up
     '$n',
     '${n + 2}',
     '${n + 10}', // crossed a decade
   ];
   return GeneratedQuestion(
     conceptId: 'count_within_1000',
-    prompt: '$n, ___',
+    prompt: '${n - 1}, $n, ___',
     correctAnswer: '$correct',
     distractors: _distinctIntStrings(correct, candidates),
-    explanation: ['Counting up by 1: $n, then $correct.'],
+    explanation: ['Counting up by 1: ${n - 1}, $n, then $correct.'],
   );
 }
 

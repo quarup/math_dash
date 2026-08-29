@@ -31,25 +31,28 @@ List<String> _distinctIntStrings(int correct, List<String> candidates) {
 // count_to_10 / count_to_20 / count_to_100_by_1 (K)
 // ─────────────────────────────────────────────────────────────────────────
 
-/// "`n`, ___" — the next number when counting by 1, with the
-/// predecessor chosen so the answer stays inside the relevant range.
+/// "`n−1`, `n`, ___" — the next number when counting by 1, with the
+/// terms chosen so the answer stays inside the relevant range.
 /// A sequence with a gap is self-explanatory; the old "What number
-/// comes right after n?" said the same thing in words.
+/// comes right after n?" said the same thing in words. Two leading
+/// terms, not one: a single "n, ___" never established the counting
+/// direction, so typing n−1 (counting down) was a defensible answer
+/// that got marked wrong.
 GeneratedQuestion _counterUpTo(int max, String conceptId, Random rand) {
-  // Predecessor n in [1, max - 1] so the answer n+1 in [2, max].
-  final n = rand.nextInt(max - 1) + 1;
+  // n in [2, max - 1] so the shown n-1 stays ≥ 1 and the answer n+1 ≤ max.
+  final n = rand.nextInt(max - 2) + 2;
   final correct = n + 1;
   final candidates = <String>[
-    '${n - 1}', // off-by-one (gave the predecessor)
+    '${n - 1}', // counted down instead of up
     '$n', // didn't count at all
     '${n + 2}', // skipped one
   ];
   return GeneratedQuestion(
     conceptId: conceptId,
-    prompt: '$n, ___',
+    prompt: '${n - 1}, $n, ___',
     correctAnswer: '$correct',
     distractors: _distinctIntStrings(correct, candidates),
-    explanation: ['Counting up by 1: $n, then ${n + 1}.'],
+    explanation: ['Counting up by 1: ${n - 1}, $n, then ${n + 1}.'],
   );
 }
 
@@ -150,24 +153,25 @@ GeneratedQuestion countTo100By10(Random rand) {
 // count_to_120 (G1)
 // ─────────────────────────────────────────────────────────────────────────
 
-/// "What number comes right after `n`?" extended into G1 territory by
-/// having the predecessor land in `[100, 119]`. Same shape as
-/// `count_to_10` but tests the 100–120 range specifically.
+/// "`n−1`, `n`, ___" extended into G1 territory by having the last
+/// shown term land in `[101, 119]`. Same shape as `count_to_10` but
+/// tests the 100–120 range specifically. Two leading terms establish
+/// the counting-up direction (see `_counterUpTo`).
 GeneratedQuestion countTo120(Random rand) {
-  final n = rand.nextInt(20) + 100; // 100..119
+  final n = rand.nextInt(19) + 101; // 101..119
   final correct = n + 1;
   final candidates = <String>[
-    '${n - 1}',
+    '${n - 1}', // counted down instead of up
     '$n',
     '${n + 2}',
     '${n + 10}', // crossed a decade by accident
   ];
   return GeneratedQuestion(
     conceptId: 'count_to_120',
-    prompt: '$n, ___',
+    prompt: '${n - 1}, $n, ___',
     correctAnswer: '$correct',
     distractors: _distinctIntStrings(correct, candidates),
-    explanation: ['Counting up by 1: $n, then $correct.'],
+    explanation: ['Counting up by 1: ${n - 1}, $n, then $correct.'],
   );
 }
 
