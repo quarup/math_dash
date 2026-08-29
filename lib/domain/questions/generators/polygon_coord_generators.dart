@@ -597,14 +597,21 @@ GeneratedQuestion congruenceViaTransformations(Random rand) {
       CoordinatePlanePoint(x: pre[i][0], y: pre[i][1], label: 'ABC'[i]),
   ];
 
+  // Bounds fit BOTH figures — a fixed grid clipped the transformed image.
+  final maxAbs = [
+    for (final v in pre) ...[v[0].abs(), v[1].abs()],
+    for (final v in image) ...[v[0].abs(), v[1].abs()],
+  ].reduce((a, b) => a > b ? a : b);
+  final bound = maxAbs + 1;
+
   return GeneratedQuestion(
     conceptId: 'congruence_via_transformations',
     prompt: 'Are these two figures congruent?',
     diagram: CoordinatePlaneSpec(
-      minX: -4,
-      maxX: 4,
-      minY: -4,
-      maxY: 4,
+      minX: -bound,
+      maxX: bound,
+      minY: -bound,
+      maxY: bound,
       points: preLabelled,
       polygons: [
         CoordinatePlanePolygon(vertices: preLabelled),
@@ -703,14 +710,21 @@ GeneratedQuestion similarityViaTransformations(Random rand) {
       CoordinatePlanePoint(x: pre[i][0], y: pre[i][1], label: 'ABC'[i]),
   ];
 
+  // Bounds fit BOTH figures — a fixed grid can clip a scaled image.
+  final maxAbs = [
+    for (final v in pre) ...[v[0].abs(), v[1].abs()],
+    for (final v in image) ...[v[0].abs(), v[1].abs()],
+  ].reduce((a, b) => a > b ? a : b);
+  final bound = maxAbs + 1;
+
   return GeneratedQuestion(
     conceptId: 'similarity_via_transformations',
     prompt: 'Are these two figures similar?',
     diagram: CoordinatePlaneSpec(
-      minX: -7,
-      maxX: 7,
-      minY: -7,
-      maxY: 7,
+      minX: -bound,
+      maxX: bound,
+      minY: -bound,
+      maxY: bound,
       points: preLabelled,
       polygons: [
         CoordinatePlanePolygon(vertices: preLabelled),

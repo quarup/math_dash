@@ -337,15 +337,18 @@ class _PromptCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    // Long word problems step down a text size so four-line prompts fit
+    // above the keypad instead of scrolling out of view mid-word.
+    final style = prompt.length > 120
+        ? theme.textTheme.titleLarge
+        : theme.textTheme.headlineMedium;
     return Card(
       elevation: 4,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
         child: MathText(
           prompt,
-          style: theme.textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style: style?.copyWith(fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),
       ),

@@ -59,8 +59,11 @@ GeneratedQuestion divWithRemainder(Random rand) {
   return GeneratedQuestion(
     conceptId: 'div_with_remainder',
     // The answer format is stated up front — on the keypad nothing else
-    // says the expected shape is "2R4".
-    prompt: '$dividend ÷ $divisor = ?\n(Type the answer like 2R4.)',
+    // says the expected shape is "quotient R remainder". The example is
+    // picked to never equal this question's own answer.
+    prompt:
+        '$dividend ÷ $divisor = ?\n'
+        '(Answer like ${quotient == 3 && remainder == 1 ? "4R2" : "3R1"}.)',
     correctAnswer: correct,
     distractors: distractors,
     explanation: [

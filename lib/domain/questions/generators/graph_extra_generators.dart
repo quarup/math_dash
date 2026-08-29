@@ -121,6 +121,10 @@ GeneratedQuestion graphProportionalSlope(Random rand) {
     explanation: [
       'When x = 1, y = $k. So the slope is $k.',
     ],
+    // The graph is the ONLY source of the slope, and the keypad band
+    // leaves too little vertical space to render it readably — MC keeps
+    // the plane large enough to read.
+    multipleChoiceOnly: true,
   );
 }
 
