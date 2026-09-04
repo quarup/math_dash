@@ -1,3387 +1,3586 @@
 {
-  "items": [
-    {
-      "id": "deepmind_mathematics_dataset_arith_62daf25bd6",
-      "concept_id": "sub_within_1000",
-      "prompt": "308 − 101 = ?",
-      "correct_answer": "207",
-      "distractors": [
-        "202",
-        "409",
-        "210"
-      ],
-      "explanation": [
-        "308 − 101 = 207"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_fc14677527",
-      "concept_id": "sub_within_1000",
-      "prompt": "126 − 0 = ?",
-      "correct_answer": "126",
-      "distractors": [
-        "130",
-        "122",
-        "121"
-      ],
-      "explanation": [
-        "126 − 0 = 126"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_5aff4724a8",
-      "concept_id": "sub_within_1000",
-      "prompt": "395 − 89 = ?",
-      "correct_answer": "306",
-      "distractors": [
-        "484",
-        "302",
-        "304"
-      ],
-      "explanation": [
-        "395 − 89 = 306"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_4cd24203cf",
-      "concept_id": "sub_within_1000",
-      "prompt": "713 − 4 = ?",
-      "correct_answer": "709",
-      "distractors": [
-        "712",
-        "717",
-        "707"
-      ],
-      "explanation": [
-        "713 − 4 = 709"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_292ca3c898",
-      "concept_id": "sub_within_1000",
-      "prompt": "257 − 1 = ?",
-      "correct_answer": "256",
-      "distractors": [
-        "251",
-        "258",
-        "255"
-      ],
-      "explanation": [
-        "257 − 1 = 256"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_07cf6c60dd",
-      "concept_id": "sub_within_1000",
-      "prompt": "193 − 86 = ?",
-      "correct_answer": "107",
-      "distractors": [
-        "279",
-        "108",
-        "106"
-      ],
-      "explanation": [
-        "193 − 86 = 107"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_dbb513d72c",
-      "concept_id": "sub_within_1000",
-      "prompt": "613 − 221 = ?",
-      "correct_answer": "392",
-      "distractors": [
-        "388",
-        "834",
-        "387"
-      ],
-      "explanation": [
-        "613 − 221 = 392"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_cabc5eb9b3",
-      "concept_id": "sub_within_1000",
-      "prompt": "921 − 101 = ?",
-      "correct_answer": "820",
-      "distractors": [
-        "1022",
-        "816",
-        "825"
-      ],
-      "explanation": [
-        "921 − 101 = 820"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_22195a8f33",
-      "concept_id": "sub_within_1000",
-      "prompt": "233 − 201 = ?",
-      "correct_answer": "32",
-      "distractors": [
-        "34",
-        "434",
-        "36"
-      ],
-      "explanation": [
-        "233 − 201 = 32"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_b775ed05cf",
-      "concept_id": "sub_within_1000",
-      "prompt": "492 − 2 = ?",
-      "correct_answer": "490",
-      "distractors": [
-        "485",
-        "492",
-        "494"
-      ],
-      "explanation": [
-        "492 − 2 = 490"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_aa1cc9ecbc",
-      "concept_id": "sub_within_1000",
-      "prompt": "115 − 22 = ?",
-      "correct_answer": "93",
-      "distractors": [
-        "137",
-        "89",
-        "95"
-      ],
-      "explanation": [
-        "115 − 22 = 93"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_7eeae1160a",
-      "concept_id": "sub_within_1000",
-      "prompt": "610 − 2 = ?",
-      "correct_answer": "608",
-      "distractors": [
-        "613",
-        "612",
-        "607"
-      ],
-      "explanation": [
-        "610 − 2 = 608"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_8e7c1d9ef4",
-      "concept_id": "sub_within_1000",
-      "prompt": "158 − 26 = ?",
-      "correct_answer": "132",
-      "distractors": [
-        "184",
-        "128",
-        "134"
-      ],
-      "explanation": [
-        "158 − 26 = 132"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_7995322fe8",
-      "concept_id": "sub_within_1000",
-      "prompt": "305 − 121 = ?",
-      "correct_answer": "184",
-      "distractors": [
-        "187",
-        "426",
-        "181"
-      ],
-      "explanation": [
-        "305 − 121 = 184"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_46cba280b2",
-      "concept_id": "sub_within_1000",
-      "prompt": "323 − 20 = ?",
-      "correct_answer": "303",
-      "distractors": [
-        "306",
-        "300",
-        "343"
-      ],
-      "explanation": [
-        "323 − 20 = 303"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_dcdfa57ddf",
-      "concept_id": "sub_within_1000",
-      "prompt": "515 − 1 = ?",
-      "correct_answer": "514",
-      "distractors": [
-        "516",
-        "513",
-        "517"
-      ],
-      "explanation": [
-        "515 − 1 = 514"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_ca6fc43e54",
-      "concept_id": "sub_within_1000",
-      "prompt": "434 − 3 = ?",
-      "correct_answer": "431",
-      "distractors": [
-        "430",
-        "437",
-        "436"
-      ],
-      "explanation": [
-        "434 − 3 = 431"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_923bfc48f5",
-      "concept_id": "sub_within_1000",
-      "prompt": "151 − 106 = ?",
-      "correct_answer": "45",
-      "distractors": [
-        "42",
-        "257",
-        "47"
-      ],
-      "explanation": [
-        "151 − 106 = 45"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_b2f8e3c9e9",
-      "concept_id": "sub_within_1000",
-      "prompt": "898 − 508 = ?",
-      "correct_answer": "390",
-      "distractors": [
-        "394",
-        "1406",
-        "385"
-      ],
-      "explanation": [
-        "898 − 508 = 390"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_2e18d7fd9e",
-      "concept_id": "sub_within_1000",
-      "prompt": "699 − 0 = ?",
-      "correct_answer": "699",
-      "distractors": [
-        "698",
-        "703",
-        "700"
-      ],
-      "explanation": [
-        "699 − 0 = 699"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_d5248d9e2d",
-      "concept_id": "sub_within_1000",
-      "prompt": "218 − 0 = ?",
-      "correct_answer": "218",
-      "distractors": [
-        "220",
-        "215",
-        "221"
-      ],
-      "explanation": [
-        "218 − 0 = 218"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_e2e4ae902e",
-      "concept_id": "sub_within_1000",
-      "prompt": "907 − 4 = ?",
-      "correct_answer": "903",
-      "distractors": [
-        "901",
-        "904",
-        "911"
-      ],
-      "explanation": [
-        "907 − 4 = 903"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_4693304961",
-      "concept_id": "sub_within_1000",
-      "prompt": "187 − 5 = ?",
-      "correct_answer": "182",
-      "distractors": [
-        "180",
-        "181",
-        "192"
-      ],
-      "explanation": [
-        "187 − 5 = 182"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_36f24d6799",
-      "concept_id": "sub_within_1000",
-      "prompt": "919 − 26 = ?",
-      "correct_answer": "893",
-      "distractors": [
-        "890",
-        "891",
-        "945"
-      ],
-      "explanation": [
-        "919 − 26 = 893"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_959bcf01a1",
-      "concept_id": "sub_within_1000",
-      "prompt": "445 − 1 = ?",
-      "correct_answer": "444",
-      "distractors": [
-        "446",
-        "445",
-        "439"
-      ],
-      "explanation": [
-        "445 − 1 = 444"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_d9792bc82a",
-      "concept_id": "sub_within_1000",
-      "prompt": "671 − 21 = ?",
-      "correct_answer": "650",
-      "distractors": [
-        "692",
-        "647",
-        "654"
-      ],
-      "explanation": [
-        "671 − 21 = 650"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_dd187a78ea",
-      "concept_id": "sub_within_1000",
-      "prompt": "194 − 1 = ?",
-      "correct_answer": "193",
-      "distractors": [
-        "189",
-        "195",
-        "196"
-      ],
-      "explanation": [
-        "194 − 1 = 193"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_6bfc1a9064",
-      "concept_id": "sub_within_1000",
-      "prompt": "195 − 56 = ?",
-      "correct_answer": "139",
-      "distractors": [
-        "137",
-        "251",
-        "138"
-      ],
-      "explanation": [
-        "195 − 56 = 139"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_690acb6a64",
-      "concept_id": "sub_within_1000",
-      "prompt": "300 − 74 = ?",
-      "correct_answer": "226",
-      "distractors": [
-        "223",
-        "228",
-        "374"
-      ],
-      "explanation": [
-        "300 − 74 = 226"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_c08c0f1166",
-      "concept_id": "sub_within_1000",
-      "prompt": "390 − 9 = ?",
-      "correct_answer": "381",
-      "distractors": [
-        "377",
-        "386",
-        "399"
-      ],
-      "explanation": [
-        "390 − 9 = 381"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_d860cb3229",
-      "concept_id": "sub_within_1000",
-      "prompt": "137 − 85 = ?",
-      "correct_answer": "52",
-      "distractors": [
-        "57",
-        "222",
-        "53"
-      ],
-      "explanation": [
-        "137 − 85 = 52"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_62a5a029db",
-      "concept_id": "sub_within_1000",
-      "prompt": "139 − 17 = ?",
-      "correct_answer": "122",
-      "distractors": [
-        "125",
-        "124",
-        "156"
-      ],
-      "explanation": [
-        "139 − 17 = 122"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_f2aa1e6f6e",
-      "concept_id": "sub_within_1000",
-      "prompt": "110 − 4 = ?",
-      "correct_answer": "106",
-      "distractors": [
-        "111",
-        "105",
-        "114"
-      ],
-      "explanation": [
-        "110 − 4 = 106"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_4a8ef76091",
-      "concept_id": "sub_within_1000",
-      "prompt": "356 − 1 = ?",
-      "correct_answer": "355",
-      "distractors": [
-        "354",
-        "353",
-        "357"
-      ],
-      "explanation": [
-        "356 − 1 = 355"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_0f2da8ed69",
-      "concept_id": "sub_within_1000",
-      "prompt": "198 − 11 = ?",
-      "correct_answer": "187",
-      "distractors": [
-        "186",
-        "209",
-        "192"
-      ],
-      "explanation": [
-        "198 − 11 = 187"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_09c83666af",
-      "concept_id": "sub_within_1000",
-      "prompt": "654 − 1 = ?",
-      "correct_answer": "653",
-      "distractors": [
-        "652",
-        "649",
-        "655"
-      ],
-      "explanation": [
-        "654 − 1 = 653"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_830edc7411",
-      "concept_id": "sub_within_1000",
-      "prompt": "121 − 12 = ?",
-      "correct_answer": "109",
-      "distractors": [
-        "112",
-        "133",
-        "114"
-      ],
-      "explanation": [
-        "121 − 12 = 109"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_8b5d66f770",
-      "concept_id": "sub_within_1000",
-      "prompt": "297 − 209 = ?",
-      "correct_answer": "88",
-      "distractors": [
-        "93",
-        "506",
-        "92"
-      ],
-      "explanation": [
-        "297 − 209 = 88"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_c4982c5657",
-      "concept_id": "sub_within_1000",
-      "prompt": "527 − 0 = ?",
-      "correct_answer": "527",
-      "distractors": [
-        "522",
-        "529",
-        "523"
-      ],
-      "explanation": [
-        "527 − 0 = 527"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_2978e06ad3",
-      "concept_id": "sub_within_1000",
-      "prompt": "473 − 115 = ?",
-      "correct_answer": "358",
-      "distractors": [
-        "357",
-        "355",
-        "588"
-      ],
-      "explanation": [
-        "473 − 115 = 358"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_ae835a5ada",
-      "concept_id": "sub_within_1000",
-      "prompt": "137 − 54 = ?",
-      "correct_answer": "83",
-      "distractors": [
-        "81",
-        "84",
-        "191"
-      ],
-      "explanation": [
-        "137 − 54 = 83"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_65156f4a94",
-      "concept_id": "sub_within_1000",
-      "prompt": "183 − 8 = ?",
-      "correct_answer": "175",
-      "distractors": [
-        "191",
-        "178",
-        "176"
-      ],
-      "explanation": [
-        "183 − 8 = 175"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_28fc458407",
-      "concept_id": "sub_within_1000",
-      "prompt": "288 − 40 = ?",
-      "correct_answer": "248",
-      "distractors": [
-        "252",
-        "245",
-        "328"
-      ],
-      "explanation": [
-        "288 − 40 = 248"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_fea79cde05",
-      "concept_id": "sub_within_1000",
-      "prompt": "871 − 5 = ?",
-      "correct_answer": "866",
-      "distractors": [
-        "876",
-        "870",
-        "865"
-      ],
-      "explanation": [
-        "871 − 5 = 866"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_a6005de5f9",
-      "concept_id": "sub_within_1000",
-      "prompt": "400 − 71 = ?",
-      "correct_answer": "329",
-      "distractors": [
-        "328",
-        "332",
-        "471"
-      ],
-      "explanation": [
-        "400 − 71 = 329"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_c554315c29",
-      "concept_id": "sub_within_1000",
-      "prompt": "207 − 5 = ?",
-      "correct_answer": "202",
-      "distractors": [
-        "203",
-        "204",
-        "212"
-      ],
-      "explanation": [
-        "207 − 5 = 202"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_41e029d689",
-      "concept_id": "sub_within_1000",
-      "prompt": "283 − 117 = ?",
-      "correct_answer": "166",
-      "distractors": [
-        "400",
-        "170",
-        "171"
-      ],
-      "explanation": [
-        "283 − 117 = 166"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_025f2340e4",
-      "concept_id": "sub_within_1000",
-      "prompt": "139 − 9 = ?",
-      "correct_answer": "130",
-      "distractors": [
-        "129",
-        "148",
-        "127"
-      ],
-      "explanation": [
-        "139 − 9 = 130"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_0230693975",
-      "concept_id": "sub_within_1000",
-      "prompt": "905 − 1 = ?",
-      "correct_answer": "904",
-      "distractors": [
-        "906",
-        "905",
-        "901"
-      ],
-      "explanation": [
-        "905 − 1 = 904"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_63e1227d7f",
-      "concept_id": "sub_within_1000",
-      "prompt": "436 − 37 = ?",
-      "correct_answer": "399",
-      "distractors": [
-        "473",
-        "402",
-        "396"
-      ],
-      "explanation": [
-        "436 − 37 = 399"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_9db4fe346e",
-      "concept_id": "sub_within_1000",
-      "prompt": "213 − 6 = ?",
-      "correct_answer": "207",
-      "distractors": [
-        "219",
-        "202",
-        "205"
-      ],
-      "explanation": [
-        "213 − 6 = 207"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_d1f75e4b26",
-      "concept_id": "sub_within_1000",
-      "prompt": "110 − 2 = ?",
-      "correct_answer": "108",
-      "distractors": [
-        "107",
-        "109",
-        "112"
-      ],
-      "explanation": [
-        "110 − 2 = 108"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_5acea6e2a4",
-      "concept_id": "sub_within_1000",
-      "prompt": "202 − 186 = ?",
-      "correct_answer": "16",
-      "distractors": [
-        "13",
-        "19",
-        "388"
-      ],
-      "explanation": [
-        "202 − 186 = 16"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_04921844c6",
-      "concept_id": "sub_within_1000",
-      "prompt": "235 − 143 = ?",
-      "correct_answer": "92",
-      "distractors": [
-        "378",
-        "89",
-        "93"
-      ],
-      "explanation": [
-        "235 − 143 = 92"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_95626cf805",
-      "concept_id": "sub_within_1000",
-      "prompt": "179 − 84 = ?",
-      "correct_answer": "95",
-      "distractors": [
-        "90",
-        "94",
-        "263"
-      ],
-      "explanation": [
-        "179 − 84 = 95"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_b7f8c5f2d4",
-      "concept_id": "sub_within_1000",
-      "prompt": "210 − 9 = ?",
-      "correct_answer": "201",
-      "distractors": [
-        "219",
-        "197",
-        "202"
-      ],
-      "explanation": [
-        "210 − 9 = 201"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_4dbc92f1d1",
-      "concept_id": "sub_within_1000",
-      "prompt": "452 − 34 = ?",
-      "correct_answer": "418",
-      "distractors": [
-        "486",
-        "417",
-        "415"
-      ],
-      "explanation": [
-        "452 − 34 = 418"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_c2175660d5",
-      "concept_id": "sub_within_1000",
-      "prompt": "263 − 11 = ?",
-      "correct_answer": "252",
-      "distractors": [
-        "274",
-        "247",
-        "256"
-      ],
-      "explanation": [
-        "263 − 11 = 252"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_2982c786d4",
-      "concept_id": "sub_within_1000",
-      "prompt": "257 − 40 = ?",
-      "correct_answer": "217",
-      "distractors": [
-        "218",
-        "297",
-        "213"
-      ],
-      "explanation": [
-        "257 − 40 = 217"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_90c120a01e",
-      "concept_id": "sub_within_1000",
-      "prompt": "420 − 11 = ?",
-      "correct_answer": "409",
-      "distractors": [
-        "431",
-        "413",
-        "412"
-      ],
-      "explanation": [
-        "420 − 11 = 409"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_fef3cdc5c7",
-      "concept_id": "sub_within_1000",
-      "prompt": "427 − 193 = ?",
-      "correct_answer": "234",
-      "distractors": [
-        "620",
-        "239",
-        "230"
-      ],
-      "explanation": [
-        "427 − 193 = 234"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_86f5a8e7c2",
-      "concept_id": "sub_within_1000",
-      "prompt": "614 − 256 = ?",
-      "correct_answer": "358",
-      "distractors": [
-        "354",
-        "870",
-        "363"
-      ],
-      "explanation": [
-        "614 − 256 = 358"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_d20bf68320",
-      "concept_id": "sub_within_1000",
-      "prompt": "242 − 22 = ?",
-      "correct_answer": "220",
-      "distractors": [
-        "219",
-        "222",
-        "264"
-      ],
-      "explanation": [
-        "242 − 22 = 220"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_7d6c88aecd",
-      "concept_id": "sub_within_1000",
-      "prompt": "786 − 7 = ?",
-      "correct_answer": "779",
-      "distractors": [
-        "793",
-        "784",
-        "780"
-      ],
-      "explanation": [
-        "786 − 7 = 779"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_70aeb0dd96",
-      "concept_id": "sub_within_1000",
-      "prompt": "931 − 5 = ?",
-      "correct_answer": "926",
-      "distractors": [
-        "936",
-        "922",
-        "928"
-      ],
-      "explanation": [
-        "931 − 5 = 926"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_b9813fd6c6",
-      "concept_id": "sub_within_1000",
-      "prompt": "679 − 2 = ?",
-      "correct_answer": "677",
-      "distractors": [
-        "673",
-        "678",
-        "681"
-      ],
-      "explanation": [
-        "679 − 2 = 677"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_695faef5c4",
-      "concept_id": "sub_within_1000",
-      "prompt": "938 − 3 = ?",
-      "correct_answer": "935",
-      "distractors": [
-        "938",
-        "941",
-        "934"
-      ],
-      "explanation": [
-        "938 − 3 = 935"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_e312f9db12",
-      "concept_id": "sub_within_1000",
-      "prompt": "275 − 18 = ?",
-      "correct_answer": "257",
-      "distractors": [
-        "293",
-        "256",
-        "255"
-      ],
-      "explanation": [
-        "275 − 18 = 257"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_2ee66c8212",
-      "concept_id": "sub_within_1000",
-      "prompt": "538 − 529 = ?",
-      "correct_answer": "9",
-      "distractors": [
-        "5",
-        "14",
-        "1067"
-      ],
-      "explanation": [
-        "538 − 529 = 9"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_74df9b595b",
-      "concept_id": "sub_within_1000",
-      "prompt": "165 − 5 = ?",
-      "correct_answer": "160",
-      "distractors": [
-        "157",
-        "170",
-        "159"
-      ],
-      "explanation": [
-        "165 − 5 = 160"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_64e12f4bd5",
-      "concept_id": "sub_within_1000",
-      "prompt": "359 − 282 = ?",
-      "correct_answer": "77",
-      "distractors": [
-        "78",
-        "641",
-        "76"
-      ],
-      "explanation": [
-        "359 − 282 = 77"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_6b9cab374f",
-      "concept_id": "sub_within_1000",
-      "prompt": "394 − 36 = ?",
-      "correct_answer": "358",
-      "distractors": [
-        "355",
-        "430",
-        "361"
-      ],
-      "explanation": [
-        "394 − 36 = 358"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_2f91a17bbb",
-      "concept_id": "sub_within_1000",
-      "prompt": "265 − 27 = ?",
-      "correct_answer": "238",
-      "distractors": [
-        "292",
-        "240",
-        "235"
-      ],
-      "explanation": [
-        "265 − 27 = 238"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_943093212c",
-      "concept_id": "sub_within_1000",
-      "prompt": "562 − 211 = ?",
-      "correct_answer": "351",
-      "distractors": [
-        "347",
-        "352",
-        "773"
-      ],
-      "explanation": [
-        "562 − 211 = 351"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_b5d1014c50",
-      "concept_id": "sub_within_1000",
-      "prompt": "184 − 21 = ?",
-      "correct_answer": "163",
-      "distractors": [
-        "162",
-        "165",
-        "205"
-      ],
-      "explanation": [
-        "184 − 21 = 163"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_8bb4fc3749",
-      "concept_id": "sub_within_1000",
-      "prompt": "710 − 13 = ?",
-      "correct_answer": "697",
-      "distractors": [
-        "700",
-        "694",
-        "723"
-      ],
-      "explanation": [
-        "710 − 13 = 697"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_3534d49a66",
-      "concept_id": "sub_within_1000",
-      "prompt": "167 − 54 = ?",
-      "correct_answer": "113",
-      "distractors": [
-        "114",
-        "221",
-        "108"
-      ],
-      "explanation": [
-        "167 − 54 = 113"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_42969696b2",
-      "concept_id": "sub_within_1000",
-      "prompt": "230 − 29 = ?",
-      "correct_answer": "201",
-      "distractors": [
-        "259",
-        "204",
-        "196"
-      ],
-      "explanation": [
-        "230 − 29 = 201"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_f454b2b577",
-      "concept_id": "sub_within_1000",
-      "prompt": "553 − 4 = ?",
-      "correct_answer": "549",
-      "distractors": [
-        "557",
-        "554",
-        "553"
-      ],
-      "explanation": [
-        "553 − 4 = 549"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_9e44411181",
-      "concept_id": "sub_within_1000",
-      "prompt": "219 − 9 = ?",
-      "correct_answer": "210",
-      "distractors": [
-        "211",
-        "208",
-        "228"
-      ],
-      "explanation": [
-        "219 − 9 = 210"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_5acd96e8a6",
-      "concept_id": "sub_within_1000",
-      "prompt": "460 − 196 = ?",
-      "correct_answer": "264",
-      "distractors": [
-        "656",
-        "260",
-        "263"
-      ],
-      "explanation": [
-        "460 − 196 = 264"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_12e15bd99f",
-      "concept_id": "sub_within_1000",
-      "prompt": "235 − 12 = ?",
-      "correct_answer": "223",
-      "distractors": [
-        "226",
-        "219",
-        "247"
-      ],
-      "explanation": [
-        "235 − 12 = 223"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_1d21037782",
-      "concept_id": "sub_within_1000",
-      "prompt": "411 − 29 = ?",
-      "correct_answer": "382",
-      "distractors": [
-        "383",
-        "377",
-        "440"
-      ],
-      "explanation": [
-        "411 − 29 = 382"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_c2f5a45bc8",
-      "concept_id": "sub_within_1000",
-      "prompt": "704 − 5 = ?",
-      "correct_answer": "699",
-      "distractors": [
-        "709",
-        "698",
-        "700"
-      ],
-      "explanation": [
-        "704 − 5 = 699"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_5f0de2400a",
-      "concept_id": "sub_within_1000",
-      "prompt": "535 − 41 = ?",
-      "correct_answer": "494",
-      "distractors": [
-        "576",
-        "489",
-        "492"
-      ],
-      "explanation": [
-        "535 − 41 = 494"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_bbe1c282b4",
-      "concept_id": "sub_within_1000",
-      "prompt": "390 − 19 = ?",
-      "correct_answer": "371",
-      "distractors": [
-        "372",
-        "376",
-        "409"
-      ],
-      "explanation": [
-        "390 − 19 = 371"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_94956f0564",
-      "concept_id": "sub_within_1000",
-      "prompt": "115 − 49 = ?",
-      "correct_answer": "66",
-      "distractors": [
-        "164",
-        "69",
-        "62"
-      ],
-      "explanation": [
-        "115 − 49 = 66"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_5e367ddbc6",
-      "concept_id": "sub_within_1000",
-      "prompt": "189 − 0 = ?",
-      "correct_answer": "189",
-      "distractors": [
-        "192",
-        "186",
-        "187"
-      ],
-      "explanation": [
-        "189 − 0 = 189"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_fb0957c4fa",
-      "concept_id": "sub_within_1000",
-      "prompt": "442 − 0 = ?",
-      "correct_answer": "442",
-      "distractors": [
-        "440",
-        "437",
-        "443"
-      ],
-      "explanation": [
-        "442 − 0 = 442"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_b5364dc4d9",
-      "concept_id": "sub_within_1000",
-      "prompt": "843 − 3 = ?",
-      "correct_answer": "840",
-      "distractors": [
-        "846",
-        "838",
-        "837"
-      ],
-      "explanation": [
-        "843 − 3 = 840"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_f33bdbb8b1",
-      "concept_id": "sub_within_1000",
-      "prompt": "670 − 15 = ?",
-      "correct_answer": "655",
-      "distractors": [
-        "659",
-        "660",
-        "685"
-      ],
-      "explanation": [
-        "670 − 15 = 655"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_f9ad5b9b3b",
-      "concept_id": "sub_within_1000",
-      "prompt": "874 − 3 = ?",
-      "correct_answer": "871",
-      "distractors": [
-        "877",
-        "869",
-        "876"
-      ],
-      "explanation": [
-        "874 − 3 = 871"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_e6912a0970",
-      "concept_id": "sub_within_1000",
-      "prompt": "157 − 16 = ?",
-      "correct_answer": "141",
-      "distractors": [
-        "137",
-        "173",
-        "138"
-      ],
-      "explanation": [
-        "157 − 16 = 141"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_158a336e16",
-      "concept_id": "sub_within_1000",
-      "prompt": "520 − 5 = ?",
-      "correct_answer": "515",
-      "distractors": [
-        "520",
-        "525",
-        "512"
-      ],
-      "explanation": [
-        "520 − 5 = 515"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_a15fe63ed1",
-      "concept_id": "sub_within_1000",
-      "prompt": "116 − 25 = ?",
-      "correct_answer": "91",
-      "distractors": [
-        "92",
-        "141",
-        "94"
-      ],
-      "explanation": [
-        "116 − 25 = 91"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_601914d3f7",
-      "concept_id": "sub_within_1000",
-      "prompt": "409 − 5 = ?",
-      "correct_answer": "404",
-      "distractors": [
-        "399",
-        "414",
-        "401"
-      ],
-      "explanation": [
-        "409 − 5 = 404"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_1c9dfcb825",
-      "concept_id": "sub_within_1000",
-      "prompt": "130 − 14 = ?",
-      "correct_answer": "116",
-      "distractors": [
-        "117",
-        "119",
-        "144"
-      ],
-      "explanation": [
-        "130 − 14 = 116"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_e590802a2e",
-      "concept_id": "sub_within_1000",
-      "prompt": "411 − 185 = ?",
-      "correct_answer": "226",
-      "distractors": [
-        "231",
-        "227",
-        "596"
-      ],
-      "explanation": [
-        "411 − 185 = 226"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_7dd66d2142",
-      "concept_id": "sub_within_1000",
-      "prompt": "445 − 31 = ?",
-      "correct_answer": "414",
-      "distractors": [
-        "410",
-        "476",
-        "413"
-      ],
-      "explanation": [
-        "445 − 31 = 414"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_aff34f4bfc",
-      "concept_id": "sub_within_1000",
-      "prompt": "345 − 10 = ?",
-      "correct_answer": "335",
-      "distractors": [
-        "334",
-        "355",
-        "340"
-      ],
-      "explanation": [
-        "345 − 10 = 335"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_fb3a66000a",
-      "concept_id": "sub_within_1000",
-      "prompt": "326 − 1 = ?",
-      "correct_answer": "325",
-      "distractors": [
-        "329",
-        "322",
-        "327"
-      ],
-      "explanation": [
-        "326 − 1 = 325"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_ed5f33115b",
-      "concept_id": "sub_within_1000",
-      "prompt": "142 − 1 = ?",
-      "correct_answer": "141",
-      "distractors": [
-        "139",
-        "143",
-        "140"
-      ],
-      "explanation": [
-        "142 − 1 = 141"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_e6c0e12831",
-      "concept_id": "sub_within_1000",
-      "prompt": "124 − 7 = ?",
-      "correct_answer": "117",
-      "distractors": [
-        "114",
-        "131",
-        "112"
-      ],
-      "explanation": [
-        "124 − 7 = 117"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_fe97ad966a",
-      "concept_id": "sub_within_1000",
-      "prompt": "125 − 17 = ?",
-      "correct_answer": "108",
-      "distractors": [
-        "105",
-        "107",
-        "142"
-      ],
-      "explanation": [
-        "125 − 17 = 108"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_d26abe8795",
-      "concept_id": "sub_within_1000",
-      "prompt": "962 − 2 = ?",
-      "correct_answer": "960",
-      "distractors": [
-        "961",
-        "964",
-        "958"
-      ],
-      "explanation": [
-        "962 − 2 = 960"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_25c1454ebf",
-      "concept_id": "sub_within_1000",
-      "prompt": "166 − 2 = ?",
-      "correct_answer": "164",
-      "distractors": [
-        "168",
-        "161",
-        "160"
-      ],
-      "explanation": [
-        "166 − 2 = 164"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_c4d0bacfc7",
-      "concept_id": "sub_within_1000",
-      "prompt": "133 − 3 = ?",
-      "correct_answer": "130",
-      "distractors": [
-        "125",
-        "136",
-        "129"
-      ],
-      "explanation": [
-        "133 − 3 = 130"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_0c4f333a1e",
-      "concept_id": "sub_within_1000",
-      "prompt": "206 − 3 = ?",
-      "correct_answer": "203",
-      "distractors": [
-        "204",
-        "208",
-        "209"
-      ],
-      "explanation": [
-        "206 − 3 = 203"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_434a6ff782",
-      "concept_id": "sub_within_1000",
-      "prompt": "714 − 1 = ?",
-      "correct_answer": "713",
-      "distractors": [
-        "708",
-        "715",
-        "718"
-      ],
-      "explanation": [
-        "714 − 1 = 713"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_1679dda887",
-      "concept_id": "sub_within_1000",
-      "prompt": "977 − 8 = ?",
-      "correct_answer": "969",
-      "distractors": [
-        "973",
-        "985",
-        "964"
-      ],
-      "explanation": [
-        "977 − 8 = 969"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_d37d4552bf",
-      "concept_id": "sub_within_1000",
-      "prompt": "110 − 32 = ?",
-      "correct_answer": "78",
-      "distractors": [
-        "142",
-        "74",
-        "80"
-      ],
-      "explanation": [
-        "110 − 32 = 78"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_cf3946e324",
-      "concept_id": "sub_within_1000",
-      "prompt": "493 − 70 = ?",
-      "correct_answer": "423",
-      "distractors": [
-        "424",
-        "422",
-        "563"
-      ],
-      "explanation": [
-        "493 − 70 = 423"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_b9c0f137ea",
-      "concept_id": "sub_within_1000",
-      "prompt": "123 − 4 = ?",
-      "correct_answer": "119",
-      "distractors": [
-        "127",
-        "123",
-        "115"
-      ],
-      "explanation": [
-        "123 − 4 = 119"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_58f5289733",
-      "concept_id": "sub_within_1000",
-      "prompt": "214 − 16 = ?",
-      "correct_answer": "198",
-      "distractors": [
-        "230",
-        "203",
-        "201"
-      ],
-      "explanation": [
-        "214 − 16 = 198"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_ec610ae6ec",
-      "concept_id": "sub_within_1000",
-      "prompt": "126 − 4 = ?",
-      "correct_answer": "122",
-      "distractors": [
-        "130",
-        "125",
-        "123"
-      ],
-      "explanation": [
-        "126 − 4 = 122"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_ce703d40ac",
-      "concept_id": "sub_within_1000",
-      "prompt": "398 − 32 = ?",
-      "correct_answer": "366",
-      "distractors": [
-        "430",
-        "363",
-        "368"
-      ],
-      "explanation": [
-        "398 − 32 = 366"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_86a981d1b0",
-      "concept_id": "sub_within_1000",
-      "prompt": "360 − 330 = ?",
-      "correct_answer": "30",
-      "distractors": [
-        "35",
-        "28",
-        "690"
-      ],
-      "explanation": [
-        "360 − 330 = 30"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_1bda3d79a6",
-      "concept_id": "sub_within_1000",
-      "prompt": "277 − 7 = ?",
-      "correct_answer": "270",
-      "distractors": [
-        "272",
-        "284",
-        "266"
-      ],
-      "explanation": [
-        "277 − 7 = 270"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_a6cde23252",
-      "concept_id": "sub_within_1000",
-      "prompt": "353 − 9 = ?",
-      "correct_answer": "344",
-      "distractors": [
-        "346",
-        "347",
-        "362"
-      ],
-      "explanation": [
-        "353 − 9 = 344"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_f9055ccaef",
-      "concept_id": "sub_within_1000",
-      "prompt": "170 − 11 = ?",
-      "correct_answer": "159",
-      "distractors": [
-        "154",
-        "155",
-        "181"
-      ],
-      "explanation": [
-        "170 − 11 = 159"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_e16f5ca8a7",
-      "concept_id": "sub_within_1000",
-      "prompt": "436 − 0 = ?",
-      "correct_answer": "436",
-      "distractors": [
-        "434",
-        "433",
-        "431"
-      ],
-      "explanation": [
-        "436 − 0 = 436"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_c043606754",
-      "concept_id": "sub_within_1000",
-      "prompt": "677 − 306 = ?",
-      "correct_answer": "371",
-      "distractors": [
-        "983",
-        "366",
-        "376"
-      ],
-      "explanation": [
-        "677 − 306 = 371"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_ebe87b87e3",
-      "concept_id": "sub_within_1000",
-      "prompt": "134 − 9 = ?",
-      "correct_answer": "125",
-      "distractors": [
-        "123",
-        "126",
-        "143"
-      ],
-      "explanation": [
-        "134 − 9 = 125"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_0c56bd3d02",
-      "concept_id": "sub_within_1000",
-      "prompt": "860 − 5 = ?",
-      "correct_answer": "855",
-      "distractors": [
-        "854",
-        "865",
-        "851"
-      ],
-      "explanation": [
-        "860 − 5 = 855"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_d4c2374229",
-      "concept_id": "sub_within_1000",
-      "prompt": "752 − 40 = ?",
-      "correct_answer": "712",
-      "distractors": [
-        "792",
-        "707",
-        "710"
-      ],
-      "explanation": [
-        "752 − 40 = 712"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_620f322b24",
-      "concept_id": "sub_within_1000",
-      "prompt": "970 − 137 = ?",
-      "correct_answer": "833",
-      "distractors": [
-        "830",
-        "1107",
-        "828"
-      ],
-      "explanation": [
-        "970 − 137 = 833"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_66f022d4e2",
-      "concept_id": "sub_within_1000",
-      "prompt": "866 − 11 = ?",
-      "correct_answer": "855",
-      "distractors": [
-        "851",
-        "877",
-        "854"
-      ],
-      "explanation": [
-        "866 − 11 = 855"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_481e2bfa55",
-      "concept_id": "sub_within_1000",
-      "prompt": "696 − 326 = ?",
-      "correct_answer": "370",
-      "distractors": [
-        "368",
-        "1022",
-        "366"
-      ],
-      "explanation": [
-        "696 − 326 = 370"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_b640214843",
-      "concept_id": "sub_within_1000",
-      "prompt": "944 − 42 = ?",
-      "correct_answer": "902",
-      "distractors": [
-        "986",
-        "903",
-        "901"
-      ],
-      "explanation": [
-        "944 − 42 = 902"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_630f75d4b3",
-      "concept_id": "sub_within_1000",
-      "prompt": "263 − 1 = ?",
-      "correct_answer": "262",
-      "distractors": [
-        "257",
-        "264",
-        "259"
-      ],
-      "explanation": [
-        "263 − 1 = 262"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_04b274c00c",
-      "concept_id": "sub_within_1000",
-      "prompt": "474 − 9 = ?",
-      "correct_answer": "465",
-      "distractors": [
-        "463",
-        "464",
-        "483"
-      ],
-      "explanation": [
-        "474 − 9 = 465"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_f594f6f01c",
-      "concept_id": "sub_within_1000",
-      "prompt": "954 − 439 = ?",
-      "correct_answer": "515",
-      "distractors": [
-        "514",
-        "512",
-        "1393"
-      ],
-      "explanation": [
-        "954 − 439 = 515"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_b4be3a0ace",
-      "concept_id": "sub_within_1000",
-      "prompt": "464 − 2 = ?",
-      "correct_answer": "462",
-      "distractors": [
-        "458",
-        "459",
-        "466"
-      ],
-      "explanation": [
-        "464 − 2 = 462"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_4668219d77",
-      "concept_id": "sub_within_1000",
-      "prompt": "103 − 1 = ?",
-      "correct_answer": "102",
-      "distractors": [
-        "103",
-        "104",
-        "107"
-      ],
-      "explanation": [
-        "103 − 1 = 102"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_f2ea422ad1",
-      "concept_id": "sub_within_1000",
-      "prompt": "769 − 398 = ?",
-      "correct_answer": "371",
-      "distractors": [
-        "366",
-        "1167",
-        "368"
-      ],
-      "explanation": [
-        "769 − 398 = 371"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_33b0d43ed9",
-      "concept_id": "sub_within_1000",
-      "prompt": "173 − 0 = ?",
-      "correct_answer": "173",
-      "distractors": [
-        "168",
-        "169",
-        "178"
-      ],
-      "explanation": [
-        "173 − 0 = 173"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_f3de4c2666",
-      "concept_id": "sub_within_1000",
-      "prompt": "188 − 21 = ?",
-      "correct_answer": "167",
-      "distractors": [
-        "209",
-        "164",
-        "170"
-      ],
-      "explanation": [
-        "188 − 21 = 167"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_15ad050829",
-      "concept_id": "sub_within_1000",
-      "prompt": "360 − 79 = ?",
-      "correct_answer": "281",
-      "distractors": [
-        "285",
-        "439",
-        "279"
-      ],
-      "explanation": [
-        "360 − 79 = 281"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_da74ffc532",
-      "concept_id": "sub_within_1000",
-      "prompt": "469 − 29 = ?",
-      "correct_answer": "440",
-      "distractors": [
-        "498",
-        "443",
-        "439"
-      ],
-      "explanation": [
-        "469 − 29 = 440"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_e917c1ffa4",
-      "concept_id": "sub_within_1000",
-      "prompt": "208 − 47 = ?",
-      "correct_answer": "161",
-      "distractors": [
-        "157",
-        "163",
-        "255"
-      ],
-      "explanation": [
-        "208 − 47 = 161"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_1be692f221",
-      "concept_id": "sub_within_1000",
-      "prompt": "313 − 8 = ?",
-      "correct_answer": "305",
-      "distractors": [
-        "307",
-        "301",
-        "321"
-      ],
-      "explanation": [
-        "313 − 8 = 305"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_c68e3cc756",
-      "concept_id": "sub_within_1000",
-      "prompt": "246 − 4 = ?",
-      "correct_answer": "242",
-      "distractors": [
-        "244",
-        "245",
-        "250"
-      ],
-      "explanation": [
-        "246 − 4 = 242"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_809451b831",
-      "concept_id": "sub_within_1000",
-      "prompt": "549 − 9 = ?",
-      "correct_answer": "540",
-      "distractors": [
-        "558",
-        "539",
-        "541"
-      ],
-      "explanation": [
-        "549 − 9 = 540"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_07c49fd546",
-      "concept_id": "sub_within_1000",
-      "prompt": "997 − 2 = ?",
-      "correct_answer": "995",
-      "distractors": [
-        "999",
-        "990",
-        "994"
-      ],
-      "explanation": [
-        "997 − 2 = 995"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_842742b7aa",
-      "concept_id": "sub_within_1000",
-      "prompt": "932 − 62 = ?",
-      "correct_answer": "870",
-      "distractors": [
-        "871",
-        "994",
-        "865"
-      ],
-      "explanation": [
-        "932 − 62 = 870"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_5f04ad3c17",
-      "concept_id": "sub_within_1000",
-      "prompt": "142 − 132 = ?",
-      "correct_answer": "10",
-      "distractors": [
-        "5",
-        "274",
-        "12"
-      ],
-      "explanation": [
-        "142 − 132 = 10"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_22a903550b",
-      "concept_id": "sub_within_1000",
-      "prompt": "264 − 6 = ?",
-      "correct_answer": "258",
-      "distractors": [
-        "254",
-        "270",
-        "253"
-      ],
-      "explanation": [
-        "264 − 6 = 258"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_952fa28b2f",
-      "concept_id": "sub_within_1000",
-      "prompt": "117 − 25 = ?",
-      "correct_answer": "92",
-      "distractors": [
-        "95",
-        "90",
-        "142"
-      ],
-      "explanation": [
-        "117 − 25 = 92"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_0f80bfad67",
-      "concept_id": "sub_within_1000",
-      "prompt": "417 − 16 = ?",
-      "correct_answer": "401",
-      "distractors": [
-        "433",
-        "404",
-        "402"
-      ],
-      "explanation": [
-        "417 − 16 = 401"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_fe986f6a06",
-      "concept_id": "sub_within_1000",
-      "prompt": "314 − 55 = ?",
-      "correct_answer": "259",
-      "distractors": [
-        "369",
-        "263",
-        "262"
-      ],
-      "explanation": [
-        "314 − 55 = 259"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_7abe8e20c8",
-      "concept_id": "sub_within_1000",
-      "prompt": "145 − 0 = ?",
-      "correct_answer": "145",
-      "distractors": [
-        "147",
-        "146",
-        "144"
-      ],
-      "explanation": [
-        "145 − 0 = 145"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_5788b883a3",
-      "concept_id": "sub_within_1000",
-      "prompt": "423 − 5 = ?",
-      "correct_answer": "418",
-      "distractors": [
-        "417",
-        "415",
-        "428"
-      ],
-      "explanation": [
-        "423 − 5 = 418"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_a370a135c1",
-      "concept_id": "sub_within_1000",
-      "prompt": "258 − 11 = ?",
-      "correct_answer": "247",
-      "distractors": [
-        "249",
-        "269",
-        "245"
-      ],
-      "explanation": [
-        "258 − 11 = 247"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_ed2fd4c9d7",
-      "concept_id": "sub_within_1000",
-      "prompt": "163 − 8 = ?",
-      "correct_answer": "155",
-      "distractors": [
-        "158",
-        "152",
-        "171"
-      ],
-      "explanation": [
-        "163 − 8 = 155"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_e64dddd951",
-      "concept_id": "sub_within_1000",
-      "prompt": "278 − 1 = ?",
-      "correct_answer": "277",
-      "distractors": [
-        "281",
-        "278",
-        "279"
-      ],
-      "explanation": [
-        "278 − 1 = 277"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_655bc9982e",
-      "concept_id": "sub_within_1000",
-      "prompt": "436 − 6 = ?",
-      "correct_answer": "430",
-      "distractors": [
-        "431",
-        "425",
-        "442"
-      ],
-      "explanation": [
-        "436 − 6 = 430"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_d2b118ea8f",
-      "concept_id": "sub_within_1000",
-      "prompt": "300 − 1 = ?",
-      "correct_answer": "299",
-      "distractors": [
-        "295",
-        "298",
-        "301"
-      ],
-      "explanation": [
-        "300 − 1 = 299"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_80d38b64c3",
-      "concept_id": "sub_within_1000",
-      "prompt": "420 − 3 = ?",
-      "correct_answer": "417",
-      "distractors": [
-        "421",
-        "423",
-        "413"
-      ],
-      "explanation": [
-        "420 − 3 = 417"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_5d6fc8f299",
-      "concept_id": "sub_within_1000",
-      "prompt": "870 − 146 = ?",
-      "correct_answer": "724",
-      "distractors": [
-        "1016",
-        "725",
-        "723"
-      ],
-      "explanation": [
-        "870 − 146 = 724"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_c8a7826a50",
-      "concept_id": "sub_within_1000",
-      "prompt": "133 − 75 = ?",
-      "correct_answer": "58",
-      "distractors": [
-        "56",
-        "208",
-        "53"
-      ],
-      "explanation": [
-        "133 − 75 = 58"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_e1700997b5",
-      "concept_id": "sub_within_1000",
-      "prompt": "289 − 3 = ?",
-      "correct_answer": "286",
-      "distractors": [
-        "282",
-        "287",
-        "292"
-      ],
-      "explanation": [
-        "289 − 3 = 286"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_235f876298",
-      "concept_id": "sub_within_1000",
-      "prompt": "185 − 0 = ?",
-      "correct_answer": "185",
-      "distractors": [
-        "184",
-        "182",
-        "180"
-      ],
-      "explanation": [
-        "185 − 0 = 185"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_9742ad5c58",
-      "concept_id": "sub_within_1000",
-      "prompt": "224 − 4 = ?",
-      "correct_answer": "220",
-      "distractors": [
-        "221",
-        "218",
-        "228"
-      ],
-      "explanation": [
-        "224 − 4 = 220"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_1db37757cc",
-      "concept_id": "sub_within_1000",
-      "prompt": "897 − 39 = ?",
-      "correct_answer": "858",
-      "distractors": [
-        "862",
-        "855",
-        "936"
-      ],
-      "explanation": [
-        "897 − 39 = 858"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_d400a6b586",
-      "concept_id": "sub_within_1000",
-      "prompt": "367 − 2 = ?",
-      "correct_answer": "365",
-      "distractors": [
-        "363",
-        "364",
-        "369"
-      ],
-      "explanation": [
-        "367 − 2 = 365"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_36cb5857f3",
-      "concept_id": "sub_within_1000",
-      "prompt": "892 − 0 = ?",
-      "correct_answer": "892",
-      "distractors": [
-        "888",
-        "896",
-        "897"
-      ],
-      "explanation": [
-        "892 − 0 = 892"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_89fe3fe363",
-      "concept_id": "sub_within_1000",
-      "prompt": "144 − 34 = ?",
-      "correct_answer": "110",
-      "distractors": [
-        "111",
-        "178",
-        "109"
-      ],
-      "explanation": [
-        "144 − 34 = 110"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_f7346227c7",
-      "concept_id": "sub_within_1000",
-      "prompt": "102 − 7 = ?",
-      "correct_answer": "95",
-      "distractors": [
-        "109",
-        "94",
-        "96"
-      ],
-      "explanation": [
-        "102 − 7 = 95"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_2624fe794e",
-      "concept_id": "sub_within_1000",
-      "prompt": "354 − 56 = ?",
-      "correct_answer": "298",
-      "distractors": [
-        "303",
-        "410",
-        "297"
-      ],
-      "explanation": [
-        "354 − 56 = 298"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_404d032c30",
-      "concept_id": "sub_within_1000",
-      "prompt": "466 − 7 = ?",
-      "correct_answer": "459",
-      "distractors": [
-        "460",
-        "473",
-        "461"
-      ],
-      "explanation": [
-        "466 − 7 = 459"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_7c07074bb7",
-      "concept_id": "sub_within_1000",
-      "prompt": "350 − 28 = ?",
-      "correct_answer": "322",
-      "distractors": [
-        "324",
-        "378",
-        "321"
-      ],
-      "explanation": [
-        "350 − 28 = 322"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_0247b592d5",
-      "concept_id": "sub_within_1000",
-      "prompt": "147 − 64 = ?",
-      "correct_answer": "83",
-      "distractors": [
-        "82",
-        "80",
-        "211"
-      ],
-      "explanation": [
-        "147 − 64 = 83"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_cf540fbfe4",
-      "concept_id": "sub_within_1000",
-      "prompt": "864 − 146 = ?",
-      "correct_answer": "718",
-      "distractors": [
-        "721",
-        "1010",
-        "717"
-      ],
-      "explanation": [
-        "864 − 146 = 718"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_ef1037bc06",
-      "concept_id": "sub_within_1000",
-      "prompt": "183 − 65 = ?",
-      "correct_answer": "118",
-      "distractors": [
-        "122",
-        "248",
-        "123"
-      ],
-      "explanation": [
-        "183 − 65 = 118"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_e8450d05e5",
-      "concept_id": "sub_within_1000",
-      "prompt": "497 − 492 = ?",
-      "correct_answer": "5",
-      "distractors": [
-        "8",
-        "7",
-        "989"
-      ],
-      "explanation": [
-        "497 − 492 = 5"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_4566003760",
-      "concept_id": "sub_within_1000",
-      "prompt": "290 − 1 = ?",
-      "correct_answer": "289",
-      "distractors": [
-        "291",
-        "292",
-        "288"
-      ],
-      "explanation": [
-        "290 − 1 = 289"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_6faf53b7a9",
-      "concept_id": "sub_within_1000",
-      "prompt": "903 − 269 = ?",
-      "correct_answer": "634",
-      "distractors": [
-        "631",
-        "637",
-        "1172"
-      ],
-      "explanation": [
-        "903 − 269 = 634"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_8a1ade83e1",
-      "concept_id": "sub_within_1000",
-      "prompt": "792 − 1 = ?",
-      "correct_answer": "791",
-      "distractors": [
-        "793",
-        "789",
-        "787"
-      ],
-      "explanation": [
-        "792 − 1 = 791"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_5cb020ec3c",
-      "concept_id": "sub_within_1000",
-      "prompt": "235 − 118 = ?",
-      "correct_answer": "117",
-      "distractors": [
-        "353",
-        "116",
-        "112"
-      ],
-      "explanation": [
-        "235 − 118 = 117"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_29a528e112",
-      "concept_id": "sub_within_1000",
-      "prompt": "515 − 426 = ?",
-      "correct_answer": "89",
-      "distractors": [
-        "87",
-        "88",
-        "941"
-      ],
-      "explanation": [
-        "515 − 426 = 89"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_44429f57f3",
-      "concept_id": "sub_within_1000",
-      "prompt": "985 − 784 = ?",
-      "correct_answer": "201",
-      "distractors": [
-        "198",
-        "200",
-        "1769"
-      ],
-      "explanation": [
-        "985 − 784 = 201"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_21349c2e21",
-      "concept_id": "sub_within_1000",
-      "prompt": "662 − 19 = ?",
-      "correct_answer": "643",
-      "distractors": [
-        "648",
-        "639",
-        "681"
-      ],
-      "explanation": [
-        "662 − 19 = 643"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_6752860ba2",
-      "concept_id": "sub_within_1000",
-      "prompt": "180 − 1 = ?",
-      "correct_answer": "179",
-      "distractors": [
-        "177",
-        "181",
-        "174"
-      ],
-      "explanation": [
-        "180 − 1 = 179"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_4bf6ae347d",
-      "concept_id": "sub_within_1000",
-      "prompt": "214 − 46 = ?",
-      "correct_answer": "168",
-      "distractors": [
-        "173",
-        "260",
-        "167"
-      ],
-      "explanation": [
-        "214 − 46 = 168"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_59c906e895",
-      "concept_id": "sub_within_1000",
-      "prompt": "212 − 22 = ?",
-      "correct_answer": "190",
-      "distractors": [
-        "195",
-        "234",
-        "191"
-      ],
-      "explanation": [
-        "212 − 22 = 190"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_ba2a6a96b3",
-      "concept_id": "sub_within_1000",
-      "prompt": "167 − 129 = ?",
-      "correct_answer": "38",
-      "distractors": [
-        "296",
-        "37",
-        "33"
-      ],
-      "explanation": [
-        "167 − 129 = 38"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_e31c3ddd1a",
-      "concept_id": "sub_within_1000",
-      "prompt": "318 − 15 = ?",
-      "correct_answer": "303",
-      "distractors": [
-        "304",
-        "305",
-        "333"
-      ],
-      "explanation": [
-        "318 − 15 = 303"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_718061af84",
-      "concept_id": "sub_within_1000",
-      "prompt": "751 − 3 = ?",
-      "correct_answer": "748",
-      "distractors": [
-        "743",
-        "754",
-        "745"
-      ],
-      "explanation": [
-        "751 − 3 = 748"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_2a99f1ae5f",
-      "concept_id": "sub_within_1000",
-      "prompt": "909 − 321 = ?",
-      "correct_answer": "588",
-      "distractors": [
-        "587",
-        "593",
-        "1230"
-      ],
-      "explanation": [
-        "909 − 321 = 588"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_ef78ab7a64",
-      "concept_id": "sub_within_1000",
-      "prompt": "112 − 52 = ?",
-      "correct_answer": "60",
-      "distractors": [
-        "65",
-        "164",
-        "62"
-      ],
-      "explanation": [
-        "112 − 52 = 60"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_03ae091749",
-      "concept_id": "sub_within_1000",
-      "prompt": "294 − 11 = ?",
-      "correct_answer": "283",
-      "distractors": [
-        "288",
-        "305",
-        "287"
-      ],
-      "explanation": [
-        "294 − 11 = 283"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_d7bbd2dac3",
-      "concept_id": "sub_within_1000",
-      "prompt": "809 − 74 = ?",
-      "correct_answer": "735",
-      "distractors": [
-        "736",
-        "883",
-        "730"
-      ],
-      "explanation": [
-        "809 − 74 = 735"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_44b6b7608a",
-      "concept_id": "sub_within_1000",
-      "prompt": "538 − 98 = ?",
-      "correct_answer": "440",
-      "distractors": [
-        "444",
-        "636",
-        "436"
-      ],
-      "explanation": [
-        "538 − 98 = 440"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_94b90ccfe0",
-      "concept_id": "sub_within_1000",
-      "prompt": "935 − 0 = ?",
-      "correct_answer": "935",
-      "distractors": [
-        "930",
-        "936",
-        "933"
-      ],
-      "explanation": [
-        "935 − 0 = 935"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_dd8b3d862a",
-      "concept_id": "sub_within_1000",
-      "prompt": "975 − 233 = ?",
-      "correct_answer": "742",
-      "distractors": [
-        "1208",
-        "741",
-        "743"
-      ],
-      "explanation": [
-        "975 − 233 = 742"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_a35c39c6fd",
-      "concept_id": "sub_within_1000",
-      "prompt": "357 − 183 = ?",
-      "correct_answer": "174",
-      "distractors": [
-        "179",
-        "178",
-        "540"
-      ],
-      "explanation": [
-        "357 − 183 = 174"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_52bbe0badf",
-      "concept_id": "sub_within_1000",
-      "prompt": "156 − 2 = ?",
-      "correct_answer": "154",
-      "distractors": [
-        "158",
-        "151",
-        "153"
-      ],
-      "explanation": [
-        "156 − 2 = 154"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_9c8accb80e",
-      "concept_id": "sub_within_1000",
-      "prompt": "687 − 269 = ?",
-      "correct_answer": "418",
-      "distractors": [
-        "423",
-        "956",
-        "416"
-      ],
-      "explanation": [
-        "687 − 269 = 418"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_f9d58d49fc",
-      "concept_id": "sub_within_1000",
-      "prompt": "386 − 61 = ?",
-      "correct_answer": "325",
-      "distractors": [
-        "447",
-        "324",
-        "328"
-      ],
-      "explanation": [
-        "386 − 61 = 325"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    }
-  ]
+ "items": [
+  {
+   "id": "deepmind_mathematics_dataset_arith_62daf25bd6",
+   "concept_id": "sub_within_1000",
+   "prompt": "308 − 101 = ?",
+   "correct_answer": "207",
+   "distractors": [
+    "202",
+    "409",
+    "210"
+   ],
+   "explanation": [
+    "Count up from 101: 101 + 9 = 110; 110 + 90 = 200; 200 + 108 = 308.",
+    "The jumps add to 9 + 90 + 108 = 207, so 308 − 101 = 207."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_fc14677527",
+   "concept_id": "sub_within_1000",
+   "prompt": "126 − 0 = ?",
+   "correct_answer": "126",
+   "distractors": [
+    "130",
+    "122",
+    "121"
+   ],
+   "explanation": [
+    "Count up from 0 to 126: that is 126.",
+    "126 − 0 = 126."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_5aff4724a8",
+   "concept_id": "sub_within_1000",
+   "prompt": "395 − 89 = ?",
+   "correct_answer": "306",
+   "distractors": [
+    "484",
+    "302",
+    "304"
+   ],
+   "explanation": [
+    "Count up from 89: 89 + 1 = 90; 90 + 10 = 100; 100 + 295 = 395.",
+    "The jumps add to 1 + 10 + 295 = 306, so 395 − 89 = 306."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_4cd24203cf",
+   "concept_id": "sub_within_1000",
+   "prompt": "713 − 4 = ?",
+   "correct_answer": "709",
+   "distractors": [
+    "712",
+    "717",
+    "707"
+   ],
+   "explanation": [
+    "Count up from 4: 4 + 6 = 10; 10 + 90 = 100; 100 + 613 = 713.",
+    "The jumps add to 6 + 90 + 613 = 709, so 713 − 4 = 709."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_292ca3c898",
+   "concept_id": "sub_within_1000",
+   "prompt": "257 − 1 = ?",
+   "correct_answer": "256",
+   "distractors": [
+    "251",
+    "258",
+    "255"
+   ],
+   "explanation": [
+    "Count up from 1: 1 + 9 = 10; 10 + 90 = 100; 100 + 157 = 257.",
+    "The jumps add to 9 + 90 + 157 = 256, so 257 − 1 = 256."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_07cf6c60dd",
+   "concept_id": "sub_within_1000",
+   "prompt": "193 − 86 = ?",
+   "correct_answer": "107",
+   "distractors": [
+    "279",
+    "108",
+    "106"
+   ],
+   "explanation": [
+    "Count up from 86: 86 + 4 = 90; 90 + 10 = 100; 100 + 93 = 193.",
+    "The jumps add to 4 + 10 + 93 = 107, so 193 − 86 = 107."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_dbb513d72c",
+   "concept_id": "sub_within_1000",
+   "prompt": "613 − 221 = ?",
+   "correct_answer": "392",
+   "distractors": [
+    "388",
+    "834",
+    "387"
+   ],
+   "explanation": [
+    "Count up from 221: 221 + 9 = 230; 230 + 70 = 300; 300 + 313 = 613.",
+    "The jumps add to 9 + 70 + 313 = 392, so 613 − 221 = 392."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_cabc5eb9b3",
+   "concept_id": "sub_within_1000",
+   "prompt": "921 − 101 = ?",
+   "correct_answer": "820",
+   "distractors": [
+    "1022",
+    "816",
+    "825"
+   ],
+   "explanation": [
+    "Count up from 101: 101 + 9 = 110; 110 + 90 = 200; 200 + 721 = 921.",
+    "The jumps add to 9 + 90 + 721 = 820, so 921 − 101 = 820."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_22195a8f33",
+   "concept_id": "sub_within_1000",
+   "prompt": "233 − 201 = ?",
+   "correct_answer": "32",
+   "distractors": [
+    "34",
+    "434",
+    "36"
+   ],
+   "explanation": [
+    "Count up from 201: 201 + 9 = 210; 210 + 23 = 233.",
+    "The jumps add to 9 + 23 = 32, so 233 − 201 = 32."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_b775ed05cf",
+   "concept_id": "sub_within_1000",
+   "prompt": "492 − 2 = ?",
+   "correct_answer": "490",
+   "distractors": [
+    "485",
+    "492",
+    "494"
+   ],
+   "explanation": [
+    "Count up from 2: 2 + 8 = 10; 10 + 90 = 100; 100 + 392 = 492.",
+    "The jumps add to 8 + 90 + 392 = 490, so 492 − 2 = 490."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_aa1cc9ecbc",
+   "concept_id": "sub_within_1000",
+   "prompt": "115 − 22 = ?",
+   "correct_answer": "93",
+   "distractors": [
+    "137",
+    "89",
+    "95"
+   ],
+   "explanation": [
+    "Count up from 22: 22 + 8 = 30; 30 + 70 = 100; 100 + 15 = 115.",
+    "The jumps add to 8 + 70 + 15 = 93, so 115 − 22 = 93."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_7eeae1160a",
+   "concept_id": "sub_within_1000",
+   "prompt": "610 − 2 = ?",
+   "correct_answer": "608",
+   "distractors": [
+    "613",
+    "612",
+    "607"
+   ],
+   "explanation": [
+    "Count up from 2: 2 + 8 = 10; 10 + 90 = 100; 100 + 510 = 610.",
+    "The jumps add to 8 + 90 + 510 = 608, so 610 − 2 = 608."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_8e7c1d9ef4",
+   "concept_id": "sub_within_1000",
+   "prompt": "158 − 26 = ?",
+   "correct_answer": "132",
+   "distractors": [
+    "184",
+    "128",
+    "134"
+   ],
+   "explanation": [
+    "Count up from 26: 26 + 4 = 30; 30 + 70 = 100; 100 + 58 = 158.",
+    "The jumps add to 4 + 70 + 58 = 132, so 158 − 26 = 132."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_7995322fe8",
+   "concept_id": "sub_within_1000",
+   "prompt": "305 − 121 = ?",
+   "correct_answer": "184",
+   "distractors": [
+    "187",
+    "426",
+    "181"
+   ],
+   "explanation": [
+    "Count up from 121: 121 + 9 = 130; 130 + 70 = 200; 200 + 105 = 305.",
+    "The jumps add to 9 + 70 + 105 = 184, so 305 − 121 = 184."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_46cba280b2",
+   "concept_id": "sub_within_1000",
+   "prompt": "323 − 20 = ?",
+   "correct_answer": "303",
+   "distractors": [
+    "306",
+    "300",
+    "343"
+   ],
+   "explanation": [
+    "Count up from 20: 20 + 80 = 100; 100 + 223 = 323.",
+    "The jumps add to 80 + 223 = 303, so 323 − 20 = 303."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_dcdfa57ddf",
+   "concept_id": "sub_within_1000",
+   "prompt": "515 − 1 = ?",
+   "correct_answer": "514",
+   "distractors": [
+    "516",
+    "513",
+    "517"
+   ],
+   "explanation": [
+    "Count up from 1: 1 + 9 = 10; 10 + 90 = 100; 100 + 415 = 515.",
+    "The jumps add to 9 + 90 + 415 = 514, so 515 − 1 = 514."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_ca6fc43e54",
+   "concept_id": "sub_within_1000",
+   "prompt": "434 − 3 = ?",
+   "correct_answer": "431",
+   "distractors": [
+    "430",
+    "437",
+    "436"
+   ],
+   "explanation": [
+    "Count up from 3: 3 + 7 = 10; 10 + 90 = 100; 100 + 334 = 434.",
+    "The jumps add to 7 + 90 + 334 = 431, so 434 − 3 = 431."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_923bfc48f5",
+   "concept_id": "sub_within_1000",
+   "prompt": "151 − 106 = ?",
+   "correct_answer": "45",
+   "distractors": [
+    "42",
+    "257",
+    "47"
+   ],
+   "explanation": [
+    "Count up from 106: 106 + 4 = 110; 110 + 41 = 151.",
+    "The jumps add to 4 + 41 = 45, so 151 − 106 = 45."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_b2f8e3c9e9",
+   "concept_id": "sub_within_1000",
+   "prompt": "898 − 508 = ?",
+   "correct_answer": "390",
+   "distractors": [
+    "394",
+    "1406",
+    "385"
+   ],
+   "explanation": [
+    "Count up from 508: 508 + 2 = 510; 510 + 90 = 600; 600 + 298 = 898.",
+    "The jumps add to 2 + 90 + 298 = 390, so 898 − 508 = 390."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_2e18d7fd9e",
+   "concept_id": "sub_within_1000",
+   "prompt": "699 − 0 = ?",
+   "correct_answer": "699",
+   "distractors": [
+    "698",
+    "703",
+    "700"
+   ],
+   "explanation": [
+    "Count up from 0 to 699: that is 699.",
+    "699 − 0 = 699."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_d5248d9e2d",
+   "concept_id": "sub_within_1000",
+   "prompt": "218 − 0 = ?",
+   "correct_answer": "218",
+   "distractors": [
+    "220",
+    "215",
+    "221"
+   ],
+   "explanation": [
+    "Count up from 0 to 218: that is 218.",
+    "218 − 0 = 218."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_e2e4ae902e",
+   "concept_id": "sub_within_1000",
+   "prompt": "907 − 4 = ?",
+   "correct_answer": "903",
+   "distractors": [
+    "901",
+    "904",
+    "911"
+   ],
+   "explanation": [
+    "Count up from 4: 4 + 6 = 10; 10 + 90 = 100; 100 + 807 = 907.",
+    "The jumps add to 6 + 90 + 807 = 903, so 907 − 4 = 903."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_4693304961",
+   "concept_id": "sub_within_1000",
+   "prompt": "187 − 5 = ?",
+   "correct_answer": "182",
+   "distractors": [
+    "180",
+    "181",
+    "192"
+   ],
+   "explanation": [
+    "Count up from 5: 5 + 5 = 10; 10 + 90 = 100; 100 + 87 = 187.",
+    "The jumps add to 5 + 90 + 87 = 182, so 187 − 5 = 182."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_36f24d6799",
+   "concept_id": "sub_within_1000",
+   "prompt": "919 − 26 = ?",
+   "correct_answer": "893",
+   "distractors": [
+    "890",
+    "891",
+    "945"
+   ],
+   "explanation": [
+    "Count up from 26: 26 + 4 = 30; 30 + 70 = 100; 100 + 819 = 919.",
+    "The jumps add to 4 + 70 + 819 = 893, so 919 − 26 = 893."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_959bcf01a1",
+   "concept_id": "sub_within_1000",
+   "prompt": "445 − 1 = ?",
+   "correct_answer": "444",
+   "distractors": [
+    "446",
+    "445",
+    "439"
+   ],
+   "explanation": [
+    "Count up from 1: 1 + 9 = 10; 10 + 90 = 100; 100 + 345 = 445.",
+    "The jumps add to 9 + 90 + 345 = 444, so 445 − 1 = 444."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_d9792bc82a",
+   "concept_id": "sub_within_1000",
+   "prompt": "671 − 21 = ?",
+   "correct_answer": "650",
+   "distractors": [
+    "692",
+    "647",
+    "654"
+   ],
+   "explanation": [
+    "Count up from 21: 21 + 9 = 30; 30 + 70 = 100; 100 + 571 = 671.",
+    "The jumps add to 9 + 70 + 571 = 650, so 671 − 21 = 650."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_dd187a78ea",
+   "concept_id": "sub_within_1000",
+   "prompt": "194 − 1 = ?",
+   "correct_answer": "193",
+   "distractors": [
+    "189",
+    "195",
+    "196"
+   ],
+   "explanation": [
+    "Count up from 1: 1 + 9 = 10; 10 + 90 = 100; 100 + 94 = 194.",
+    "The jumps add to 9 + 90 + 94 = 193, so 194 − 1 = 193."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_6bfc1a9064",
+   "concept_id": "sub_within_1000",
+   "prompt": "195 − 56 = ?",
+   "correct_answer": "139",
+   "distractors": [
+    "137",
+    "251",
+    "138"
+   ],
+   "explanation": [
+    "Count up from 56: 56 + 4 = 60; 60 + 40 = 100; 100 + 95 = 195.",
+    "The jumps add to 4 + 40 + 95 = 139, so 195 − 56 = 139."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_690acb6a64",
+   "concept_id": "sub_within_1000",
+   "prompt": "300 − 74 = ?",
+   "correct_answer": "226",
+   "distractors": [
+    "223",
+    "228",
+    "374"
+   ],
+   "explanation": [
+    "Count up from 74: 74 + 6 = 80; 80 + 20 = 100; 100 + 200 = 300.",
+    "The jumps add to 6 + 20 + 200 = 226, so 300 − 74 = 226."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_c08c0f1166",
+   "concept_id": "sub_within_1000",
+   "prompt": "390 − 9 = ?",
+   "correct_answer": "381",
+   "distractors": [
+    "377",
+    "386",
+    "399"
+   ],
+   "explanation": [
+    "Count up from 9: 9 + 1 = 10; 10 + 90 = 100; 100 + 290 = 390.",
+    "The jumps add to 1 + 90 + 290 = 381, so 390 − 9 = 381."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_d860cb3229",
+   "concept_id": "sub_within_1000",
+   "prompt": "137 − 85 = ?",
+   "correct_answer": "52",
+   "distractors": [
+    "57",
+    "222",
+    "53"
+   ],
+   "explanation": [
+    "Count up from 85: 85 + 5 = 90; 90 + 10 = 100; 100 + 37 = 137.",
+    "The jumps add to 5 + 10 + 37 = 52, so 137 − 85 = 52."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_62a5a029db",
+   "concept_id": "sub_within_1000",
+   "prompt": "139 − 17 = ?",
+   "correct_answer": "122",
+   "distractors": [
+    "125",
+    "124",
+    "156"
+   ],
+   "explanation": [
+    "Count up from 17: 17 + 3 = 20; 20 + 80 = 100; 100 + 39 = 139.",
+    "The jumps add to 3 + 80 + 39 = 122, so 139 − 17 = 122."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_f2aa1e6f6e",
+   "concept_id": "sub_within_1000",
+   "prompt": "110 − 4 = ?",
+   "correct_answer": "106",
+   "distractors": [
+    "111",
+    "105",
+    "114"
+   ],
+   "explanation": [
+    "Count up from 4: 4 + 6 = 10; 10 + 90 = 100; 100 + 10 = 110.",
+    "The jumps add to 6 + 90 + 10 = 106, so 110 − 4 = 106."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_4a8ef76091",
+   "concept_id": "sub_within_1000",
+   "prompt": "356 − 1 = ?",
+   "correct_answer": "355",
+   "distractors": [
+    "354",
+    "353",
+    "357"
+   ],
+   "explanation": [
+    "Count up from 1: 1 + 9 = 10; 10 + 90 = 100; 100 + 256 = 356.",
+    "The jumps add to 9 + 90 + 256 = 355, so 356 − 1 = 355."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_0f2da8ed69",
+   "concept_id": "sub_within_1000",
+   "prompt": "198 − 11 = ?",
+   "correct_answer": "187",
+   "distractors": [
+    "186",
+    "209",
+    "192"
+   ],
+   "explanation": [
+    "Count up from 11: 11 + 9 = 20; 20 + 80 = 100; 100 + 98 = 198.",
+    "The jumps add to 9 + 80 + 98 = 187, so 198 − 11 = 187."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_09c83666af",
+   "concept_id": "sub_within_1000",
+   "prompt": "654 − 1 = ?",
+   "correct_answer": "653",
+   "distractors": [
+    "652",
+    "649",
+    "655"
+   ],
+   "explanation": [
+    "Count up from 1: 1 + 9 = 10; 10 + 90 = 100; 100 + 554 = 654.",
+    "The jumps add to 9 + 90 + 554 = 653, so 654 − 1 = 653."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_830edc7411",
+   "concept_id": "sub_within_1000",
+   "prompt": "121 − 12 = ?",
+   "correct_answer": "109",
+   "distractors": [
+    "112",
+    "133",
+    "114"
+   ],
+   "explanation": [
+    "Count up from 12: 12 + 8 = 20; 20 + 80 = 100; 100 + 21 = 121.",
+    "The jumps add to 8 + 80 + 21 = 109, so 121 − 12 = 109."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_8b5d66f770",
+   "concept_id": "sub_within_1000",
+   "prompt": "297 − 209 = ?",
+   "correct_answer": "88",
+   "distractors": [
+    "93",
+    "506",
+    "92"
+   ],
+   "explanation": [
+    "Count up from 209: 209 + 1 = 210; 210 + 87 = 297.",
+    "The jumps add to 1 + 87 = 88, so 297 − 209 = 88."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_c4982c5657",
+   "concept_id": "sub_within_1000",
+   "prompt": "527 − 0 = ?",
+   "correct_answer": "527",
+   "distractors": [
+    "522",
+    "529",
+    "523"
+   ],
+   "explanation": [
+    "Count up from 0 to 527: that is 527.",
+    "527 − 0 = 527."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_2978e06ad3",
+   "concept_id": "sub_within_1000",
+   "prompt": "473 − 115 = ?",
+   "correct_answer": "358",
+   "distractors": [
+    "357",
+    "355",
+    "588"
+   ],
+   "explanation": [
+    "Count up from 115: 115 + 5 = 120; 120 + 80 = 200; 200 + 273 = 473.",
+    "The jumps add to 5 + 80 + 273 = 358, so 473 − 115 = 358."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_ae835a5ada",
+   "concept_id": "sub_within_1000",
+   "prompt": "137 − 54 = ?",
+   "correct_answer": "83",
+   "distractors": [
+    "81",
+    "84",
+    "191"
+   ],
+   "explanation": [
+    "Count up from 54: 54 + 6 = 60; 60 + 40 = 100; 100 + 37 = 137.",
+    "The jumps add to 6 + 40 + 37 = 83, so 137 − 54 = 83."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_65156f4a94",
+   "concept_id": "sub_within_1000",
+   "prompt": "183 − 8 = ?",
+   "correct_answer": "175",
+   "distractors": [
+    "191",
+    "178",
+    "176"
+   ],
+   "explanation": [
+    "Count up from 8: 8 + 2 = 10; 10 + 90 = 100; 100 + 83 = 183.",
+    "The jumps add to 2 + 90 + 83 = 175, so 183 − 8 = 175."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_28fc458407",
+   "concept_id": "sub_within_1000",
+   "prompt": "288 − 40 = ?",
+   "correct_answer": "248",
+   "distractors": [
+    "252",
+    "245",
+    "328"
+   ],
+   "explanation": [
+    "Count up from 40: 40 + 60 = 100; 100 + 188 = 288.",
+    "The jumps add to 60 + 188 = 248, so 288 − 40 = 248."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_fea79cde05",
+   "concept_id": "sub_within_1000",
+   "prompt": "871 − 5 = ?",
+   "correct_answer": "866",
+   "distractors": [
+    "876",
+    "870",
+    "865"
+   ],
+   "explanation": [
+    "Count up from 5: 5 + 5 = 10; 10 + 90 = 100; 100 + 771 = 871.",
+    "The jumps add to 5 + 90 + 771 = 866, so 871 − 5 = 866."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_a6005de5f9",
+   "concept_id": "sub_within_1000",
+   "prompt": "400 − 71 = ?",
+   "correct_answer": "329",
+   "distractors": [
+    "328",
+    "332",
+    "471"
+   ],
+   "explanation": [
+    "Count up from 71: 71 + 9 = 80; 80 + 20 = 100; 100 + 300 = 400.",
+    "The jumps add to 9 + 20 + 300 = 329, so 400 − 71 = 329."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_c554315c29",
+   "concept_id": "sub_within_1000",
+   "prompt": "207 − 5 = ?",
+   "correct_answer": "202",
+   "distractors": [
+    "203",
+    "204",
+    "212"
+   ],
+   "explanation": [
+    "Count up from 5: 5 + 5 = 10; 10 + 90 = 100; 100 + 107 = 207.",
+    "The jumps add to 5 + 90 + 107 = 202, so 207 − 5 = 202."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_41e029d689",
+   "concept_id": "sub_within_1000",
+   "prompt": "283 − 117 = ?",
+   "correct_answer": "166",
+   "distractors": [
+    "400",
+    "170",
+    "171"
+   ],
+   "explanation": [
+    "Count up from 117: 117 + 3 = 120; 120 + 80 = 200; 200 + 83 = 283.",
+    "The jumps add to 3 + 80 + 83 = 166, so 283 − 117 = 166."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_025f2340e4",
+   "concept_id": "sub_within_1000",
+   "prompt": "139 − 9 = ?",
+   "correct_answer": "130",
+   "distractors": [
+    "129",
+    "148",
+    "127"
+   ],
+   "explanation": [
+    "Count up from 9: 9 + 1 = 10; 10 + 90 = 100; 100 + 39 = 139.",
+    "The jumps add to 1 + 90 + 39 = 130, so 139 − 9 = 130."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_0230693975",
+   "concept_id": "sub_within_1000",
+   "prompt": "905 − 1 = ?",
+   "correct_answer": "904",
+   "distractors": [
+    "906",
+    "905",
+    "901"
+   ],
+   "explanation": [
+    "Count up from 1: 1 + 9 = 10; 10 + 90 = 100; 100 + 805 = 905.",
+    "The jumps add to 9 + 90 + 805 = 904, so 905 − 1 = 904."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_63e1227d7f",
+   "concept_id": "sub_within_1000",
+   "prompt": "436 − 37 = ?",
+   "correct_answer": "399",
+   "distractors": [
+    "473",
+    "402",
+    "396"
+   ],
+   "explanation": [
+    "Count up from 37: 37 + 3 = 40; 40 + 60 = 100; 100 + 336 = 436.",
+    "The jumps add to 3 + 60 + 336 = 399, so 436 − 37 = 399."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_9db4fe346e",
+   "concept_id": "sub_within_1000",
+   "prompt": "213 − 6 = ?",
+   "correct_answer": "207",
+   "distractors": [
+    "219",
+    "202",
+    "205"
+   ],
+   "explanation": [
+    "Count up from 6: 6 + 4 = 10; 10 + 90 = 100; 100 + 113 = 213.",
+    "The jumps add to 4 + 90 + 113 = 207, so 213 − 6 = 207."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_d1f75e4b26",
+   "concept_id": "sub_within_1000",
+   "prompt": "110 − 2 = ?",
+   "correct_answer": "108",
+   "distractors": [
+    "107",
+    "109",
+    "112"
+   ],
+   "explanation": [
+    "Count up from 2: 2 + 8 = 10; 10 + 90 = 100; 100 + 10 = 110.",
+    "The jumps add to 8 + 90 + 10 = 108, so 110 − 2 = 108."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_5acea6e2a4",
+   "concept_id": "sub_within_1000",
+   "prompt": "202 − 186 = ?",
+   "correct_answer": "16",
+   "distractors": [
+    "13",
+    "19",
+    "388"
+   ],
+   "explanation": [
+    "Count up from 186: 186 + 4 = 190; 190 + 10 = 200; 200 + 2 = 202.",
+    "The jumps add to 4 + 10 + 2 = 16, so 202 − 186 = 16."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_04921844c6",
+   "concept_id": "sub_within_1000",
+   "prompt": "235 − 143 = ?",
+   "correct_answer": "92",
+   "distractors": [
+    "378",
+    "89",
+    "93"
+   ],
+   "explanation": [
+    "Count up from 143: 143 + 7 = 150; 150 + 50 = 200; 200 + 35 = 235.",
+    "The jumps add to 7 + 50 + 35 = 92, so 235 − 143 = 92."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_95626cf805",
+   "concept_id": "sub_within_1000",
+   "prompt": "179 − 84 = ?",
+   "correct_answer": "95",
+   "distractors": [
+    "90",
+    "94",
+    "263"
+   ],
+   "explanation": [
+    "Count up from 84: 84 + 6 = 90; 90 + 10 = 100; 100 + 79 = 179.",
+    "The jumps add to 6 + 10 + 79 = 95, so 179 − 84 = 95."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_b7f8c5f2d4",
+   "concept_id": "sub_within_1000",
+   "prompt": "210 − 9 = ?",
+   "correct_answer": "201",
+   "distractors": [
+    "219",
+    "197",
+    "202"
+   ],
+   "explanation": [
+    "Count up from 9: 9 + 1 = 10; 10 + 90 = 100; 100 + 110 = 210.",
+    "The jumps add to 1 + 90 + 110 = 201, so 210 − 9 = 201."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_4dbc92f1d1",
+   "concept_id": "sub_within_1000",
+   "prompt": "452 − 34 = ?",
+   "correct_answer": "418",
+   "distractors": [
+    "486",
+    "417",
+    "415"
+   ],
+   "explanation": [
+    "Count up from 34: 34 + 6 = 40; 40 + 60 = 100; 100 + 352 = 452.",
+    "The jumps add to 6 + 60 + 352 = 418, so 452 − 34 = 418."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_c2175660d5",
+   "concept_id": "sub_within_1000",
+   "prompt": "263 − 11 = ?",
+   "correct_answer": "252",
+   "distractors": [
+    "274",
+    "247",
+    "256"
+   ],
+   "explanation": [
+    "Count up from 11: 11 + 9 = 20; 20 + 80 = 100; 100 + 163 = 263.",
+    "The jumps add to 9 + 80 + 163 = 252, so 263 − 11 = 252."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_2982c786d4",
+   "concept_id": "sub_within_1000",
+   "prompt": "257 − 40 = ?",
+   "correct_answer": "217",
+   "distractors": [
+    "218",
+    "297",
+    "213"
+   ],
+   "explanation": [
+    "Count up from 40: 40 + 60 = 100; 100 + 157 = 257.",
+    "The jumps add to 60 + 157 = 217, so 257 − 40 = 217."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_90c120a01e",
+   "concept_id": "sub_within_1000",
+   "prompt": "420 − 11 = ?",
+   "correct_answer": "409",
+   "distractors": [
+    "431",
+    "413",
+    "412"
+   ],
+   "explanation": [
+    "Count up from 11: 11 + 9 = 20; 20 + 80 = 100; 100 + 320 = 420.",
+    "The jumps add to 9 + 80 + 320 = 409, so 420 − 11 = 409."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_fef3cdc5c7",
+   "concept_id": "sub_within_1000",
+   "prompt": "427 − 193 = ?",
+   "correct_answer": "234",
+   "distractors": [
+    "620",
+    "239",
+    "230"
+   ],
+   "explanation": [
+    "Count up from 193: 193 + 7 = 200; 200 + 227 = 427.",
+    "The jumps add to 7 + 227 = 234, so 427 − 193 = 234."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_86f5a8e7c2",
+   "concept_id": "sub_within_1000",
+   "prompt": "614 − 256 = ?",
+   "correct_answer": "358",
+   "distractors": [
+    "354",
+    "870",
+    "363"
+   ],
+   "explanation": [
+    "Count up from 256: 256 + 4 = 260; 260 + 40 = 300; 300 + 314 = 614.",
+    "The jumps add to 4 + 40 + 314 = 358, so 614 − 256 = 358."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_d20bf68320",
+   "concept_id": "sub_within_1000",
+   "prompt": "242 − 22 = ?",
+   "correct_answer": "220",
+   "distractors": [
+    "219",
+    "222",
+    "264"
+   ],
+   "explanation": [
+    "Count up from 22: 22 + 8 = 30; 30 + 70 = 100; 100 + 142 = 242.",
+    "The jumps add to 8 + 70 + 142 = 220, so 242 − 22 = 220."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_7d6c88aecd",
+   "concept_id": "sub_within_1000",
+   "prompt": "786 − 7 = ?",
+   "correct_answer": "779",
+   "distractors": [
+    "793",
+    "784",
+    "780"
+   ],
+   "explanation": [
+    "Count up from 7: 7 + 3 = 10; 10 + 90 = 100; 100 + 686 = 786.",
+    "The jumps add to 3 + 90 + 686 = 779, so 786 − 7 = 779."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_70aeb0dd96",
+   "concept_id": "sub_within_1000",
+   "prompt": "931 − 5 = ?",
+   "correct_answer": "926",
+   "distractors": [
+    "936",
+    "922",
+    "928"
+   ],
+   "explanation": [
+    "Count up from 5: 5 + 5 = 10; 10 + 90 = 100; 100 + 831 = 931.",
+    "The jumps add to 5 + 90 + 831 = 926, so 931 − 5 = 926."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_b9813fd6c6",
+   "concept_id": "sub_within_1000",
+   "prompt": "679 − 2 = ?",
+   "correct_answer": "677",
+   "distractors": [
+    "673",
+    "678",
+    "681"
+   ],
+   "explanation": [
+    "Count up from 2: 2 + 8 = 10; 10 + 90 = 100; 100 + 579 = 679.",
+    "The jumps add to 8 + 90 + 579 = 677, so 679 − 2 = 677."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_695faef5c4",
+   "concept_id": "sub_within_1000",
+   "prompt": "938 − 3 = ?",
+   "correct_answer": "935",
+   "distractors": [
+    "938",
+    "941",
+    "934"
+   ],
+   "explanation": [
+    "Count up from 3: 3 + 7 = 10; 10 + 90 = 100; 100 + 838 = 938.",
+    "The jumps add to 7 + 90 + 838 = 935, so 938 − 3 = 935."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_e312f9db12",
+   "concept_id": "sub_within_1000",
+   "prompt": "275 − 18 = ?",
+   "correct_answer": "257",
+   "distractors": [
+    "293",
+    "256",
+    "255"
+   ],
+   "explanation": [
+    "Count up from 18: 18 + 2 = 20; 20 + 80 = 100; 100 + 175 = 275.",
+    "The jumps add to 2 + 80 + 175 = 257, so 275 − 18 = 257."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_2ee66c8212",
+   "concept_id": "sub_within_1000",
+   "prompt": "538 − 529 = ?",
+   "correct_answer": "9",
+   "distractors": [
+    "5",
+    "14",
+    "1067"
+   ],
+   "explanation": [
+    "Count up from 529: 529 + 1 = 530; 530 + 8 = 538.",
+    "The jumps add to 1 + 8 = 9, so 538 − 529 = 9."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_74df9b595b",
+   "concept_id": "sub_within_1000",
+   "prompt": "165 − 5 = ?",
+   "correct_answer": "160",
+   "distractors": [
+    "157",
+    "170",
+    "159"
+   ],
+   "explanation": [
+    "Count up from 5: 5 + 5 = 10; 10 + 90 = 100; 100 + 65 = 165.",
+    "The jumps add to 5 + 90 + 65 = 160, so 165 − 5 = 160."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_64e12f4bd5",
+   "concept_id": "sub_within_1000",
+   "prompt": "359 − 282 = ?",
+   "correct_answer": "77",
+   "distractors": [
+    "78",
+    "641",
+    "76"
+   ],
+   "explanation": [
+    "Count up from 282: 282 + 8 = 290; 290 + 10 = 300; 300 + 59 = 359.",
+    "The jumps add to 8 + 10 + 59 = 77, so 359 − 282 = 77."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_6b9cab374f",
+   "concept_id": "sub_within_1000",
+   "prompt": "394 − 36 = ?",
+   "correct_answer": "358",
+   "distractors": [
+    "355",
+    "430",
+    "361"
+   ],
+   "explanation": [
+    "Count up from 36: 36 + 4 = 40; 40 + 60 = 100; 100 + 294 = 394.",
+    "The jumps add to 4 + 60 + 294 = 358, so 394 − 36 = 358."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_2f91a17bbb",
+   "concept_id": "sub_within_1000",
+   "prompt": "265 − 27 = ?",
+   "correct_answer": "238",
+   "distractors": [
+    "292",
+    "240",
+    "235"
+   ],
+   "explanation": [
+    "Count up from 27: 27 + 3 = 30; 30 + 70 = 100; 100 + 165 = 265.",
+    "The jumps add to 3 + 70 + 165 = 238, so 265 − 27 = 238."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_943093212c",
+   "concept_id": "sub_within_1000",
+   "prompt": "562 − 211 = ?",
+   "correct_answer": "351",
+   "distractors": [
+    "347",
+    "352",
+    "773"
+   ],
+   "explanation": [
+    "Count up from 211: 211 + 9 = 220; 220 + 80 = 300; 300 + 262 = 562.",
+    "The jumps add to 9 + 80 + 262 = 351, so 562 − 211 = 351."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_b5d1014c50",
+   "concept_id": "sub_within_1000",
+   "prompt": "184 − 21 = ?",
+   "correct_answer": "163",
+   "distractors": [
+    "162",
+    "165",
+    "205"
+   ],
+   "explanation": [
+    "Count up from 21: 21 + 9 = 30; 30 + 70 = 100; 100 + 84 = 184.",
+    "The jumps add to 9 + 70 + 84 = 163, so 184 − 21 = 163."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_8bb4fc3749",
+   "concept_id": "sub_within_1000",
+   "prompt": "710 − 13 = ?",
+   "correct_answer": "697",
+   "distractors": [
+    "700",
+    "694",
+    "723"
+   ],
+   "explanation": [
+    "Count up from 13: 13 + 7 = 20; 20 + 80 = 100; 100 + 610 = 710.",
+    "The jumps add to 7 + 80 + 610 = 697, so 710 − 13 = 697."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_3534d49a66",
+   "concept_id": "sub_within_1000",
+   "prompt": "167 − 54 = ?",
+   "correct_answer": "113",
+   "distractors": [
+    "114",
+    "221",
+    "108"
+   ],
+   "explanation": [
+    "Count up from 54: 54 + 6 = 60; 60 + 40 = 100; 100 + 67 = 167.",
+    "The jumps add to 6 + 40 + 67 = 113, so 167 − 54 = 113."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_42969696b2",
+   "concept_id": "sub_within_1000",
+   "prompt": "230 − 29 = ?",
+   "correct_answer": "201",
+   "distractors": [
+    "259",
+    "204",
+    "196"
+   ],
+   "explanation": [
+    "Count up from 29: 29 + 1 = 30; 30 + 70 = 100; 100 + 130 = 230.",
+    "The jumps add to 1 + 70 + 130 = 201, so 230 − 29 = 201."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_f454b2b577",
+   "concept_id": "sub_within_1000",
+   "prompt": "553 − 4 = ?",
+   "correct_answer": "549",
+   "distractors": [
+    "557",
+    "554",
+    "553"
+   ],
+   "explanation": [
+    "Count up from 4: 4 + 6 = 10; 10 + 90 = 100; 100 + 453 = 553.",
+    "The jumps add to 6 + 90 + 453 = 549, so 553 − 4 = 549."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_9e44411181",
+   "concept_id": "sub_within_1000",
+   "prompt": "219 − 9 = ?",
+   "correct_answer": "210",
+   "distractors": [
+    "211",
+    "208",
+    "228"
+   ],
+   "explanation": [
+    "Count up from 9: 9 + 1 = 10; 10 + 90 = 100; 100 + 119 = 219.",
+    "The jumps add to 1 + 90 + 119 = 210, so 219 − 9 = 210."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_5acd96e8a6",
+   "concept_id": "sub_within_1000",
+   "prompt": "460 − 196 = ?",
+   "correct_answer": "264",
+   "distractors": [
+    "656",
+    "260",
+    "263"
+   ],
+   "explanation": [
+    "Count up from 196: 196 + 4 = 200; 200 + 260 = 460.",
+    "The jumps add to 4 + 260 = 264, so 460 − 196 = 264."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_12e15bd99f",
+   "concept_id": "sub_within_1000",
+   "prompt": "235 − 12 = ?",
+   "correct_answer": "223",
+   "distractors": [
+    "226",
+    "219",
+    "247"
+   ],
+   "explanation": [
+    "Count up from 12: 12 + 8 = 20; 20 + 80 = 100; 100 + 135 = 235.",
+    "The jumps add to 8 + 80 + 135 = 223, so 235 − 12 = 223."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_1d21037782",
+   "concept_id": "sub_within_1000",
+   "prompt": "411 − 29 = ?",
+   "correct_answer": "382",
+   "distractors": [
+    "383",
+    "377",
+    "440"
+   ],
+   "explanation": [
+    "Count up from 29: 29 + 1 = 30; 30 + 70 = 100; 100 + 311 = 411.",
+    "The jumps add to 1 + 70 + 311 = 382, so 411 − 29 = 382."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_c2f5a45bc8",
+   "concept_id": "sub_within_1000",
+   "prompt": "704 − 5 = ?",
+   "correct_answer": "699",
+   "distractors": [
+    "709",
+    "698",
+    "700"
+   ],
+   "explanation": [
+    "Count up from 5: 5 + 5 = 10; 10 + 90 = 100; 100 + 604 = 704.",
+    "The jumps add to 5 + 90 + 604 = 699, so 704 − 5 = 699."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_5f0de2400a",
+   "concept_id": "sub_within_1000",
+   "prompt": "535 − 41 = ?",
+   "correct_answer": "494",
+   "distractors": [
+    "576",
+    "489",
+    "492"
+   ],
+   "explanation": [
+    "Count up from 41: 41 + 9 = 50; 50 + 50 = 100; 100 + 435 = 535.",
+    "The jumps add to 9 + 50 + 435 = 494, so 535 − 41 = 494."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_bbe1c282b4",
+   "concept_id": "sub_within_1000",
+   "prompt": "390 − 19 = ?",
+   "correct_answer": "371",
+   "distractors": [
+    "372",
+    "376",
+    "409"
+   ],
+   "explanation": [
+    "Count up from 19: 19 + 1 = 20; 20 + 80 = 100; 100 + 290 = 390.",
+    "The jumps add to 1 + 80 + 290 = 371, so 390 − 19 = 371."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_94956f0564",
+   "concept_id": "sub_within_1000",
+   "prompt": "115 − 49 = ?",
+   "correct_answer": "66",
+   "distractors": [
+    "164",
+    "69",
+    "62"
+   ],
+   "explanation": [
+    "Count up from 49: 49 + 1 = 50; 50 + 50 = 100; 100 + 15 = 115.",
+    "The jumps add to 1 + 50 + 15 = 66, so 115 − 49 = 66."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_5e367ddbc6",
+   "concept_id": "sub_within_1000",
+   "prompt": "189 − 0 = ?",
+   "correct_answer": "189",
+   "distractors": [
+    "192",
+    "186",
+    "187"
+   ],
+   "explanation": [
+    "Count up from 0 to 189: that is 189.",
+    "189 − 0 = 189."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_fb0957c4fa",
+   "concept_id": "sub_within_1000",
+   "prompt": "442 − 0 = ?",
+   "correct_answer": "442",
+   "distractors": [
+    "440",
+    "437",
+    "443"
+   ],
+   "explanation": [
+    "Count up from 0 to 442: that is 442.",
+    "442 − 0 = 442."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_b5364dc4d9",
+   "concept_id": "sub_within_1000",
+   "prompt": "843 − 3 = ?",
+   "correct_answer": "840",
+   "distractors": [
+    "846",
+    "838",
+    "837"
+   ],
+   "explanation": [
+    "Count up from 3: 3 + 7 = 10; 10 + 90 = 100; 100 + 743 = 843.",
+    "The jumps add to 7 + 90 + 743 = 840, so 843 − 3 = 840."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_f33bdbb8b1",
+   "concept_id": "sub_within_1000",
+   "prompt": "670 − 15 = ?",
+   "correct_answer": "655",
+   "distractors": [
+    "659",
+    "660",
+    "685"
+   ],
+   "explanation": [
+    "Count up from 15: 15 + 5 = 20; 20 + 80 = 100; 100 + 570 = 670.",
+    "The jumps add to 5 + 80 + 570 = 655, so 670 − 15 = 655."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_f9ad5b9b3b",
+   "concept_id": "sub_within_1000",
+   "prompt": "874 − 3 = ?",
+   "correct_answer": "871",
+   "distractors": [
+    "877",
+    "869",
+    "876"
+   ],
+   "explanation": [
+    "Count up from 3: 3 + 7 = 10; 10 + 90 = 100; 100 + 774 = 874.",
+    "The jumps add to 7 + 90 + 774 = 871, so 874 − 3 = 871."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_e6912a0970",
+   "concept_id": "sub_within_1000",
+   "prompt": "157 − 16 = ?",
+   "correct_answer": "141",
+   "distractors": [
+    "137",
+    "173",
+    "138"
+   ],
+   "explanation": [
+    "Count up from 16: 16 + 4 = 20; 20 + 80 = 100; 100 + 57 = 157.",
+    "The jumps add to 4 + 80 + 57 = 141, so 157 − 16 = 141."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_158a336e16",
+   "concept_id": "sub_within_1000",
+   "prompt": "520 − 5 = ?",
+   "correct_answer": "515",
+   "distractors": [
+    "520",
+    "525",
+    "512"
+   ],
+   "explanation": [
+    "Count up from 5: 5 + 5 = 10; 10 + 90 = 100; 100 + 420 = 520.",
+    "The jumps add to 5 + 90 + 420 = 515, so 520 − 5 = 515."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_a15fe63ed1",
+   "concept_id": "sub_within_1000",
+   "prompt": "116 − 25 = ?",
+   "correct_answer": "91",
+   "distractors": [
+    "92",
+    "141",
+    "94"
+   ],
+   "explanation": [
+    "Count up from 25: 25 + 5 = 30; 30 + 70 = 100; 100 + 16 = 116.",
+    "The jumps add to 5 + 70 + 16 = 91, so 116 − 25 = 91."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_601914d3f7",
+   "concept_id": "sub_within_1000",
+   "prompt": "409 − 5 = ?",
+   "correct_answer": "404",
+   "distractors": [
+    "399",
+    "414",
+    "401"
+   ],
+   "explanation": [
+    "Count up from 5: 5 + 5 = 10; 10 + 90 = 100; 100 + 309 = 409.",
+    "The jumps add to 5 + 90 + 309 = 404, so 409 − 5 = 404."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_1c9dfcb825",
+   "concept_id": "sub_within_1000",
+   "prompt": "130 − 14 = ?",
+   "correct_answer": "116",
+   "distractors": [
+    "117",
+    "119",
+    "144"
+   ],
+   "explanation": [
+    "Count up from 14: 14 + 6 = 20; 20 + 80 = 100; 100 + 30 = 130.",
+    "The jumps add to 6 + 80 + 30 = 116, so 130 − 14 = 116."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_e590802a2e",
+   "concept_id": "sub_within_1000",
+   "prompt": "411 − 185 = ?",
+   "correct_answer": "226",
+   "distractors": [
+    "231",
+    "227",
+    "596"
+   ],
+   "explanation": [
+    "Count up from 185: 185 + 5 = 190; 190 + 10 = 200; 200 + 211 = 411.",
+    "The jumps add to 5 + 10 + 211 = 226, so 411 − 185 = 226."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_7dd66d2142",
+   "concept_id": "sub_within_1000",
+   "prompt": "445 − 31 = ?",
+   "correct_answer": "414",
+   "distractors": [
+    "410",
+    "476",
+    "413"
+   ],
+   "explanation": [
+    "Count up from 31: 31 + 9 = 40; 40 + 60 = 100; 100 + 345 = 445.",
+    "The jumps add to 9 + 60 + 345 = 414, so 445 − 31 = 414."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_aff34f4bfc",
+   "concept_id": "sub_within_1000",
+   "prompt": "345 − 10 = ?",
+   "correct_answer": "335",
+   "distractors": [
+    "334",
+    "355",
+    "340"
+   ],
+   "explanation": [
+    "Count up from 10: 10 + 90 = 100; 100 + 245 = 345.",
+    "The jumps add to 90 + 245 = 335, so 345 − 10 = 335."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_fb3a66000a",
+   "concept_id": "sub_within_1000",
+   "prompt": "326 − 1 = ?",
+   "correct_answer": "325",
+   "distractors": [
+    "329",
+    "322",
+    "327"
+   ],
+   "explanation": [
+    "Count up from 1: 1 + 9 = 10; 10 + 90 = 100; 100 + 226 = 326.",
+    "The jumps add to 9 + 90 + 226 = 325, so 326 − 1 = 325."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_ed5f33115b",
+   "concept_id": "sub_within_1000",
+   "prompt": "142 − 1 = ?",
+   "correct_answer": "141",
+   "distractors": [
+    "139",
+    "143",
+    "140"
+   ],
+   "explanation": [
+    "Count up from 1: 1 + 9 = 10; 10 + 90 = 100; 100 + 42 = 142.",
+    "The jumps add to 9 + 90 + 42 = 141, so 142 − 1 = 141."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_e6c0e12831",
+   "concept_id": "sub_within_1000",
+   "prompt": "124 − 7 = ?",
+   "correct_answer": "117",
+   "distractors": [
+    "114",
+    "131",
+    "112"
+   ],
+   "explanation": [
+    "Count up from 7: 7 + 3 = 10; 10 + 90 = 100; 100 + 24 = 124.",
+    "The jumps add to 3 + 90 + 24 = 117, so 124 − 7 = 117."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_fe97ad966a",
+   "concept_id": "sub_within_1000",
+   "prompt": "125 − 17 = ?",
+   "correct_answer": "108",
+   "distractors": [
+    "105",
+    "107",
+    "142"
+   ],
+   "explanation": [
+    "Count up from 17: 17 + 3 = 20; 20 + 80 = 100; 100 + 25 = 125.",
+    "The jumps add to 3 + 80 + 25 = 108, so 125 − 17 = 108."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_d26abe8795",
+   "concept_id": "sub_within_1000",
+   "prompt": "962 − 2 = ?",
+   "correct_answer": "960",
+   "distractors": [
+    "961",
+    "964",
+    "958"
+   ],
+   "explanation": [
+    "Count up from 2: 2 + 8 = 10; 10 + 90 = 100; 100 + 862 = 962.",
+    "The jumps add to 8 + 90 + 862 = 960, so 962 − 2 = 960."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_25c1454ebf",
+   "concept_id": "sub_within_1000",
+   "prompt": "166 − 2 = ?",
+   "correct_answer": "164",
+   "distractors": [
+    "168",
+    "161",
+    "160"
+   ],
+   "explanation": [
+    "Count up from 2: 2 + 8 = 10; 10 + 90 = 100; 100 + 66 = 166.",
+    "The jumps add to 8 + 90 + 66 = 164, so 166 − 2 = 164."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_c4d0bacfc7",
+   "concept_id": "sub_within_1000",
+   "prompt": "133 − 3 = ?",
+   "correct_answer": "130",
+   "distractors": [
+    "125",
+    "136",
+    "129"
+   ],
+   "explanation": [
+    "Count up from 3: 3 + 7 = 10; 10 + 90 = 100; 100 + 33 = 133.",
+    "The jumps add to 7 + 90 + 33 = 130, so 133 − 3 = 130."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_0c4f333a1e",
+   "concept_id": "sub_within_1000",
+   "prompt": "206 − 3 = ?",
+   "correct_answer": "203",
+   "distractors": [
+    "204",
+    "208",
+    "209"
+   ],
+   "explanation": [
+    "Count up from 3: 3 + 7 = 10; 10 + 90 = 100; 100 + 106 = 206.",
+    "The jumps add to 7 + 90 + 106 = 203, so 206 − 3 = 203."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_434a6ff782",
+   "concept_id": "sub_within_1000",
+   "prompt": "714 − 1 = ?",
+   "correct_answer": "713",
+   "distractors": [
+    "708",
+    "715",
+    "718"
+   ],
+   "explanation": [
+    "Count up from 1: 1 + 9 = 10; 10 + 90 = 100; 100 + 614 = 714.",
+    "The jumps add to 9 + 90 + 614 = 713, so 714 − 1 = 713."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_1679dda887",
+   "concept_id": "sub_within_1000",
+   "prompt": "977 − 8 = ?",
+   "correct_answer": "969",
+   "distractors": [
+    "973",
+    "985",
+    "964"
+   ],
+   "explanation": [
+    "Count up from 8: 8 + 2 = 10; 10 + 90 = 100; 100 + 877 = 977.",
+    "The jumps add to 2 + 90 + 877 = 969, so 977 − 8 = 969."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_d37d4552bf",
+   "concept_id": "sub_within_1000",
+   "prompt": "110 − 32 = ?",
+   "correct_answer": "78",
+   "distractors": [
+    "142",
+    "74",
+    "80"
+   ],
+   "explanation": [
+    "Count up from 32: 32 + 8 = 40; 40 + 60 = 100; 100 + 10 = 110.",
+    "The jumps add to 8 + 60 + 10 = 78, so 110 − 32 = 78."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_cf3946e324",
+   "concept_id": "sub_within_1000",
+   "prompt": "493 − 70 = ?",
+   "correct_answer": "423",
+   "distractors": [
+    "424",
+    "422",
+    "563"
+   ],
+   "explanation": [
+    "Count up from 70: 70 + 30 = 100; 100 + 393 = 493.",
+    "The jumps add to 30 + 393 = 423, so 493 − 70 = 423."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_b9c0f137ea",
+   "concept_id": "sub_within_1000",
+   "prompt": "123 − 4 = ?",
+   "correct_answer": "119",
+   "distractors": [
+    "127",
+    "123",
+    "115"
+   ],
+   "explanation": [
+    "Count up from 4: 4 + 6 = 10; 10 + 90 = 100; 100 + 23 = 123.",
+    "The jumps add to 6 + 90 + 23 = 119, so 123 − 4 = 119."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_58f5289733",
+   "concept_id": "sub_within_1000",
+   "prompt": "214 − 16 = ?",
+   "correct_answer": "198",
+   "distractors": [
+    "230",
+    "203",
+    "201"
+   ],
+   "explanation": [
+    "Count up from 16: 16 + 4 = 20; 20 + 80 = 100; 100 + 114 = 214.",
+    "The jumps add to 4 + 80 + 114 = 198, so 214 − 16 = 198."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_ec610ae6ec",
+   "concept_id": "sub_within_1000",
+   "prompt": "126 − 4 = ?",
+   "correct_answer": "122",
+   "distractors": [
+    "130",
+    "125",
+    "123"
+   ],
+   "explanation": [
+    "Count up from 4: 4 + 6 = 10; 10 + 90 = 100; 100 + 26 = 126.",
+    "The jumps add to 6 + 90 + 26 = 122, so 126 − 4 = 122."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_ce703d40ac",
+   "concept_id": "sub_within_1000",
+   "prompt": "398 − 32 = ?",
+   "correct_answer": "366",
+   "distractors": [
+    "430",
+    "363",
+    "368"
+   ],
+   "explanation": [
+    "Count up from 32: 32 + 8 = 40; 40 + 60 = 100; 100 + 298 = 398.",
+    "The jumps add to 8 + 60 + 298 = 366, so 398 − 32 = 366."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_86a981d1b0",
+   "concept_id": "sub_within_1000",
+   "prompt": "360 − 330 = ?",
+   "correct_answer": "30",
+   "distractors": [
+    "35",
+    "28",
+    "690"
+   ],
+   "explanation": [
+    "Count up from 330 to 360: that is 30.",
+    "360 − 330 = 30."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_1bda3d79a6",
+   "concept_id": "sub_within_1000",
+   "prompt": "277 − 7 = ?",
+   "correct_answer": "270",
+   "distractors": [
+    "272",
+    "284",
+    "266"
+   ],
+   "explanation": [
+    "Count up from 7: 7 + 3 = 10; 10 + 90 = 100; 100 + 177 = 277.",
+    "The jumps add to 3 + 90 + 177 = 270, so 277 − 7 = 270."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_a6cde23252",
+   "concept_id": "sub_within_1000",
+   "prompt": "353 − 9 = ?",
+   "correct_answer": "344",
+   "distractors": [
+    "346",
+    "347",
+    "362"
+   ],
+   "explanation": [
+    "Count up from 9: 9 + 1 = 10; 10 + 90 = 100; 100 + 253 = 353.",
+    "The jumps add to 1 + 90 + 253 = 344, so 353 − 9 = 344."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_f9055ccaef",
+   "concept_id": "sub_within_1000",
+   "prompt": "170 − 11 = ?",
+   "correct_answer": "159",
+   "distractors": [
+    "154",
+    "155",
+    "181"
+   ],
+   "explanation": [
+    "Count up from 11: 11 + 9 = 20; 20 + 80 = 100; 100 + 70 = 170.",
+    "The jumps add to 9 + 80 + 70 = 159, so 170 − 11 = 159."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_e16f5ca8a7",
+   "concept_id": "sub_within_1000",
+   "prompt": "436 − 0 = ?",
+   "correct_answer": "436",
+   "distractors": [
+    "434",
+    "433",
+    "431"
+   ],
+   "explanation": [
+    "Count up from 0 to 436: that is 436.",
+    "436 − 0 = 436."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_c043606754",
+   "concept_id": "sub_within_1000",
+   "prompt": "677 − 306 = ?",
+   "correct_answer": "371",
+   "distractors": [
+    "983",
+    "366",
+    "376"
+   ],
+   "explanation": [
+    "Count up from 306: 306 + 4 = 310; 310 + 90 = 400; 400 + 277 = 677.",
+    "The jumps add to 4 + 90 + 277 = 371, so 677 − 306 = 371."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_ebe87b87e3",
+   "concept_id": "sub_within_1000",
+   "prompt": "134 − 9 = ?",
+   "correct_answer": "125",
+   "distractors": [
+    "123",
+    "126",
+    "143"
+   ],
+   "explanation": [
+    "Count up from 9: 9 + 1 = 10; 10 + 90 = 100; 100 + 34 = 134.",
+    "The jumps add to 1 + 90 + 34 = 125, so 134 − 9 = 125."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_0c56bd3d02",
+   "concept_id": "sub_within_1000",
+   "prompt": "860 − 5 = ?",
+   "correct_answer": "855",
+   "distractors": [
+    "854",
+    "865",
+    "851"
+   ],
+   "explanation": [
+    "Count up from 5: 5 + 5 = 10; 10 + 90 = 100; 100 + 760 = 860.",
+    "The jumps add to 5 + 90 + 760 = 855, so 860 − 5 = 855."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_d4c2374229",
+   "concept_id": "sub_within_1000",
+   "prompt": "752 − 40 = ?",
+   "correct_answer": "712",
+   "distractors": [
+    "792",
+    "707",
+    "710"
+   ],
+   "explanation": [
+    "Count up from 40: 40 + 60 = 100; 100 + 652 = 752.",
+    "The jumps add to 60 + 652 = 712, so 752 − 40 = 712."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_620f322b24",
+   "concept_id": "sub_within_1000",
+   "prompt": "970 − 137 = ?",
+   "correct_answer": "833",
+   "distractors": [
+    "830",
+    "1107",
+    "828"
+   ],
+   "explanation": [
+    "Count up from 137: 137 + 3 = 140; 140 + 60 = 200; 200 + 770 = 970.",
+    "The jumps add to 3 + 60 + 770 = 833, so 970 − 137 = 833."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_66f022d4e2",
+   "concept_id": "sub_within_1000",
+   "prompt": "866 − 11 = ?",
+   "correct_answer": "855",
+   "distractors": [
+    "851",
+    "877",
+    "854"
+   ],
+   "explanation": [
+    "Count up from 11: 11 + 9 = 20; 20 + 80 = 100; 100 + 766 = 866.",
+    "The jumps add to 9 + 80 + 766 = 855, so 866 − 11 = 855."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_481e2bfa55",
+   "concept_id": "sub_within_1000",
+   "prompt": "696 − 326 = ?",
+   "correct_answer": "370",
+   "distractors": [
+    "368",
+    "1022",
+    "366"
+   ],
+   "explanation": [
+    "Count up from 326: 326 + 4 = 330; 330 + 70 = 400; 400 + 296 = 696.",
+    "The jumps add to 4 + 70 + 296 = 370, so 696 − 326 = 370."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_b640214843",
+   "concept_id": "sub_within_1000",
+   "prompt": "944 − 42 = ?",
+   "correct_answer": "902",
+   "distractors": [
+    "986",
+    "903",
+    "901"
+   ],
+   "explanation": [
+    "Count up from 42: 42 + 8 = 50; 50 + 50 = 100; 100 + 844 = 944.",
+    "The jumps add to 8 + 50 + 844 = 902, so 944 − 42 = 902."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_630f75d4b3",
+   "concept_id": "sub_within_1000",
+   "prompt": "263 − 1 = ?",
+   "correct_answer": "262",
+   "distractors": [
+    "257",
+    "264",
+    "259"
+   ],
+   "explanation": [
+    "Count up from 1: 1 + 9 = 10; 10 + 90 = 100; 100 + 163 = 263.",
+    "The jumps add to 9 + 90 + 163 = 262, so 263 − 1 = 262."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_04b274c00c",
+   "concept_id": "sub_within_1000",
+   "prompt": "474 − 9 = ?",
+   "correct_answer": "465",
+   "distractors": [
+    "463",
+    "464",
+    "483"
+   ],
+   "explanation": [
+    "Count up from 9: 9 + 1 = 10; 10 + 90 = 100; 100 + 374 = 474.",
+    "The jumps add to 1 + 90 + 374 = 465, so 474 − 9 = 465."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_f594f6f01c",
+   "concept_id": "sub_within_1000",
+   "prompt": "954 − 439 = ?",
+   "correct_answer": "515",
+   "distractors": [
+    "514",
+    "512",
+    "1393"
+   ],
+   "explanation": [
+    "Count up from 439: 439 + 1 = 440; 440 + 60 = 500; 500 + 454 = 954.",
+    "The jumps add to 1 + 60 + 454 = 515, so 954 − 439 = 515."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_b4be3a0ace",
+   "concept_id": "sub_within_1000",
+   "prompt": "464 − 2 = ?",
+   "correct_answer": "462",
+   "distractors": [
+    "458",
+    "459",
+    "466"
+   ],
+   "explanation": [
+    "Count up from 2: 2 + 8 = 10; 10 + 90 = 100; 100 + 364 = 464.",
+    "The jumps add to 8 + 90 + 364 = 462, so 464 − 2 = 462."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_4668219d77",
+   "concept_id": "sub_within_1000",
+   "prompt": "103 − 1 = ?",
+   "correct_answer": "102",
+   "distractors": [
+    "103",
+    "104",
+    "107"
+   ],
+   "explanation": [
+    "Count up from 1: 1 + 9 = 10; 10 + 90 = 100; 100 + 3 = 103.",
+    "The jumps add to 9 + 90 + 3 = 102, so 103 − 1 = 102."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_f2ea422ad1",
+   "concept_id": "sub_within_1000",
+   "prompt": "769 − 398 = ?",
+   "correct_answer": "371",
+   "distractors": [
+    "366",
+    "1167",
+    "368"
+   ],
+   "explanation": [
+    "Count up from 398: 398 + 2 = 400; 400 + 369 = 769.",
+    "The jumps add to 2 + 369 = 371, so 769 − 398 = 371."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_33b0d43ed9",
+   "concept_id": "sub_within_1000",
+   "prompt": "173 − 0 = ?",
+   "correct_answer": "173",
+   "distractors": [
+    "168",
+    "169",
+    "178"
+   ],
+   "explanation": [
+    "Count up from 0 to 173: that is 173.",
+    "173 − 0 = 173."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_f3de4c2666",
+   "concept_id": "sub_within_1000",
+   "prompt": "188 − 21 = ?",
+   "correct_answer": "167",
+   "distractors": [
+    "209",
+    "164",
+    "170"
+   ],
+   "explanation": [
+    "Count up from 21: 21 + 9 = 30; 30 + 70 = 100; 100 + 88 = 188.",
+    "The jumps add to 9 + 70 + 88 = 167, so 188 − 21 = 167."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_15ad050829",
+   "concept_id": "sub_within_1000",
+   "prompt": "360 − 79 = ?",
+   "correct_answer": "281",
+   "distractors": [
+    "285",
+    "439",
+    "279"
+   ],
+   "explanation": [
+    "Count up from 79: 79 + 1 = 80; 80 + 20 = 100; 100 + 260 = 360.",
+    "The jumps add to 1 + 20 + 260 = 281, so 360 − 79 = 281."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_da74ffc532",
+   "concept_id": "sub_within_1000",
+   "prompt": "469 − 29 = ?",
+   "correct_answer": "440",
+   "distractors": [
+    "498",
+    "443",
+    "439"
+   ],
+   "explanation": [
+    "Count up from 29: 29 + 1 = 30; 30 + 70 = 100; 100 + 369 = 469.",
+    "The jumps add to 1 + 70 + 369 = 440, so 469 − 29 = 440."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_e917c1ffa4",
+   "concept_id": "sub_within_1000",
+   "prompt": "208 − 47 = ?",
+   "correct_answer": "161",
+   "distractors": [
+    "157",
+    "163",
+    "255"
+   ],
+   "explanation": [
+    "Count up from 47: 47 + 3 = 50; 50 + 50 = 100; 100 + 108 = 208.",
+    "The jumps add to 3 + 50 + 108 = 161, so 208 − 47 = 161."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_1be692f221",
+   "concept_id": "sub_within_1000",
+   "prompt": "313 − 8 = ?",
+   "correct_answer": "305",
+   "distractors": [
+    "307",
+    "301",
+    "321"
+   ],
+   "explanation": [
+    "Count up from 8: 8 + 2 = 10; 10 + 90 = 100; 100 + 213 = 313.",
+    "The jumps add to 2 + 90 + 213 = 305, so 313 − 8 = 305."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_c68e3cc756",
+   "concept_id": "sub_within_1000",
+   "prompt": "246 − 4 = ?",
+   "correct_answer": "242",
+   "distractors": [
+    "244",
+    "245",
+    "250"
+   ],
+   "explanation": [
+    "Count up from 4: 4 + 6 = 10; 10 + 90 = 100; 100 + 146 = 246.",
+    "The jumps add to 6 + 90 + 146 = 242, so 246 − 4 = 242."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_809451b831",
+   "concept_id": "sub_within_1000",
+   "prompt": "549 − 9 = ?",
+   "correct_answer": "540",
+   "distractors": [
+    "558",
+    "539",
+    "541"
+   ],
+   "explanation": [
+    "Count up from 9: 9 + 1 = 10; 10 + 90 = 100; 100 + 449 = 549.",
+    "The jumps add to 1 + 90 + 449 = 540, so 549 − 9 = 540."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_07c49fd546",
+   "concept_id": "sub_within_1000",
+   "prompt": "997 − 2 = ?",
+   "correct_answer": "995",
+   "distractors": [
+    "999",
+    "990",
+    "994"
+   ],
+   "explanation": [
+    "Count up from 2: 2 + 8 = 10; 10 + 90 = 100; 100 + 897 = 997.",
+    "The jumps add to 8 + 90 + 897 = 995, so 997 − 2 = 995."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_842742b7aa",
+   "concept_id": "sub_within_1000",
+   "prompt": "932 − 62 = ?",
+   "correct_answer": "870",
+   "distractors": [
+    "871",
+    "994",
+    "865"
+   ],
+   "explanation": [
+    "Count up from 62: 62 + 8 = 70; 70 + 30 = 100; 100 + 832 = 932.",
+    "The jumps add to 8 + 30 + 832 = 870, so 932 − 62 = 870."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_5f04ad3c17",
+   "concept_id": "sub_within_1000",
+   "prompt": "142 − 132 = ?",
+   "correct_answer": "10",
+   "distractors": [
+    "5",
+    "274",
+    "12"
+   ],
+   "explanation": [
+    "Count up from 132: 132 + 8 = 140; 140 + 2 = 142.",
+    "The jumps add to 8 + 2 = 10, so 142 − 132 = 10."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_22a903550b",
+   "concept_id": "sub_within_1000",
+   "prompt": "264 − 6 = ?",
+   "correct_answer": "258",
+   "distractors": [
+    "254",
+    "270",
+    "253"
+   ],
+   "explanation": [
+    "Count up from 6: 6 + 4 = 10; 10 + 90 = 100; 100 + 164 = 264.",
+    "The jumps add to 4 + 90 + 164 = 258, so 264 − 6 = 258."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_952fa28b2f",
+   "concept_id": "sub_within_1000",
+   "prompt": "117 − 25 = ?",
+   "correct_answer": "92",
+   "distractors": [
+    "95",
+    "90",
+    "142"
+   ],
+   "explanation": [
+    "Count up from 25: 25 + 5 = 30; 30 + 70 = 100; 100 + 17 = 117.",
+    "The jumps add to 5 + 70 + 17 = 92, so 117 − 25 = 92."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_0f80bfad67",
+   "concept_id": "sub_within_1000",
+   "prompt": "417 − 16 = ?",
+   "correct_answer": "401",
+   "distractors": [
+    "433",
+    "404",
+    "402"
+   ],
+   "explanation": [
+    "Count up from 16: 16 + 4 = 20; 20 + 80 = 100; 100 + 317 = 417.",
+    "The jumps add to 4 + 80 + 317 = 401, so 417 − 16 = 401."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_fe986f6a06",
+   "concept_id": "sub_within_1000",
+   "prompt": "314 − 55 = ?",
+   "correct_answer": "259",
+   "distractors": [
+    "369",
+    "263",
+    "262"
+   ],
+   "explanation": [
+    "Count up from 55: 55 + 5 = 60; 60 + 40 = 100; 100 + 214 = 314.",
+    "The jumps add to 5 + 40 + 214 = 259, so 314 − 55 = 259."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_7abe8e20c8",
+   "concept_id": "sub_within_1000",
+   "prompt": "145 − 0 = ?",
+   "correct_answer": "145",
+   "distractors": [
+    "147",
+    "146",
+    "144"
+   ],
+   "explanation": [
+    "Count up from 0 to 145: that is 145.",
+    "145 − 0 = 145."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_5788b883a3",
+   "concept_id": "sub_within_1000",
+   "prompt": "423 − 5 = ?",
+   "correct_answer": "418",
+   "distractors": [
+    "417",
+    "415",
+    "428"
+   ],
+   "explanation": [
+    "Count up from 5: 5 + 5 = 10; 10 + 90 = 100; 100 + 323 = 423.",
+    "The jumps add to 5 + 90 + 323 = 418, so 423 − 5 = 418."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_a370a135c1",
+   "concept_id": "sub_within_1000",
+   "prompt": "258 − 11 = ?",
+   "correct_answer": "247",
+   "distractors": [
+    "249",
+    "269",
+    "245"
+   ],
+   "explanation": [
+    "Count up from 11: 11 + 9 = 20; 20 + 80 = 100; 100 + 158 = 258.",
+    "The jumps add to 9 + 80 + 158 = 247, so 258 − 11 = 247."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_ed2fd4c9d7",
+   "concept_id": "sub_within_1000",
+   "prompt": "163 − 8 = ?",
+   "correct_answer": "155",
+   "distractors": [
+    "158",
+    "152",
+    "171"
+   ],
+   "explanation": [
+    "Count up from 8: 8 + 2 = 10; 10 + 90 = 100; 100 + 63 = 163.",
+    "The jumps add to 2 + 90 + 63 = 155, so 163 − 8 = 155."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_e64dddd951",
+   "concept_id": "sub_within_1000",
+   "prompt": "278 − 1 = ?",
+   "correct_answer": "277",
+   "distractors": [
+    "281",
+    "278",
+    "279"
+   ],
+   "explanation": [
+    "Count up from 1: 1 + 9 = 10; 10 + 90 = 100; 100 + 178 = 278.",
+    "The jumps add to 9 + 90 + 178 = 277, so 278 − 1 = 277."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_655bc9982e",
+   "concept_id": "sub_within_1000",
+   "prompt": "436 − 6 = ?",
+   "correct_answer": "430",
+   "distractors": [
+    "431",
+    "425",
+    "442"
+   ],
+   "explanation": [
+    "Count up from 6: 6 + 4 = 10; 10 + 90 = 100; 100 + 336 = 436.",
+    "The jumps add to 4 + 90 + 336 = 430, so 436 − 6 = 430."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_d2b118ea8f",
+   "concept_id": "sub_within_1000",
+   "prompt": "300 − 1 = ?",
+   "correct_answer": "299",
+   "distractors": [
+    "295",
+    "298",
+    "301"
+   ],
+   "explanation": [
+    "Count up from 1: 1 + 9 = 10; 10 + 90 = 100; 100 + 200 = 300.",
+    "The jumps add to 9 + 90 + 200 = 299, so 300 − 1 = 299."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_80d38b64c3",
+   "concept_id": "sub_within_1000",
+   "prompt": "420 − 3 = ?",
+   "correct_answer": "417",
+   "distractors": [
+    "421",
+    "423",
+    "413"
+   ],
+   "explanation": [
+    "Count up from 3: 3 + 7 = 10; 10 + 90 = 100; 100 + 320 = 420.",
+    "The jumps add to 7 + 90 + 320 = 417, so 420 − 3 = 417."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_5d6fc8f299",
+   "concept_id": "sub_within_1000",
+   "prompt": "870 − 146 = ?",
+   "correct_answer": "724",
+   "distractors": [
+    "1016",
+    "725",
+    "723"
+   ],
+   "explanation": [
+    "Count up from 146: 146 + 4 = 150; 150 + 50 = 200; 200 + 670 = 870.",
+    "The jumps add to 4 + 50 + 670 = 724, so 870 − 146 = 724."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_c8a7826a50",
+   "concept_id": "sub_within_1000",
+   "prompt": "133 − 75 = ?",
+   "correct_answer": "58",
+   "distractors": [
+    "56",
+    "208",
+    "53"
+   ],
+   "explanation": [
+    "Count up from 75: 75 + 5 = 80; 80 + 20 = 100; 100 + 33 = 133.",
+    "The jumps add to 5 + 20 + 33 = 58, so 133 − 75 = 58."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_e1700997b5",
+   "concept_id": "sub_within_1000",
+   "prompt": "289 − 3 = ?",
+   "correct_answer": "286",
+   "distractors": [
+    "282",
+    "287",
+    "292"
+   ],
+   "explanation": [
+    "Count up from 3: 3 + 7 = 10; 10 + 90 = 100; 100 + 189 = 289.",
+    "The jumps add to 7 + 90 + 189 = 286, so 289 − 3 = 286."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_235f876298",
+   "concept_id": "sub_within_1000",
+   "prompt": "185 − 0 = ?",
+   "correct_answer": "185",
+   "distractors": [
+    "184",
+    "182",
+    "180"
+   ],
+   "explanation": [
+    "Count up from 0 to 185: that is 185.",
+    "185 − 0 = 185."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_9742ad5c58",
+   "concept_id": "sub_within_1000",
+   "prompt": "224 − 4 = ?",
+   "correct_answer": "220",
+   "distractors": [
+    "221",
+    "218",
+    "228"
+   ],
+   "explanation": [
+    "Count up from 4: 4 + 6 = 10; 10 + 90 = 100; 100 + 124 = 224.",
+    "The jumps add to 6 + 90 + 124 = 220, so 224 − 4 = 220."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_1db37757cc",
+   "concept_id": "sub_within_1000",
+   "prompt": "897 − 39 = ?",
+   "correct_answer": "858",
+   "distractors": [
+    "862",
+    "855",
+    "936"
+   ],
+   "explanation": [
+    "Count up from 39: 39 + 1 = 40; 40 + 60 = 100; 100 + 797 = 897.",
+    "The jumps add to 1 + 60 + 797 = 858, so 897 − 39 = 858."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_d400a6b586",
+   "concept_id": "sub_within_1000",
+   "prompt": "367 − 2 = ?",
+   "correct_answer": "365",
+   "distractors": [
+    "363",
+    "364",
+    "369"
+   ],
+   "explanation": [
+    "Count up from 2: 2 + 8 = 10; 10 + 90 = 100; 100 + 267 = 367.",
+    "The jumps add to 8 + 90 + 267 = 365, so 367 − 2 = 365."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_36cb5857f3",
+   "concept_id": "sub_within_1000",
+   "prompt": "892 − 0 = ?",
+   "correct_answer": "892",
+   "distractors": [
+    "888",
+    "896",
+    "897"
+   ],
+   "explanation": [
+    "Count up from 0 to 892: that is 892.",
+    "892 − 0 = 892."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_89fe3fe363",
+   "concept_id": "sub_within_1000",
+   "prompt": "144 − 34 = ?",
+   "correct_answer": "110",
+   "distractors": [
+    "111",
+    "178",
+    "109"
+   ],
+   "explanation": [
+    "Count up from 34: 34 + 6 = 40; 40 + 60 = 100; 100 + 44 = 144.",
+    "The jumps add to 6 + 60 + 44 = 110, so 144 − 34 = 110."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_f7346227c7",
+   "concept_id": "sub_within_1000",
+   "prompt": "102 − 7 = ?",
+   "correct_answer": "95",
+   "distractors": [
+    "109",
+    "94",
+    "96"
+   ],
+   "explanation": [
+    "Count up from 7: 7 + 3 = 10; 10 + 90 = 100; 100 + 2 = 102.",
+    "The jumps add to 3 + 90 + 2 = 95, so 102 − 7 = 95."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_2624fe794e",
+   "concept_id": "sub_within_1000",
+   "prompt": "354 − 56 = ?",
+   "correct_answer": "298",
+   "distractors": [
+    "303",
+    "410",
+    "297"
+   ],
+   "explanation": [
+    "Count up from 56: 56 + 4 = 60; 60 + 40 = 100; 100 + 254 = 354.",
+    "The jumps add to 4 + 40 + 254 = 298, so 354 − 56 = 298."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_404d032c30",
+   "concept_id": "sub_within_1000",
+   "prompt": "466 − 7 = ?",
+   "correct_answer": "459",
+   "distractors": [
+    "460",
+    "473",
+    "461"
+   ],
+   "explanation": [
+    "Count up from 7: 7 + 3 = 10; 10 + 90 = 100; 100 + 366 = 466.",
+    "The jumps add to 3 + 90 + 366 = 459, so 466 − 7 = 459."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_7c07074bb7",
+   "concept_id": "sub_within_1000",
+   "prompt": "350 − 28 = ?",
+   "correct_answer": "322",
+   "distractors": [
+    "324",
+    "378",
+    "321"
+   ],
+   "explanation": [
+    "Count up from 28: 28 + 2 = 30; 30 + 70 = 100; 100 + 250 = 350.",
+    "The jumps add to 2 + 70 + 250 = 322, so 350 − 28 = 322."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_0247b592d5",
+   "concept_id": "sub_within_1000",
+   "prompt": "147 − 64 = ?",
+   "correct_answer": "83",
+   "distractors": [
+    "82",
+    "80",
+    "211"
+   ],
+   "explanation": [
+    "Count up from 64: 64 + 6 = 70; 70 + 30 = 100; 100 + 47 = 147.",
+    "The jumps add to 6 + 30 + 47 = 83, so 147 − 64 = 83."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_cf540fbfe4",
+   "concept_id": "sub_within_1000",
+   "prompt": "864 − 146 = ?",
+   "correct_answer": "718",
+   "distractors": [
+    "721",
+    "1010",
+    "717"
+   ],
+   "explanation": [
+    "Count up from 146: 146 + 4 = 150; 150 + 50 = 200; 200 + 664 = 864.",
+    "The jumps add to 4 + 50 + 664 = 718, so 864 − 146 = 718."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_ef1037bc06",
+   "concept_id": "sub_within_1000",
+   "prompt": "183 − 65 = ?",
+   "correct_answer": "118",
+   "distractors": [
+    "122",
+    "248",
+    "123"
+   ],
+   "explanation": [
+    "Count up from 65: 65 + 5 = 70; 70 + 30 = 100; 100 + 83 = 183.",
+    "The jumps add to 5 + 30 + 83 = 118, so 183 − 65 = 118."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_e8450d05e5",
+   "concept_id": "sub_within_1000",
+   "prompt": "497 − 492 = ?",
+   "correct_answer": "5",
+   "distractors": [
+    "8",
+    "7",
+    "989"
+   ],
+   "explanation": [
+    "Count up from 492 to 497: that is 5.",
+    "497 − 492 = 5."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_4566003760",
+   "concept_id": "sub_within_1000",
+   "prompt": "290 − 1 = ?",
+   "correct_answer": "289",
+   "distractors": [
+    "291",
+    "292",
+    "288"
+   ],
+   "explanation": [
+    "Count up from 1: 1 + 9 = 10; 10 + 90 = 100; 100 + 190 = 290.",
+    "The jumps add to 9 + 90 + 190 = 289, so 290 − 1 = 289."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_6faf53b7a9",
+   "concept_id": "sub_within_1000",
+   "prompt": "903 − 269 = ?",
+   "correct_answer": "634",
+   "distractors": [
+    "631",
+    "637",
+    "1172"
+   ],
+   "explanation": [
+    "Count up from 269: 269 + 1 = 270; 270 + 30 = 300; 300 + 603 = 903.",
+    "The jumps add to 1 + 30 + 603 = 634, so 903 − 269 = 634."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_8a1ade83e1",
+   "concept_id": "sub_within_1000",
+   "prompt": "792 − 1 = ?",
+   "correct_answer": "791",
+   "distractors": [
+    "793",
+    "789",
+    "787"
+   ],
+   "explanation": [
+    "Count up from 1: 1 + 9 = 10; 10 + 90 = 100; 100 + 692 = 792.",
+    "The jumps add to 9 + 90 + 692 = 791, so 792 − 1 = 791."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_5cb020ec3c",
+   "concept_id": "sub_within_1000",
+   "prompt": "235 − 118 = ?",
+   "correct_answer": "117",
+   "distractors": [
+    "353",
+    "116",
+    "112"
+   ],
+   "explanation": [
+    "Count up from 118: 118 + 2 = 120; 120 + 80 = 200; 200 + 35 = 235.",
+    "The jumps add to 2 + 80 + 35 = 117, so 235 − 118 = 117."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_29a528e112",
+   "concept_id": "sub_within_1000",
+   "prompt": "515 − 426 = ?",
+   "correct_answer": "89",
+   "distractors": [
+    "87",
+    "88",
+    "941"
+   ],
+   "explanation": [
+    "Count up from 426: 426 + 4 = 430; 430 + 70 = 500; 500 + 15 = 515.",
+    "The jumps add to 4 + 70 + 15 = 89, so 515 − 426 = 89."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_44429f57f3",
+   "concept_id": "sub_within_1000",
+   "prompt": "985 − 784 = ?",
+   "correct_answer": "201",
+   "distractors": [
+    "198",
+    "200",
+    "1769"
+   ],
+   "explanation": [
+    "Count up from 784: 784 + 6 = 790; 790 + 10 = 800; 800 + 185 = 985.",
+    "The jumps add to 6 + 10 + 185 = 201, so 985 − 784 = 201."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_21349c2e21",
+   "concept_id": "sub_within_1000",
+   "prompt": "662 − 19 = ?",
+   "correct_answer": "643",
+   "distractors": [
+    "648",
+    "639",
+    "681"
+   ],
+   "explanation": [
+    "Count up from 19: 19 + 1 = 20; 20 + 80 = 100; 100 + 562 = 662.",
+    "The jumps add to 1 + 80 + 562 = 643, so 662 − 19 = 643."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_6752860ba2",
+   "concept_id": "sub_within_1000",
+   "prompt": "180 − 1 = ?",
+   "correct_answer": "179",
+   "distractors": [
+    "177",
+    "181",
+    "174"
+   ],
+   "explanation": [
+    "Count up from 1: 1 + 9 = 10; 10 + 90 = 100; 100 + 80 = 180.",
+    "The jumps add to 9 + 90 + 80 = 179, so 180 − 1 = 179."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_4bf6ae347d",
+   "concept_id": "sub_within_1000",
+   "prompt": "214 − 46 = ?",
+   "correct_answer": "168",
+   "distractors": [
+    "173",
+    "260",
+    "167"
+   ],
+   "explanation": [
+    "Count up from 46: 46 + 4 = 50; 50 + 50 = 100; 100 + 114 = 214.",
+    "The jumps add to 4 + 50 + 114 = 168, so 214 − 46 = 168."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_59c906e895",
+   "concept_id": "sub_within_1000",
+   "prompt": "212 − 22 = ?",
+   "correct_answer": "190",
+   "distractors": [
+    "195",
+    "234",
+    "191"
+   ],
+   "explanation": [
+    "Count up from 22: 22 + 8 = 30; 30 + 70 = 100; 100 + 112 = 212.",
+    "The jumps add to 8 + 70 + 112 = 190, so 212 − 22 = 190."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_ba2a6a96b3",
+   "concept_id": "sub_within_1000",
+   "prompt": "167 − 129 = ?",
+   "correct_answer": "38",
+   "distractors": [
+    "296",
+    "37",
+    "33"
+   ],
+   "explanation": [
+    "Count up from 129: 129 + 1 = 130; 130 + 37 = 167.",
+    "The jumps add to 1 + 37 = 38, so 167 − 129 = 38."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_e31c3ddd1a",
+   "concept_id": "sub_within_1000",
+   "prompt": "318 − 15 = ?",
+   "correct_answer": "303",
+   "distractors": [
+    "304",
+    "305",
+    "333"
+   ],
+   "explanation": [
+    "Count up from 15: 15 + 5 = 20; 20 + 80 = 100; 100 + 218 = 318.",
+    "The jumps add to 5 + 80 + 218 = 303, so 318 − 15 = 303."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_718061af84",
+   "concept_id": "sub_within_1000",
+   "prompt": "751 − 3 = ?",
+   "correct_answer": "748",
+   "distractors": [
+    "743",
+    "754",
+    "745"
+   ],
+   "explanation": [
+    "Count up from 3: 3 + 7 = 10; 10 + 90 = 100; 100 + 651 = 751.",
+    "The jumps add to 7 + 90 + 651 = 748, so 751 − 3 = 748."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_2a99f1ae5f",
+   "concept_id": "sub_within_1000",
+   "prompt": "909 − 321 = ?",
+   "correct_answer": "588",
+   "distractors": [
+    "587",
+    "593",
+    "1230"
+   ],
+   "explanation": [
+    "Count up from 321: 321 + 9 = 330; 330 + 70 = 400; 400 + 509 = 909.",
+    "The jumps add to 9 + 70 + 509 = 588, so 909 − 321 = 588."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_ef78ab7a64",
+   "concept_id": "sub_within_1000",
+   "prompt": "112 − 52 = ?",
+   "correct_answer": "60",
+   "distractors": [
+    "65",
+    "164",
+    "62"
+   ],
+   "explanation": [
+    "Count up from 52: 52 + 8 = 60; 60 + 40 = 100; 100 + 12 = 112.",
+    "The jumps add to 8 + 40 + 12 = 60, so 112 − 52 = 60."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_03ae091749",
+   "concept_id": "sub_within_1000",
+   "prompt": "294 − 11 = ?",
+   "correct_answer": "283",
+   "distractors": [
+    "288",
+    "305",
+    "287"
+   ],
+   "explanation": [
+    "Count up from 11: 11 + 9 = 20; 20 + 80 = 100; 100 + 194 = 294.",
+    "The jumps add to 9 + 80 + 194 = 283, so 294 − 11 = 283."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_d7bbd2dac3",
+   "concept_id": "sub_within_1000",
+   "prompt": "809 − 74 = ?",
+   "correct_answer": "735",
+   "distractors": [
+    "736",
+    "883",
+    "730"
+   ],
+   "explanation": [
+    "Count up from 74: 74 + 6 = 80; 80 + 20 = 100; 100 + 709 = 809.",
+    "The jumps add to 6 + 20 + 709 = 735, so 809 − 74 = 735."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_44b6b7608a",
+   "concept_id": "sub_within_1000",
+   "prompt": "538 − 98 = ?",
+   "correct_answer": "440",
+   "distractors": [
+    "444",
+    "636",
+    "436"
+   ],
+   "explanation": [
+    "Count up from 98: 98 + 2 = 100; 100 + 438 = 538.",
+    "The jumps add to 2 + 438 = 440, so 538 − 98 = 440."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_94b90ccfe0",
+   "concept_id": "sub_within_1000",
+   "prompt": "935 − 0 = ?",
+   "correct_answer": "935",
+   "distractors": [
+    "930",
+    "936",
+    "933"
+   ],
+   "explanation": [
+    "Count up from 0 to 935: that is 935.",
+    "935 − 0 = 935."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_dd8b3d862a",
+   "concept_id": "sub_within_1000",
+   "prompt": "975 − 233 = ?",
+   "correct_answer": "742",
+   "distractors": [
+    "1208",
+    "741",
+    "743"
+   ],
+   "explanation": [
+    "Count up from 233: 233 + 7 = 240; 240 + 60 = 300; 300 + 675 = 975.",
+    "The jumps add to 7 + 60 + 675 = 742, so 975 − 233 = 742."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_a35c39c6fd",
+   "concept_id": "sub_within_1000",
+   "prompt": "357 − 183 = ?",
+   "correct_answer": "174",
+   "distractors": [
+    "179",
+    "178",
+    "540"
+   ],
+   "explanation": [
+    "Count up from 183: 183 + 7 = 190; 190 + 10 = 200; 200 + 157 = 357.",
+    "The jumps add to 7 + 10 + 157 = 174, so 357 − 183 = 174."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_52bbe0badf",
+   "concept_id": "sub_within_1000",
+   "prompt": "156 − 2 = ?",
+   "correct_answer": "154",
+   "distractors": [
+    "158",
+    "151",
+    "153"
+   ],
+   "explanation": [
+    "Count up from 2: 2 + 8 = 10; 10 + 90 = 100; 100 + 56 = 156.",
+    "The jumps add to 8 + 90 + 56 = 154, so 156 − 2 = 154."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_9c8accb80e",
+   "concept_id": "sub_within_1000",
+   "prompt": "687 − 269 = ?",
+   "correct_answer": "418",
+   "distractors": [
+    "423",
+    "956",
+    "416"
+   ],
+   "explanation": [
+    "Count up from 269: 269 + 1 = 270; 270 + 30 = 300; 300 + 387 = 687.",
+    "The jumps add to 1 + 30 + 387 = 418, so 687 − 269 = 418."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_f9d58d49fc",
+   "concept_id": "sub_within_1000",
+   "prompt": "386 − 61 = ?",
+   "correct_answer": "325",
+   "distractors": [
+    "447",
+    "324",
+    "328"
+   ],
+   "explanation": [
+    "Count up from 61: 61 + 9 = 70; 70 + 30 = 100; 100 + 286 = 386.",
+    "The jumps add to 9 + 30 + 286 = 325, so 386 − 61 = 325."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  }
+ ]
 }

@@ -1,89 +1,92 @@
 {
-  "items": [
-    {
-      "id": "deepmind_mathematics_dataset_arith_704e641e52",
-      "concept_id": "add_within_10",
-      "prompt": "2 + 4 = ?",
-      "correct_answer": "6",
-      "distractors": [
-        "10",
-        "3",
-        "4"
-      ],
-      "explanation": [
-        "2 + 4 = 6"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_cf7c572cd0",
-      "concept_id": "add_within_10",
-      "prompt": "2 + 7 = ?",
-      "correct_answer": "9",
-      "distractors": [
-        "8",
-        "11",
-        "12"
-      ],
-      "explanation": [
-        "2 + 7 = 9"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_0778e8c22a",
-      "concept_id": "add_within_10",
-      "prompt": "0 + 8 = ?",
-      "correct_answer": "8",
-      "distractors": [
-        "3",
-        "9",
-        "12"
-      ],
-      "explanation": [
-        "0 + 8 = 8"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_d841ce53d9",
-      "concept_id": "add_within_10",
-      "prompt": "0 + 9 = ?",
-      "correct_answer": "9",
-      "distractors": [
-        "4",
-        "13",
-        "5"
-      ],
-      "explanation": [
-        "0 + 9 = 9"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_bcc8cffeb2",
-      "concept_id": "add_within_10",
-      "prompt": "8 + 1 = ?",
-      "correct_answer": "9",
-      "distractors": [
-        "12",
-        "13",
-        "7"
-      ],
-      "explanation": [
-        "8 + 1 = 9"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    }
-  ]
+ "items": [
+  {
+   "id": "deepmind_mathematics_dataset_arith_704e641e52",
+   "concept_id": "add_within_10",
+   "prompt": "2 + 4 = ?",
+   "correct_answer": "6",
+   "distractors": [
+    "10",
+    "3",
+    "4"
+   ],
+   "explanation": [
+    "Start at 4 and count up 2: 5, 6.",
+    "2 + 4 = 6."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_cf7c572cd0",
+   "concept_id": "add_within_10",
+   "prompt": "2 + 7 = ?",
+   "correct_answer": "9",
+   "distractors": [
+    "8",
+    "11",
+    "12"
+   ],
+   "explanation": [
+    "Start at 7 and count up 2: 8, 9.",
+    "2 + 7 = 9."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_0778e8c22a",
+   "concept_id": "add_within_10",
+   "prompt": "0 + 8 = ?",
+   "correct_answer": "8",
+   "distractors": [
+    "3",
+    "9",
+    "12"
+   ],
+   "explanation": [
+    "Adding 0 changes nothing: 0 + 8 = 8."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_d841ce53d9",
+   "concept_id": "add_within_10",
+   "prompt": "0 + 9 = ?",
+   "correct_answer": "9",
+   "distractors": [
+    "4",
+    "13",
+    "5"
+   ],
+   "explanation": [
+    "Adding 0 changes nothing: 0 + 9 = 9."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_bcc8cffeb2",
+   "concept_id": "add_within_10",
+   "prompt": "8 + 1 = ?",
+   "correct_answer": "9",
+   "distractors": [
+    "12",
+    "13",
+    "7"
+   ],
+   "explanation": [
+    "Start at 8 and count up 1: 9.",
+    "8 + 1 = 9."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  }
+ ]
 }

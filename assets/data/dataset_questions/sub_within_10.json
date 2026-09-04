@@ -1,55 +1,57 @@
 {
-  "items": [
-    {
-      "id": "deepmind_mathematics_dataset_arith_b8f0c0defa",
-      "concept_id": "sub_within_10",
-      "prompt": "10 − 1 = ?",
-      "correct_answer": "9",
-      "distractors": [
-        "11",
-        "14",
-        "12"
-      ],
-      "explanation": [
-        "10 − 1 = 9"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_70ea4ea6b3",
-      "concept_id": "sub_within_10",
-      "prompt": "10 − 0 = ?",
-      "correct_answer": "10",
-      "distractors": [
-        "9",
-        "5",
-        "6"
-      ],
-      "explanation": [
-        "10 − 0 = 10"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_fbbec0a0b4",
-      "concept_id": "sub_within_10",
-      "prompt": "9 − 1 = ?",
-      "correct_answer": "8",
-      "distractors": [
-        "11",
-        "12",
-        "10"
-      ],
-      "explanation": [
-        "9 − 1 = 8"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    }
-  ]
+ "items": [
+  {
+   "id": "deepmind_mathematics_dataset_arith_b8f0c0defa",
+   "concept_id": "sub_within_10",
+   "prompt": "10 − 1 = ?",
+   "correct_answer": "9",
+   "distractors": [
+    "11",
+    "14",
+    "12"
+   ],
+   "explanation": [
+    "Start at 10 and count back 1: 9.",
+    "10 − 1 = 9."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_70ea4ea6b3",
+   "concept_id": "sub_within_10",
+   "prompt": "10 − 0 = ?",
+   "correct_answer": "10",
+   "distractors": [
+    "9",
+    "5",
+    "6"
+   ],
+   "explanation": [
+    "Taking away 0 changes nothing: 10 − 0 = 10."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_fbbec0a0b4",
+   "concept_id": "sub_within_10",
+   "prompt": "9 − 1 = ?",
+   "correct_answer": "8",
+   "distractors": [
+    "11",
+    "12",
+    "10"
+   ],
+   "explanation": [
+    "Start at 9 and count back 1: 8.",
+    "9 − 1 = 8."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  }
+ ]
 }

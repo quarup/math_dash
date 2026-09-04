@@ -1,21 +1,21 @@
 {
-  "items": [
-    {
-      "id": "deepmind_mathematics_dataset_arith_205edc265b",
-      "concept_id": "add_within_5",
-      "prompt": "0 + 0 = ?",
-      "correct_answer": "0",
-      "distractors": [
-        "2",
-        "1",
-        "4"
-      ],
-      "explanation": [
-        "0 + 0 = 0"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    }
-  ]
+ "items": [
+  {
+   "id": "deepmind_mathematics_dataset_arith_205edc265b",
+   "concept_id": "add_within_5",
+   "prompt": "0 + 0 = ?",
+   "correct_answer": "0",
+   "distractors": [
+    "2",
+    "1",
+    "4"
+   ],
+   "explanation": [
+    "Adding 0 changes nothing: 0 + 0 = 0."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  }
+ ]
 }

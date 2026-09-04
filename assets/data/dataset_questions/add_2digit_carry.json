@@ -1,837 +1,935 @@
 {
-  "items": [
-    {
-      "id": "deepmind_mathematics_dataset_arith_76376f6a89",
-      "concept_id": "add_2digit_carry",
-      "prompt": "28 + 18 = ?",
-      "correct_answer": "46",
-      "distractors": [
-        "51",
-        "48",
-        "10"
-      ],
-      "explanation": [
-        "28 + 18 = 46"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_1703e00af4",
-      "concept_id": "add_2digit_carry",
-      "prompt": "38 + 36 = ?",
-      "correct_answer": "74",
-      "distractors": [
-        "75",
-        "71",
-        "2"
-      ],
-      "explanation": [
-        "38 + 36 = 74"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_92c3925467",
-      "concept_id": "add_2digit_carry",
-      "prompt": "36 + 28 = ?",
-      "correct_answer": "64",
-      "distractors": [
-        "61",
-        "59",
-        "8"
-      ],
-      "explanation": [
-        "36 + 28 = 64"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_50185a6db8",
-      "concept_id": "add_2digit_carry",
-      "prompt": "39 + 36 = ?",
-      "correct_answer": "75",
-      "distractors": [
-        "3",
-        "74",
-        "72"
-      ],
-      "explanation": [
-        "39 + 36 = 75"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_9c499f7745",
-      "concept_id": "add_2digit_carry",
-      "prompt": "22 + 19 = ?",
-      "correct_answer": "41",
-      "distractors": [
-        "3",
-        "45",
-        "36"
-      ],
-      "explanation": [
-        "22 + 19 = 41"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_b43070390f",
-      "concept_id": "add_2digit_carry",
-      "prompt": "46 + 14 = ?",
-      "correct_answer": "60",
-      "distractors": [
-        "63",
-        "64",
-        "32"
-      ],
-      "explanation": [
-        "46 + 14 = 60"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_a6bf3b69f7",
-      "concept_id": "add_2digit_carry",
-      "prompt": "29 + 17 = ?",
-      "correct_answer": "46",
-      "distractors": [
-        "43",
-        "48",
-        "12"
-      ],
-      "explanation": [
-        "29 + 17 = 46"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_916985317c",
-      "concept_id": "add_2digit_carry",
-      "prompt": "17 + 27 = ?",
-      "correct_answer": "44",
-      "distractors": [
-        "49",
-        "39",
-        "42"
-      ],
-      "explanation": [
-        "17 + 27 = 44"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_6504dcd510",
-      "concept_id": "add_2digit_carry",
-      "prompt": "15 + 16 = ?",
-      "correct_answer": "31",
-      "distractors": [
-        "26",
-        "33",
-        "28"
-      ],
-      "explanation": [
-        "15 + 16 = 31"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_2fcd5c86ae",
-      "concept_id": "add_2digit_carry",
-      "prompt": "15 + 45 = ?",
-      "correct_answer": "60",
-      "distractors": [
-        "62",
-        "57",
-        "59"
-      ],
-      "explanation": [
-        "15 + 45 = 60"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_5c5483c807",
-      "concept_id": "add_2digit_carry",
-      "prompt": "28 + 14 = ?",
-      "correct_answer": "42",
-      "distractors": [
-        "47",
-        "38",
-        "14"
-      ],
-      "explanation": [
-        "28 + 14 = 42"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_89fe45cee3",
-      "concept_id": "add_2digit_carry",
-      "prompt": "54 + 16 = ?",
-      "correct_answer": "70",
-      "distractors": [
-        "67",
-        "38",
-        "75"
-      ],
-      "explanation": [
-        "54 + 16 = 70"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_365a68dd29",
-      "concept_id": "add_2digit_carry",
-      "prompt": "27 + 23 = ?",
-      "correct_answer": "50",
-      "distractors": [
-        "54",
-        "4",
-        "51"
-      ],
-      "explanation": [
-        "27 + 23 = 50"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_f88cf6728c",
-      "concept_id": "add_2digit_carry",
-      "prompt": "49 + 16 = ?",
-      "correct_answer": "65",
-      "distractors": [
-        "62",
-        "64",
-        "33"
-      ],
-      "explanation": [
-        "49 + 16 = 65"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_04cbb6f417",
-      "concept_id": "add_2digit_carry",
-      "prompt": "14 + 69 = ?",
-      "correct_answer": "83",
-      "distractors": [
-        "88",
-        "82",
-        "79"
-      ],
-      "explanation": [
-        "14 + 69 = 83"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_feef33c279",
-      "concept_id": "add_2digit_carry",
-      "prompt": "43 + 29 = ?",
-      "correct_answer": "72",
-      "distractors": [
-        "14",
-        "71",
-        "70"
-      ],
-      "explanation": [
-        "43 + 29 = 72"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_1ff553b89b",
-      "concept_id": "add_2digit_carry",
-      "prompt": "47 + 38 = ?",
-      "correct_answer": "85",
-      "distractors": [
-        "86",
-        "9",
-        "84"
-      ],
-      "explanation": [
-        "47 + 38 = 85"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_47c3c70e28",
-      "concept_id": "add_2digit_carry",
-      "prompt": "39 + 53 = ?",
-      "correct_answer": "92",
-      "distractors": [
-        "89",
-        "90",
-        "88"
-      ],
-      "explanation": [
-        "39 + 53 = 92"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_5e1b2dee1c",
-      "concept_id": "add_2digit_carry",
-      "prompt": "49 + 43 = ?",
-      "correct_answer": "92",
-      "distractors": [
-        "90",
-        "6",
-        "97"
-      ],
-      "explanation": [
-        "49 + 43 = 92"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_35a40ae89e",
-      "concept_id": "add_2digit_carry",
-      "prompt": "56 + 14 = ?",
-      "correct_answer": "70",
-      "distractors": [
-        "67",
-        "42",
-        "75"
-      ],
-      "explanation": [
-        "56 + 14 = 70"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_8042595520",
-      "concept_id": "add_2digit_carry",
-      "prompt": "29 + 22 = ?",
-      "correct_answer": "51",
-      "distractors": [
-        "7",
-        "55",
-        "46"
-      ],
-      "explanation": [
-        "29 + 22 = 51"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_bed3954042",
-      "concept_id": "add_2digit_carry",
-      "prompt": "17 + 19 = ?",
-      "correct_answer": "36",
-      "distractors": [
-        "33",
-        "37",
-        "39"
-      ],
-      "explanation": [
-        "17 + 19 = 36"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_82f2fc91d0",
-      "concept_id": "add_2digit_carry",
-      "prompt": "22 + 68 = ?",
-      "correct_answer": "90",
-      "distractors": [
-        "95",
-        "93",
-        "94"
-      ],
-      "explanation": [
-        "22 + 68 = 90"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_b39ed1a566",
-      "concept_id": "add_2digit_carry",
-      "prompt": "64 + 29 = ?",
-      "correct_answer": "93",
-      "distractors": [
-        "90",
-        "97",
-        "35"
-      ],
-      "explanation": [
-        "64 + 29 = 93"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_020c0e6933",
-      "concept_id": "add_2digit_carry",
-      "prompt": "44 + 56 = ?",
-      "correct_answer": "100",
-      "distractors": [
-        "98",
-        "101",
-        "99"
-      ],
-      "explanation": [
-        "44 + 56 = 100"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_30f4c6a711",
-      "concept_id": "add_2digit_carry",
-      "prompt": "66 + 15 = ?",
-      "correct_answer": "81",
-      "distractors": [
-        "79",
-        "51",
-        "85"
-      ],
-      "explanation": [
-        "66 + 15 = 81"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_72ee81df05",
-      "concept_id": "add_2digit_carry",
-      "prompt": "19 + 22 = ?",
-      "correct_answer": "41",
-      "distractors": [
-        "46",
-        "38",
-        "37"
-      ],
-      "explanation": [
-        "19 + 22 = 41"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_012d315326",
-      "concept_id": "add_2digit_carry",
-      "prompt": "47 + 14 = ?",
-      "correct_answer": "61",
-      "distractors": [
-        "59",
-        "66",
-        "33"
-      ],
-      "explanation": [
-        "47 + 14 = 61"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_ff0fb0e6dd",
-      "concept_id": "add_2digit_carry",
-      "prompt": "47 + 46 = ?",
-      "correct_answer": "93",
-      "distractors": [
-        "92",
-        "88",
-        "1"
-      ],
-      "explanation": [
-        "47 + 46 = 93"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_c132e8a2e0",
-      "concept_id": "add_2digit_carry",
-      "prompt": "12 + 19 = ?",
-      "correct_answer": "31",
-      "distractors": [
-        "30",
-        "33",
-        "34"
-      ],
-      "explanation": [
-        "12 + 19 = 31"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_91775dbcb4",
-      "concept_id": "add_2digit_carry",
-      "prompt": "15 + 56 = ?",
-      "correct_answer": "71",
-      "distractors": [
-        "69",
-        "70",
-        "76"
-      ],
-      "explanation": [
-        "15 + 56 = 71"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_23a122b8e3",
-      "concept_id": "add_2digit_carry",
-      "prompt": "26 + 66 = ?",
-      "correct_answer": "92",
-      "distractors": [
-        "94",
-        "88",
-        "91"
-      ],
-      "explanation": [
-        "26 + 66 = 92"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_2ab9fd50fb",
-      "concept_id": "add_2digit_carry",
-      "prompt": "33 + 19 = ?",
-      "correct_answer": "52",
-      "distractors": [
-        "14",
-        "49",
-        "56"
-      ],
-      "explanation": [
-        "33 + 19 = 52"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_bbea9f26f9",
-      "concept_id": "add_2digit_carry",
-      "prompt": "27 + 47 = ?",
-      "correct_answer": "74",
-      "distractors": [
-        "75",
-        "76",
-        "73"
-      ],
-      "explanation": [
-        "27 + 47 = 74"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_6c5d92361b",
-      "concept_id": "add_2digit_carry",
-      "prompt": "59 + 28 = ?",
-      "correct_answer": "87",
-      "distractors": [
-        "92",
-        "82",
-        "31"
-      ],
-      "explanation": [
-        "59 + 28 = 87"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_5ea29f7834",
-      "concept_id": "add_2digit_carry",
-      "prompt": "18 + 34 = ?",
-      "correct_answer": "52",
-      "distractors": [
-        "57",
-        "48",
-        "53"
-      ],
-      "explanation": [
-        "18 + 34 = 52"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_624507200d",
-      "concept_id": "add_2digit_carry",
-      "prompt": "25 + 27 = ?",
-      "correct_answer": "52",
-      "distractors": [
-        "51",
-        "50",
-        "56"
-      ],
-      "explanation": [
-        "25 + 27 = 52"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_02e6041742",
-      "concept_id": "add_2digit_carry",
-      "prompt": "23 + 19 = ?",
-      "correct_answer": "42",
-      "distractors": [
-        "46",
-        "4",
-        "47"
-      ],
-      "explanation": [
-        "23 + 19 = 42"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_f346c5232e",
-      "concept_id": "add_2digit_carry",
-      "prompt": "66 + 19 = ?",
-      "correct_answer": "85",
-      "distractors": [
-        "47",
-        "88",
-        "86"
-      ],
-      "explanation": [
-        "66 + 19 = 85"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_0549b1481d",
-      "concept_id": "add_2digit_carry",
-      "prompt": "39 + 15 = ?",
-      "correct_answer": "54",
-      "distractors": [
-        "57",
-        "24",
-        "52"
-      ],
-      "explanation": [
-        "39 + 15 = 54"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_3c974f7490",
-      "concept_id": "add_2digit_carry",
-      "prompt": "49 + 22 = ?",
-      "correct_answer": "71",
-      "distractors": [
-        "70",
-        "74",
-        "27"
-      ],
-      "explanation": [
-        "49 + 22 = 71"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_e55853c3d1",
-      "concept_id": "add_2digit_carry",
-      "prompt": "68 + 19 = ?",
-      "correct_answer": "87",
-      "distractors": [
-        "82",
-        "92",
-        "49"
-      ],
-      "explanation": [
-        "68 + 19 = 87"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_f5766e1e2a",
-      "concept_id": "add_2digit_carry",
-      "prompt": "59 + 35 = ?",
-      "correct_answer": "94",
-      "distractors": [
-        "24",
-        "97",
-        "89"
-      ],
-      "explanation": [
-        "59 + 35 = 94"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_51ad66f427",
-      "concept_id": "add_2digit_carry",
-      "prompt": "79 + 13 = ?",
-      "correct_answer": "92",
-      "distractors": [
-        "96",
-        "66",
-        "87"
-      ],
-      "explanation": [
-        "79 + 13 = 92"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_d04599952a",
-      "concept_id": "add_2digit_carry",
-      "prompt": "36 + 17 = ?",
-      "correct_answer": "53",
-      "distractors": [
-        "19",
-        "55",
-        "50"
-      ],
-      "explanation": [
-        "36 + 17 = 53"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_765f212006",
-      "concept_id": "add_2digit_carry",
-      "prompt": "18 + 13 = ?",
-      "correct_answer": "31",
-      "distractors": [
-        "5",
-        "32",
-        "29"
-      ],
-      "explanation": [
-        "18 + 13 = 31"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_f5b27e61a6",
-      "concept_id": "add_2digit_carry",
-      "prompt": "45 + 27 = ?",
-      "correct_answer": "72",
-      "distractors": [
-        "69",
-        "18",
-        "74"
-      ],
-      "explanation": [
-        "45 + 27 = 72"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_b9c6a3ae5b",
-      "concept_id": "add_2digit_carry",
-      "prompt": "48 + 22 = ?",
-      "correct_answer": "70",
-      "distractors": [
-        "26",
-        "72",
-        "71"
-      ],
-      "explanation": [
-        "48 + 22 = 70"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_ee7ec514cc",
-      "concept_id": "add_2digit_carry",
-      "prompt": "67 + 33 = ?",
-      "correct_answer": "100",
-      "distractors": [
-        "104",
-        "98",
-        "34"
-      ],
-      "explanation": [
-        "67 + 33 = 100"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    }
-  ]
+ "items": [
+  {
+   "id": "deepmind_mathematics_dataset_arith_76376f6a89",
+   "concept_id": "add_2digit_carry",
+   "prompt": "28 + 18 = ?",
+   "correct_answer": "46",
+   "distractors": [
+    "51",
+    "48",
+    "10"
+   ],
+   "explanation": [
+    "Ones: 8 + 8 = 16 — write 6, carry 1.",
+    "Tens: 2 + 1 + 1 = 4.",
+    "So 28 + 18 = 46."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_1703e00af4",
+   "concept_id": "add_2digit_carry",
+   "prompt": "38 + 36 = ?",
+   "correct_answer": "74",
+   "distractors": [
+    "75",
+    "71",
+    "2"
+   ],
+   "explanation": [
+    "Ones: 8 + 6 = 14 — write 4, carry 1.",
+    "Tens: 3 + 3 + 1 = 7.",
+    "So 38 + 36 = 74."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_92c3925467",
+   "concept_id": "add_2digit_carry",
+   "prompt": "36 + 28 = ?",
+   "correct_answer": "64",
+   "distractors": [
+    "61",
+    "59",
+    "8"
+   ],
+   "explanation": [
+    "Ones: 6 + 8 = 14 — write 4, carry 1.",
+    "Tens: 3 + 2 + 1 = 6.",
+    "So 36 + 28 = 64."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_50185a6db8",
+   "concept_id": "add_2digit_carry",
+   "prompt": "39 + 36 = ?",
+   "correct_answer": "75",
+   "distractors": [
+    "3",
+    "74",
+    "72"
+   ],
+   "explanation": [
+    "Ones: 9 + 6 = 15 — write 5, carry 1.",
+    "Tens: 3 + 3 + 1 = 7.",
+    "So 39 + 36 = 75."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_9c499f7745",
+   "concept_id": "add_2digit_carry",
+   "prompt": "22 + 19 = ?",
+   "correct_answer": "41",
+   "distractors": [
+    "3",
+    "45",
+    "36"
+   ],
+   "explanation": [
+    "Ones: 2 + 9 = 11 — write 1, carry 1.",
+    "Tens: 2 + 1 + 1 = 4.",
+    "So 22 + 19 = 41."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_b43070390f",
+   "concept_id": "add_2digit_carry",
+   "prompt": "46 + 14 = ?",
+   "correct_answer": "60",
+   "distractors": [
+    "63",
+    "64",
+    "32"
+   ],
+   "explanation": [
+    "Ones: 6 + 4 = 10 — write 0, carry 1.",
+    "Tens: 4 + 1 + 1 = 6.",
+    "So 46 + 14 = 60."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_a6bf3b69f7",
+   "concept_id": "add_2digit_carry",
+   "prompt": "29 + 17 = ?",
+   "correct_answer": "46",
+   "distractors": [
+    "43",
+    "48",
+    "12"
+   ],
+   "explanation": [
+    "Ones: 9 + 7 = 16 — write 6, carry 1.",
+    "Tens: 2 + 1 + 1 = 4.",
+    "So 29 + 17 = 46."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_916985317c",
+   "concept_id": "add_2digit_carry",
+   "prompt": "17 + 27 = ?",
+   "correct_answer": "44",
+   "distractors": [
+    "49",
+    "39",
+    "42"
+   ],
+   "explanation": [
+    "Ones: 7 + 7 = 14 — write 4, carry 1.",
+    "Tens: 1 + 2 + 1 = 4.",
+    "So 17 + 27 = 44."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_6504dcd510",
+   "concept_id": "add_2digit_carry",
+   "prompt": "15 + 16 = ?",
+   "correct_answer": "31",
+   "distractors": [
+    "26",
+    "33",
+    "28"
+   ],
+   "explanation": [
+    "Ones: 5 + 6 = 11 — write 1, carry 1.",
+    "Tens: 1 + 1 + 1 = 3.",
+    "So 15 + 16 = 31."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_2fcd5c86ae",
+   "concept_id": "add_2digit_carry",
+   "prompt": "15 + 45 = ?",
+   "correct_answer": "60",
+   "distractors": [
+    "62",
+    "57",
+    "59"
+   ],
+   "explanation": [
+    "Ones: 5 + 5 = 10 — write 0, carry 1.",
+    "Tens: 1 + 4 + 1 = 6.",
+    "So 15 + 45 = 60."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_5c5483c807",
+   "concept_id": "add_2digit_carry",
+   "prompt": "28 + 14 = ?",
+   "correct_answer": "42",
+   "distractors": [
+    "47",
+    "38",
+    "14"
+   ],
+   "explanation": [
+    "Ones: 8 + 4 = 12 — write 2, carry 1.",
+    "Tens: 2 + 1 + 1 = 4.",
+    "So 28 + 14 = 42."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_89fe45cee3",
+   "concept_id": "add_2digit_carry",
+   "prompt": "54 + 16 = ?",
+   "correct_answer": "70",
+   "distractors": [
+    "67",
+    "38",
+    "75"
+   ],
+   "explanation": [
+    "Ones: 4 + 6 = 10 — write 0, carry 1.",
+    "Tens: 5 + 1 + 1 = 7.",
+    "So 54 + 16 = 70."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_365a68dd29",
+   "concept_id": "add_2digit_carry",
+   "prompt": "27 + 23 = ?",
+   "correct_answer": "50",
+   "distractors": [
+    "54",
+    "4",
+    "51"
+   ],
+   "explanation": [
+    "Ones: 7 + 3 = 10 — write 0, carry 1.",
+    "Tens: 2 + 2 + 1 = 5.",
+    "So 27 + 23 = 50."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_f88cf6728c",
+   "concept_id": "add_2digit_carry",
+   "prompt": "49 + 16 = ?",
+   "correct_answer": "65",
+   "distractors": [
+    "62",
+    "64",
+    "33"
+   ],
+   "explanation": [
+    "Ones: 9 + 6 = 15 — write 5, carry 1.",
+    "Tens: 4 + 1 + 1 = 6.",
+    "So 49 + 16 = 65."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_04cbb6f417",
+   "concept_id": "add_2digit_carry",
+   "prompt": "14 + 69 = ?",
+   "correct_answer": "83",
+   "distractors": [
+    "88",
+    "82",
+    "79"
+   ],
+   "explanation": [
+    "Ones: 4 + 9 = 13 — write 3, carry 1.",
+    "Tens: 1 + 6 + 1 = 8.",
+    "So 14 + 69 = 83."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_feef33c279",
+   "concept_id": "add_2digit_carry",
+   "prompt": "43 + 29 = ?",
+   "correct_answer": "72",
+   "distractors": [
+    "14",
+    "71",
+    "70"
+   ],
+   "explanation": [
+    "Ones: 3 + 9 = 12 — write 2, carry 1.",
+    "Tens: 4 + 2 + 1 = 7.",
+    "So 43 + 29 = 72."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_1ff553b89b",
+   "concept_id": "add_2digit_carry",
+   "prompt": "47 + 38 = ?",
+   "correct_answer": "85",
+   "distractors": [
+    "86",
+    "9",
+    "84"
+   ],
+   "explanation": [
+    "Ones: 7 + 8 = 15 — write 5, carry 1.",
+    "Tens: 4 + 3 + 1 = 8.",
+    "So 47 + 38 = 85."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_47c3c70e28",
+   "concept_id": "add_2digit_carry",
+   "prompt": "39 + 53 = ?",
+   "correct_answer": "92",
+   "distractors": [
+    "89",
+    "90",
+    "88"
+   ],
+   "explanation": [
+    "Ones: 9 + 3 = 12 — write 2, carry 1.",
+    "Tens: 3 + 5 + 1 = 9.",
+    "So 39 + 53 = 92."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_5e1b2dee1c",
+   "concept_id": "add_2digit_carry",
+   "prompt": "49 + 43 = ?",
+   "correct_answer": "92",
+   "distractors": [
+    "90",
+    "6",
+    "97"
+   ],
+   "explanation": [
+    "Ones: 9 + 3 = 12 — write 2, carry 1.",
+    "Tens: 4 + 4 + 1 = 9.",
+    "So 49 + 43 = 92."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_35a40ae89e",
+   "concept_id": "add_2digit_carry",
+   "prompt": "56 + 14 = ?",
+   "correct_answer": "70",
+   "distractors": [
+    "67",
+    "42",
+    "75"
+   ],
+   "explanation": [
+    "Ones: 6 + 4 = 10 — write 0, carry 1.",
+    "Tens: 5 + 1 + 1 = 7.",
+    "So 56 + 14 = 70."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_8042595520",
+   "concept_id": "add_2digit_carry",
+   "prompt": "29 + 22 = ?",
+   "correct_answer": "51",
+   "distractors": [
+    "7",
+    "55",
+    "46"
+   ],
+   "explanation": [
+    "Ones: 9 + 2 = 11 — write 1, carry 1.",
+    "Tens: 2 + 2 + 1 = 5.",
+    "So 29 + 22 = 51."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_bed3954042",
+   "concept_id": "add_2digit_carry",
+   "prompt": "17 + 19 = ?",
+   "correct_answer": "36",
+   "distractors": [
+    "33",
+    "37",
+    "39"
+   ],
+   "explanation": [
+    "Ones: 7 + 9 = 16 — write 6, carry 1.",
+    "Tens: 1 + 1 + 1 = 3.",
+    "So 17 + 19 = 36."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_82f2fc91d0",
+   "concept_id": "add_2digit_carry",
+   "prompt": "22 + 68 = ?",
+   "correct_answer": "90",
+   "distractors": [
+    "95",
+    "93",
+    "94"
+   ],
+   "explanation": [
+    "Ones: 2 + 8 = 10 — write 0, carry 1.",
+    "Tens: 2 + 6 + 1 = 9.",
+    "So 22 + 68 = 90."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_b39ed1a566",
+   "concept_id": "add_2digit_carry",
+   "prompt": "64 + 29 = ?",
+   "correct_answer": "93",
+   "distractors": [
+    "90",
+    "97",
+    "35"
+   ],
+   "explanation": [
+    "Ones: 4 + 9 = 13 — write 3, carry 1.",
+    "Tens: 6 + 2 + 1 = 9.",
+    "So 64 + 29 = 93."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_020c0e6933",
+   "concept_id": "add_2digit_carry",
+   "prompt": "44 + 56 = ?",
+   "correct_answer": "100",
+   "distractors": [
+    "98",
+    "101",
+    "99"
+   ],
+   "explanation": [
+    "Ones: 4 + 6 = 10 — write 0, carry 1.",
+    "Tens: 4 + 5 + 1 = 10.",
+    "So 44 + 56 = 100."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_30f4c6a711",
+   "concept_id": "add_2digit_carry",
+   "prompt": "66 + 15 = ?",
+   "correct_answer": "81",
+   "distractors": [
+    "79",
+    "51",
+    "85"
+   ],
+   "explanation": [
+    "Ones: 6 + 5 = 11 — write 1, carry 1.",
+    "Tens: 6 + 1 + 1 = 8.",
+    "So 66 + 15 = 81."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_72ee81df05",
+   "concept_id": "add_2digit_carry",
+   "prompt": "19 + 22 = ?",
+   "correct_answer": "41",
+   "distractors": [
+    "46",
+    "38",
+    "37"
+   ],
+   "explanation": [
+    "Ones: 9 + 2 = 11 — write 1, carry 1.",
+    "Tens: 1 + 2 + 1 = 4.",
+    "So 19 + 22 = 41."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_012d315326",
+   "concept_id": "add_2digit_carry",
+   "prompt": "47 + 14 = ?",
+   "correct_answer": "61",
+   "distractors": [
+    "59",
+    "66",
+    "33"
+   ],
+   "explanation": [
+    "Ones: 7 + 4 = 11 — write 1, carry 1.",
+    "Tens: 4 + 1 + 1 = 6.",
+    "So 47 + 14 = 61."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_ff0fb0e6dd",
+   "concept_id": "add_2digit_carry",
+   "prompt": "47 + 46 = ?",
+   "correct_answer": "93",
+   "distractors": [
+    "92",
+    "88",
+    "1"
+   ],
+   "explanation": [
+    "Ones: 7 + 6 = 13 — write 3, carry 1.",
+    "Tens: 4 + 4 + 1 = 9.",
+    "So 47 + 46 = 93."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_c132e8a2e0",
+   "concept_id": "add_2digit_carry",
+   "prompt": "12 + 19 = ?",
+   "correct_answer": "31",
+   "distractors": [
+    "30",
+    "33",
+    "34"
+   ],
+   "explanation": [
+    "Ones: 2 + 9 = 11 — write 1, carry 1.",
+    "Tens: 1 + 1 + 1 = 3.",
+    "So 12 + 19 = 31."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_91775dbcb4",
+   "concept_id": "add_2digit_carry",
+   "prompt": "15 + 56 = ?",
+   "correct_answer": "71",
+   "distractors": [
+    "69",
+    "70",
+    "76"
+   ],
+   "explanation": [
+    "Ones: 5 + 6 = 11 — write 1, carry 1.",
+    "Tens: 1 + 5 + 1 = 7.",
+    "So 15 + 56 = 71."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_23a122b8e3",
+   "concept_id": "add_2digit_carry",
+   "prompt": "26 + 66 = ?",
+   "correct_answer": "92",
+   "distractors": [
+    "94",
+    "88",
+    "91"
+   ],
+   "explanation": [
+    "Ones: 6 + 6 = 12 — write 2, carry 1.",
+    "Tens: 2 + 6 + 1 = 9.",
+    "So 26 + 66 = 92."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_2ab9fd50fb",
+   "concept_id": "add_2digit_carry",
+   "prompt": "33 + 19 = ?",
+   "correct_answer": "52",
+   "distractors": [
+    "14",
+    "49",
+    "56"
+   ],
+   "explanation": [
+    "Ones: 3 + 9 = 12 — write 2, carry 1.",
+    "Tens: 3 + 1 + 1 = 5.",
+    "So 33 + 19 = 52."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_bbea9f26f9",
+   "concept_id": "add_2digit_carry",
+   "prompt": "27 + 47 = ?",
+   "correct_answer": "74",
+   "distractors": [
+    "75",
+    "76",
+    "73"
+   ],
+   "explanation": [
+    "Ones: 7 + 7 = 14 — write 4, carry 1.",
+    "Tens: 2 + 4 + 1 = 7.",
+    "So 27 + 47 = 74."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_6c5d92361b",
+   "concept_id": "add_2digit_carry",
+   "prompt": "59 + 28 = ?",
+   "correct_answer": "87",
+   "distractors": [
+    "92",
+    "82",
+    "31"
+   ],
+   "explanation": [
+    "Ones: 9 + 8 = 17 — write 7, carry 1.",
+    "Tens: 5 + 2 + 1 = 8.",
+    "So 59 + 28 = 87."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_5ea29f7834",
+   "concept_id": "add_2digit_carry",
+   "prompt": "18 + 34 = ?",
+   "correct_answer": "52",
+   "distractors": [
+    "57",
+    "48",
+    "53"
+   ],
+   "explanation": [
+    "Ones: 8 + 4 = 12 — write 2, carry 1.",
+    "Tens: 1 + 3 + 1 = 5.",
+    "So 18 + 34 = 52."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_624507200d",
+   "concept_id": "add_2digit_carry",
+   "prompt": "25 + 27 = ?",
+   "correct_answer": "52",
+   "distractors": [
+    "51",
+    "50",
+    "56"
+   ],
+   "explanation": [
+    "Ones: 5 + 7 = 12 — write 2, carry 1.",
+    "Tens: 2 + 2 + 1 = 5.",
+    "So 25 + 27 = 52."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_02e6041742",
+   "concept_id": "add_2digit_carry",
+   "prompt": "23 + 19 = ?",
+   "correct_answer": "42",
+   "distractors": [
+    "46",
+    "4",
+    "47"
+   ],
+   "explanation": [
+    "Ones: 3 + 9 = 12 — write 2, carry 1.",
+    "Tens: 2 + 1 + 1 = 4.",
+    "So 23 + 19 = 42."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_f346c5232e",
+   "concept_id": "add_2digit_carry",
+   "prompt": "66 + 19 = ?",
+   "correct_answer": "85",
+   "distractors": [
+    "47",
+    "88",
+    "86"
+   ],
+   "explanation": [
+    "Ones: 6 + 9 = 15 — write 5, carry 1.",
+    "Tens: 6 + 1 + 1 = 8.",
+    "So 66 + 19 = 85."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_0549b1481d",
+   "concept_id": "add_2digit_carry",
+   "prompt": "39 + 15 = ?",
+   "correct_answer": "54",
+   "distractors": [
+    "57",
+    "24",
+    "52"
+   ],
+   "explanation": [
+    "Ones: 9 + 5 = 14 — write 4, carry 1.",
+    "Tens: 3 + 1 + 1 = 5.",
+    "So 39 + 15 = 54."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_3c974f7490",
+   "concept_id": "add_2digit_carry",
+   "prompt": "49 + 22 = ?",
+   "correct_answer": "71",
+   "distractors": [
+    "70",
+    "74",
+    "27"
+   ],
+   "explanation": [
+    "Ones: 9 + 2 = 11 — write 1, carry 1.",
+    "Tens: 4 + 2 + 1 = 7.",
+    "So 49 + 22 = 71."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_e55853c3d1",
+   "concept_id": "add_2digit_carry",
+   "prompt": "68 + 19 = ?",
+   "correct_answer": "87",
+   "distractors": [
+    "82",
+    "92",
+    "49"
+   ],
+   "explanation": [
+    "Ones: 8 + 9 = 17 — write 7, carry 1.",
+    "Tens: 6 + 1 + 1 = 8.",
+    "So 68 + 19 = 87."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_f5766e1e2a",
+   "concept_id": "add_2digit_carry",
+   "prompt": "59 + 35 = ?",
+   "correct_answer": "94",
+   "distractors": [
+    "24",
+    "97",
+    "89"
+   ],
+   "explanation": [
+    "Ones: 9 + 5 = 14 — write 4, carry 1.",
+    "Tens: 5 + 3 + 1 = 9.",
+    "So 59 + 35 = 94."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_51ad66f427",
+   "concept_id": "add_2digit_carry",
+   "prompt": "79 + 13 = ?",
+   "correct_answer": "92",
+   "distractors": [
+    "96",
+    "66",
+    "87"
+   ],
+   "explanation": [
+    "Ones: 9 + 3 = 12 — write 2, carry 1.",
+    "Tens: 7 + 1 + 1 = 9.",
+    "So 79 + 13 = 92."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_d04599952a",
+   "concept_id": "add_2digit_carry",
+   "prompt": "36 + 17 = ?",
+   "correct_answer": "53",
+   "distractors": [
+    "19",
+    "55",
+    "50"
+   ],
+   "explanation": [
+    "Ones: 6 + 7 = 13 — write 3, carry 1.",
+    "Tens: 3 + 1 + 1 = 5.",
+    "So 36 + 17 = 53."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_765f212006",
+   "concept_id": "add_2digit_carry",
+   "prompt": "18 + 13 = ?",
+   "correct_answer": "31",
+   "distractors": [
+    "5",
+    "32",
+    "29"
+   ],
+   "explanation": [
+    "Ones: 8 + 3 = 11 — write 1, carry 1.",
+    "Tens: 1 + 1 + 1 = 3.",
+    "So 18 + 13 = 31."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_f5b27e61a6",
+   "concept_id": "add_2digit_carry",
+   "prompt": "45 + 27 = ?",
+   "correct_answer": "72",
+   "distractors": [
+    "69",
+    "18",
+    "74"
+   ],
+   "explanation": [
+    "Ones: 5 + 7 = 12 — write 2, carry 1.",
+    "Tens: 4 + 2 + 1 = 7.",
+    "So 45 + 27 = 72."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_b9c6a3ae5b",
+   "concept_id": "add_2digit_carry",
+   "prompt": "48 + 22 = ?",
+   "correct_answer": "70",
+   "distractors": [
+    "26",
+    "72",
+    "71"
+   ],
+   "explanation": [
+    "Ones: 8 + 2 = 10 — write 0, carry 1.",
+    "Tens: 4 + 2 + 1 = 7.",
+    "So 48 + 22 = 70."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_ee7ec514cc",
+   "concept_id": "add_2digit_carry",
+   "prompt": "67 + 33 = ?",
+   "correct_answer": "100",
+   "distractors": [
+    "104",
+    "98",
+    "34"
+   ],
+   "explanation": [
+    "Ones: 7 + 3 = 10 — write 0, carry 1.",
+    "Tens: 6 + 3 + 1 = 10.",
+    "So 67 + 33 = 100."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  }
+ ]
 }

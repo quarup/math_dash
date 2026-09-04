@@ -1,89 +1,91 @@
 {
-  "items": [
-    {
-      "id": "deepmind_mathematics_dataset_arith_c8fb09d298",
-      "concept_id": "sub_within_5",
-      "prompt": "1 − 0 = ?",
-      "correct_answer": "1",
-      "distractors": [
-        "4",
-        "2",
-        "6"
-      ],
-      "explanation": [
-        "1 − 0 = 1"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_48f89fbf47",
-      "concept_id": "sub_within_5",
-      "prompt": "4 − 0 = ?",
-      "correct_answer": "4",
-      "distractors": [
-        "7",
-        "3",
-        "1"
-      ],
-      "explanation": [
-        "4 − 0 = 4"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_f03738e96e",
-      "concept_id": "sub_within_5",
-      "prompt": "4 − 3 = ?",
-      "correct_answer": "1",
-      "distractors": [
-        "7",
-        "2",
-        "5"
-      ],
-      "explanation": [
-        "4 − 3 = 1"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_508083ed8c",
-      "concept_id": "sub_within_5",
-      "prompt": "3 − 3 = ?",
-      "correct_answer": "0",
-      "distractors": [
-        "4",
-        "2",
-        "6"
-      ],
-      "explanation": [
-        "3 − 3 = 0"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    },
-    {
-      "id": "deepmind_mathematics_dataset_arith_9d781b62cd",
-      "concept_id": "sub_within_5",
-      "prompt": "3 − 1 = ?",
-      "correct_answer": "2",
-      "distractors": [
-        "4",
-        "3",
-        "1"
-      ],
-      "explanation": [
-        "3 − 1 = 2"
-      ],
-      "source": "deepmind_mathematics_dataset",
-      "source_module": "arithmetic.add_or_sub",
-      "license": "Apache-2.0"
-    }
-  ]
+ "items": [
+  {
+   "id": "deepmind_mathematics_dataset_arith_c8fb09d298",
+   "concept_id": "sub_within_5",
+   "prompt": "1 − 0 = ?",
+   "correct_answer": "1",
+   "distractors": [
+    "4",
+    "2",
+    "6"
+   ],
+   "explanation": [
+    "Taking away 0 changes nothing: 1 − 0 = 1."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_48f89fbf47",
+   "concept_id": "sub_within_5",
+   "prompt": "4 − 0 = ?",
+   "correct_answer": "4",
+   "distractors": [
+    "7",
+    "3",
+    "1"
+   ],
+   "explanation": [
+    "Taking away 0 changes nothing: 4 − 0 = 4."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_f03738e96e",
+   "concept_id": "sub_within_5",
+   "prompt": "4 − 3 = ?",
+   "correct_answer": "1",
+   "distractors": [
+    "7",
+    "2",
+    "5"
+   ],
+   "explanation": [
+    "Start at 4 and count back 3: 3, 2, 1.",
+    "4 − 3 = 1."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_508083ed8c",
+   "concept_id": "sub_within_5",
+   "prompt": "3 − 3 = ?",
+   "correct_answer": "0",
+   "distractors": [
+    "4",
+    "2",
+    "6"
+   ],
+   "explanation": [
+    "Taking away all 3 leaves nothing: 3 − 3 = 0."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  },
+  {
+   "id": "deepmind_mathematics_dataset_arith_9d781b62cd",
+   "concept_id": "sub_within_5",
+   "prompt": "3 − 1 = ?",
+   "correct_answer": "2",
+   "distractors": [
+    "4",
+    "3",
+    "1"
+   ],
+   "explanation": [
+    "Start at 3 and count back 1: 2.",
+    "3 − 1 = 2."
+   ],
+   "source": "deepmind_mathematics_dataset",
+   "source_module": "arithmetic.add_or_sub",
+   "license": "Apache-2.0"
+  }
+ ]
 }
