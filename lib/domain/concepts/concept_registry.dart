@@ -1235,8 +1235,10 @@ const List<Concept> allConcepts = [
     categoryRowOrder: 32,
   ),
   Concept(
+    // Named for what the generator actually asks (single-level parens)
+    // — "Brackets and braces" promised nesting it never showed.
     id: 'nested_grouping',
-    name: 'Brackets and braces',
+    name: 'Parentheses first',
     shortLabel: 'parens',
     categoryId: 'mult_div',
     primaryGrade: 5,
@@ -3620,8 +3622,11 @@ const List<Concept> allConcepts = [
     categoryRowOrder: 35,
   ),
   Concept(
+    // Neutral name: the screen title showed the concept name, and
+    // "System with no solution" actively misled on instances whose
+    // correct answer is "Exactly one solution".
     id: 'inspect_system_no_solution',
-    name: 'System with no solution',
+    name: 'How many solutions?',
     shortLabel: 'sys soln?',
     categoryId: 'prealgebra',
     primaryGrade: 8,

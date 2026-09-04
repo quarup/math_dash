@@ -90,16 +90,16 @@ void main() {
   });
 
   group('area_polygon_decompose', () {
-    test('answer = a + b drawn from the prompt', () {
+    test('answer = w·h + base·height/2 from the stated dimensions', () {
       for (var i = 0; i < _iterations; i++) {
         final q = _gen(registry, 'area_polygon_decompose', i);
         final nums = RegExp(
           r'\d+',
         ).allMatches(q.prompt).map((m) => int.parse(m.group(0)!)).toList();
-        expect(nums.length, greaterThanOrEqualTo(2));
-        final a = nums[0];
-        final b = nums[1];
-        expect(int.parse(q.correctAnswer), a + b);
+        expect(nums, hasLength(4), reason: q.prompt);
+        final [w, h, base, triH] = nums;
+        expect(base.isEven, isTrue, reason: 'triangle area must be whole');
+        expect(int.parse(q.correctAnswer), w * h + base * triH ~/ 2);
         _expectThreeDistinctDistractors(q);
       }
     });

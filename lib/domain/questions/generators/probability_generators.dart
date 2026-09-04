@@ -140,7 +140,11 @@ GeneratedQuestion probabilitySimpleEvent(Random rand) {
     explanation: [
       'P = favourable ÷ total.',
       'Favourable: $a ${colors.$1}; total: $a + $b = $total.',
-      '$a/$total reduced = $correct.',
+      // No "reduced =" no-op when the raw fraction is already reduced.
+      if ('$a/$total' == correct)
+        'P = $correct.'
+      else
+        '$a/$total reduced = $correct.',
     ],
     answerFormat: AnswerFormat.fraction,
     // Shape `any`: the prompt never demands simplest form, so a typed

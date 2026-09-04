@@ -864,10 +864,10 @@ GeneratedQuestion repeatingDecimalRecognize(Random rand) {
   } while (Fraction(numerator, denominator).reduce().denominator !=
       denominator);
   final correct = isTerminating ? 'terminating' : 'repeating';
+  // Binary question, binary choices. 'neither' and 'both' are
+  // impossible for any fraction and read as filler.
   final distractors = <String>[
     if (isTerminating) 'repeating' else 'terminating',
-    'neither',
-    'both',
   ];
 
   return GeneratedQuestion(
@@ -923,7 +923,12 @@ GeneratedQuestion repeatingDecimalToFraction(Random rand) {
     distractors: distractors,
     explanation: [
       'Put the repeating digit over 9, then reduce.',
-      '${pick.$1} = ${pick.$1[2]}/9 = $correct.',
+      // Skip the "= x/9" hop when x/9 already IS the reduced answer —
+      // "5/9 = 5/9" read as a degenerate no-op.
+      if ('${pick.$1[2]}/9' == correct)
+        '${pick.$1} = $correct.'
+      else
+        '${pick.$1} = ${pick.$1[2]}/9 = $correct.',
     ],
     answerFormat: AnswerFormat.fraction,
     answerShape: AnswerShape.exactString,

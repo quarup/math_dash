@@ -26,10 +26,13 @@ typedef _Scenario = ({
 // The prompt must NOT state the relation in words ("The toy is in the
 // box…" hands over the answer) — the picture is the only source.
 const List<_Scenario> _positionalScenarios = [
+  // Every subject/reference here has an emoji glyph in the
+  // PositionalScene widget, so pre-readers see the objects themselves
+  // rather than labelled rectangles they can't decode.
   (
-    prompt: 'Look at the picture. Where is the book?',
-    subject: 'book',
-    reference: 'table',
+    prompt: 'Look at the picture. Where is the butterfly?',
+    subject: 'butterfly',
+    reference: 'flower',
     relation: PositionRelation.above,
   ),
   (

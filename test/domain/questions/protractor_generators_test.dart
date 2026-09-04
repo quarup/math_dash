@@ -38,17 +38,20 @@ void main() {
   });
 
   group('draw_angle_protractor', () {
-    test('label shown inside wedge; answer = angleDeg', () {
-      for (var i = 0; i < _iterations; i++) {
-        final q = _gen(registry, 'draw_angle_protractor', i);
-        final spec = _spec(q);
-        expect(spec.angleDeg, inInclusiveRange(15, 165));
-        expect(spec.angleDeg % 5, 0);
-        expect(spec.angleDeg, isNot(90));
-        expect(spec.showAngleLabel, isTrue);
-        expect(int.parse(q.correctAnswer), spec.angleDeg);
-        _expectThreeDistinctDistractors(q);
-      }
-    });
+    test(
+      'no label inside wedge (it printed the answer); answer = angleDeg',
+      () {
+        for (var i = 0; i < _iterations; i++) {
+          final q = _gen(registry, 'draw_angle_protractor', i);
+          final spec = _spec(q);
+          expect(spec.angleDeg, inInclusiveRange(15, 165));
+          expect(spec.angleDeg % 5, 0);
+          expect(spec.angleDeg, isNot(90));
+          expect(spec.showAngleLabel, isFalse);
+          expect(int.parse(q.correctAnswer), spec.angleDeg);
+          _expectThreeDistinctDistractors(q);
+        }
+      },
+    );
   });
 }

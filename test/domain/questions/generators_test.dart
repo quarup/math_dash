@@ -294,13 +294,16 @@ void main() {
   });
 
   group('Fractions', () {
-    test('fraction_a_over_b: proper fraction + bar diagram', () {
+    test('fraction_a_over_b: blank-numerator prompt + bar diagram', () {
       for (var i = 0; i < _iterations; i++) {
         final q = _gen(registry, 'fraction_a_over_b', i);
         expect(q.diagram, isA<FractionBarSpec>());
         final spec = q.diagram! as FractionBarSpec;
         expect(spec.numerator, inInclusiveRange(1, spec.denominator - 1));
-        expect(q.correctAnswer, '${spec.numerator}/${spec.denominator}');
+        // ___/d template: the typed answer is the numerator alone, so
+        // the keypad can't reject an equivalent simplified fraction.
+        expect(q.prompt, endsWith('___/${spec.denominator}'));
+        expect(q.correctAnswer, '${spec.numerator}');
         expect(q.distractors, hasLength(3));
         expect(q.distractors.toSet(), hasLength(3));
       }

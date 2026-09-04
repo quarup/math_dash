@@ -147,7 +147,9 @@ void main() {
         final q = _gen(registry, 'classify_2d_hierarchy', i);
         expect(['True', 'False'], contains(q.correctAnswer));
         expect(q.answerFormat, AnswerFormat.string);
-        _expectThreeDistinctDistractors(q);
+        // Binary framing gets binary choices: only the opposite verdict.
+        final opposite = q.correctAnswer == 'True' ? 'False' : 'True';
+        expect(q.distractors, [opposite]);
         seen.add(q.correctAnswer);
       }
       expect(seen, containsAll(<String>['True', 'False']));

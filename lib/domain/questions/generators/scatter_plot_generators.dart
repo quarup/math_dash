@@ -61,45 +61,15 @@ GeneratedQuestion scatterPlotConstruct(Random rand) {
       if (i != missingIdx) ScatterPlotPoint(x: pairs[i][0], y: pairs[i][1]),
   ];
 
-  // Distractors:
-  //   - (y, x) — swapped coordinates (must be off the existing plotted
-  //     points and not the missing point itself; guaranteed by x != y)
-  //   - (x + 1, y) — off-by-one in x
-  //   - (x, y + 1) — off-by-one in y (or y - 1 if y == 10 to stay in [1, 10])
-  final candidates = <List<int>>[
-    [my, mx],
-    [mx + 1, my],
-    if (my < 10) [mx, my + 1] else [mx, my - 1],
-    [mx - 1, my],
-    if (my > 1) [mx, my - 1],
-  ];
-
-  // Pick the first 3 distinct candidates that don't collide with the
-  // correct answer or with each other or with plotted points (since a
-  // plotted point can't be the "missing" answer).
-  final plottedKeys = {
-    for (final p in plotted) '${p.x},${p.y}',
-  };
-  final correctKey = '$mx,$my';
-  final seen = <String>{correctKey, ...plottedKeys};
-  final distractorPairs = <List<int>>[];
-  for (final c in candidates) {
-    if (distractorPairs.length >= 3) break;
-    final key = '${c[0]},${c[1]}';
-    if (seen.add(key)) distractorPairs.add(c);
-  }
-  // Fallback: walk a small neighbourhood if any of the misconception
-  // candidates collide and we end up short of 3.
-  for (final dx in <int>[2, -2, 1, -1]) {
-    if (distractorPairs.length >= 3) break;
-    for (final dy in <int>[2, -2, 1, -1]) {
-      if (distractorPairs.length >= 3) break;
-      final c = [mx + dx, my + dy];
-      if (c[0] < 0 || c[1] < 0) continue;
-      final key = '${c[0]},${c[1]}';
-      if (seen.add(key)) distractorPairs.add(c);
-    }
-  }
+  // Distractors are three of the four pairs that ARE plotted. Every
+  // choice then appears in the listed pairs, so the kid must check the
+  // plot dot-by-dot — off-by-one coordinates that never appeared in
+  // the list let the answer be deduced without looking at the plot.
+  final distractorPairs = <List<int>>[
+    for (var i = 0; i < pairs.length; i++)
+      if (i != missingIdx) pairs[i],
+  ]..shuffle(rand);
+  distractorPairs.removeRange(3, distractorPairs.length);
 
   final tableRows = pairs.map((p) => '(${p[0]}, ${p[1]})').join('; ');
 

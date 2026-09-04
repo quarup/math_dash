@@ -45,13 +45,19 @@ class AreaGrid extends StatelessWidget {
       );
     }
 
+    // With separateRows, each row gets a gap below it so it reads as
+    // one distinct group rather than a slice of a fused block. Rows are
+    // fixed-height so the gaps don't steal space from the last row.
+    final rowGap = spec.separateRows ? 8.0 : 0.0;
     return SizedBox(
       width: cellSize * spec.cols,
-      height: cellSize * spec.rows,
+      height: cellSize * spec.rows + rowGap * (spec.rows - 1),
       child: Column(
         children: List.generate(spec.rows, (r) {
           final inRow = r < spec.shadedRows;
-          return Expanded(
+          return Container(
+            height: cellSize,
+            margin: EdgeInsets.only(top: r == 0 ? 0 : rowGap),
             child: Row(
               children: List.generate(spec.cols, (c) {
                 final inCol = c < spec.shadedCols;

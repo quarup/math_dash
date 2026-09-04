@@ -305,6 +305,11 @@ _buildFractionalDataset(Random rand) {
 String _formatInternal(int internal, int denom) =>
     Fraction(internal, denom).toMixed();
 
+/// Prompt-display variant of a mixed number: the whole–fraction gap is
+/// a no-break space so "1 1/4" can't wrap into "1 / 1/4" mid-number.
+/// Display only — answers keep the plain space the keypad types.
+String _noWrap(String mixed) => mixed.replaceAll(' ', ' ');
+
 // ─────────────────────────────────────────────────────────────────────────
 // line_plot_fractional (Grade 4)
 // ─────────────────────────────────────────────────────────────────────────
@@ -339,7 +344,7 @@ GeneratedQuestion lineplotFractional(Random rand) {
     conceptId: 'line_plot_fractional',
     prompt:
         'How many ${d.theme.itemPlural} are '
-        '$askedDisplay ${d.theme.measureUnit} long?',
+        '${_noWrap(askedDisplay)} ${d.theme.measureUnit} long?',
     diagram: DotPlotSpec(
       title: d.theme.title,
       axisLabel: d.theme.axisLabel,
@@ -412,7 +417,7 @@ GeneratedQuestion lineplotFractionWord(Random rand) {
       conceptId: 'line_plot_fraction_word',
       prompt:
           'What is the total ${d.theme.measureNoun} of all '
-          '${d.theme.itemPlural} that are $askedDisplay '
+          '${d.theme.itemPlural} that are ${_noWrap(askedDisplay)} '
           '${d.theme.measureUnit}?',
       diagram: DotPlotSpec(
         title: d.theme.title,

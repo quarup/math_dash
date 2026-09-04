@@ -213,8 +213,11 @@ GeneratedQuestion readFirstQuadrant(Random rand) {
 /// neither is allowed to be 0 (axis points are visually ambiguous on a
 /// small grid).
 GeneratedQuestion plotFourQuadrants(Random rand) {
+  // Target in [-4, 4] and the distractor box one cell inside the ±5
+  // frame, so no dot ever sits on the grid edge (edge dots rendered
+  // half-clipped and their labels crowded the frame corner).
   int pickNonZero() {
-    final n = rand.nextInt(11) - 5; // -5..5
+    final n = rand.nextInt(9) - 4; // -4..4
     return n == 0 ? (rand.nextBool() ? 1 : -1) : n;
   }
 
@@ -229,10 +232,10 @@ GeneratedQuestion plotFourQuadrants(Random rand) {
     x,
     y,
     rand,
-    minX: -5,
-    maxX: 5,
-    minY: -5,
-    maxY: 5,
+    minX: -4,
+    maxX: 4,
+    minY: -4,
+    maxY: 4,
   );
 
   final allPoints = <List<int>>[
@@ -373,12 +376,16 @@ GeneratedQuestion pythagoreanDistanceCoords(Random rand) {
 
   const lo = -8;
   const hi = 8;
-  // Pick ax so that ax + dx stays in [lo, hi].
-  final axMin = dx >= 0 ? lo : lo - dx;
-  final axMax = dx >= 0 ? hi - dx : hi;
+  // Keep both endpoints one cell inside the frame — a dot ON the
+  // boundary renders half-clipped against the plot edge.
+  const inLo = lo + 1;
+  const inHi = hi - 1;
+  // Pick ax so that both ax and ax + dx stay in [inLo, inHi].
+  final axMin = dx >= 0 ? inLo : inLo - dx;
+  final axMax = dx >= 0 ? inHi - dx : inHi;
   final ax = axMin + rand.nextInt(axMax - axMin + 1);
-  final ayMin = dy >= 0 ? lo : lo - dy;
-  final ayMax = dy >= 0 ? hi - dy : hi;
+  final ayMin = dy >= 0 ? inLo : inLo - dy;
+  final ayMax = dy >= 0 ? inHi - dy : inHi;
   final ay = ayMin + rand.nextInt(ayMax - ayMin + 1);
   final bx = ax + dx;
   final by = ay + dy;

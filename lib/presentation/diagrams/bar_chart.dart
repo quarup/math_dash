@@ -29,7 +29,8 @@ class BarChart extends StatelessWidget {
     const leftGutter = 36.0;
     const rightGutter = 12.0;
     const topGutter = 28.0;
-    const bottomGutter = 30.0;
+    // Tall enough for two-line category labels ("paint cans" wraps).
+    const bottomGutter = 42.0;
     final naturalBars =
         spec.labels.length * barWidth + (spec.labels.length + 1) * barGap;
     return LayoutBuilder(
@@ -167,12 +168,14 @@ class _BarChartPainter extends CustomPainter {
           barPaint,
         );
       }
-      // Category label centred under the bar.
+      // Category label centred under the bar — two lines allowed, so
+      // "paint cans" wraps instead of ellipsising to "paint c…".
       _drawText(
         canvas,
         spec.labels[i],
-        Offset(left + barWidth / 2, plotBottom + 14),
+        Offset(left + barWidth / 2, plotBottom + 18),
         labelStyle,
+        maxLines: 2,
       );
     }
   }
@@ -183,12 +186,13 @@ class _BarChartPainter extends CustomPainter {
     Offset centre,
     TextStyle style, {
     double? maxWidth,
+    int maxLines = 1,
   }) {
     final tp = TextPainter(
       text: TextSpan(text: text, style: style),
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.center,
-      maxLines: 1,
+      maxLines: maxLines,
       ellipsis: '…',
     )..layout(maxWidth: maxWidth ?? math.max(barWidth + barGap, 48));
     tp.paint(

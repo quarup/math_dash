@@ -89,9 +89,13 @@ void main() {
           ];
           // At least one tick has that count (the asked one). Confirm one
           // such tick's display appears in the prompt.
+          // The prompt shows mixed numbers with a no-break space between
+          // whole and fraction (so they can't wrap); normalise it away
+          // before matching.
+          final normalisedPrompt = q.prompt.replaceAll(' ', ' ');
           final matched = candidates.any((v) {
             final s = Fraction(v, spec.denominator).toMixed();
-            return q.prompt.contains(' $s ');
+            return normalisedPrompt.contains(' $s ');
           });
           expect(matched, isTrue, reason: q.prompt);
           _expectThreeDistinctDistractors(q);
@@ -128,7 +132,8 @@ void main() {
             ).toMixed();
             if (expected != correctMixed) continue;
             final display = Fraction(v, spec.denominator).toMixed();
-            if (q.prompt.contains(display)) {
+            // Prompt mixed numbers use a no-break space; normalise.
+            if (q.prompt.replaceAll(' ', ' ').contains(display)) {
               found = true;
               break;
             }

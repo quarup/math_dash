@@ -55,14 +55,14 @@ List<String> _fractionDistractors(
     if (out.length >= 3) break;
     tryAdd(c);
   }
-  // Fallback perturbations.
+  // Fallback perturbations: keep the correct denominator and drift the
+  // top — an off-by-one top is at least a believable slip, while a
+  // drifted denominator (2/13, x/1) read as filler no kid would write.
   for (var i = 0; i < 40 && out.length < 3; i++) {
     final dn = rand.nextInt(5) - 2; // -2..2
-    final dd = rand.nextInt(5) - 2;
     final n2 = correct.numerator + dn;
-    final d2 = correct.denominator + dd;
-    if (d2 <= 0 || n2 == 0 || n2 < 0) continue;
-    tryAdd('$n2/$d2');
+    if (n2 <= 0) continue;
+    tryAdd('$n2/${correct.denominator}');
   }
   while (out.length < 3) {
     // Extreme fallback: just emit unique tiny fractions.
@@ -84,36 +84,28 @@ List<String> _fractionDistractors(
 GeneratedQuestion fractionAOverB(Random rand) {
   final denominator = rand.nextInt(7) + 2; // 2..8
   final numerator = rand.nextInt(denominator - 1) + 1; // 1..denom-1 (proper)
-  final correct = '$numerator/$denominator';
-  final correctF = Fraction(numerator, denominator);
-  final distractors = _fractionDistractors(
-    correctF,
-    [
-      '$denominator/$numerator', // swapped
-      '${numerator + 1}/$denominator',
-      '$numerator/${denominator + 1}',
-      if (numerator > 1) '${numerator - 1}/$denominator',
-      '$numerator/${denominator - 1}',
-    ],
-    rand,
-  );
   return GeneratedQuestion(
     conceptId: 'fraction_a_over_b',
-    // Naming the parts count steers the keypad answer to the depicted
-    // form (4/6, not the equally-true 2/3 that exactString rejects).
-    prompt: 'The bar has $denominator equal parts. What fraction is shaded?',
+    // Blank-numerator template (same pattern as fraction_denom_10_100):
+    // the shape "___/6" pins the depicted denominator, so the keypad
+    // can't reject an equally-true simplified form like 2/3 — the kid
+    // only types the parts count.
+    prompt: 'What fraction of the bar is shaded?\n___/$denominator',
     diagram: FractionBarSpec(
       numerator: numerator,
       denominator: denominator,
     ),
-    correctAnswer: correct,
-    distractors: distractors,
+    correctAnswer: '$numerator',
+    distractors: integerDistractorsWith(
+      numerator,
+      rand,
+      // Complement: counted the un-shaded cells.
+      misconception: denominator - numerator,
+    ),
     explanation: [
       'The bar is split into $denominator equal parts.',
       '$numerator of them are shaded, so it is $numerator/$denominator.',
     ],
-    answerFormat: AnswerFormat.fraction,
-    answerShape: AnswerShape.exactString,
   );
 }
 
@@ -179,9 +171,13 @@ GeneratedQuestion equivalentFractionsVisual(Random rand) {
     prompt:
         'Multiply top and bottom by $multiplier: '
         '$numerator/$denominator = ?',
+    // subdivideAll draws the ×multiplier partition inside every
+    // segment, so the bar shows the equivalence itself: heavy lines
+    // read n/d, light lines read (n·m)/(d·m).
     diagram: FractionBarSpec(
       numerator: numerator,
       denominator: denominator,
+      subdivideAll: multiplier,
     ),
     correctAnswer: correct,
     distractors: distractors,
@@ -596,9 +592,14 @@ GeneratedQuestion subFractionsUnlikeDenom(Random rand) {
   final distractors = _fractionDistractors(
     diffF,
     [
-      '${(n1 - n2).abs()}/${(d1 - d2).abs() == 0 ? d1 : (d1 - d2).abs()}',
+      // Subtracted tops and bottoms separately (0 when tops match — a
+      // kid ignoring denominators writes plain 0, not "0/1").
+      if (n1 == n2)
+        '0'
+      else
+        '${(n1 - n2).abs()}/${(d1 - d2).abs() == 0 ? d1 : (d1 - d2).abs()}',
       '${n1 - n2}/$d1', // subtracted tops, kept one denom
-      '$diffNum/${common + 1}',
+      '$diffNum/${d1 * d2}', // used the product instead of the LCM
       '${diffNum + 1}/$common',
       '${scaled1 + scaled2}/$common', // added instead of subtracted
     ],
@@ -627,21 +628,26 @@ GeneratedQuestion multFractionByWhole(Random rand) {
   final numerator = rand.nextInt(denominator - 1) + 1; // proper
   final productF = Fraction(whole * numerator, denominator);
   final correct = productF.toCanonical();
+  // The prompt demands lowest terms, so every distractor must be in
+  // lowest terms too — unreduced choices (6/6, 3/18) failed the stated
+  // constraint on sight and gave the answer away.
+  final rawCandidates = [
+    '$numerator/${whole * denominator}', // multiplied denom instead of num
+    '${whole + numerator}/$denominator', // added instead of multiplied
+    '${whole * numerator}/${whole * denominator}', // multiplied both
+    '${whole * numerator + 1}/$denominator', // off-by-one num
+    '${whole * numerator}/${denominator + 1}', // off-by-one denom
+  ];
   final distractors = _fractionDistractors(
-    productF,
+    productF.reduce(),
     [
-      '$numerator/${whole * denominator}', // multiplied denom instead of num
-      '${whole + numerator}/$denominator', // added instead of multiplied
-      '${whole * numerator}/${whole * denominator}', // multiplied both
-      '${whole * numerator + 1}/$denominator', // off-by-one num
-      '${whole * numerator}/${denominator + 1}', // off-by-one denom
+      for (final c in rawCandidates) Fraction.tryParse(c)?.toCanonical() ?? c,
     ],
     rand,
   );
   return GeneratedQuestion(
     conceptId: 'mult_fraction_by_whole',
-    prompt:
-        '$whole × $numerator/$denominator = ?\n(Answer in lowest terms.)',
+    prompt: '$whole × $numerator/$denominator = ?\n(Answer in lowest terms.)',
     correctAnswer: correct,
     distractors: distractors,
     explanation: [
@@ -925,6 +931,12 @@ GeneratedQuestion subMixedLikeDenom(Random rand) {
   final correct = diffF.toMixed();
   final borrowed = n1 < n2;
   final wholeDiff = w1 - w2;
+  // Unsimplified difference in the problem's own denominator.
+  final rawWholes = borrowed ? w1 - 1 - w2 : w1 - w2;
+  final rawTop = borrowed ? n1 + denominator - n2 : n1 - n2;
+  final rawMixed = rawWholes == 0
+      ? '$rawTop/$denominator'
+      : '$rawWholes $rawTop/$denominator';
   final distractors = _fractionDistractors(
     diffF,
     [
@@ -953,7 +965,14 @@ GeneratedQuestion subMixedLikeDenom(Random rand) {
         'Now: ${w1 - 1} − $w2 wholes, ${n1 + denominator} − $n2 tops.'
       else
         '$w1 − $w2 = ${w1 - w2}; $n1 − $n2 = ${n1 - n2}.',
-      'Result: $correct.',
+      // Name the unsimplified result before reducing — jumping straight
+      // to the reduced form silently changed denominators mid-problem.
+      if (rawMixed == correct)
+        'Result: $correct.'
+      else ...[
+        'Result: $rawMixed.',
+        'Simplify: $rawMixed = $correct.',
+      ],
     ],
     answerFormat: AnswerFormat.mixedNumber,
   );

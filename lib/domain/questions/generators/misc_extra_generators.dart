@@ -13,30 +13,34 @@ import 'package:math_city/domain/questions/generated_question.dart';
 // am_pm (G2)
 // ─────────────────────────────────────────────────────────────────────────
 
-const _amContexts = [
-  'in the morning',
-  'when the sun comes up',
-  'at sunrise',
-  'before lunch',
-  'at breakfast',
+// Each context carries the clock-hour range it is plausible for —
+// a random hour produced pairings like "5:15 at night", where the cue
+// misleads more than it helps.
+const _amContexts = <(String, int, int)>[
+  ('in the morning', 6, 11),
+  ('when the sun comes up', 5, 7),
+  ('at sunrise', 5, 7),
+  ('before lunch', 10, 11),
+  ('at breakfast', 6, 9),
 ];
-const _pmContexts = [
-  'in the afternoon',
-  'in the evening',
-  'at night',
-  'after lunch',
-  'at sunset',
-  'at dinnertime',
+const _pmContexts = <(String, int, int)>[
+  ('in the afternoon', 1, 4),
+  ('in the evening', 5, 8),
+  ('at night', 9, 11),
+  ('after lunch', 1, 3),
+  ('at sunset', 5, 8),
+  ('at dinnertime', 5, 7),
 ];
 
 /// "8:30 in the morning is ___" → a.m. (or p.m.). Context word
-/// uniquely determines the period; time is decorative.
+/// uniquely determines the period; the hour is drawn from the range
+/// where the context is actually plausible.
 GeneratedQuestion amPm(Random rand) {
   final isAm = rand.nextBool();
-  final ctx = isAm
+  final (ctx, hourLo, hourHi) = isAm
       ? _amContexts[rand.nextInt(_amContexts.length)]
       : _pmContexts[rand.nextInt(_pmContexts.length)];
-  final hour = rand.nextInt(11) + 1; // 1..11
+  final hour = rand.nextInt(hourHi - hourLo + 1) + hourLo;
   final minute = rand.nextInt(60);
   final mm = minute.toString().padLeft(2, '0');
   final correct = isAm ? 'a.m.' : 'p.m.';

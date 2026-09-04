@@ -227,7 +227,8 @@ GeneratedQuestion multistepRatioWord(Random rand) {
       conceptId: 'multistep_ratio_word',
       prompt:
           '$name drives at $rate1 $unit per hour for $time1 hours, then at '
-          '$rate2 $unit per hour for $time2 more hours. '
+          '$rate2 $unit per hour for $time2 more '
+          '${time2 == 1 ? 'hour' : 'hours'}. '
           'How many $unit does $name drive in total?',
       correctAnswer: '$correct',
       distractors: integerDistractorsWith(

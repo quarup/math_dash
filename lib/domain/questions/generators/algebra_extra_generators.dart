@@ -38,7 +38,10 @@ GeneratedQuestion missingAddendWithin20(Random rand) {
       // Misconception: added instead of subtracted.
       misconception: a + sum,
     ),
-    explanation: ['$a + $correct = $sum'],
+    explanation: [
+      'To find the missing part, subtract: $sum − $a = $correct.',
+      'Check: $a + $correct = $sum.',
+    ],
   );
 }
 
@@ -61,7 +64,10 @@ GeneratedQuestion missingFactor(Random rand) {
       rand,
       misconception: product - known, // subtracted instead of divided
     ),
-    explanation: ['$known × $answer = $product'],
+    explanation: [
+      'To find the missing factor, divide: $product ÷ $known = $answer.',
+      'Check: $known × $answer = $product.',
+    ],
   );
 }
 
@@ -189,13 +195,27 @@ GeneratedQuestion writeExpressionFromWords(Random rand) {
     '$b ÷ n',
   }..remove(correct);
   final list = pool.toList()..shuffle(rand);
+  // The reasoning line targets the exact misread the distractors bait —
+  // especially word order in "less than", where the named number comes
+  // SECOND in the expression.
+  final reasoning = switch (tmpl.$2) {
+    '+' => 'A sum adds the two parts: n + $b.',
+    'plus_after' =>
+      '"$b more than n" starts at n and adds $b, so it is n + $b.',
+    '-' => 'A difference subtracts in the order named: n first, then − $b.',
+    'minus_after' =>
+      '"$b less than n" starts at n and takes $b away: n − $b. '
+          'The order flips — it is not $b − n.',
+    '*' || 'mult' => 'A product multiplies the two parts: $b·n.',
+    _ => '"n divided by $b" keeps that order: n ÷ $b, not $b ÷ n.',
+  };
   return GeneratedQuestion(
     conceptId: 'write_expression_from_words',
     prompt: 'Which expression matches "$phrase"?',
     correctAnswer: correct,
     answerFormat: AnswerFormat.string,
     distractors: list.take(3).toList(),
-    explanation: ['"$phrase" → $correct'],
+    explanation: [reasoning],
   );
 }
 
@@ -245,8 +265,7 @@ GeneratedQuestion identifyPartsExpression(Random rand) {
     // facts taught none of them.
     explanation: [
       switch (flavor) {
-        0 =>
-          'The coefficient is the number multiplying x — here it is $a.',
+        0 => 'The coefficient is the number multiplying x — here it is $a.',
         1 => 'The constant is the term with no x — here it is $b.',
         _ => '${a}x and $b are the two terms (joined by +).',
       },

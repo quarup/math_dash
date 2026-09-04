@@ -55,12 +55,18 @@ GeneratedQuestion drawAngleProtractor(Random rand) {
   do {
     a = (rand.nextInt(31) + 3) * 5; // 15..165, step 5
   } while (a == 90);
+  final scaleWarning =
+      'Use the scale whose 0 is on the first ray — the other scale '
+      'wrongly gives ${180 - a}°.';
   return GeneratedQuestion(
     conceptId: 'draw_angle_protractor',
+    // No label inside the wedge — printing the answer there reduced the
+    // task to reading it back. The kid reads the scale where the second
+    // ray crosses instead, so the 180−a wrong-scale trap is real.
     prompt:
-        'A student set up the protractor and labelled the angle inside '
-        'the wedge. What angle did they draw, in degrees?',
-    diagram: ProtractorSpec(angleDeg: a, showAngleLabel: true),
+        'A student drew this angle with a protractor. Read the scale: '
+        'what angle did they draw, in degrees?',
+    diagram: ProtractorSpec(angleDeg: a),
     correctAnswer: '$a',
     distractors: integerDistractorsWith(
       a,
@@ -68,7 +74,8 @@ GeneratedQuestion drawAngleProtractor(Random rand) {
       misconception: 180 - a,
     ),
     explanation: [
-      'The label $a° inside the wedge shows the angle they drew.',
+      'One ray points at 0°; the other crosses the scale at $a°.',
+      scaleWarning,
     ],
   );
 }

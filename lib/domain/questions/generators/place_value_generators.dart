@@ -187,6 +187,7 @@ GeneratedQuestion _roundingGen({
 }) {
   final correct = _roundToPlace(n, place);
   final factor = _pow10(place);
+  final decidingDigit = (n ~/ _pow10(place - 1)) % 10;
   // Distractors: the next multiple in either direction, plus a "rounded
   // wrong direction" misconception.
   final misconception = correct == n - (n % factor)
@@ -199,6 +200,11 @@ GeneratedQuestion _roundingGen({
   final misconceptionStr = misconception.toString().length > 3
       ? formatWithCommas(misconception)
       : '$misconception';
+  // The digit rule, then the closeness fact it implements.
+  final digitRule =
+      'Look at the digit one place right of the $placeLabel place: '
+      'it is $decidingDigit, so round '
+      '${decidingDigit >= 5 ? "up" : "down"}.';
 
   return GeneratedQuestion(
     conceptId: conceptId,
@@ -211,6 +217,7 @@ GeneratedQuestion _roundingGen({
       rand: rand,
     ),
     explanation: [
+      digitRule,
       '$formatted is closer to $correctStr than to $misconceptionStr.',
     ],
   );

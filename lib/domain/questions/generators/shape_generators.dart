@@ -97,8 +97,7 @@ GeneratedQuestion identifyShape3d(Random rand) {
       switch (answer) {
         'cube' => 'All flat square faces — a cube.',
         'sphere' => 'Perfectly round all over, like a ball — a sphere.',
-        'cylinder' =>
-          'Two flat circle ends with a curved side — a cylinder.',
+        'cylinder' => 'Two flat circle ends with a curved side — a cylinder.',
         _ => 'One flat circle end rising to a point — a cone.',
       },
     ],
@@ -312,13 +311,10 @@ GeneratedQuestion classify2dHierarchy(Random rand) {
     prompt: 'True or False: every $child is a $parent.',
     diagram: ShapeSpec(kind: kind),
     correctAnswer: answer,
-    // True/False question — distractor pool is fixed to the opposite
-    // plus two confidence-builders so the MC has 4 distinct choices.
-    distractors: stringDistractorsFromPool(
-      answer,
-      const ['True', 'False', 'Only sometimes', 'Cannot tell'],
-      rand,
-    ),
+    // A "True or False" prompt gets exactly True and False — padding
+    // with 'Only sometimes'/'Cannot tell' contradicted the binary
+    // framing.
+    distractors: [if (isTrue) 'False' else 'True'],
     answerFormat: AnswerFormat.string,
     explanation: [
       if (isTrue)

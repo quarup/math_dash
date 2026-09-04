@@ -246,32 +246,38 @@ GeneratedQuestion surfaceAreaFromNet(Random rand) {
 /// "A polygon can be split into a rectangle of area A and a triangle
 /// of area B. What is the total area?" → A + B. CCSS 6.G.A.1.
 ///
-/// Text-only decomposition: the prompt specifies the two part areas and
-/// the kid sums them. No diagram — the generic unlabelled trapezoid it
-/// used to show had no split line and didn't match the described
-/// rectangle-plus-triangle decomposition, which misleads more than a
-/// blank space does.
+/// Text-only decomposition: the prompt gives each part's DIMENSIONS
+/// (not its precomputed area), so the kid computes w·h and b·h/2 and
+/// sums — stating both areas reduced the item to one addition. Still
+/// no diagram — the generic unlabelled trapezoid it used to show had
+/// no split line and didn't match the described rectangle-plus-triangle
+/// decomposition, which misleads more than a blank space does.
 GeneratedQuestion areaPolygonDecompose(Random rand) {
-  // Rectangle area ∈ 6..60.
-  final a = (rand.nextInt(15) + 3) * 2;
-  // Triangle area ∈ 3..30.
-  final b = rand.nextInt(28) + 3;
-  final total = a + b;
+  final w = rand.nextInt(7) + 3; // 3..9
+  final h = rand.nextInt(6) + 2; // 2..7
+  final rectArea = w * h;
+  // Even base so the triangle area is a whole number.
+  final base = (rand.nextInt(4) + 1) * 2; // 2, 4, 6, 8
+  final triH = rand.nextInt(5) + 2; // 2..6
+  final triArea = base * triH ~/ 2;
+  final total = rectArea + triArea;
   return GeneratedQuestion(
     conceptId: 'area_polygon_decompose',
     prompt:
-        'A polygon is split into a rectangle of area $a square units and '
-        'a triangle of area $b square units. What is the total area of '
-        'the polygon?',
+        'A polygon is split into a rectangle $w units by $h units and a '
+        'triangle with base $base units and height $triH units. What is '
+        'the total area of the polygon, in square units?',
     correctAnswer: '$total',
     distractors: integerDistractorsWith(
       total,
       rand,
-      // Misconception: subtracted instead of added.
-      misconception: (a - b).abs(),
+      // Misconception: forgot the ÷2 on the triangle.
+      misconception: rectArea + base * triH,
     ),
     explanation: [
-      'Decomposition: $a + $b = $total square units.',
+      'Rectangle: $w × $h = $rectArea square units.',
+      'Triangle: $base × $triH ÷ 2 = $triArea square units.',
+      'Total: $rectArea + $triArea = $total square units.',
     ],
   );
 }

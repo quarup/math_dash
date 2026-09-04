@@ -115,12 +115,25 @@ GeneratedQuestion classify2dByLinesAngles(Random rand) {
   final flavour = rand.nextInt(2);
   late final bool isTrue;
   late final String prompt;
+  late final String reason;
   if (flavour == 0) {
     isTrue = kind == ShapeKind.square || kind == ShapeKind.rectangle;
     prompt = 'Does this quadrilateral have all right angles?';
+    // Name the check — "it does" restated the verdict without saying
+    // what to look at.
+    reason = isTrue
+        ? 'check each corner of the ${kind.displayName}: all four are '
+              'square 90° corners.'
+        : 'check each corner of the ${kind.displayName}: some corners '
+              'are not square 90° corners.';
   } else {
     isTrue = kind == ShapeKind.square || kind == ShapeKind.rhombus;
     prompt = 'Does this quadrilateral have all sides the same length?';
+    reason = isTrue
+        ? 'compare the sides of the ${kind.displayName}: all four are '
+              'the same length.'
+        : 'compare the sides of the ${kind.displayName}: they are not '
+              'all the same length.';
   }
   // Reasoned yes/no about the drawn shape — the filler choices were
   // never correct, and the explanation now talks about the shape ON
@@ -133,11 +146,6 @@ GeneratedQuestion classify2dByLinesAngles(Random rand) {
     correctAnswer: answer,
     distractors: [if (isTrue) 'No' else 'Yes'],
     answerFormat: AnswerFormat.string,
-    explanation: [
-      if (isTrue)
-        'Yes — look at the ${kind.displayName} shown: it does.'
-      else
-        'No — look at the ${kind.displayName} shown: it does not.',
-    ],
+    explanation: ['${isTrue ? 'Yes' : 'No'} — $reason'],
   );
 }

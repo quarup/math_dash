@@ -233,10 +233,10 @@ GeneratedQuestion functionDefinitionCheck(Random rand) {
 
   final setText = '{${pairs.map((p) => _coord(p[0], p[1])).join(', ')}}';
   final correct = isFunction ? 'Yes' : 'No';
+  // Yes/No only — a fixed set of pairs is never 'Sometimes' a function,
+  // and with the whole set shown "Can't tell" is never right either.
   final distractors = <String>[
     if (isFunction) 'No' else 'Yes',
-    "Can't tell",
-    'Sometimes',
   ];
 
   return GeneratedQuestion(

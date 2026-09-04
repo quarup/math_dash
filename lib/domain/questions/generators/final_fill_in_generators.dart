@@ -50,7 +50,12 @@ GeneratedQuestion compareGroupsByCount(Random rand) {
       rand,
     ),
     answerFormat: AnswerFormat.string,
-    explanation: ['$a vs $b → ${aWins ? a : b} is more.'],
+    explanation: [
+      // Name the groups, not just the counts — the choices are group
+      // names, so the kid needs the counts mapped back to them.
+      'Group A has $a and Group B has $b.',
+      '${aWins ? a : b} is more than ${aWins ? b : a}, so $answer has more.',
+    ],
   );
 }
 
@@ -76,6 +81,9 @@ GeneratedQuestion measureLengthUnits(Random rand) {
   // Pick a ruler total just larger than the marked length so the
   // remaining unmarked space is visible too.
   final total = (marked + 2).clamp(6, 12);
+  final howLong =
+      'Count the same-size blocks in the bar — the $obj is '
+      '$marked blocks long.';
   return GeneratedQuestion(
     conceptId: 'measure_length_units',
     prompt:
@@ -94,9 +102,7 @@ GeneratedQuestion measureLengthUnits(Random rand) {
       rand,
       misconception: marked + 1,
     ),
-    explanation: [
-      'Count the unit blocks under the bar — the $obj spans $marked.',
-    ],
+    explanation: [howLong],
   );
 }
 
@@ -123,10 +129,13 @@ GeneratedQuestion volumeComposite(Random rand) {
   final total = v1 + v2;
   return GeneratedQuestion(
     conceptId: 'volume_composite',
+    // "measures … units" — attaching "cubic units" to the dimensions
+    // ("is 4 × 5 × 2 cubic units") was a units error; the volume is
+    // cubic, the edge lengths aren't.
     prompt:
         'A composite figure is made of two rectangular prisms. The first '
-        'is $l1 × $w1 × $h1 cubic units. The second is $l2 × $w2 × $h2 '
-        'cubic units. What is the total volume?',
+        'measures $l1 × $w1 × $h1 units. The second measures '
+        '$l2 × $w2 × $h2 units. What is the total volume in cubic units?',
     correctAnswer: '$total',
     distractors: integerDistractorsWith(
       total,

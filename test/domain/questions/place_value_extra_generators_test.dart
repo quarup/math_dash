@@ -210,7 +210,11 @@ void main() {
         expect(b, inInclusiveRange(100, 999));
         final expected = isGreater ? max(a, b) : min(a, b);
         expect(int.parse(q.correctAnswer), expected);
-        _expectThreeDistinctDistractors(q);
+        // Binary compare: the only distractor is the pair's other
+        // number (off-pair numbers were eliminable without comparing).
+        final wrong = isGreater ? min(a, b) : max(a, b);
+        expect(q.distractors, ['$wrong']);
+        expect(q.multipleChoiceOnly, isTrue);
       }
     });
   });

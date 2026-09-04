@@ -513,8 +513,10 @@ GeneratedQuestion parallelLinesTransversal(Random rand) {
     '${isSupplementary ? a : 180 - a}',
     // Misconception: complementary.
     if (a < 90) '${90 - a}',
-    // Misconception: full turn.
-    '${360 - a}',
+    // Near-misses. (360 − a was here once, but no angle at a
+    // transversal crossing exceeds 180° — it was eliminable on sight.)
+    '${answer + 10}',
+    '${answer - 10}',
   ];
 
   return GeneratedQuestion(

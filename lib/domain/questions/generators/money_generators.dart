@@ -55,8 +55,7 @@ String _coinName(MoneyDenom d) => switch (d) {
   _ => throw ArgumentError('not a coin: $d'),
 };
 
-String _centsPhrase(int cents) =>
-    cents == 1 ? '1 cent' : '$cents cents';
+String _centsPhrase(int cents) => cents == 1 ? '1 cent' : '$cents cents';
 
 // ─────────────────────────────────────────────────────────────────────────
 // count_coins (G2) — sum a small collection of coins
@@ -156,9 +155,26 @@ GeneratedQuestion countBillsCoins(Random rand) {
   final correct = _formatCents(total);
   // Misconception: forgot to convert dollars to cents — added bill face
   // dollars + coin cents directly (e.g. $$1 + 25¢ + 10¢ = "1 + 35 = 36").
-  final misconceptionVal =
-      items.where((d) => d.isCoin).fold<int>(0, (a, d) => a + d.cents) +
-      items.where((d) => !d.isCoin).fold<int>(0, (a, d) => a + d.cents ~/ 100);
+  final coinTotal = items
+      .where((d) => d.isCoin)
+      .fold<int>(0, (a, d) => a + d.cents);
+  final billTotal = total - coinTotal;
+  final misconceptionVal = coinTotal + billTotal ~/ 100;
+  // Worked sum, bills then coins, mirroring the sorted diagram:
+  // "$10 + $10 = $20" / "10¢ + 10¢ = 20¢" / "$20 + 20¢ = $20.20".
+  final billSum = items
+      .where((d) => !d.isCoin)
+      .map((d) => _formatCents(d.cents))
+      .join(' + ');
+  final coinSum = items
+      .where((d) => d.isCoin)
+      .map((d) => _formatCents(d.cents))
+      .join(' + ');
+  final billsLine = 'Bills: $billSum = ${_formatCents(billTotal)}.';
+  final coinsLine = 'Coins: $coinSum = ${_formatCents(coinTotal)}.';
+  final togetherLine =
+      'Together: ${_formatCents(billTotal)} + ${_formatCents(coinTotal)} '
+      '= ${_formatCents(total)}.';
   return GeneratedQuestion(
     conceptId: 'count_bills_coins',
     prompt: 'What is the total amount of money shown?',
@@ -171,9 +187,7 @@ GeneratedQuestion countBillsCoins(Random rand) {
       _formatCents(total + 100),
       if (total > 100) _formatCents(total - 100),
     ]),
-    explanation: [
-      'Add the bills and coins together → ${_formatCents(total)}.',
-    ],
+    explanation: [billsLine, coinsLine, togetherLine],
     answerFormat: AnswerFormat.string,
   );
 }

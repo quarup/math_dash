@@ -51,7 +51,9 @@ const _contexts = <_PictureContext>[
     ],
   ),
   _PictureContext(
-    title: "Today's weather log",
+    // Not "Today's …" — the graph counts days across a stretch of time,
+    // and a single day can't have 7 sunny days.
+    title: "This month's weather",
     rows: [
       ('Sunny', 'sunny days', '☀️'),
       ('Cloudy', 'cloudy days', '☁️'),
@@ -126,7 +128,9 @@ GeneratedQuestion threeCategoryData(Random rand) {
     final total = values.reduce((a, b) => a + b);
     return GeneratedQuestion(
       conceptId: 'three_category_data',
-      prompt: 'How many ${plurals.join(', ')} are there in all?',
+      prompt:
+          'How many ${plurals.take(plurals.length - 1).join(', ')}, '
+          'and ${plurals.last} are there in all?',
       diagram: PictureGraphSpec(
         title: ctx.title,
         rowLabels: labels,

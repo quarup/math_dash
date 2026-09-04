@@ -54,22 +54,26 @@ GeneratedQuestion describeAttribute(Random rand) {
 /// weight pairs state the weights in the prompt instead (a longer BAR
 /// for a heavier CAT depicts weight as length, which misleads).
 /// CCSS K.MD.A.2.
-const List<(String, String, String, String)> _pairScenarios = [
-  // (subject1, subject2, unit noun, comparison word)
-  ('the pencil', 'the crayon', 'cm', 'longer'),
-  ('the rope', 'the string', 'feet', 'longer'),
-  ('the cat', 'the dog', 'pounds', 'heavier'),
-  ('the apple', 'the orange', 'grams', 'heavier'),
-  ('the red ribbon', 'the blue ribbon', 'inches', 'longer'),
+const List<(String, String, String, String, int, int)> _pairScenarios = [
+  // (subject1, subject2, unit noun, comparison word, value lo, value hi)
+  // Value ranges are per-scenario so the stated measurements stay
+  // realistic — an apple at "4 grams" undermined the comparison.
+  ('the pencil', 'the crayon', 'cm', 'longer', 2, 20),
+  ('the rope', 'the string', 'feet', 'longer', 2, 20),
+  ('the cat', 'the dog', 'pounds', 'heavier', 6, 25),
+  ('the apple', 'the orange', 'grams', 'heavier', 100, 300),
+  ('the red ribbon', 'the blue ribbon', 'inches', 'longer', 2, 20),
 ];
 
 GeneratedQuestion compareTwoObjects(Random rand) {
   final p = _pairScenarios[rand.nextInt(_pairScenarios.length)];
-  // Two distinct values in 2..20.
-  final a = rand.nextInt(19) + 2;
-  var b = rand.nextInt(19) + 2;
+  // Two distinct values in the scenario's realistic range.
+  final lo = p.$5;
+  final span = p.$6 - p.$5 + 1;
+  final a = rand.nextInt(span) + lo;
+  var b = rand.nextInt(span) + lo;
   while (b == a) {
-    b = rand.nextInt(19) + 2;
+    b = rand.nextInt(span) + lo;
   }
   final s1Larger = a > b;
   final answer = s1Larger ? p.$1 : p.$2;
@@ -137,6 +141,13 @@ GeneratedQuestion orderThreeObjectsLength(Random rand) {
   final wantShortest = rand.nextInt(2) == 0;
   final ordered = [...entries]..sort((a, b) => a.$2.compareTo(b.$2));
   final answer = wantShortest ? ordered.first.$1 : ordered.last.$1;
+  // Name which object each length belongs to — bare numbers made the
+  // kid re-derive the mapping the question was about.
+  final barsShown = ordered.map((e) => '${e.$1} is ${e.$2} ${s.$4}').join(', ');
+  final answerLength = wantShortest ? ordered.first.$2 : ordered.last.$2;
+  final verdict =
+      'The ${wantShortest ? 'shortest' : 'longest'} is $answer '
+      '($answerLength ${s.$4}).';
   return GeneratedQuestion(
     conceptId: 'order_three_objects_length',
     prompt: 'Which is the ${wantShortest ? 'shortest' : 'longest'}?',
@@ -154,7 +165,8 @@ GeneratedQuestion orderThreeObjectsLength(Random rand) {
     ),
     answerFormat: AnswerFormat.string,
     explanation: [
-      'Smallest = ${ordered.first.$2}; biggest = ${ordered.last.$2}.',
+      'The bars show: $barsShown.',
+      verdict,
     ],
   );
 }

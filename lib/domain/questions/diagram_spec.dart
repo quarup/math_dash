@@ -14,12 +14,17 @@ class FractionBarSpec extends DiagramSpec {
     required this.numerator,
     required this.denominator,
     this.subdivideShaded,
+    this.subdivideAll,
     this.bars = 1,
   }) : assert(denominator > 0, 'denominator must be > 0'),
        assert(numerator >= 0, 'numerator must be >= 0'),
        assert(
          subdivideShaded == null || subdivideShaded >= 2,
          'subdivideShaded must be >= 2 when set',
+       ),
+       assert(
+         subdivideAll == null || subdivideAll >= 2,
+         'subdivideAll must be >= 2 when set',
        ),
        assert(bars >= 1, 'bars must be >= 1');
 
@@ -31,6 +36,12 @@ class FractionBarSpec extends DiagramSpec {
   /// bar then reads as n × m pieces and the highlighted sliver is the
   /// answer 1/(n·m).
   final int? subdivideShaded;
+
+  /// When set, EVERY segment (shaded and unshaded) is split into this
+  /// many equal sub-pieces by lighter interior lines — the equivalence
+  /// picture: heavy lines show n/d, light lines show the same bar as
+  /// (n·m)/(d·m).
+  final int? subdivideAll;
 
   /// Number of identical bars stacked vertically. More than 1 shows
   /// "m ÷ 1/n": m wholes each cut into n pieces, so the kid counts
@@ -80,6 +91,7 @@ class AreaGridSpec extends DiagramSpec {
     required this.cols,
     required this.shadedRows,
     required this.shadedCols,
+    this.separateRows = false,
   }) : shadedCount = null,
        assert(rows > 0 && cols > 0, 'rows and cols must be > 0'),
        assert(
@@ -107,6 +119,7 @@ class AreaGridSpec extends DiagramSpec {
        rows = (count + cols - 1) ~/ cols,
        shadedRows = 0,
        shadedCols = 0,
+       separateRows = false,
        assert(cols > 0, 'cols must be > 0'),
        assert(count > 0, 'count must be > 0');
 
@@ -114,6 +127,12 @@ class AreaGridSpec extends DiagramSpec {
   final int cols;
   final int shadedRows;
   final int shadedCols;
+
+  /// Draw a visible gap between rows so each row reads as its own
+  /// group. Used by the equal-groups / sharing concepts, where a fused
+  /// rows×cols block read equally as "rows groups of cols" or "cols
+  /// groups of rows" and ambiguously hinted at a wrong choice.
+  final bool separateRows;
 
   /// Non-null only for [AreaGridSpec.count] — the exact number of objects
   /// to draw, row-major. When set, `shadedRows`/`shadedCols` are unused.

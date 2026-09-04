@@ -85,7 +85,19 @@ class PositionalScene extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(spec.referenceLabel, style: labelStyle),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (_emojiFor[spec.referenceLabel] != null) ...[
+                    Text(
+                      _emojiFor[spec.referenceLabel]!,
+                      style: const TextStyle(fontSize: 24),
+                    ),
+                    const SizedBox(width: 4),
+                  ],
+                  Text(spec.referenceLabel, style: labelStyle),
+                ],
+              ),
               SizedBox(height: gap),
               subject,
             ],
@@ -94,6 +106,28 @@ class PositionalScene extends StatelessWidget {
     }
   }
 }
+
+/// Emoji glyph for each object the positional generator can name. A
+/// K-age pre-reader can't decode a labelled rectangle — the picture has
+/// to BE the object. Falls back to the labelled box for unknown labels.
+const Map<String, String> _emojiFor = {
+  'butterfly': '🦋',
+  'flower': '🌸',
+  'cat': '🐱',
+  'chair': '🪑',
+  'toy': '🧸',
+  'box': '📦',
+  'lamp': '💡',
+  'bed': '🛏️',
+  'bird': '🐦',
+  'tree': '🌳',
+  'dog': '🐶',
+  'sofa': '🛋️',
+  'doll': '🪆',
+  'teddy bear': '🧸',
+  'pencil': '✏️',
+  'case': '👝',
+};
 
 class _Box extends StatelessWidget {
   const _Box({
@@ -111,14 +145,26 @@ class _Box extends StatelessWidget {
   final TextStyle labelStyle;
 
   @override
-  Widget build(BuildContext context) => Container(
-    width: size.width,
-    height: size.height,
-    alignment: Alignment.center,
-    decoration: BoxDecoration(
-      color: fill,
-      border: Border.all(color: edge, width: 1.2),
-    ),
-    child: Text(label, style: labelStyle, textAlign: TextAlign.center),
-  );
+  Widget build(BuildContext context) {
+    final emoji = _emojiFor[label];
+    if (emoji != null) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(emoji, style: const TextStyle(fontSize: 44)),
+          Text(label, style: labelStyle, textAlign: TextAlign.center),
+        ],
+      );
+    }
+    return Container(
+      width: size.width,
+      height: size.height,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: fill,
+        border: Border.all(color: edge, width: 1.2),
+      ),
+      child: Text(label, style: labelStyle, textAlign: TextAlign.center),
+    );
+  }
 }

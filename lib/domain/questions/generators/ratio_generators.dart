@@ -427,7 +427,7 @@ GeneratedQuestion proportionalRelationship(Random rand) {
     correctAnswer: correct,
     distractors: distractors,
     explanation: [
-      'Proportional iff y/x is the same constant for every pair.',
+      'Proportional means y ÷ x is the same constant for every pair.',
       if (isProportional)
         'Every y ÷ x = ${ys.first ~/ xs.first} here — same constant.'
       else

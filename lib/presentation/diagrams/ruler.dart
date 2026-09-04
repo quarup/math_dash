@@ -82,6 +82,20 @@ class _RulerPainter extends CustomPainter {
       barTop + barHeight,
     );
     canvas.drawRect(barRect, Paint()..color = barColor);
+    // Divide the bar at every whole unit so it reads as a row of
+    // same-size unit blocks (measure_length_units asks the kid to
+    // count them), not one undifferentiated strip.
+    final dividerPaint = Paint()
+      ..color = edgeColor.withValues(alpha: 0.55)
+      ..strokeWidth = 1.2;
+    for (var u = 1; u < markedDisplay; u++) {
+      final x = xFor(u);
+      canvas.drawLine(
+        Offset(x, barTop),
+        Offset(x, barTop + barHeight),
+        dividerPaint,
+      );
+    }
 
     // Ruler body.
     final rulerRect = Rect.fromLTRB(

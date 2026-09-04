@@ -72,10 +72,14 @@ void main() {
           );
           expect(q.correctAnswer, isIn(shapes));
           expect(q.answerFormat, AnswerFormat.string);
-          // Distractors are exactly the other 3 shape names.
+          // Distractors are the other shape names — minus 'Symmetric'
+          // when the answer is 'Uniform', since a flat histogram is
+          // symmetric too and the choice would be defensibly true.
           expect(
             q.distractors.toSet(),
-            shapes.difference({q.correctAnswer}),
+            q.correctAnswer == 'Uniform'
+                ? {'Skewed left', 'Skewed right'}
+                : shapes.difference({q.correctAnswer}),
           );
 
           expect(q.diagram, isA<HistogramSpec>());

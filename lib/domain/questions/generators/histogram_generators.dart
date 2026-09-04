@@ -194,7 +194,12 @@ GeneratedQuestion describeDistribution(Random rand) {
       maxY: maxY,
     ),
     correctAnswer: correctShape,
-    distractors: shapes.where((s) => s != correctShape).toList(),
+    // A flat histogram is symmetric too, so when 'Uniform' is correct
+    // 'Symmetric' would be a defensibly-true choice marked wrong —
+    // drop it and keep only the two skews.
+    distractors: correctShape == 'Uniform'
+        ? const ['Skewed left', 'Skewed right']
+        : shapes.where((s) => s != correctShape).toList(),
     explanation: [
       _explanationFor(correctShape),
     ],

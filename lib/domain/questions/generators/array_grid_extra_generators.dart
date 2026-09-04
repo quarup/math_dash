@@ -37,7 +37,7 @@ GeneratedQuestion countObjectsTo10(Random rand) {
       rand,
       misconception: correct + 1, // counted one twice
     ),
-    explanation: ['There are $correct objects shaded.'],
+    explanation: ['There are $correct objects shown.'],
   );
 }
 
@@ -60,7 +60,7 @@ GeneratedQuestion countObjectsTo20(Random rand) {
       rand,
       misconception: correct + 1, // counted one twice
     ),
-    explanation: ['There are $correct objects shaded.'],
+    explanation: ['There are $correct objects shown.'],
   );
 }
 
@@ -77,11 +77,14 @@ GeneratedQuestion equalGroupsIntro(Random rand) {
     prompt:
         'There are $rows equal groups, with $cols objects in each group. '
         'How many objects in all?',
+    // separateRows: each row renders as its own group, matching the
+    // "$rows equal groups" the prompt describes.
     diagram: AreaGridSpec(
       rows: rows,
       cols: cols,
       shadedRows: rows,
       shadedCols: cols,
+      separateRows: true,
     ),
     correctAnswer: '$correct',
     distractors: integerDistractorsWith(
@@ -176,11 +179,15 @@ GeneratedQuestion divMeaningShare(Random rand) {
     prompt:
         '$total objects are shared equally into $rows groups. '
         'How many objects per group?',
+    // separateRows: the $rows groups are visible as distinct rows, so
+    // the diagram supports the question instead of reading equally as
+    // "$cols groups of $rows" (a distractor).
     diagram: AreaGridSpec(
       rows: rows,
       cols: cols,
       shadedRows: rows,
       shadedCols: cols,
+      separateRows: true,
     ),
     correctAnswer: '$cols',
     distractors: integerDistractorsWith(
@@ -205,11 +212,15 @@ GeneratedQuestion divMeaningGrouping(Random rand) {
     prompt:
         '$total objects are put into groups of $cols. '
         'How many groups are there?',
+    // separateRows: each row IS one group of $cols, so counting rows
+    // answers the question — the fused block steered kids to read
+    // columns and pick $cols.
     diagram: AreaGridSpec(
       rows: rows,
       cols: cols,
       shadedRows: rows,
       shadedCols: cols,
+      separateRows: true,
     ),
     correctAnswer: '$rows',
     distractors: integerDistractorsWith(

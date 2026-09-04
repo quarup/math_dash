@@ -103,10 +103,23 @@ GeneratedQuestion compare2digit(Random rand) {
     // nowhere in the prompt can be eliminated without comparing.
     distractors: ['$wrong'],
     explanation: [
-      'The ${isGreater ? "greater" : "smaller"} of $a and $b is $correct.',
+      // Place-value method, not just the verdict: compare tens first,
+      // then ones on a tie.
+      _tensComparisonHint(min(a, b), max(a, b)),
+      'The ${isGreater ? "greater" : "smaller"} one is $correct.',
     ],
     multipleChoiceOnly: true,
   );
+}
+
+/// Place-value comparison hint for two distinct 2-digit numbers.
+String _tensComparisonHint(int lo, int hi) {
+  if (lo ~/ 10 != hi ~/ 10) {
+    return 'Compare tens: ${lo ~/ 10} tens is less than ${hi ~/ 10} tens, '
+        'so $lo < $hi.';
+  }
+  return 'Both have ${lo ~/ 10} tens, so compare ones: '
+      '${lo % 10} < ${hi % 10}, so $lo < $hi.';
 }
 
 // ─────────────────────────────────────────────────────────────────────────

@@ -132,7 +132,10 @@ GeneratedQuestion decompose10(Random rand) {
       rand,
       misconception: 10 + a, // added instead of subtracted
     ),
-    explanation: ['$a + $correct = 10'],
+    explanation: [
+      'To find the missing part, subtract: 10 − $a = $correct.',
+      'Check: $a + $correct = 10.',
+    ],
   );
 }
 
@@ -191,6 +194,10 @@ GeneratedQuestion add2digitMultipleOf10(Random rand) {
     b = tens * 10;
   } while (a + b > 99);
   final correct = a + b;
+  // Tens method, mirroring sub_multiples_of_10's explanation style.
+  final tensLine =
+      'Only the tens change: ${a ~/ 10} tens + ${b ~/ 10} tens '
+      '= ${correct ~/ 10} tens.';
   return GeneratedQuestion(
     conceptId: 'add_2digit_multiple_of_10',
     prompt: '$a + $b = ?',
@@ -200,7 +207,10 @@ GeneratedQuestion add2digitMultipleOf10(Random rand) {
       rand,
       misconception: correct + 10, // added one too many tens
     ),
-    explanation: ['$a + $b = $correct'],
+    explanation: [
+      tensLine,
+      'The ones stay ${a % 10}, so $a + $b = $correct.',
+    ],
   );
 }
 
@@ -331,20 +341,37 @@ GeneratedQuestion compare3digit(Random rand) {
   final isGreater = rand.nextBool();
   final correct = isGreater ? max(a, b) : min(a, b);
   final wrong = isGreater ? min(a, b) : max(a, b);
-  final candidates = <String>[
-    '$wrong',
-    '${a + b}', // gave the sum
-    '${(a - b).abs()}', // gave the difference
-  ];
   return GeneratedQuestion(
     conceptId: 'compare_3digit',
     prompt: 'Which number is ${isGreater ? "greater" : "smaller"}: $a or $b?',
     correctAnswer: '$correct',
-    distractors: _distinctStrings('$correct', candidates),
+    // Only the other number of the pair — numbers that appear nowhere
+    // in the prompt could be eliminated without comparing (and confused
+    // more than they distracted). Matches compare_2digit.
+    distractors: ['$wrong'],
     explanation: [
-      'The ${isGreater ? "greater" : "smaller"} of $a and $b is $correct.',
+      _comparePlaceValueHint(min(a, b), max(a, b)),
+      'The ${isGreater ? "greater" : "smaller"} one is $correct.',
     ],
+    multipleChoiceOnly: true,
   );
+}
+
+/// Place-value comparison hint for two distinct 3-digit numbers: names
+/// the highest place where they differ ("3 hundreds is less than
+/// 5 hundreds, so 378 < 550").
+String _comparePlaceValueHint(int lo, int hi) {
+  if (lo ~/ 100 != hi ~/ 100) {
+    return 'Compare hundreds: ${lo ~/ 100} hundreds is less than '
+        '${hi ~/ 100} hundreds, so $lo < $hi.';
+  }
+  if ((lo ~/ 10) % 10 != (hi ~/ 10) % 10) {
+    return 'Hundreds match, so compare tens: '
+        '${(lo ~/ 10) % 10} tens is less than ${(hi ~/ 10) % 10} tens, '
+        'so $lo < $hi.';
+  }
+  return 'Hundreds and tens match, so compare ones: '
+      '${lo % 10} < ${hi % 10}, so $lo < $hi.';
 }
 
 // ─────────────────────────────────────────────────────────────────────────

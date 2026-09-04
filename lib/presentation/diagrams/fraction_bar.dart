@@ -32,26 +32,47 @@ class FractionBar extends StatelessWidget {
 
     Widget cell(int i, {required bool shaded}) {
       final sub = spec.subdivideShaded;
-      final child = (shaded && sub != null)
-          ? Row(
-              children: List.generate(sub, (j) {
-                return Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      // First sub-piece pops: it is the answer 1/(n·m).
-                      color: j == 0
-                          ? highlightColor
-                          : shadeColor.withValues(alpha: 0.35),
-                      border: Border.all(
-                        color: borderColor.withValues(alpha: 0.7),
-                        width: 0.8,
-                      ),
-                    ),
+      final subAll = spec.subdivideAll;
+      Widget? child;
+      if (shaded && sub != null) {
+        child = Row(
+          children: List.generate(sub, (j) {
+            return Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  // First sub-piece pops: it is the answer 1/(n·m).
+                  color: j == 0
+                      ? highlightColor
+                      : shadeColor.withValues(alpha: 0.35),
+                  border: Border.all(
+                    color: borderColor.withValues(alpha: 0.7),
+                    width: 0.8,
                   ),
-                );
-              }),
-            )
-          : null;
+                ),
+              ),
+            );
+          }),
+        );
+      } else if (subAll != null) {
+        // Equivalence picture: every segment carries the same lighter
+        // sub-partition, so the one bar reads as both n/d (heavy lines)
+        // and (n·m)/(d·m) (light lines).
+        child = Row(
+          children: List.generate(subAll, (j) {
+            return Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: shaded ? shadeColor : emptyColor,
+                  border: Border.all(
+                    color: borderColor.withValues(alpha: 0.5),
+                    width: 0.8,
+                  ),
+                ),
+              ),
+            );
+          }),
+        );
+      }
       return Expanded(
         child: Container(
           margin: EdgeInsets.only(left: i == 0 ? 0 : 1),

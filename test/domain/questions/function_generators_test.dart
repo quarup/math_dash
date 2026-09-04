@@ -109,7 +109,9 @@ void main() {
         final xs = pairs.map((p) => p[0]).toList();
         final xsUnique = xs.toSet().length == xs.length;
         expect(q.correctAnswer, xsUnique ? 'Yes' : 'No', reason: q.prompt);
-        _expectThreeDistinctDistractors(q);
+        // Yes/No question, Yes/No choices only.
+        final opposite = xsUnique ? 'No' : 'Yes';
+        expect(q.distractors, [opposite]);
       }
     });
 

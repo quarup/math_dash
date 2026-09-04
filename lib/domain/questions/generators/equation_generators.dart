@@ -45,11 +45,16 @@ List<String> _intDistractors(
 // order_of_operations_no_exp (Grade 5)
 // ─────────────────────────────────────────────────────────────────────────
 
-/// "3 + 4 × 2 = ?" → 11. Three-operand expressions with two operators
-/// drawn from {+, −, ×, ÷}. Division only when the kid would actually
-/// get an exact integer; subtraction only when the result stays ≥ 0.
+/// "3 + 4 × 2 = ?" → 11. Three-operand expressions where the FIRST
+/// operator is + or − and the SECOND is × or ÷ — the only ordering
+/// where naive left-to-right evaluation gives a different (wrong)
+/// answer, so every item actually tests precedence. Forms like
+/// "12 × 8 + 4" evaluate the same either way and taught nothing.
+/// Division only when the kid would actually get an exact integer;
+/// subtraction only when the result stays ≥ 0.
 GeneratedQuestion orderOfOperationsNoExp(Random rand) {
-  const ops = <String>['+', '−', '×', '÷'];
+  const addSub = <String>['+', '−'];
+  const multDiv = <String>['×', '÷'];
   // Re-roll until we get a tractable expression.
   late int a;
   late int b;
@@ -64,44 +69,21 @@ GeneratedQuestion orderOfOperationsNoExp(Random rand) {
     a = rand.nextInt(19) + 2; // 2..20
     b = rand.nextInt(9) + 2; // 2..10
     c = rand.nextInt(9) + 2; // 2..10
-    op1 = ops[rand.nextInt(ops.length)];
-    op2 = ops[rand.nextInt(ops.length)];
-    // Evaluate with precedence: × and ÷ before + and −. Equal-precedence
-    // operators are left-to-right, so the right-grouping branch only
-    // applies when op2 strictly binds tighter than op1.
-    final pre1 = _prec(op1);
-    final pre2 = _prec(op2);
-    int? answerCandidate;
-    int? wrongCandidate;
-    if (pre2 > pre1) {
-      // op2 binds tighter: compute (b op2 c) first, then a op1 ?.
-      final bc = _apply(b, op2, c);
-      if (bc == null) continue;
-      final res = _apply(a, op1, bc);
-      if (res == null || res < 0) continue;
-      answerCandidate = res;
-      // Left-to-right wrong: (a op1 b) op2 c.
-      final ab = _apply(a, op1, b);
-      if (ab == null) continue;
-      final left = _apply(ab, op2, c);
-      if (left == null) continue;
-      wrongCandidate = left;
-    } else {
-      // op1 binds tighter (× / ÷ before + / −): compute (a op1 b) then op2 c.
-      final ab = _apply(a, op1, b);
-      if (ab == null) continue;
-      final res = _apply(ab, op2, c);
-      if (res == null || res < 0) continue;
-      answerCandidate = res;
-      // Right-to-left wrong: a op1 (b op2 c).
-      final bc = _apply(b, op2, c);
-      if (bc == null) continue;
-      final right = _apply(a, op1, bc);
-      if (right == null) continue;
-      wrongCandidate = right;
-    }
-    answer = answerCandidate;
-    wrongAnswer = wrongCandidate;
+    op1 = addSub[rand.nextInt(addSub.length)];
+    op2 = multDiv[rand.nextInt(multDiv.length)];
+    // op2 always binds tighter (op1 ∈ {+,−}, op2 ∈ {×,÷}): compute
+    // (b op2 c) first, then a op1 ?.
+    final bc = _apply(b, op2, c);
+    if (bc == null) continue;
+    final res = _apply(a, op1, bc);
+    if (res == null || res < 0) continue;
+    // Left-to-right wrong: (a op1 b) op2 c.
+    final ab = _apply(a, op1, b);
+    if (ab == null) continue;
+    final left = _apply(ab, op2, c);
+    if (left == null) continue;
+    answer = res;
+    wrongAnswer = left;
     // Want the wrong answer to be different from the right answer so
     // the misconception distractor is meaningful.
     if (answer != wrongAnswer && answer <= 200) break;
@@ -680,6 +662,8 @@ GeneratedQuestion solveLinearEqOneSolution(Random rand) {
   if (b < 1) return solveLinearEqOneSolution(rand);
   final prompt = 'Solve for x: ${a}x + $b = ${c}x + $d';
   final correct = '$x';
+  // Coefficient after moving cx across: shown bare when it is 1.
+  final coeff = a - c == 1 ? '' : '${a - c}';
   final candidates = <String>[
     // Misconception: divided d by a.
     '${d ~/ (a == 0 ? 1 : a)}',
@@ -695,12 +679,11 @@ GeneratedQuestion solveLinearEqOneSolution(Random rand) {
     correctAnswer: correct,
     distractors: _intDistractors(x, candidates, rand),
     explanation: [
-      if (a - c == 1)
-        'Move x terms to one side: x = ${d - b}.'
-      else ...[
-        'Move x terms to one side: ${a - c}x = ${d - b}.',
-        'Divide by ${a - c}: x = ${d - b} ÷ ${a - c} = $x.',
-      ],
+      // Full walkthrough even when a−c == 1 — the collapsed one-liner
+      // ("x = 6.") restated the answer without teaching the two moves.
+      'Subtract ${c}x from both sides: ${coeff}x + $b = $d.',
+      'Subtract $b from both sides: ${coeff}x = ${d - b}.',
+      if (a - c != 1) 'Divide by ${a - c}: x = ${d - b} ÷ ${a - c} = $x.',
     ],
   );
 }
