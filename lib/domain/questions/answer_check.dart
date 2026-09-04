@@ -128,7 +128,11 @@ int _pow10(int n) {
 /// (`+18`, used by signed-quantity prompts). `+18` and `18` are the same
 /// integer and must grade the same.
 int? _tryParseInt(String s) {
-  var t = s.replaceAll('−', '-');
+  // Strip thousands separators: canonical answers like "100,000"
+  // (round_multidigit_any_place) must match the "100000" a kid types —
+  // the keypad has no comma key, so without this the question was
+  // unanswerable in keypad mode.
+  var t = s.replaceAll('−', '-').replaceAll(',', '');
   if (t.startsWith('+')) t = t.substring(1);
   return int.tryParse(t);
 }

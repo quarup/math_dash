@@ -30,6 +30,14 @@ void main() {
       expect(checkAnswer(_q('42'), '  42 '), AnswerOutcome.canonical);
     });
 
+    test('typed 100000 accepted for canonical "100,000" (no comma key)', () {
+      expect(
+        checkAnswer(_q('100,000'), '100000'),
+        AnswerOutcome.equivalentNonCanonical,
+      );
+      expect(checkAnswer(_q('100,000'), '10000'), AnswerOutcome.wrong);
+    });
+
     test('typed 18 accepted for canonical +18 (signed-quantity prompts)', () {
       expect(
         checkAnswer(_q('+18'), '18'),
