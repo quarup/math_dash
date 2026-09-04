@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter/services.dart' show AssetManifest, rootBundle;
 import 'package:math_city/domain/avatar/adventurer_config.dart';
 import 'package:math_city/domain/city/building_registry.dart';
@@ -215,6 +216,13 @@ class AppSettings extends Table {
   /// (see prd.md accessibility goals); persists across sessions.
   BoolColumn get ttsEnabled => boolean().withDefault(const Constant(true))();
 
+  /// Fingerprint of the bundled dataset JSONs at last seed. When an app
+  /// update ships changed dataset files, the mismatch triggers a
+  /// drop-and-reseed of `dataset_questions` — without this, only-if-empty
+  /// seeding meant every dataset fix silently no-shipped to existing
+  /// installs.
+  TextColumn get datasetFingerprint => text().nullable()();
+
   @override
   Set<Column<Object>> get primaryKey => {id};
 }
@@ -264,7 +272,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
   @override
-  int get schemaVersion => 12;
+  int get schemaVersion => 13;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -346,6 +354,14 @@ class AppDatabase extends _$AppDatabase {
         await customStatement('DROP TABLE IF EXISTS dataset_questions');
         await m.createTable(datasetQuestions);
       }
+      if (from < 13) {
+        // v13: AppSettings.datasetFingerprint — the seeder now re-seeds
+        // whenever the bundled JSON changes (fingerprint mismatch), so
+        // dataset fixes no longer need a schema bump to reach existing
+        // installs. The old rows carry a NULL fingerprint, which never
+        // matches, so the next read refreshes them automatically.
+        await m.addColumn(appSettings, appSettings.datasetFingerprint);
+      }
     },
   );
 
@@ -358,26 +374,63 @@ class AppDatabase extends _$AppDatabase {
     });
   }
 
-  Future<void> _seedDatasetQuestionsIfEmpty() async {
+  /// True once this process has verified the seeded table matches the
+  /// bundled assets — the fingerprint check costs an asset read, so it
+  /// runs at most once per app session.
+  bool _datasetFingerprintVerified = false;
+
+  /// Test hook: forget that this session already verified the dataset
+  /// fingerprint, so the next read re-checks it (simulates an app
+  /// restart after an update shipped changed dataset JSONs).
+  @visibleForTesting
+  void resetDatasetFingerprintCheck() {
+    _datasetFingerprintVerified = false;
+  }
+
+  Future<void> _seedDatasetQuestionsIfStale() async {
     final existing =
         await (selectOnly(datasetQuestions)
               ..addColumns([datasetQuestions.id])
               ..limit(1))
             .get();
-    if (existing.isNotEmpty) return;
-    final items = await loadBundledDatasetQuestions();
+    final hasRows = existing.isNotEmpty;
+    if (hasRows && _datasetFingerprintVerified) return;
+
+    // One pass over the asset bytes serves both the fingerprint check
+    // and (only when stale) the JSON parse — loading the files twice
+    // measurably slowed the first read.
+    final bundle = await _loadDatasetAssetBytes();
+    if (bundle == null) {
+      // No asset bundle (pure-Dart unit tests) — nothing to seed from.
+      return;
+    }
+    final fingerprint = _fingerprintOf(bundle);
+    _datasetFingerprintVerified = true;
+    if (hasRows) {
+      final stored = (await _getOrCreateAppSettings()).datasetFingerprint;
+      if (stored == fingerprint) return;
+    }
+
+    final items = _parseDatasetBytes(bundle);
     if (items.isEmpty) return;
+    await delete(datasetQuestions).go();
     await batch((b) {
       b.insertAll(
         datasetQuestions,
         items.map(_datasetQuestionToCompanion).toList(),
       );
     });
+    await _getOrCreateAppSettings();
+    await (update(appSettings)..where((t) => t.id.equals(1))).write(
+      AppSettingsCompanion(datasetFingerprint: Value(fingerprint)),
+    );
   }
 
   /// Returns every bundled dataset question grouped by concept ID. On
-  /// first call (table empty), reads `assets/data/dataset_questions/*.json`
-  /// into the persisted table; thereafter reads from the table directly.
+  /// first call each session, verifies the persisted table against the
+  /// bundled `assets/data/dataset_questions/*.json` (fingerprint match)
+  /// and re-seeds when the bundle changed; thereafter reads from the
+  /// table directly.
   ///
   /// Lazy seeding (rather than seeding during migration) keeps `flutter
   /// test`'s `pumpAndSettle` happy: the asset-bundle platform channel
@@ -387,7 +440,7 @@ class AppDatabase extends _$AppDatabase {
   /// don't pay the cost.
   Future<Map<String, List<DatasetQuestion>>>
   allDatasetQuestionsByConcept() async {
-    await _seedDatasetQuestionsIfEmpty();
+    await _seedDatasetQuestionsIfStale();
     final rows = await select(datasetQuestions).get();
     final out = <String, List<DatasetQuestion>>{};
     for (final r in rows) {
@@ -1002,25 +1055,8 @@ const String _datasetAssetPrefix = 'assets/data/dataset_questions/';
 /// `TestWidgetsFlutterBinding`). The seeded table is then empty and
 /// `QuestionSource` degrades to generator-only.
 Future<List<DatasetQuestion>> loadBundledDatasetQuestions() async {
-  final List<String> paths;
-  try {
-    final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
-    paths =
-        manifest
-            .listAssets()
-            .where(
-              (k) => k.startsWith(_datasetAssetPrefix) && k.endsWith('.json'),
-            )
-            .toList()
-          ..sort();
-  }
-  // Intentional broad catch: AssetManifest throws different exception
-  // types depending on what's missing (FlutterError for missing manifest,
-  // Exception for missing binding). Both should degrade to empty.
-  // ignore: avoid_catches_without_on_clauses
-  catch (_) {
-    return const [];
-  }
+  final paths = await _datasetAssetPaths();
+  if (paths == null) return const [];
 
   final out = <DatasetQuestion>[];
   for (final path in paths) {
@@ -1032,6 +1068,86 @@ Future<List<DatasetQuestion>> loadBundledDatasetQuestions() async {
     }
   }
   return out;
+}
+
+/// Sorted asset paths of the bundled dataset JSONs, or null when the
+/// asset bundle is unavailable (pure-Dart unit tests without a binding).
+Future<List<String>?> _datasetAssetPaths() async {
+  try {
+    final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+    return manifest
+        .listAssets()
+        .where(
+          (k) => k.startsWith(_datasetAssetPrefix) && k.endsWith('.json'),
+        )
+        .toList()
+      ..sort();
+  }
+  // Intentional broad catch: AssetManifest throws different exception
+  // types depending on what's missing (FlutterError for missing manifest,
+  // Exception for missing binding). Both should degrade to null.
+  // ignore: avoid_catches_without_on_clauses
+  catch (_) {
+    return null;
+  }
+}
+
+/// The bundled dataset files' raw bytes, keyed by sorted asset path.
+/// Null when the asset bundle is unavailable.
+Future<Map<String, Uint8List>?> _loadDatasetAssetBytes() async {
+  final paths = await _datasetAssetPaths();
+  if (paths == null) return null;
+  final out = <String, Uint8List>{};
+  for (final path in paths) {
+    final data = await rootBundle.load(path);
+    out[path] = data.buffer.asUint8List(
+      data.offsetInBytes,
+      data.lengthInBytes,
+    );
+  }
+  return out;
+}
+
+/// FNV-1a 64-bit fingerprint over the bundled dataset files (names and
+/// bytes, in sorted-path order). Any content change — even same-length
+/// edits — yields a different value, which is what triggers a re-seed
+/// of the `dataset_questions` cache after an app update.
+String _fingerprintOf(Map<String, Uint8List> bundle) {
+  // Mobile-only app; the 64-bit constant is fine off the web.
+  // ignore: avoid_js_rounded_ints
+  var hash = 0xcbf29ce484222325; // FNV-1a 64-bit offset basis
+  const prime = 0x100000001b3; // FNV prime; multiply wraps on the VM
+  for (final entry in bundle.entries) {
+    final path = entry.key;
+    for (var i = 0; i < path.length; i++) {
+      hash = (hash ^ (path.codeUnitAt(i) & 0xff)) * prime;
+    }
+    final bytes = entry.value;
+    for (var i = 0; i < bytes.length; i++) {
+      hash = (hash ^ bytes[i]) * prime;
+    }
+  }
+  return hash.toRadixString(16);
+}
+
+List<DatasetQuestion> _parseDatasetBytes(Map<String, Uint8List> bundle) {
+  final out = <DatasetQuestion>[];
+  for (final bytes in bundle.values) {
+    final decoded = json.decode(utf8.decode(bytes)) as Map<String, dynamic>;
+    final items = decoded['items'] as List<dynamic>;
+    for (final item in items) {
+      out.add(DatasetQuestion.fromJson(item as Map<String, dynamic>));
+    }
+  }
+  return out;
+}
+
+/// Fingerprint of the bundled dataset JSONs, or null when the asset
+/// bundle is unavailable. Exposed for tests.
+@visibleForTesting
+Future<String?> bundledDatasetFingerprint() async {
+  final bundle = await _loadDatasetAssetBytes();
+  return bundle == null ? null : _fingerprintOf(bundle);
 }
 
 DatasetQuestionsCompanion _datasetQuestionToCompanion(DatasetQuestion q) =>

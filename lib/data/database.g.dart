@@ -4828,8 +4828,19 @@ class $AppSettingsTable extends AppSettings
     ),
     defaultValue: const Constant(true),
   );
+  static const VerificationMeta _datasetFingerprintMeta =
+      const VerificationMeta('datasetFingerprint');
   @override
-  List<GeneratedColumn> get $columns => [id, ttsEnabled];
+  late final GeneratedColumn<String> datasetFingerprint =
+      GeneratedColumn<String>(
+        'dataset_fingerprint',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [id, ttsEnabled, datasetFingerprint];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -4851,6 +4862,15 @@ class $AppSettingsTable extends AppSettings
         ttsEnabled.isAcceptableOrUnknown(data['tts_enabled']!, _ttsEnabledMeta),
       );
     }
+    if (data.containsKey('dataset_fingerprint')) {
+      context.handle(
+        _datasetFingerprintMeta,
+        datasetFingerprint.isAcceptableOrUnknown(
+          data['dataset_fingerprint']!,
+          _datasetFingerprintMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -4868,6 +4888,10 @@ class $AppSettingsTable extends AppSettings
         DriftSqlType.bool,
         data['${effectivePrefix}tts_enabled'],
       )!,
+      datasetFingerprint: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}dataset_fingerprint'],
+      ),
     );
   }
 
@@ -4883,17 +4907,37 @@ class AppSetting extends DataClass implements Insertable<AppSetting> {
   /// Text-to-speech for question prompts and story beats. On by default
   /// (see prd.md accessibility goals); persists across sessions.
   final bool ttsEnabled;
-  const AppSetting({required this.id, required this.ttsEnabled});
+
+  /// Fingerprint of the bundled dataset JSONs at last seed. When an app
+  /// update ships changed dataset files, the mismatch triggers a
+  /// drop-and-reseed of `dataset_questions` — without this, only-if-empty
+  /// seeding meant every dataset fix silently no-shipped to existing
+  /// installs.
+  final String? datasetFingerprint;
+  const AppSetting({
+    required this.id,
+    required this.ttsEnabled,
+    this.datasetFingerprint,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['tts_enabled'] = Variable<bool>(ttsEnabled);
+    if (!nullToAbsent || datasetFingerprint != null) {
+      map['dataset_fingerprint'] = Variable<String>(datasetFingerprint);
+    }
     return map;
   }
 
   AppSettingsCompanion toCompanion(bool nullToAbsent) {
-    return AppSettingsCompanion(id: Value(id), ttsEnabled: Value(ttsEnabled));
+    return AppSettingsCompanion(
+      id: Value(id),
+      ttsEnabled: Value(ttsEnabled),
+      datasetFingerprint: datasetFingerprint == null && nullToAbsent
+          ? const Value.absent()
+          : Value(datasetFingerprint),
+    );
   }
 
   factory AppSetting.fromJson(
@@ -4904,6 +4948,9 @@ class AppSetting extends DataClass implements Insertable<AppSetting> {
     return AppSetting(
       id: serializer.fromJson<int>(json['id']),
       ttsEnabled: serializer.fromJson<bool>(json['ttsEnabled']),
+      datasetFingerprint: serializer.fromJson<String?>(
+        json['datasetFingerprint'],
+      ),
     );
   }
   @override
@@ -4912,17 +4959,30 @@ class AppSetting extends DataClass implements Insertable<AppSetting> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'ttsEnabled': serializer.toJson<bool>(ttsEnabled),
+      'datasetFingerprint': serializer.toJson<String?>(datasetFingerprint),
     };
   }
 
-  AppSetting copyWith({int? id, bool? ttsEnabled}) =>
-      AppSetting(id: id ?? this.id, ttsEnabled: ttsEnabled ?? this.ttsEnabled);
+  AppSetting copyWith({
+    int? id,
+    bool? ttsEnabled,
+    Value<String?> datasetFingerprint = const Value.absent(),
+  }) => AppSetting(
+    id: id ?? this.id,
+    ttsEnabled: ttsEnabled ?? this.ttsEnabled,
+    datasetFingerprint: datasetFingerprint.present
+        ? datasetFingerprint.value
+        : this.datasetFingerprint,
+  );
   AppSetting copyWithCompanion(AppSettingsCompanion data) {
     return AppSetting(
       id: data.id.present ? data.id.value : this.id,
       ttsEnabled: data.ttsEnabled.present
           ? data.ttsEnabled.value
           : this.ttsEnabled,
+      datasetFingerprint: data.datasetFingerprint.present
+          ? data.datasetFingerprint.value
+          : this.datasetFingerprint,
     );
   }
 
@@ -4930,46 +4990,58 @@ class AppSetting extends DataClass implements Insertable<AppSetting> {
   String toString() {
     return (StringBuffer('AppSetting(')
           ..write('id: $id, ')
-          ..write('ttsEnabled: $ttsEnabled')
+          ..write('ttsEnabled: $ttsEnabled, ')
+          ..write('datasetFingerprint: $datasetFingerprint')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, ttsEnabled);
+  int get hashCode => Object.hash(id, ttsEnabled, datasetFingerprint);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AppSetting &&
           other.id == this.id &&
-          other.ttsEnabled == this.ttsEnabled);
+          other.ttsEnabled == this.ttsEnabled &&
+          other.datasetFingerprint == this.datasetFingerprint);
 }
 
 class AppSettingsCompanion extends UpdateCompanion<AppSetting> {
   final Value<int> id;
   final Value<bool> ttsEnabled;
+  final Value<String?> datasetFingerprint;
   const AppSettingsCompanion({
     this.id = const Value.absent(),
     this.ttsEnabled = const Value.absent(),
+    this.datasetFingerprint = const Value.absent(),
   });
   AppSettingsCompanion.insert({
     this.id = const Value.absent(),
     this.ttsEnabled = const Value.absent(),
+    this.datasetFingerprint = const Value.absent(),
   });
   static Insertable<AppSetting> custom({
     Expression<int>? id,
     Expression<bool>? ttsEnabled,
+    Expression<String>? datasetFingerprint,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (ttsEnabled != null) 'tts_enabled': ttsEnabled,
+      if (datasetFingerprint != null) 'dataset_fingerprint': datasetFingerprint,
     });
   }
 
-  AppSettingsCompanion copyWith({Value<int>? id, Value<bool>? ttsEnabled}) {
+  AppSettingsCompanion copyWith({
+    Value<int>? id,
+    Value<bool>? ttsEnabled,
+    Value<String?>? datasetFingerprint,
+  }) {
     return AppSettingsCompanion(
       id: id ?? this.id,
       ttsEnabled: ttsEnabled ?? this.ttsEnabled,
+      datasetFingerprint: datasetFingerprint ?? this.datasetFingerprint,
     );
   }
 
@@ -4982,6 +5054,9 @@ class AppSettingsCompanion extends UpdateCompanion<AppSetting> {
     if (ttsEnabled.present) {
       map['tts_enabled'] = Variable<bool>(ttsEnabled.value);
     }
+    if (datasetFingerprint.present) {
+      map['dataset_fingerprint'] = Variable<String>(datasetFingerprint.value);
+    }
     return map;
   }
 
@@ -4989,7 +5064,8 @@ class AppSettingsCompanion extends UpdateCompanion<AppSetting> {
   String toString() {
     return (StringBuffer('AppSettingsCompanion(')
           ..write('id: $id, ')
-          ..write('ttsEnabled: $ttsEnabled')
+          ..write('ttsEnabled: $ttsEnabled, ')
+          ..write('datasetFingerprint: $datasetFingerprint')
           ..write(')'))
         .toString();
   }
@@ -9416,9 +9492,17 @@ typedef $$StoryBeatStatesTableProcessedTableManager =
       PrefetchHooks Function({bool playerId})
     >;
 typedef $$AppSettingsTableCreateCompanionBuilder =
-    AppSettingsCompanion Function({Value<int> id, Value<bool> ttsEnabled});
+    AppSettingsCompanion Function({
+      Value<int> id,
+      Value<bool> ttsEnabled,
+      Value<String?> datasetFingerprint,
+    });
 typedef $$AppSettingsTableUpdateCompanionBuilder =
-    AppSettingsCompanion Function({Value<int> id, Value<bool> ttsEnabled});
+    AppSettingsCompanion Function({
+      Value<int> id,
+      Value<bool> ttsEnabled,
+      Value<String?> datasetFingerprint,
+    });
 
 class $$AppSettingsTableFilterComposer
     extends Composer<_$AppDatabase, $AppSettingsTable> {
@@ -9436,6 +9520,11 @@ class $$AppSettingsTableFilterComposer
 
   ColumnFilters<bool> get ttsEnabled => $composableBuilder(
     column: $table.ttsEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get datasetFingerprint => $composableBuilder(
+    column: $table.datasetFingerprint,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -9458,6 +9547,11 @@ class $$AppSettingsTableOrderingComposer
     column: $table.ttsEnabled,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get datasetFingerprint => $composableBuilder(
+    column: $table.datasetFingerprint,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$AppSettingsTableAnnotationComposer
@@ -9474,6 +9568,11 @@ class $$AppSettingsTableAnnotationComposer
 
   GeneratedColumn<bool> get ttsEnabled => $composableBuilder(
     column: $table.ttsEnabled,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get datasetFingerprint => $composableBuilder(
+    column: $table.datasetFingerprint,
     builder: (column) => column,
   );
 }
@@ -9511,12 +9610,22 @@ class $$AppSettingsTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<bool> ttsEnabled = const Value.absent(),
-              }) => AppSettingsCompanion(id: id, ttsEnabled: ttsEnabled),
+                Value<String?> datasetFingerprint = const Value.absent(),
+              }) => AppSettingsCompanion(
+                id: id,
+                ttsEnabled: ttsEnabled,
+                datasetFingerprint: datasetFingerprint,
+              ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 Value<bool> ttsEnabled = const Value.absent(),
-              }) => AppSettingsCompanion.insert(id: id, ttsEnabled: ttsEnabled),
+                Value<String?> datasetFingerprint = const Value.absent(),
+              }) => AppSettingsCompanion.insert(
+                id: id,
+                ttsEnabled: ttsEnabled,
+                datasetFingerprint: datasetFingerprint,
+              ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
               .toList(),
