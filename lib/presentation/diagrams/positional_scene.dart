@@ -82,22 +82,14 @@ class PositionalScene extends StatelessWidget {
             color: referenceStyle.withValues(alpha: 0.20),
             border: Border.all(color: edge, width: 1.2),
           ),
+          // No reference EMOJI here: drawing a box emoji next to the
+          // subject stacked the two pictures and read as "below". The
+          // bordered container itself plays the box/case, with the
+          // subject emoji visibly inside it.
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (_emojiFor[spec.referenceLabel] != null) ...[
-                    Text(
-                      _emojiFor[spec.referenceLabel]!,
-                      style: const TextStyle(fontSize: 24),
-                    ),
-                    const SizedBox(width: 4),
-                  ],
-                  Text(spec.referenceLabel, style: labelStyle),
-                ],
-              ),
+              Text(spec.referenceLabel, style: labelStyle),
               SizedBox(height: gap),
               subject,
             ],

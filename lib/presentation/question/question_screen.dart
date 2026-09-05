@@ -201,12 +201,15 @@ class _QuestionScreenState extends ConsumerState<QuestionScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // With a diagram: the diagram slot keeps a readable minimum
-              // height and the prompt card is capped at the remainder
-              // (scrolling when a long prompt exceeds it). The old scheme
-              // — card at full intrinsic height, diagram FittedBox-shrunk
-              // into the leftover — squeezed diagrams under long prompts
-              // into illegible specks, worst above the keypad.
+              // With a diagram: the diagram is measured FIRST at its
+              // natural size (capped at 45% of the space, so a long
+              // prompt can never crush it into a speck), and the prompt
+              // card gets the true remainder — a short diagram (ruler,
+              // number line) hands its unused space to the card instead
+              // of reserving a fixed slot that left the card clipped
+              // mid-glyph while empty space sat above it. The card
+              // scrolls only when the prompt genuinely exceeds what's
+              // left.
               //
               // Without one: the card scrolls if a long word problem
               // exceeds the space above the keypad (an unflexed card
@@ -218,61 +221,44 @@ class _QuestionScreenState extends ConsumerState<QuestionScreen> {
                           child: _PromptCard(prompt: question.prompt),
                         ),
                       )
-                    : LayoutBuilder(
-                        builder: (context, box) {
-                          final minDiagram = min(box.maxHeight * 0.45, 240);
-                          final maxCard = max(
-                            box.maxHeight - minDiagram - 16,
-                            0,
-                          ).toDouble();
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Flexible(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                  ),
-                                  child: LayoutBuilder(
-                                    builder: (context, constraints) =>
-                                        FittedBox(
-                                          // Default `contain`, not
-                                          // `scaleDown`: small-natural-size
-                                          // diagrams (angles, spinners,
-                                          // sparse plots) grow — labels
-                                          // included — to use the slot;
-                                          // wide ones are width-bound and
-                                          // unchanged.
-                                          child: ConstrainedBox(
-                                            // Bound the width so
-                                            // self-sizing diagram widgets
-                                            // lay out at phone width;
-                                            // FittedBox then scales the
-                                            // result to the slot.
-                                            constraints: BoxConstraints(
-                                              maxWidth: constraints.maxWidth,
-                                            ),
-                                            child: DiagramRenderer(
-                                              spec: question.diagram!,
-                                            ),
-                                          ),
-                                        ),
+                    : CustomMultiChildLayout(
+                        delegate: _DiagramThenCardLayout(),
+                        children: [
+                          LayoutId(
+                            id: _QuestionSlot.diagram,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                              ),
+                              child: LayoutBuilder(
+                                builder: (context, constraints) => FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: ConstrainedBox(
+                                    // Bound the width so self-sizing
+                                    // diagram widgets lay out at phone
+                                    // width; FittedBox then scales the
+                                    // result down if the 45% cap binds.
+                                    constraints: BoxConstraints(
+                                      maxWidth: constraints.maxWidth,
+                                    ),
+                                    child: DiagramRenderer(
+                                      spec: question.diagram!,
+                                    ),
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 16),
-                              ConstrainedBox(
-                                constraints: BoxConstraints(
-                                  maxHeight: maxCard,
-                                ),
-                                child: SingleChildScrollView(
-                                  child: _PromptCard(prompt: question.prompt),
-                                ),
+                            ),
+                          ),
+                          LayoutId(
+                            id: _QuestionSlot.card,
+                            child: SingleChildScrollView(
+                              child: _PromptCard(
+                                prompt: question.prompt,
+                                compact: true,
                               ),
-                            ],
-                          );
-                        },
+                            ),
+                          ),
+                        ],
                       ),
               ),
               const SizedBox(height: 16),
@@ -351,20 +337,81 @@ List<String> extraKeypadCharsFor(GeneratedQuestion q) {
 List<String> _extraCharsFor(GeneratedQuestion q) => extraKeypadCharsFor(q);
 
 // ---------------------------------------------------------------------------
+// Diagram + prompt-card layout
+// ---------------------------------------------------------------------------
+
+enum _QuestionSlot { diagram, card }
+
+/// Sequential two-slot layout: the diagram is measured first at its
+/// natural size (its max height capped at 45% of the available space so
+/// a long prompt can never crush it), then the prompt card receives
+/// everything that remains. A fixed reserved slot either crushed the
+/// card under a short diagram or wasted the space a big diagram never
+/// claimed; measuring in order gives each question the split it needs.
+/// The pair is vertically centred when both fit with room to spare.
+class _DiagramThenCardLayout extends MultiChildLayoutDelegate {
+  static const _gap = 16.0;
+
+  @override
+  void performLayout(Size size) {
+    final diagramSize = layoutChild(
+      _QuestionSlot.diagram,
+      BoxConstraints(
+        maxWidth: size.width,
+        maxHeight: size.height * 0.45,
+      ),
+    );
+    final cardSize = layoutChild(
+      _QuestionSlot.card,
+      BoxConstraints(
+        // The card stretches to the full width (matching the old
+        // stretched Column) and scrolls when the prompt exceeds the
+        // remaining height.
+        minWidth: size.width,
+        maxWidth: size.width,
+        maxHeight: (size.height - diagramSize.height - _gap).clamp(
+          0.0,
+          size.height,
+        ),
+      ),
+    );
+    final used = diagramSize.height + _gap + cardSize.height;
+    final top = ((size.height - used) / 2).clamp(0.0, size.height);
+    positionChild(
+      _QuestionSlot.diagram,
+      Offset((size.width - diagramSize.width) / 2, top),
+    );
+    positionChild(
+      _QuestionSlot.card,
+      Offset(0, top + diagramSize.height + _gap),
+    );
+  }
+
+  @override
+  bool shouldRelayout(_DiagramThenCardLayout oldDelegate) => false;
+}
+
+// ---------------------------------------------------------------------------
 // Shared sub-widgets
 // ---------------------------------------------------------------------------
 
 class _PromptCard extends StatelessWidget {
-  const _PromptCard({required this.prompt});
+  const _PromptCard({required this.prompt, this.compact = false});
 
   final String prompt;
+
+  /// True when a diagram shares the screen with the card: the card has
+  /// less height to work with, so the step-down to the smaller text
+  /// size kicks in earlier (a ~110-char prompt at headline size clipped
+  /// behind the keypad next to a tall diagram).
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     // Long word problems step down a text size so four-line prompts fit
     // above the keypad instead of scrolling out of view mid-word.
-    final style = prompt.length > 120
+    final style = prompt.length > (compact ? 90 : 120)
         ? theme.textTheme.titleLarge
         : theme.textTheme.headlineMedium;
     return Card(
