@@ -1,0 +1,15 @@
+{"id": "mult_multidigit_standard_alg", "verdict": "improve", "notes": "Wrong-screen explanation is just '150 x 17 = 2550' with no working, for a concept explicitly about the written algorithm (both modes). datasetPool is 200, so this generator probe may not represent the dataset items."}
+{"id": "div_4digit_by_2digit", "verdict": "ok", "notes": ""}
+{"id": "mult_div_word_2step", "verdict": "ok", "notes": "This probe looks clean, but datasetPool is 300 so most questions come from the bundled dataset and this single sample is not representative."}
+{"id": "arithmetic_patterns_in_tables", "verdict": "ok", "notes": ""}
+{"id": "order_of_operations_no_exp", "verdict": "ok", "notes": ""}
+{"id": "order_of_operations_with_exp", "verdict": "ok", "notes": ""}
+{"id": "nested_grouping", "verdict": "ok", "notes": ""}
+{"id": "partition_halves_fourths", "verdict": "ok", "notes": ""}
+{"id": "partition_thirds", "verdict": "ok", "notes": ""}
+{"id": "unit_fraction_intro", "verdict": "ok", "notes": ""}
+{"id": "fraction_a_over_b", "verdict": "ok", "notes": ""}
+{"id": "fraction_on_number_line", "verdict": "ok", "notes": ""}
+{"id": "equivalent_fractions_visual", "verdict": "ok", "notes": ""}
+{"id": "equivalent_fractions_compute", "verdict": "ok", "notes": ""}
+{"id": "compare_fractions_same_denom", "verdict": "improve", "notes": "MC distractor '10/7' (the sum of the tops) is not a possible answer to 'Which is bigger: 6/7 or 4/7?' -- every choice should be one of the two named fractions or 'They are equal'."}

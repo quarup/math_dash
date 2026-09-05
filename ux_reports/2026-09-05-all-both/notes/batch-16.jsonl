@@ -1,0 +1,15 @@
+{"id": "positional_words", "verdict": "ok", "notes": ""}
+{"id": "shape_attributes_basic", "verdict": "ok", "notes": ""}
+{"id": "compose_shapes", "verdict": "ok", "notes": ""}
+{"id": "partition_circle_rect_halves", "verdict": "ok", "notes": ""}
+{"id": "identify_polygons", "verdict": "ok", "notes": ""}
+{"id": "partition_into_rows_columns", "verdict": "improve", "notes": "Keypad mode: the prompt's last line ('total?') is sliced in half at the fold above the keypad with no scroll affordance; MC mode shows it fully."}
+{"id": "classify_quadrilaterals", "verdict": "ok", "notes": ""}
+{"id": "identify_lines_rays_segments", "verdict": "ok", "notes": ""}
+{"id": "right_acute_obtuse_angle", "verdict": "ok", "notes": ""}
+{"id": "parallel_perpendicular_lines", "verdict": "ok", "notes": ""}
+{"id": "classify_2d_by_lines_angles", "verdict": "ok", "notes": ""}
+{"id": "line_of_symmetry", "verdict": "improve", "notes": "Prompt never says the hexagon is regular, and in keypad mode there are no choices to anchor the answer, so 2 (for a slightly stretched hexagon) is defensible; the explanation itself hedges with 'as drawn'. Say 'regular hexagon' in the prompt."}
+{"id": "measure_angle_protractor", "verdict": "ok", "notes": ""}
+{"id": "draw_angle_protractor", "verdict": "improve", "notes": "The wrong-answer explanation says 'the other scale wrongly gives 125°' but the protractor renders only one scale, so the advice references something not in the diagram. Keypad mode also slices the prompt's last line ('degrees?') in half at the fold."}
+{"id": "angle_addition", "verdict": "improve", "notes": "Keypad mode: the prompt's last line ('measure?') is sliced in half at the fold above the keypad; MC mode is fine."}

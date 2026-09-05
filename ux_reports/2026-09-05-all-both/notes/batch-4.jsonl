@@ -1,0 +1,15 @@
+{"id": "scientific_notation_read", "verdict": "ok", "notes": ""}
+{"id": "scientific_notation_write", "verdict": "ok", "notes": ""}
+{"id": "scientific_notation_ops", "verdict": "ok", "notes": ""}
+{"id": "add_within_5", "verdict": "ok", "notes": "Generator probe only; datasetPool=1, so bundled-dataset questions for this concept were not sampled."}
+{"id": "sub_within_5", "verdict": "ok", "notes": "Generator probe only; datasetPool=5, so bundled-dataset questions for this concept were not sampled."}
+{"id": "add_within_10", "verdict": "ok", "notes": "Generator probe only; datasetPool=5, so bundled-dataset questions for this concept were not sampled."}
+{"id": "sub_within_10", "verdict": "ok", "notes": "Generator probe only; datasetPool=3, so bundled-dataset questions for this concept were not sampled."}
+{"id": "make_10_pair", "verdict": "ok", "notes": ""}
+{"id": "decompose_10", "verdict": "ok", "notes": ""}
+{"id": "add_3_addends_within_20", "verdict": "ok", "notes": ""}
+{"id": "add_within_20", "verdict": "ok", "notes": "Generator probe only; datasetPool=20, so bundled-dataset questions for this concept were not sampled."}
+{"id": "sub_within_20", "verdict": "ok", "notes": "Generator probe only; datasetPool=23, so bundled-dataset questions for this concept were not sampled."}
+{"id": "add_sub_unknown_position", "verdict": "ok", "notes": ""}
+{"id": "equal_sign_meaning", "verdict": "ok", "notes": ""}
+{"id": "commutative_add", "verdict": "ok", "notes": ""}

@@ -1,0 +1,15 @@
+{"id": "fraction_as_division", "verdict": "ok", "notes": ""}
+{"id": "mult_fractions_proper", "verdict": "ok", "notes": ""}
+{"id": "mult_mixed_numbers", "verdict": "ok", "notes": ""}
+{"id": "mult_as_scaling", "verdict": "ok", "notes": ""}
+{"id": "div_unit_fraction_by_whole", "verdict": "ok", "notes": ""}
+{"id": "div_whole_by_unit_fraction", "verdict": "ok", "notes": ""}
+{"id": "div_fraction_by_fraction", "verdict": "ok", "notes": ""}
+{"id": "fraction_word_problems", "verdict": "ok", "notes": "Probe question clean in both modes, but datasetPool is 156, so this single generator sample does not cover the bundled dataset questions."}
+{"id": "fraction_denom_10_100", "verdict": "ok", "notes": ""}
+{"id": "decimal_notation_tenths", "verdict": "ok", "notes": ""}
+{"id": "decimal_notation_hundredths", "verdict": "ok", "notes": ""}
+{"id": "decimal_on_number_line", "verdict": "ok", "notes": ""}
+{"id": "compare_decimals_hundredths", "verdict": "ok", "notes": ""}
+{"id": "decimal_to_thousandths_read", "verdict": "ok", "notes": ""}
+{"id": "compare_decimals_thousandths", "verdict": "ok", "notes": ""}

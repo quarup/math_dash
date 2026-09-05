@@ -1,0 +1,15 @@
+{"id": "mult_facts_9", "verdict": "ok", "notes": ""}
+{"id": "div_meaning_share", "verdict": "ok", "notes": ""}
+{"id": "div_meaning_grouping", "verdict": "ok", "notes": ""}
+{"id": "div_facts_within_100", "verdict": "ok", "notes": ""}
+{"id": "div_as_unknown_factor", "verdict": "ok", "notes": ""}
+{"id": "commutative_mult", "verdict": "ok", "notes": ""}
+{"id": "associative_mult", "verdict": "ok", "notes": ""}
+{"id": "distributive_mult_over_add", "verdict": "improve", "notes": "Generator picked the symmetric split 8 = 4 + 4, so both partial products are the identical 5 x 4 = 20 and the worked example barely demonstrates distribution; forcing an uneven split (e.g. 5 + 3) would show the property properly. Diagram and answers are correct in both modes."}
+{"id": "mult_1digit_by_multiple_of_10", "verdict": "ok", "notes": "Probe question and screens are clean, but datasetPool is 71 so this single generator sample does not cover the bundled dataset questions."}
+{"id": "div_with_remainder", "verdict": "ok", "notes": ""}
+{"id": "interpret_remainder_word", "verdict": "ok", "notes": ""}
+{"id": "mult_compare_word", "verdict": "ok", "notes": "Probe is clean, but datasetPool is 300 so most of this concept's questions were not sampled."}
+{"id": "mult_4digit_by_1digit", "verdict": "improve", "notes": "Wrong-answer explanation is just '6592 x 5 = 32960' with no working, which teaches nothing for a multi-step algorithm; show partial products or place-value steps. Also datasetPool is 200, so this one probe does not cover the dataset questions."}
+{"id": "mult_2digit_by_2digit", "verdict": "ok", "notes": "This draw was 'Multiply 82 and 10', an easy x10 case, and datasetPool is 200, so the harder genuine 2-digit x 2-digit questions went unsampled; screens themselves are clean."}
+{"id": "div_4digit_by_1digit", "verdict": "improve", "notes": "Wrong-answer explanation only restates '1192 / 8 = 149' plus a multiplication check; it never shows the division steps, so a child who cannot long-divide learns nothing. Both modes otherwise clean."}

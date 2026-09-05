@@ -1,0 +1,15 @@
+{"id": "rational_to_decimal_repeating", "verdict": "ok", "notes": ""}
+{"id": "irrational_recognize", "verdict": "ok", "notes": ""}
+{"id": "approximate_irrational", "verdict": "ok", "notes": ""}
+{"id": "missing_addend_within_20", "verdict": "ok", "notes": ""}
+{"id": "missing_factor", "verdict": "ok", "notes": ""}
+{"id": "numerical_pattern_rule", "verdict": "ok", "notes": ""}
+{"id": "two_pattern_relationships", "verdict": "improve", "notes": "MC: the long prompt card's bottom edge is cut off flush against the first choice with no gap or rounded corner, so it reads as clipped. The coordinate-plane diagram's A/B point labels are tiny and crowd together near (1,2)/(2,2)."}
+{"id": "write_expression_from_words", "verdict": "ok", "notes": ""}
+{"id": "evaluate_expression", "verdict": "ok", "notes": ""}
+{"id": "identify_parts_expression", "verdict": "ok", "notes": ""}
+{"id": "equivalent_expressions_props", "verdict": "ok", "notes": ""}
+{"id": "substitute_to_check", "verdict": "ok", "notes": ""}
+{"id": "solve_one_step_eq_addition", "verdict": "ok", "notes": ""}
+{"id": "solve_one_step_eq_mult", "verdict": "ok", "notes": ""}
+{"id": "inequality_one_var_intro", "verdict": "ok", "notes": ""}

@@ -1,0 +1,15 @@
+{"id": "opposites_and_zero", "verdict": "ok", "notes": ""}
+{"id": "absolute_value", "verdict": "ok", "notes": ""}
+{"id": "compare_order_rationals", "verdict": "ok", "notes": ""}
+{"id": "closest_to_target", "verdict": "improve", "notes": "Wrong-screen explanation only restates that 0 is closest to −0.2 without comparing distances (0.2 vs 4.8/0.45/5.1), so it teaches nothing. Probe was clean otherwise, but datasetPool=200 means this single generator sample may not represent the dataset items."}
+{"id": "kth_value_in_list", "verdict": "improve", "notes": "Wrong-screen explanation restates \"the third biggest value is 4/3\" without showing the sorted list, which is the whole method. datasetPool=176, so this one sample may not represent the dataset items."}
+{"id": "sort_rationals", "verdict": "ok", "notes": "Probe clean in both screens, but datasetPool=200 means most questions come from the bundled dataset — one generator sample is not representative."}
+{"id": "plot_four_quadrants", "verdict": "ok", "notes": ""}
+{"id": "coord_distance_same_line", "verdict": "ok", "notes": ""}
+{"id": "integers_add", "verdict": "ok", "notes": ""}
+{"id": "integers_subtract", "verdict": "improve", "notes": "Keypad mode: the pad shows no − key because all four distractors (35/37/33/40) are positive, but the classic misconception for 17 − (−18) is 17 − 18 = −1 — a kid making that error can't type it, and the missing key hints the answer is positive. Adding a negative sign-error distractor would fix both."}
+{"id": "integers_multiply_divide", "verdict": "ok", "notes": ""}
+{"id": "rationals_add_sub", "verdict": "ok", "notes": ""}
+{"id": "rationals_multiply_divide", "verdict": "ok", "notes": ""}
+{"id": "rationals_four_op_word", "verdict": "ok", "notes": ""}
+{"id": "rational_to_decimal_terminating", "verdict": "ok", "notes": ""}

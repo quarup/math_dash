@@ -1,0 +1,15 @@
+{"id": "area_rectangle_count_squares", "verdict": "ok", "notes": ""}
+{"id": "area_rectangle_formula", "verdict": "ok", "notes": ""}
+{"id": "perimeter_polygon", "verdict": "ok", "notes": ""}
+{"id": "perimeter_unknown_side", "verdict": "ok", "notes": ""}
+{"id": "area_perimeter_word", "verdict": "ok", "notes": ""}
+{"id": "volume_unit_cubes", "verdict": "improve", "notes": "Keypad mode: the prompt's last line 'does it contain?' is clipped mid-glyph behind the keypad edge; MC mode shows it fully."}
+{"id": "volume_rect_prism_formula", "verdict": "ok", "notes": ""}
+{"id": "volume_composite", "verdict": "ok", "notes": ""}
+{"id": "volume_prism_fractional_edges", "verdict": "ok", "notes": ""}
+{"id": "surface_area_from_net", "verdict": "improve", "notes": "Keypad mode: the prompt's last line 'cube?' is clipped and unreadable behind the keypad edge; MC mode shows it fully."}
+{"id": "volume_cylinder", "verdict": "ok", "notes": ""}
+{"id": "volume_cone", "verdict": "ok", "notes": ""}
+{"id": "volume_sphere", "verdict": "ok", "notes": ""}
+{"id": "identify_shape_2d", "verdict": "ok", "notes": ""}
+{"id": "identify_shape_3d", "verdict": "ok", "notes": ""}

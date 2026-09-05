@@ -1,0 +1,15 @@
+{"id": "adjacent_angles", "verdict": "ok", "notes": ""}
+{"id": "transformations_translation", "verdict": "improve", "notes": "Vertex labels A/B/C and axis numbers on the coordinate grid are tiny; the kid must locate vertex C from a label a few pixels tall."}
+{"id": "transformations_reflection", "verdict": "improve", "notes": "The triangle renders as a near-degenerate sliver, and the A label crowds against C at the right vertex so the third vertex looks unlabeled; B (the one asked about) is labelled, so still answerable."}
+{"id": "transformations_rotation", "verdict": "improve", "notes": "The bottom-left vertex has no visible letter label (A and B are labelled, the third is a bare dot); labels that do render are tiny."}
+{"id": "transformations_dilation", "verdict": "ok", "notes": ""}
+{"id": "congruence_via_transformations", "verdict": "improve", "notes": "The comparison figure is drawn in pale yellow dashes on the light grid - low contrast for the very element the size judgement depends on."}
+{"id": "similarity_via_transformations", "verdict": "improve", "notes": "Same faint yellow dashed figure as congruence, and here it overlaps the green triangle inside a small grid, so judging whether sides are in proportion is visually hard."}
+{"id": "triangle_angle_sum", "verdict": "ok", "notes": ""}
+{"id": "exterior_angle_triangle", "verdict": "ok", "notes": ""}
+{"id": "parallel_lines_transversal", "verdict": "improve", "notes": "No diagram in either mode for an inherently spatial concept - without a picture, 'alternate interior angle' is pure vocabulary recall for a grade-8 kid."}
+{"id": "pythagorean_apply_2d", "verdict": "ok", "notes": ""}
+{"id": "pythagorean_apply_3d", "verdict": "ok", "notes": ""}
+{"id": "pythagorean_distance_coords", "verdict": "ok", "notes": ""}
+{"id": "signed_quantities_context", "verdict": "ok", "notes": ""}
+{"id": "integers_on_number_line", "verdict": "ok", "notes": ""}

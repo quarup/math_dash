@@ -1,0 +1,15 @@
+{"id": "graph_linear_equation", "verdict": "improve", "notes": "Wrong-screen explanation ends with the malformed chain 'So y = mx + b = y = 2x − 2' — the doubled 'y =' reads as an incorrect equation; should be 'So y = mx + b gives y = 2x − 2'."}
+{"id": "identify_linear_vs_nonlinear", "verdict": "improve", "notes": "Wrong-screen explanation opens with 'Δy varies: -3, -1, 1' — Δ notation is never introduced anywhere on the question or result screen, so a grade-8 student who just got it wrong has to guess what Δy means."}
+{"id": "function_definition_check", "verdict": "ok", "notes": ""}
+{"id": "compare_functions_representations", "verdict": "ok", "notes": ""}
+{"id": "qualitative_graph_features", "verdict": "ok", "notes": ""}
+{"id": "solve_system_by_graphing", "verdict": "ok", "notes": ""}
+{"id": "solve_system_substitution", "verdict": "ok", "notes": ""}
+{"id": "solve_system_elimination", "verdict": "ok", "notes": ""}
+{"id": "inspect_system_no_solution", "verdict": "ok", "notes": ""}
+{"id": "system_word_problem", "verdict": "ok", "notes": ""}
+{"id": "classify_count_categories", "verdict": "ok", "notes": ""}
+{"id": "three_category_data", "verdict": "ok", "notes": ""}
+{"id": "picture_graph_read", "verdict": "ok", "notes": ""}
+{"id": "bar_graph_read", "verdict": "ok", "notes": ""}
+{"id": "bar_graph_compare", "verdict": "ok", "notes": ""}

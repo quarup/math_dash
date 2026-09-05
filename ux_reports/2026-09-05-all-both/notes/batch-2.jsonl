@@ -1,0 +1,15 @@
+{"id": "skip_count_5", "verdict": "ok", "notes": ""}
+{"id": "skip_count_10", "verdict": "ok", "notes": ""}
+{"id": "skip_count_100", "verdict": "ok", "notes": ""}
+{"id": "count_within_1000", "verdict": "ok", "notes": ""}
+{"id": "even_odd", "verdict": "improve", "notes": "MC distractors 'Both even and odd' and 'Neither' can never be correct for any whole number, so kids learn to eliminate them and the question is effectively 50/50 while looking four-way."}
+{"id": "teen_numbers_as_ten_plus", "verdict": "ok", "notes": ""}
+{"id": "place_value_2digit", "verdict": "ok", "notes": "This generator sample is clean in both modes, but datasetPool is 46, so bundled-dataset questions for this concept are unsampled by this probe."}
+{"id": "compare_2digit", "verdict": "ok", "notes": ""}
+{"id": "place_value_3digit", "verdict": "ok", "notes": "This generator sample is clean in both modes, but datasetPool is 200, so bundled-dataset questions for this concept are unsampled by this probe."}
+{"id": "read_write_3digit", "verdict": "ok", "notes": ""}
+{"id": "expanded_form_3digit", "verdict": "ok", "notes": ""}
+{"id": "compare_3digit", "verdict": "improve", "notes": "Wrong-answer explanation reads 'Compare hundreds: 1 hundreds is less than 3 hundreds' -- '1 hundreds' is a pluralization glitch in the template; should be '1 hundred'."}
+{"id": "round_to_10", "verdict": "improve", "notes": "Wrong-answer explanation says 'the digit one place right of the 10 place' -- awkward phrasing; standard term is 'tens place'. Generator sample only; datasetPool is 23, so dataset questions are unsampled here."}
+{"id": "round_to_100", "verdict": "improve", "notes": "Wrong-answer explanation 'Round 9187 to the nearest 100 gives 9200' just restates the answer with no method (round_to_10 explains the look-right-and-round-up rule; this one should too). datasetPool is 85, so dataset questions are unsampled here."}
+{"id": "place_value_multidigit", "verdict": "ok", "notes": "This generator sample is clean in both modes, but datasetPool is 200, so bundled-dataset questions for this concept are unsampled by this probe."}

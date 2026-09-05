@@ -1,0 +1,15 @@
+{"id": "compare_fractions_same_num", "verdict": "ok", "notes": ""}
+{"id": "compare_fractions_unlike", "verdict": "ok", "notes": ""}
+{"id": "whole_number_as_fraction", "verdict": "ok", "notes": ""}
+{"id": "simplify_fraction", "verdict": "ok", "notes": ""}
+{"id": "improper_to_mixed", "verdict": "ok", "notes": ""}
+{"id": "mixed_to_improper", "verdict": "ok", "notes": ""}
+{"id": "add_fractions_like_denom", "verdict": "ok", "notes": ""}
+{"id": "sub_fractions_like_denom", "verdict": "ok", "notes": ""}
+{"id": "add_mixed_like_denom", "verdict": "ok", "notes": ""}
+{"id": "sub_mixed_like_denom", "verdict": "improve", "notes": "MC: the question is in sixths but only the simplified 2 2/3 is offered, and the prompt has no '(Answer in lowest terms.)' note, so a kid who correctly computes 2 4/6 finds no matching choice; add the lowest-terms note as mult_fraction_by_whole does."}
+{"id": "mult_fraction_by_whole", "verdict": "ok", "notes": ""}
+{"id": "add_fractions_unlike_denom", "verdict": "ok", "notes": ""}
+{"id": "sub_fractions_unlike_denom", "verdict": "improve", "notes": "MC: prompt lacks the '(Answer in lowest terms.)' note the add-unlike variant has, yet only simplified 1/6 is offered; a kid who correctly computes 2/12 sees the near-miss distractor 3/12 but not their own answer."}
+{"id": "add_mixed_unlike_denom", "verdict": "ok", "notes": ""}
+{"id": "sub_mixed_unlike_denom", "verdict": "ok", "notes": ""}

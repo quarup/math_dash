@@ -1,0 +1,15 @@
+{"id": "length_diff_units", "verdict": "ok", "notes": ""}
+{"id": "measure_to_half_quarter_inch", "verdict": "improve", "notes": "Wrong-answer explanation is just 'The bar reaches 5/2 = 2 1/2.' — the improper fraction 5/2 appears with no connection to counting halves on the ruler, confusing for a grade-3 reader. Applies to both modes."}
+{"id": "time_to_hour_half", "verdict": "ok", "notes": ""}
+{"id": "time_to_5_min", "verdict": "ok", "notes": ""}
+{"id": "time_to_minute", "verdict": "ok", "notes": ""}
+{"id": "am_pm", "verdict": "ok", "notes": ""}
+{"id": "elapsed_time", "verdict": "ok", "notes": "This probe (generator question, clock matches 7:45, choices and grading correct) is clean, but datasetPool=200 means most questions come from the bundled dataset, which this single sample does not cover."}
+{"id": "coins_id_value", "verdict": "ok", "notes": ""}
+{"id": "count_coins", "verdict": "ok", "notes": ""}
+{"id": "count_bills_coins", "verdict": "ok", "notes": ""}
+{"id": "money_word_problems", "verdict": "ok", "notes": ""}
+{"id": "change_from_purchase", "verdict": "ok", "notes": ""}
+{"id": "liquid_volume_mass", "verdict": "ok", "notes": ""}
+{"id": "convert_units_within_system", "verdict": "ok", "notes": ""}
+{"id": "convert_units_multistep", "verdict": "ok", "notes": ""}

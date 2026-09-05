@@ -1,0 +1,15 @@
+{"id": "associative_add", "verdict": "ok", "notes": ""}
+{"id": "add_2digit_1digit", "verdict": "improve", "notes": "Wrong-screen explanation just restates '69 + 2 = 71.' with no method, even though this sum crosses a ten; a make-a-ten step (69 + 1 = 70, 70 + 1 = 71) would teach something."}
+{"id": "add_2digit_multiple_of_10", "verdict": "ok", "notes": ""}
+{"id": "sub_multiples_of_10", "verdict": "ok", "notes": ""}
+{"id": "add_within_100", "verdict": "improve", "notes": "Wrong-screen explanation is only '27 + 68 = 95' despite the regrouping involved, unlike add_2digit_carry's step-by-step. datasetPool is 195, so this single probe may not represent the pool."}
+{"id": "sub_within_100", "verdict": "ok", "notes": "datasetPool is 126, so this single generator probe may not represent the bundled questions."}
+{"id": "add_2digit_carry", "verdict": "ok", "notes": "datasetPool is 49, so this single generator probe may not represent the bundled questions."}
+{"id": "sub_2digit_borrow", "verdict": "ok", "notes": "datasetPool is 38, so this single generator probe may not represent the bundled questions."}
+{"id": "add_up_to_4_2digit", "verdict": "ok", "notes": ""}
+{"id": "add_within_1000", "verdict": "ok", "notes": "datasetPool is 200, so this single generator probe may not represent the bundled questions."}
+{"id": "sub_within_1000", "verdict": "ok", "notes": "datasetPool is 199, so this single generator probe may not represent the bundled questions."}
+{"id": "mental_add_10_or_100", "verdict": "ok", "notes": ""}
+{"id": "add_word_problems_within_100", "verdict": "ok", "notes": ""}
+{"id": "add_sub_2step_word_problems", "verdict": "ok", "notes": "datasetPool is 300, so this single generator probe may not represent the bundled questions."}
+{"id": "add_multidigit_standard_alg", "verdict": "improve", "notes": "Wrong-screen explanation restates '3626 + 6859 = 10485' and the column diagram shows no carry marks, though every column here regroups; add_2digit_carry shows the per-column steps this one lacks."}

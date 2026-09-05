@@ -1,0 +1,15 @@
+{"id": "mad", "verdict": "ok", "notes": ""}
+{"id": "describe_distribution", "verdict": "ok", "notes": ""}
+{"id": "compare_two_distributions", "verdict": "improve", "notes": "Wrong-answer explanation just states 'Group A: 2. Group B: 3.' without saying IQR is the width of the box (Q3 − Q1), so a kid who misread the plot learns the values but not how to read them."}
+{"id": "sampling_representativeness", "verdict": "ok", "notes": ""}
+{"id": "inference_from_sample", "verdict": "ok", "notes": ""}
+{"id": "probability_zero_to_one", "verdict": "ok", "notes": ""}
+{"id": "probability_simple_event", "verdict": "ok", "notes": ""}
+{"id": "experimental_probability", "verdict": "ok", "notes": ""}
+{"id": "theoretical_vs_experimental", "verdict": "ok", "notes": ""}
+{"id": "sample_space_list", "verdict": "ok", "notes": ""}
+{"id": "compound_event_probability", "verdict": "improve", "notes": "Keypad mode: the prompt card is clipped behind the answer box, cutting the final line mid-glyph so the event being asked about ('…and then H?') is not visible without scrolling."}
+{"id": "tree_diagram", "verdict": "improve", "notes": "Keypad mode: last prompt line 'total?' is sliced mid-glyph by the answer box; MC mode also shows the card's last line flush against the choices."}
+{"id": "simulate_compound", "verdict": "ok", "notes": ""}
+{"id": "scatter_plot_construct", "verdict": "ok", "notes": ""}
+{"id": "scatter_plot_describe", "verdict": "ok", "notes": ""}

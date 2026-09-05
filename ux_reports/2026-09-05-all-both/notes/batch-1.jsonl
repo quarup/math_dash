@@ -1,0 +1,15 @@
+{"id": "count_to_10", "verdict": "ok", "notes": ""}
+{"id": "count_to_20", "verdict": "ok", "notes": ""}
+{"id": "count_to_100_by_1", "verdict": "ok", "notes": ""}
+{"id": "count_to_100_by_10", "verdict": "ok", "notes": ""}
+{"id": "count_to_120", "verdict": "ok", "notes": ""}
+{"id": "count_forward_from_n", "verdict": "ok", "notes": ""}
+{"id": "read_numerals_0_20", "verdict": "ok", "notes": ""}
+{"id": "write_numerals_0_20", "verdict": "ok", "notes": ""}
+{"id": "count_objects_to_10", "verdict": "ok", "notes": ""}
+{"id": "count_objects_to_20", "verdict": "ok", "notes": ""}
+{"id": "compare_groups_by_count", "verdict": "ok", "notes": ""}
+{"id": "compare_numerals_1_10", "verdict": "ok", "notes": ""}
+{"id": "one_more_one_less_within_20", "verdict": "ok", "notes": ""}
+{"id": "ten_more_ten_less", "verdict": "ok", "notes": ""}
+{"id": "skip_count_2", "verdict": "ok", "notes": ""}

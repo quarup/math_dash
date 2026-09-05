@@ -1,0 +1,15 @@
+{"id": "sub_multidigit_standard_alg", "verdict": "ok", "notes": ""}
+{"id": "add_sub_fluency_within_20", "verdict": "ok", "notes": ""}
+{"id": "number_line_add_sub", "verdict": "improve", "notes": "Wrong screen drops the number-line diagram and only restates 31 - 14 = 17; showing the hop that the question screen drew would explain the method (both modes)."}
+{"id": "equal_groups_intro", "verdict": "improve", "notes": "Prompt says 3 objects in each group but the diagram draws each group as one fused bar of grid cells rather than discrete objects; MC distractor 1 is implausible with 6 squares on screen."}
+{"id": "array_repeated_addition", "verdict": "ok", "notes": ""}
+{"id": "mult_meaning_groups", "verdict": "ok", "notes": ""}
+{"id": "mult_facts_within_100", "verdict": "ok", "notes": "Probe question is generator-style (4 x 2) and clean in all three shots, but datasetPool is 125, so this single sample does not cover the bundled dataset items."}
+{"id": "mult_facts_2", "verdict": "ok", "notes": ""}
+{"id": "mult_facts_5", "verdict": "ok", "notes": ""}
+{"id": "mult_facts_10", "verdict": "ok", "notes": ""}
+{"id": "mult_facts_3", "verdict": "ok", "notes": ""}
+{"id": "mult_facts_4", "verdict": "ok", "notes": ""}
+{"id": "mult_facts_6", "verdict": "ok", "notes": ""}
+{"id": "mult_facts_7", "verdict": "ok", "notes": ""}
+{"id": "mult_facts_8", "verdict": "ok", "notes": ""}

@@ -1,0 +1,15 @@
+{"id": "line_plot_whole", "verdict": "ok", "notes": ""}
+{"id": "scaled_bar_graph_read", "verdict": "ok", "notes": ""}
+{"id": "scaled_picture_graph", "verdict": "improve", "notes": "Prompt says 'How many apples are there?' but the chart is a 'Favourite fruit' survey where 1 icon = 10 kids, so the icons count votes, not apples; 'How many kids chose apple?' would match the diagram. Both modes."}
+{"id": "line_plot_fractional", "verdict": "ok", "notes": ""}
+{"id": "line_plot_fraction_word", "verdict": "ok", "notes": ""}
+{"id": "line_plot_5th_grade_ops", "verdict": "ok", "notes": ""}
+{"id": "statistical_question", "verdict": "ok", "notes": ""}
+{"id": "dot_plot", "verdict": "ok", "notes": ""}
+{"id": "histogram", "verdict": "ok", "notes": ""}
+{"id": "box_plot", "verdict": "ok", "notes": ""}
+{"id": "mean", "verdict": "ok", "notes": ""}
+{"id": "median", "verdict": "improve", "notes": "Axis 0-28 has unit ticks labelled only every 2 and adjacent dot columns at 15 and 16 nearly touch, so exact values are a one-tick squint; MC distractor 17 punishes that misread rather than a median mistake. Both modes."}
+{"id": "mode", "verdict": "ok", "notes": ""}
+{"id": "range_data", "verdict": "improve", "notes": "Dots are rendered much smaller than in other stats plots and sit on a 0-37 axis with unlabelled unit ticks (labels every 5), yet the answer needs exact min/max values 3 and 37. Both modes."}
+{"id": "iqr", "verdict": "improve", "notes": "Same tiny dots on a 0-46 axis with unit ticks labelled every 5; computing IQR requires reading all 7 exact values (e.g. 27 vs 28 is a hairline difference), which is a squint at this density. Both modes."}

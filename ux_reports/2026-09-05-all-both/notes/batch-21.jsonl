@@ -1,0 +1,15 @@
+{"id": "dependent_independent_vars", "verdict": "ok", "notes": ""}
+{"id": "add_subtract_linear_expressions", "verdict": "ok", "notes": ""}
+{"id": "factor_linear_expression", "verdict": "ok", "notes": ""}
+{"id": "expand_linear_expression", "verdict": "ok", "notes": ""}
+{"id": "solve_two_step_eq", "verdict": "ok", "notes": ""}
+{"id": "solve_two_step_eq_distributive", "verdict": "ok", "notes": ""}
+{"id": "solve_two_step_inequality", "verdict": "ok", "notes": ""}
+{"id": "word_problem_two_step_eq", "verdict": "ok", "notes": ""}
+{"id": "solve_linear_eq_one_solution", "verdict": "ok", "notes": ""}
+{"id": "solve_linear_eq_no_or_inf", "verdict": "ok", "notes": ""}
+{"id": "solve_linear_eq_with_distrib_collect", "verdict": "ok", "notes": ""}
+{"id": "graph_proportional_slope", "verdict": "improve", "notes": "Both modes (keypad forced MC): the answer must be read entirely off the graph, but the plot is small and its axis labels are tiny; picking slope 4 over distractors 3 and 5 requires counting fine gridlines where the steep line crosses x = 1."}
+{"id": "slope_from_two_points", "verdict": "ok", "notes": ""}
+{"id": "linear_function_construct", "verdict": "ok", "notes": ""}
+{"id": "function_evaluate_at_point", "verdict": "ok", "notes": "Probed question (generator path with minus key present on keypad) is clean, but datasetPool is 200, so this single sample does not cover the bundled dataset questions for this concept."}
