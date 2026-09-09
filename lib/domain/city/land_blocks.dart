@@ -1,7 +1,7 @@
 /// Land ownership on an effectively-infinite plane (plan.md Phase 9 revamp):
 /// the city is a *set of owned 4×4 blocks*, not a fixed rectangle. Tiles you
-/// don't own show pale; you tap an adjacent block to buy it with 🧱, and the
-/// price climbs the further the block sits from the center.
+/// don't own show pale; you tap an adjacent block to buy it with coins, and
+/// the price climbs the further the block sits from the center.
 ///
 /// World tile coordinates are **signed** — block `(0,0)` is the center and
 /// covers tiles `[0,4)×[0,4)`, so blocks (and the tiles / placements on them)
@@ -13,18 +13,19 @@ import 'dart:math' as math;
 /// A "block" is a [kBlockSize]×[kBlockSize] square of world tiles.
 const int kBlockSize = 4;
 
-/// Linear price base: a ring-`r` block costs [kBaseBlockBrickCost] × `r` 🧱.
-/// Rings 0–1 (the starting 3×3) are seeded free, so the first purchasable block
-/// is ring 2 = 80 🧱.
-const int kBaseBlockBrickCost = 40;
+/// Linear price base: a ring-`r` block costs [kBaseBlockCoinCost] × `r` coins.
+/// Coins are study-seconds, so 600 = ten minutes of math per ring. Rings 0–1
+/// (the starting 3×3) are seeded free, so the first purchasable block is
+/// ring 2 = 1200 coins (~20 min), ring 3 = 1800 (~30 min), ring 4 = 2400.
+const int kBaseBlockCoinCost = 600;
 
 /// Chebyshev ring of a block: `max(|bx|, |by|)`. Center block `(0,0)` is ring
 /// 0, the 8 blocks around it ring 1, and so on outward in square rings.
 int blockRing(int bx, int by) => math.max(bx.abs(), by.abs());
 
-/// 🧱 cost to buy block `(bx, by)`: [kBaseBlockBrickCost] × ring, linear.
+/// Coin cost to buy block `(bx, by)`: [kBaseBlockCoinCost] × ring, linear.
 /// (Rings 0–1 are seeded free, so this is only meaningful for ring ≥ 2.)
-int blockCost(int bx, int by) => kBaseBlockBrickCost * blockRing(bx, by);
+int blockCost(int bx, int by) => kBaseBlockCoinCost * blockRing(bx, by);
 
 /// Floored integer division — unlike Dart's `~/` (which truncates toward zero),
 /// this rounds toward negative infinity, so block coordinates stay correct for

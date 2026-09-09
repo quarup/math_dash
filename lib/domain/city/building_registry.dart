@@ -4,16 +4,20 @@ import 'package:math_city/domain/city/unlock_rule.dart';
 
 /// Building catalog, authored against `city_builder.md §3` (the §3 row is the
 /// source of truth for costs / footprints / unlock rules). Phase 7 shipped the
-/// first 10; Phase 9 grows the list building-by-building as sprite art lands.
+/// first 10; Phase 9 grew the list building-by-building as sprite art landed.
 /// `numVariants: 0` means no art yet — the renderer keeps the Phase-7
 /// box+emoji placeholder (a few such rows exist purely as DAG prereqs for
 /// art-backed buildings further up their arc).
 ///
+/// **Prices are coins = expected seconds of study** (`coin_economy.dart`), so
+/// every `coinCost` reads as minutes of math: starters 1–2 min (60–120), the
+/// median building ~10 min (600), landmarks 1–2 h (3600–7200). Lifetime gates
+/// (`minLifetimeCoins`) are "hours of total study" milestones. Full table with
+/// rationale in `city_builder.md §3`; these are first-draft numbers for tuning.
+///
 /// Mayor's office is free and ungated so every player can place it on turn
-/// one. Single home costs 5 🧱 to place and 1 🔬 to research, so the very
-/// first 🔬 award (band-crossing on a starter concept) unlocks the research
-/// card and a handful of correct answers afterward earns the bricks to
-/// place the first house.
+/// one. Single home costs 60 coins (one minute of study) — a handful of
+/// correct answers after reading the first citizen request.
 const buildingRegistry = <BuildingType>[
   // -- Civic & housing ---------------------------------------------------
   BuildingType(
@@ -21,8 +25,7 @@ const buildingRegistry = <BuildingType>[
     name: "Mayor's office",
     emoji: '🏛️',
     category: BuildingCategory.civicHousing,
-    brickCost: 0,
-    researchCost: 0,
+    coinCost: 0,
     unlockRule: UnlockRule.open,
     footprint: (2, 2),
     numVariants: 1,
@@ -33,8 +36,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Single home',
     emoji: '🏠',
     category: BuildingCategory.civicHousing,
-    brickCost: 5,
-    researchCost: 1,
+    coinCost: 60,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'mayors_office'},
       requiredBeatsRead: <String>{'demand_first_home'},
@@ -47,8 +49,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Apartment',
     emoji: '🏢',
     category: BuildingCategory.civicHousing,
-    brickCost: 10,
-    researchCost: 1,
+    coinCost: 120,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'mayors_office'},
       requiredBeatsRead: <String>{'demand_apartment'},
@@ -64,8 +65,7 @@ const buildingRegistry = <BuildingType>[
     // §3.2: education moved from civicHousing to services (2026-05-31
     // city_builder.md decision; the one-field change Phase 9 applies).
     category: BuildingCategory.services,
-    brickCost: 10,
-    researchCost: 1,
+    coinCost: 120,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'mayors_office'},
       requiredBeatsRead: <String>{'demand_school'},
@@ -80,8 +80,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Clinic',
     emoji: '🏥',
     category: BuildingCategory.services,
-    brickCost: 10,
-    researchCost: 1,
+    coinCost: 120,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'mayors_office'},
       requiredBeatsRead: <String>{'demand_clinic'},
@@ -99,8 +98,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Power plant',
     emoji: '⚡',
     category: BuildingCategory.services,
-    brickCost: 10,
-    researchCost: 1,
+    coinCost: 120,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'mayors_office'},
       requiredBeatsRead: <String>{'demand_power'},
@@ -115,8 +113,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Waste management',
     emoji: '🚮',
     category: BuildingCategory.services,
-    brickCost: 10,
-    researchCost: 1,
+    coinCost: 120,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'mayors_office'},
       requiredBeatsRead: <String>{'demand_waste'},
@@ -132,8 +129,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Grocery',
     emoji: '🛒',
     category: BuildingCategory.commercial,
-    brickCost: 10,
-    researchCost: 1,
+    coinCost: 120,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'mayors_office'},
       requiredBeatsRead: <String>{'demand_grocery'},
@@ -147,8 +143,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Coffee shop',
     emoji: '☕',
     category: BuildingCategory.commercial,
-    brickCost: 10,
-    researchCost: 1,
+    coinCost: 120,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'mayors_office'},
       requiredBeatsRead: <String>{'demand_coffee_shop'},
@@ -162,8 +157,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Park',
     emoji: '🌳',
     category: BuildingCategory.entertainment,
-    brickCost: 10,
-    researchCost: 1,
+    coinCost: 120,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'mayors_office'},
       requiredBeatsRead: <String>{'demand_more_parks'},
@@ -181,8 +175,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Town hall',
     emoji: '🏤',
     category: BuildingCategory.civicHousing,
-    brickCost: 30,
-    researchCost: 2,
+    coinCost: 720,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'mayors_office'},
       minPopulation: 20,
@@ -197,8 +190,7 @@ const buildingRegistry = <BuildingType>[
     name: 'City hall',
     emoji: '🏙️',
     category: BuildingCategory.civicHousing,
-    brickCost: 80,
-    researchCost: 3,
+    coinCost: 2400,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'town_hall'},
       minPopulation: 80,
@@ -213,8 +205,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Library',
     emoji: '📚',
     category: BuildingCategory.civicHousing,
-    brickCost: 20,
-    researchCost: 2,
+    coinCost: 300,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'school'},
       requiredBeatsRead: <String>{'demand_library'},
@@ -227,8 +218,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Post office',
     emoji: '📮',
     category: BuildingCategory.civicHousing,
-    brickCost: 20,
-    researchCost: 2,
+    coinCost: 300,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'town_hall'},
       requiredBeatsRead: <String>{'demand_post_office'},
@@ -241,8 +231,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Duplex',
     emoji: '🏘️',
     category: BuildingCategory.civicHousing,
-    brickCost: 10,
-    researchCost: 1,
+    coinCost: 120,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'single_home'},
       requiredBeatsRead: <String>{'demand_duplex'},
@@ -256,8 +245,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Townhouse row',
     emoji: '🏘️',
     category: BuildingCategory.civicHousing,
-    brickCost: 20,
-    researchCost: 2,
+    coinCost: 300,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'duplex'},
       minPopulation: 12,
@@ -272,8 +260,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Mid-rise apartment',
     emoji: '🏢',
     category: BuildingCategory.civicHousing,
-    brickCost: 30,
-    researchCost: 2,
+    coinCost: 720,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'apartment'},
       minPopulation: 30,
@@ -288,10 +275,9 @@ const buildingRegistry = <BuildingType>[
     name: 'High-rise',
     emoji: '🌆',
     category: BuildingCategory.civicHousing,
-    brickCost: 60,
-    researchCost: 3,
+    coinCost: 1500,
     unlockRule: UnlockRule(
-      minLifetimeBricks: 300,
+      minLifetimeCoins: 3600,
       requiredBuildingsPlaced: <String>{'mid_rise_apartment'},
       minPopulation: 60,
       requiredBeatsRead: <String>{'demand_high_rise'},
@@ -305,10 +291,9 @@ const buildingRegistry = <BuildingType>[
     name: 'Luxury condo',
     emoji: '🏨',
     category: BuildingCategory.civicHousing,
-    brickCost: 100,
-    researchCost: 3,
+    coinCost: 3000,
     unlockRule: UnlockRule(
-      minLifetimeBricks: 500,
+      minLifetimeCoins: 7200,
       requiredBuildingsPlaced: <String>{'high_rise'},
       requiredBeatsRead: <String>{'demand_luxury_condo'},
     ),
@@ -322,8 +307,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Farmhouse',
     emoji: '🏡',
     category: BuildingCategory.civicHousing,
-    brickCost: 8,
-    researchCost: 1,
+    coinCost: 90,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'single_home'},
       requiredBeatsRead: <String>{'demand_farmhouse'},
@@ -341,8 +325,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Power station',
     emoji: '🏭',
     category: BuildingCategory.services,
-    brickCost: 40,
-    researchCost: 3,
+    coinCost: 900,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'power_plant'},
       minPopulation: 40,
@@ -358,10 +341,9 @@ const buildingRegistry = <BuildingType>[
     name: 'Solar farm',
     emoji: '☀️',
     category: BuildingCategory.services,
-    brickCost: 70,
-    researchCost: 3,
+    coinCost: 1800,
     unlockRule: UnlockRule(
-      minLifetimeBricks: 400,
+      minLifetimeCoins: 5400,
       requiredBuildingsPlaced: <String>{'power_station'},
       requiredBeatsRead: <String>{'demand_solar_farm'},
     ),
@@ -375,8 +357,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Water tower',
     emoji: '🚰',
     category: BuildingCategory.services,
-    brickCost: 10,
-    researchCost: 1,
+    coinCost: 120,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'single_home'},
       requiredBeatsRead: <String>{'demand_water'},
@@ -390,8 +371,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Water treatment',
     emoji: '💧',
     category: BuildingCategory.services,
-    brickCost: 40,
-    researchCost: 3,
+    coinCost: 900,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'water_tower'},
       minPopulation: 40,
@@ -407,8 +387,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Recycling center',
     emoji: '♻️',
     category: BuildingCategory.services,
-    brickCost: 40,
-    researchCost: 3,
+    coinCost: 900,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'waste_management'},
       minPopulation: 40,
@@ -424,8 +403,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Hospital',
     emoji: '🚑',
     category: BuildingCategory.services,
-    brickCost: 60,
-    researchCost: 3,
+    coinCost: 1500,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'clinic'},
       minPopulation: 60,
@@ -445,8 +423,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Sports field',
     emoji: '⚽',
     category: BuildingCategory.entertainment,
-    brickCost: 25,
-    researchCost: 2,
+    coinCost: 600,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'school'},
       requiredBeatsRead: <String>{'demand_sports_field'},
@@ -460,8 +437,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Museum',
     emoji: '🏛️',
     category: BuildingCategory.entertainment,
-    brickCost: 50,
-    researchCost: 3,
+    coinCost: 1200,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'library'},
       requiredBeatsRead: <String>{'demand_museum'},
@@ -475,8 +451,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Stadium',
     emoji: '🏟️',
     category: BuildingCategory.entertainment,
-    brickCost: 90,
-    researchCost: 3,
+    coinCost: 2700,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'sports_field'},
       minPopulation: 80,
@@ -491,8 +466,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Aquarium',
     emoji: '🐠',
     category: BuildingCategory.entertainment,
-    brickCost: 120,
-    researchCost: 5,
+    coinCost: 3600,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'museum'},
       minPopulation: 100,
@@ -507,10 +481,9 @@ const buildingRegistry = <BuildingType>[
     name: 'Amusement park',
     emoji: '🎢',
     category: BuildingCategory.entertainment,
-    brickCost: 200,
-    researchCost: 5,
+    coinCost: 5400,
     unlockRule: UnlockRule(
-      minLifetimeBricks: 800,
+      minLifetimeCoins: 10800,
       requiredBuildingsPlaced: <String>{'stadium'},
       minPopulation: 120,
       requiredBeatsRead: <String>{'demand_amusement_park'},
@@ -524,10 +497,9 @@ const buildingRegistry = <BuildingType>[
     name: 'Observation tower',
     emoji: '🗼',
     category: BuildingCategory.entertainment,
-    brickCost: 250,
-    researchCost: 5,
+    coinCost: 7200,
     unlockRule: UnlockRule(
-      minLifetimeBricks: 1000,
+      minLifetimeCoins: 14400,
       requiredBuildingsPlaced: <String>{'city_hall'},
       requiredBeatsRead: <String>{'demand_observation_tower'},
     ),
@@ -544,8 +516,7 @@ const buildingRegistry = <BuildingType>[
     name: 'High school',
     emoji: '🎓',
     category: BuildingCategory.services,
-    brickCost: 40,
-    researchCost: 2,
+    coinCost: 900,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'school'},
       minPopulation: 40,
@@ -560,8 +531,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Fire station',
     emoji: '🚒',
     category: BuildingCategory.services,
-    brickCost: 25,
-    researchCost: 2,
+    coinCost: 600,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'town_hall'},
       requiredBeatsRead: <String>{'demand_fire'},
@@ -575,8 +545,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Police station',
     emoji: '🚓',
     category: BuildingCategory.services,
-    brickCost: 25,
-    researchCost: 2,
+    coinCost: 600,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'town_hall'},
       requiredBeatsRead: <String>{'demand_police'},
@@ -590,8 +559,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Bus depot',
     emoji: '🚌',
     category: BuildingCategory.services,
-    brickCost: 40,
-    researchCost: 3,
+    coinCost: 900,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'city_hall'},
       requiredBeatsRead: <String>{'demand_bus_depot'},
@@ -605,8 +573,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Gym',
     emoji: '🏋️',
     category: BuildingCategory.services,
-    brickCost: 25,
-    researchCost: 2,
+    coinCost: 600,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'sports_field'},
       requiredBeatsRead: <String>{'demand_gym'},
@@ -626,8 +593,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Market stall',
     emoji: '🍎',
     category: BuildingCategory.commercial,
-    brickCost: 8,
-    researchCost: 1,
+    coinCost: 90,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'single_home'},
       requiredBeatsRead: <String>{'demand_market_stall'},
@@ -640,8 +606,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Supermarket',
     emoji: '🏪',
     category: BuildingCategory.commercial,
-    brickCost: 30,
-    researchCost: 2,
+    coinCost: 720,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'grocery'},
       minPopulation: 20,
@@ -656,8 +621,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Bakery',
     emoji: '🥐',
     category: BuildingCategory.commercial,
-    brickCost: 20,
-    researchCost: 2,
+    coinCost: 300,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'grocery'},
       requiredBeatsRead: <String>{'demand_bakery'},
@@ -671,8 +635,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Restaurant',
     emoji: '🍽️',
     category: BuildingCategory.commercial,
-    brickCost: 25,
-    researchCost: 2,
+    coinCost: 600,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'coffee_shop'},
       requiredBeatsRead: <String>{'demand_restaurant'},
@@ -686,8 +649,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Farmers market',
     emoji: '🧺',
     category: BuildingCategory.commercial,
-    brickCost: 20,
-    researchCost: 2,
+    coinCost: 300,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'farmhouse'},
       requiredBeatsRead: <String>{'demand_farmers_market'},
@@ -701,8 +663,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Bookshop',
     emoji: '📖',
     category: BuildingCategory.commercial,
-    brickCost: 20,
-    researchCost: 2,
+    coinCost: 300,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'library'},
       requiredBeatsRead: <String>{'demand_bookshop'},
@@ -715,8 +676,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Toy store',
     emoji: '🧸',
     category: BuildingCategory.commercial,
-    brickCost: 20,
-    researchCost: 2,
+    coinCost: 300,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'grocery'},
       requiredBeatsRead: <String>{'demand_toy_store'},
@@ -730,8 +690,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Clothing store',
     emoji: '👕',
     category: BuildingCategory.commercial,
-    brickCost: 25,
-    researchCost: 2,
+    coinCost: 600,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'supermarket'},
       requiredBeatsRead: <String>{'demand_clothing_store'},
@@ -745,8 +704,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Office building',
     emoji: '🏬',
     category: BuildingCategory.commercial,
-    brickCost: 40,
-    researchCost: 3,
+    coinCost: 900,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'town_hall'},
       requiredBeatsRead: <String>{'demand_office'},
@@ -760,8 +718,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Shopping mall',
     emoji: '🛍️',
     category: BuildingCategory.commercial,
-    brickCost: 80,
-    researchCost: 3,
+    coinCost: 2400,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'supermarket', 'clothing_store'},
       minPopulation: 80,
@@ -776,10 +733,9 @@ const buildingRegistry = <BuildingType>[
     name: 'Business tower',
     emoji: '🏢',
     category: BuildingCategory.commercial,
-    brickCost: 100,
-    researchCost: 3,
+    coinCost: 3000,
     unlockRule: UnlockRule(
-      minLifetimeBricks: 400,
+      minLifetimeCoins: 5400,
       requiredBuildingsPlaced: <String>{'office_building'},
       minPopulation: 80,
       requiredBeatsRead: <String>{'demand_business_tower'},
@@ -797,8 +753,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Playground',
     emoji: '🛝',
     category: BuildingCategory.entertainment,
-    brickCost: 10,
-    researchCost: 1,
+    coinCost: 120,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'park'},
       requiredBeatsRead: <String>{'demand_playground'},
@@ -812,8 +767,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Community garden',
     emoji: '🌻',
     category: BuildingCategory.entertainment,
-    brickCost: 15,
-    researchCost: 2,
+    coinCost: 180,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'park'},
       requiredBeatsRead: <String>{'demand_community_garden'},
@@ -827,8 +781,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Fountain plaza',
     emoji: '⛲',
     category: BuildingCategory.entertainment,
-    brickCost: 25,
-    researchCost: 2,
+    coinCost: 600,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'town_hall'},
       requiredBeatsRead: <String>{'demand_fountain_plaza'},
@@ -842,8 +795,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Botanical garden',
     emoji: '🌺',
     category: BuildingCategory.entertainment,
-    brickCost: 50,
-    researchCost: 3,
+    coinCost: 1200,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'community_garden'},
       minPopulation: 50,
@@ -858,8 +810,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Swimming pool',
     emoji: '🏊',
     category: BuildingCategory.entertainment,
-    brickCost: 30,
-    researchCost: 2,
+    coinCost: 720,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'sports_field'},
       requiredBeatsRead: <String>{'demand_swimming_pool'},
@@ -873,8 +824,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Movie theater',
     emoji: '🎬',
     category: BuildingCategory.entertainment,
-    brickCost: 40,
-    researchCost: 3,
+    coinCost: 900,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'restaurant'},
       requiredBeatsRead: <String>{'demand_movie_theater'},
@@ -888,8 +838,7 @@ const buildingRegistry = <BuildingType>[
     name: 'Zoo',
     emoji: '🦁',
     category: BuildingCategory.entertainment,
-    brickCost: 120,
-    researchCost: 5,
+    coinCost: 3600,
     unlockRule: UnlockRule(
       requiredBuildingsPlaced: <String>{'botanical_garden'},
       minPopulation: 100,
@@ -907,19 +856,3 @@ BuildingType? findBuildingTypeById(String id) {
   }
   return null;
 }
-
-/// Building types that should be pre-researched at city creation: any with
-/// `researchCost == 0` whose `unlockRule` is trivially satisfied by an empty
-/// starting state. In v1 this is just the mayor's office.
-Iterable<BuildingType> get preResearchedBuildings => buildingRegistry.where(
-  (b) =>
-      b.researchCost == 0 &&
-      b.unlockRule.evaluate(
-        const UnlockContext(
-          lifetimeBricksEarned: 0,
-          population: 0,
-          placedBuildingTypeIds: <String>{},
-          readBeatIds: <String>{},
-        ),
-      ),
-);

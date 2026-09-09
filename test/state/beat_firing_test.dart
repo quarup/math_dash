@@ -34,7 +34,7 @@ Future<void> _place(
   buildingTypeId: typeId,
   gridX: x,
   gridY: 0,
-  brickCost: 0,
+  coinCost: 0,
 );
 
 Set<String> _onScreenIds(ProviderContainer c) =>
@@ -74,7 +74,7 @@ void main() {
 
   group('story-beat DB helpers', () {
     test(
-      'recordBeatFired sets on-screen, counts fires, stamps bricks',
+      'recordBeatFired sets on-screen, counts fires, stamps coins',
       () async {
         final db = AppDatabase(NativeDatabase.memory());
         final p = await db.createPlayer(
@@ -87,13 +87,13 @@ void main() {
         var states = await db.storyBeatStatesForPlayer(p.id);
         expect(states['demand_clinic']!.state, 'onScreen');
         expect(states['demand_clinic']!.fireCount, 1);
-        expect(states['demand_clinic']!.lifetimeBricksAtLastFire, 10);
+        expect(states['demand_clinic']!.lifetimeCoinsAtLastFire, 10);
         expect(await db.firedBeatIds(p.id), {'demand_clinic'});
 
         await db.recordBeatFired(p.id, 'demand_clinic', 40);
         states = await db.storyBeatStatesForPlayer(p.id);
         expect(states['demand_clinic']!.fireCount, 2);
-        expect(states['demand_clinic']!.lifetimeBricksAtLastFire, 40);
+        expect(states['demand_clinic']!.lifetimeCoinsAtLastFire, 40);
       },
     );
 
@@ -216,7 +216,7 @@ void main() {
     });
 
     test(
-      'a re-fireable demand respects brick spacing after dismissal',
+      'a re-fireable demand respects coin spacing after dismissal',
       () async {
         final (db, pid, container) = await _setup();
         addTearDown(container.dispose);
@@ -229,7 +229,7 @@ void main() {
         var states = await db.storyBeatStatesForPlayer(pid);
         expect(states['demand_more_parks']!.fireCount, 1);
 
-        // Dismiss it, then re-evaluate with no new bricks earned: spacing (150)
+        // Dismiss it, then re-evaluate with no new coins earned: spacing (600)
         // not met, so it must NOT re-fire.
         await db.setBeatState(pid, 'demand_more_parks', 'dismissed');
         await actions.fireBeats();
@@ -237,9 +237,9 @@ void main() {
         expect(states['demand_more_parks']!.state, 'dismissed');
         expect(states['demand_more_parks']!.fireCount, 1);
 
-        // Earn 200 bricks (past the 150 spacing) and re-evaluate: re-fires
+        // Earn 700 coins (past the 600 spacing) and re-evaluate: re-fires
         // (other eligible beats are already on screen, so parks is next up).
-        await db.incrementPlayerBricks(pid, 200);
+        await db.incrementPlayerCoins(pid, 700);
         await _drainUntil(db, pid, actions, 'demand_more_parks');
         states = await db.storyBeatStatesForPlayer(pid);
         expect(states['demand_more_parks']!.state, 'onScreen');

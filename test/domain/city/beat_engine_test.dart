@@ -10,13 +10,13 @@ void main() {
     int population = 0,
     Map<String, int> ages = const <String, int>{},
     Set<String> fired = const <String>{},
-    int? bricksSince,
+    int? coinsSince,
   }) => TriggerContext(
     placedBuildingTypeIds: placed,
     population: population,
     maxBuildingAgeByTypeId: ages,
     firedBeatIds: fired,
-    bricksEarnedSinceBeatLastFired: bricksSince,
+    coinsEarnedSinceBeatLastFired: coinsSince,
   );
 
   Set<String> eligibleIds(TriggerContext context) =>
@@ -84,14 +84,14 @@ void main() {
       eligibleIds(ctx(placed: {'single_home'})),
       contains('demand_more_parks'),
     );
-    // Within the brick-spacing window -> suppressed.
+    // Within the coin-spacing window (600 ≈ 10 min of study) -> suppressed.
     expect(
-      eligibleIds(ctx(placed: {'single_home'}, bricksSince: 100)),
+      eligibleIds(ctx(placed: {'single_home'}, coinsSince: 400)),
       isNot(contains('demand_more_parks')),
     );
     // Past the spacing window -> re-fires.
     expect(
-      eligibleIds(ctx(placed: {'single_home'}, bricksSince: 150)),
+      eligibleIds(ctx(placed: {'single_home'}, coinsSince: 600)),
       contains('demand_more_parks'),
     );
   });

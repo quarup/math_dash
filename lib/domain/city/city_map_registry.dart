@@ -8,7 +8,7 @@ const cityMapRegistry = <CityMap>[
     theme: CityMapTheme.beginner,
     baseGridWidth: 12,
     baseGridHeight: 12,
-    brickUnlockCost: 0,
+    coinUnlockCost: 0,
     terrainSeed: 0,
   ),
 ];

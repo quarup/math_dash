@@ -1,5 +1,5 @@
 /// Thematic map definition — static catalog. Each `CityMap` is a tile-grid
-/// + a brick unlock cost (0 for the beginner map). Players can have multiple
+/// + a coin unlock cost (0 for the beginner map). Players can have multiple
 /// `City` instances over time (one per `CityMap` they've unlocked).
 enum CityMapTheme { beginner, countryside, bigCity, futuristic }
 
@@ -10,7 +10,7 @@ class CityMap {
     required this.theme,
     required this.baseGridWidth,
     required this.baseGridHeight,
-    required this.brickUnlockCost,
+    required this.coinUnlockCost,
     required this.terrainSeed,
   });
 
@@ -20,9 +20,9 @@ class CityMap {
   final int baseGridWidth;
   final int baseGridHeight;
 
-  /// 🧱 to unlock this map. 0 for the beginner map (every player starts
+  /// Coins to unlock this map. 0 for the beginner map (every player starts
   /// with it; the row in `Cities` is auto-created on player creation).
-  final int brickUnlockCost;
+  final int coinUnlockCost;
 
   /// Deterministic seed driving the procedural terrain layout.
   final int terrainSeed;

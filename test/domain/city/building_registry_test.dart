@@ -18,12 +18,11 @@ void main() {
     test("mayor's office is free + ungated", () {
       final mayors = findBuildingTypeById('mayors_office');
       expect(mayors, isNotNull);
-      expect(mayors!.brickCost, 0);
-      expect(mayors.researchCost, 0);
+      expect(mayors!.coinCost, 0);
       expect(
         mayors.unlockRule.evaluate(
           const UnlockContext(
-            lifetimeBricksEarned: 0,
+            lifetimeCoinsEarned: 0,
             population: 0,
             placedBuildingTypeIds: <String>{},
             readBeatIds: <String>{},
@@ -33,11 +32,34 @@ void main() {
       );
     });
 
-    test('single home costs 5 bricks to place and 1 research to unlock', () {
+    test('single home costs one minute of study (60 coins)', () {
       final home = findBuildingTypeById('single_home');
       expect(home, isNotNull);
-      expect(home!.brickCost, 5);
-      expect(home.researchCost, 1);
+      expect(home!.coinCost, 60);
+    });
+
+    test('prices read as whole half-minutes of study, none below a minute', () {
+      for (final b in buildingRegistry) {
+        if (b.id == 'mayors_office') continue;
+        expect(b.coinCost % 30, 0, reason: '${b.id} cost ${b.coinCost}');
+        expect(b.coinCost, greaterThanOrEqualTo(60), reason: b.id);
+      }
+    });
+
+    test('the dearest building is a couple of hours of study', () {
+      final dearest = buildingRegistry
+          .map((b) => b.coinCost)
+          .reduce((a, b) => a > b ? a : b);
+      expect(dearest, 7200);
+    });
+
+    test('lifetime gates are hour-scale milestones', () {
+      for (final b in buildingRegistry) {
+        final gate = b.unlockRule.minLifetimeCoins;
+        if (gate == null) continue;
+        expect(gate, greaterThanOrEqualTo(3600), reason: b.id);
+        expect(gate % 1800, 0, reason: b.id);
+      }
     });
 
     test('every prereq building referenced by an unlock rule exists', () {
@@ -119,11 +141,6 @@ void main() {
           reason: '${b.id} should have processed sprite art',
         );
       }
-    });
-
-    test("preResearchedBuildings is exactly the mayor's office", () {
-      final ids = preResearchedBuildings.map((b) => b.id).toList();
-      expect(ids, ['mayors_office']);
     });
   });
 }

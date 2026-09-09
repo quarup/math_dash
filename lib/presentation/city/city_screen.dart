@@ -20,6 +20,7 @@ import 'package:math_city/game/city/iso_grid.dart';
 import 'package:math_city/game/city/land_window.dart';
 import 'package:math_city/presentation/player/adventurer_avatar_widget.dart';
 import 'package:math_city/presentation/spin/spin_screen.dart';
+import 'package:math_city/presentation/widgets/coin_icon.dart';
 import 'package:math_city/presentation/widgets/speech_toggle_button.dart';
 import 'package:math_city/state/city_provider.dart';
 import 'package:math_city/state/player_provider.dart';
@@ -37,8 +38,8 @@ Color _colorFor(BuildingType b) =>
     _categoryColors[b.category] ?? const Color(0xFF90A4AE);
 
 /// "My City" — the per-player hub. Players reach it by tapping their chip on
-/// the home screen, and jump to the spin wheel from here. Chunk 2 scope:
-/// render the empty grid, list the researched build catalog, tap-to-place.
+/// the home screen, and jump to the spin wheel from here: render the grid,
+/// list the buildable catalog, tap-to-place.
 class CityScreen extends ConsumerStatefulWidget {
   const CityScreen({super.key});
 
@@ -71,7 +72,7 @@ class _CityScreenState extends ConsumerState<CityScreen> {
 
   /// The frontier block currently selected for purchase (yellow highlight +
   /// confirm bar at the bottom), or null. Selecting is allowed even when the
-  /// player can't afford it — the bar then shows how many 🧱 are missing.
+  /// player can't afford it — the bar then shows how many coins are missing.
   (int, int)? _buyingBlock;
 
   /// One tap on the board. The board reports a **window-local** tile; we map it
@@ -162,7 +163,7 @@ class _CityScreenState extends ConsumerState<CityScreen> {
   }
 
   /// Repositions the picked-up placement so its footprint covers `(col, row)`,
-  /// auto-sliding the anchor as needed. Free (no 🧱). Stays selected so the
+  /// auto-sliding the anchor as needed. Free (no coins). Stays selected so the
   /// player can keep nudging it.
   void _tryMove(
     int placementId,
@@ -225,9 +226,9 @@ class _CityScreenState extends ConsumerState<CityScreen> {
       _toast('No room for ${type.name} there');
       return;
     }
-    final bricks = ref.read(activePlayerProvider).asData?.value.brickBalance;
-    if (bricks == null || type.brickCost > bricks) {
-      _toast('Not enough bricks for ${type.name}');
+    final coins = ref.read(activePlayerProvider).asData?.value.coinBalance;
+    if (coins == null || type.coinCost > coins) {
+      _toast('Not enough coins for ${type.name}');
       return;
     }
     unawaited(() async {
@@ -239,7 +240,7 @@ class _CityScreenState extends ConsumerState<CityScreen> {
         // Keep the just-placed building selected so it can be nudged (req. #3),
         // and drop the catalog pick if the player can't afford another.
         _movingId = id;
-        if (bricks - type.brickCost < type.brickCost) _selected = null;
+        if (coins - type.coinCost < type.coinCost) _selected = null;
       });
     }());
   }
@@ -393,55 +394,18 @@ class _CityScreenState extends ConsumerState<CityScreen> {
     );
   }
 
-  /// Confirms the pending land selection: spends the ring-priced 🧱 and clears
-  /// the selection. Reached from the buy bar's Buy button and from a second tap
-  /// on the selected block, so it checks affordability itself — an unaffordable
-  /// block stays selected (and priced) rather than silently doing nothing.
+  /// Confirms the pending land selection: spends the ring-priced coins and
+  /// clears the selection. Reached from the buy bar's Buy button and from a
+  /// second tap on the selected block, so it checks affordability itself — an
+  /// unaffordable block stays selected (and priced) rather than silently
+  /// doing nothing.
   void _buySelectedBlock() {
     final block = _buyingBlock;
     if (block == null) return;
-    final bricks = ref.read(activePlayerProvider).asData?.value.brickBalance;
-    if (bricks == null || blockCost(block.$1, block.$2) > bricks) return;
+    final coins = ref.read(activePlayerProvider).asData?.value.coinBalance;
+    if (coins == null || blockCost(block.$1, block.$2) > coins) return;
     setState(() => _buyingBlock = null);
     unawaited(ref.read(cityActionsProvider).buyLandBlock(block.$1, block.$2));
-  }
-
-  /// Tap on a locked (available-to-research) catalog card: confirm, then spend
-  /// 🔬 to unlock the type. On success the newly-researched building is
-  /// auto-selected so the player can place it right away.
-  Future<void> _confirmResearch(BuildingType b) async {
-    final research = ref
-        .read(activePlayerProvider)
-        .asData
-        ?.value
-        .researchBalance;
-    if (research == null || b.researchCost > research) {
-      _toast('Not enough research for ${b.name}');
-      return;
-    }
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text('Research ${b.name}?'),
-        content: Text(
-          'Spend 🔬 ${b.researchCost} to add ${b.name} to your build menu.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: const Text('Research'),
-          ),
-        ],
-      ),
-    );
-    if (confirmed ?? false) {
-      await ref.read(cityActionsProvider).researchBuilding(b);
-      if (mounted) setState(() => _selected = b);
-    }
   }
 
   List<PlacedBuildingView> _viewsFor(
@@ -552,18 +516,16 @@ class _CityScreenState extends ConsumerState<CityScreen> {
         ? null
         : findBuildingTypeById(moving.buildingTypeId);
 
-    // Auto-select the only researched building so the starter player doesn't
+    // Auto-select the only buildable building so the starter player doesn't
     // have to click the mayor's office before placing it. Once the catalog
-    // grows (more researched buildings, or locked ones to research), the
-    // player makes an explicit pick.
+    // grows, the player makes an explicit pick.
     // .value (not asData?.value) so a refresh — which the catalog does on
     // every placement — keeps the *previous* catalog instead of momentarily
     // dropping to null. Otherwise the bottom bar collapses for a frame, which
     // resizes the Flame viewport and makes the camera jump (see bottomNavBar).
     final catalog = catalogAsync.value;
-    if (_selected == null && catalog != null) {
-      final placeable = catalog.where((e) => e.researched).toList();
-      if (placeable.length == 1) _selected = placeable.first.building;
+    if (_selected == null && catalog != null && catalog.length == 1) {
+      _selected = catalog.first;
     }
 
     return Scaffold(
@@ -583,10 +545,7 @@ class _CityScreenState extends ConsumerState<CityScreen> {
           if (player != null)
             Padding(
               padding: const EdgeInsets.only(right: 12),
-              child: _CurrencyBar(
-                bricks: player.brickBalance,
-                research: player.researchBalance,
-              ),
+              child: _CurrencyBar(coins: player.coinBalance),
             ),
         ],
       ),
@@ -621,7 +580,7 @@ class _CityScreenState extends ConsumerState<CityScreen> {
       bottomNavigationBar: _buyingBlock != null
           ? _BuyLandBar(
               cost: blockCost(_buyingBlock!.$1, _buyingBlock!.$2),
-              brickBalance: player?.brickBalance ?? 0,
+              coinBalance: player?.coinBalance ?? 0,
               onBuy: _buySelectedBlock,
               onCancel: () => setState(() => _buyingBlock = null),
             )
@@ -638,10 +597,8 @@ class _CityScreenState extends ConsumerState<CityScreen> {
           : _BuildCatalogBar(
               catalog: catalog,
               selected: _selected,
-              brickBalance: player?.brickBalance ?? 0,
-              researchBalance: player?.researchBalance ?? 0,
+              coinBalance: player?.coinBalance ?? 0,
               onSelect: (b) => setState(() => _selected = b),
-              onResearch: _confirmResearch,
             ),
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
@@ -671,15 +628,15 @@ class _CityScreenState extends ConsumerState<CityScreen> {
 
 /// kDebugMode-only control panel, shown in a bottom sheet from the city
 /// screen's debug FAB. Lets a developer exercise the city mechanics
-/// (placement, research, growth, beats) without grinding math for currency:
-/// grant 🧱/🔬, set the population directly, research the whole catalog,
-/// force-fire any beat, and reset the city to a brand-new-player baseline.
+/// (placement, growth, beats) without grinding math for currency: grant
+/// coins, set the population directly, force-fire any beat, and reset the
+/// city to a brand-new-player baseline.
 /// Operates on the *real* active player so persistence is exercised too.
 class _CityDebugSheet extends ConsumerStatefulWidget {
   const _CityDebugSheet({required this.onReset});
 
   /// Called after a successful reset so the parent screen can clear its
-  /// pending building selection (which may now be un-researched).
+  /// pending building selection (which may no longer be available).
   final VoidCallback onReset;
 
   @override
@@ -705,8 +662,8 @@ class _CityDebugSheetState extends ConsumerState<_CityDebugSheet> {
       builder: (dialogContext) => AlertDialog(
         title: const Text('Reset city?'),
         content: const Text(
-          'Wipes all placements, researched buildings, beats, and population, '
-          'and zeroes 🧱 / 🔬 (balances + lifetime). Cannot be undone.',
+          'Wipes all placements, beats, and population, and zeroes coins '
+          '(balance + lifetime) and the streak. Cannot be undone.',
         ),
         actions: [
           TextButton(
@@ -754,8 +711,8 @@ class _CityDebugSheetState extends ConsumerState<_CityDebugSheet> {
                 Text('City debug', style: theme.textTheme.titleMedium),
                 const Spacer(),
                 if (player != null)
-                  Text(
-                    '🧱 ${player.brickBalance}   🔬 ${player.researchBalance}',
+                  CoinAmount(
+                    amount: player.coinBalance,
                     style: theme.textTheme.titleMedium,
                   ),
               ],
@@ -767,12 +724,12 @@ class _CityDebugSheetState extends ConsumerState<_CityDebugSheet> {
               spacing: 8,
               children: [
                 FilledButton.tonal(
-                  onPressed: () => unawaited(actions.debugGrantBricks(500)),
-                  child: const Text('+500 🧱'),
+                  onPressed: () => unawaited(actions.debugGrantCoins(600)),
+                  child: const Text('+600 coins (10 min)'),
                 ),
                 FilledButton.tonal(
-                  onPressed: () => unawaited(actions.debugGrantResearch(50)),
-                  child: const Text('+50 🔬'),
+                  onPressed: () => unawaited(actions.debugGrantCoins(3600)),
+                  child: const Text('+3600 coins (1 h)'),
                 ),
               ],
             ),
@@ -818,13 +775,6 @@ class _CityDebugSheetState extends ConsumerState<_CityDebugSheet> {
               ],
             ),
             const SizedBox(height: 16),
-            Text('Buildings', style: theme.textTheme.labelLarge),
-            const SizedBox(height: 8),
-            FilledButton.tonal(
-              onPressed: () => unawaited(actions.debugResearchAll()),
-              child: const Text('Research all buildings'),
-            ),
-            const SizedBox(height: 16),
             Text('Force-fire beat', style: theme.textTheme.labelLarge),
             const SizedBox(height: 8),
             Wrap(
@@ -862,13 +812,12 @@ class _CityDebugSheetState extends ConsumerState<_CityDebugSheet> {
   }
 }
 
-/// 🧱 / 🔬 balances on a shaded rounded card so both glyphs keep contrast
-/// against the city's bright terrain background showing behind the AppBar.
+/// Coin balance on a shaded rounded card so it keeps contrast against the
+/// city's bright terrain background showing behind the AppBar.
 class _CurrencyBar extends StatelessWidget {
-  const _CurrencyBar({required this.bricks, required this.research});
+  const _CurrencyBar({required this.coins});
 
-  final int bricks;
-  final int research;
+  final int coins;
 
   @override
   Widget build(BuildContext context) {
@@ -883,18 +832,7 @@ class _CurrencyBar extends StatelessWidget {
         color: Colors.black.withValues(alpha: 0.32),
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text('🧱', style: TextStyle(fontSize: 15)),
-          const SizedBox(width: 5),
-          Text('$bricks', style: textStyle),
-          const SizedBox(width: 12),
-          const Text('🔬', style: TextStyle(fontSize: 15)),
-          const SizedBox(width: 5),
-          Text('$research', style: textStyle),
-        ],
-      ),
+      child: CoinAmount(amount: coins, iconSize: 18, style: textStyle),
     );
   }
 }
@@ -978,24 +916,24 @@ class _MoveModeBar extends StatelessWidget {
 /// dialog on purpose: the city stays visible and tappable, so the player can
 /// still move the selection to a different spot before confirming. When the
 /// player can't afford the land yet, Buy is disabled and the text says how
-/// many more 🧱 they need.
+/// many more coins they need.
 class _BuyLandBar extends StatelessWidget {
   const _BuyLandBar({
     required this.cost,
-    required this.brickBalance,
+    required this.coinBalance,
     required this.onBuy,
     required this.onCancel,
   });
 
   final int cost;
-  final int brickBalance;
+  final int coinBalance;
   final VoidCallback onBuy;
   final VoidCallback onCancel;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final missing = cost - brickBalance;
+    final missing = cost - coinBalance;
     final affordable = missing <= 0;
     return Material(
       elevation: 8,
@@ -1009,11 +947,22 @@ class _BuyLandBar extends StatelessWidget {
               const Icon(Icons.landscape_rounded),
               const SizedBox(width: 12),
               Expanded(
-                child: Text(
-                  affordable
-                      ? 'Buy this land for 🧱 $cost?'
-                      : 'This land costs 🧱 $cost — '
-                            'earn 🧱 $missing more to buy it!',
+                child: Text.rich(
+                  TextSpan(
+                    children: affordable
+                        ? [
+                            const TextSpan(text: 'Buy this land for '),
+                            coinSpan(),
+                            TextSpan(text: ' $cost?'),
+                          ]
+                        : [
+                            const TextSpan(text: 'This land costs '),
+                            coinSpan(),
+                            TextSpan(text: ' $cost — earn '),
+                            coinSpan(),
+                            TextSpan(text: ' $missing more to buy it!'),
+                          ],
+                  ),
                   style: theme.textTheme.bodyMedium,
                 ),
               ),
@@ -1497,25 +1446,21 @@ class _ExpandedBeatCard extends StatelessWidget {
   }
 }
 
-/// Horizontal catalog of buildings. Researched buildings are tap-to-select for
-/// placement (🧱 cost); buildings still available to research show a 🔬 cost +
-/// a lock badge and tap-to-research. Unaffordable cards are greyed.
+/// Horizontal catalog of buildings whose unlock rule has passed. Every card
+/// is tap-to-select for placement at its coin cost; unaffordable cards are
+/// greyed and can't be selected.
 class _BuildCatalogBar extends StatelessWidget {
   const _BuildCatalogBar({
     required this.catalog,
     required this.selected,
-    required this.brickBalance,
-    required this.researchBalance,
+    required this.coinBalance,
     required this.onSelect,
-    required this.onResearch,
   });
 
-  final List<CatalogEntry> catalog;
+  final List<BuildingType> catalog;
   final BuildingType? selected;
-  final int brickBalance;
-  final int researchBalance;
+  final int coinBalance;
   final void Function(BuildingType) onSelect;
-  final void Function(BuildingType) onResearch;
 
   @override
   Widget build(BuildContext context) {
@@ -1530,7 +1475,7 @@ class _BuildCatalogBar extends StatelessWidget {
           child: catalog.isEmpty
               ? Center(
                   child: Text(
-                    'No buildings yet — research some by playing math!',
+                    'No buildings yet — keep playing math!',
                     style: theme.textTheme.bodySmall,
                   ),
                 )
@@ -1543,22 +1488,14 @@ class _BuildCatalogBar extends StatelessWidget {
                   itemCount: catalog.length,
                   separatorBuilder: (_, _) => const SizedBox(width: 8),
                   itemBuilder: (context, i) {
-                    final entry = catalog[i];
-                    final b = entry.building;
-                    final affordable = entry.researched
-                        ? b.brickCost <= brickBalance
-                        : b.researchCost <= researchBalance;
+                    final b = catalog[i];
+                    final affordable = b.coinCost <= coinBalance;
                     return _CatalogCard(
-                      entry: entry,
-                      isSelected: entry.researched && b.id == selected?.id,
+                      building: b,
+                      isSelected: b.id == selected?.id,
                       affordable: affordable,
                       color: _colorFor(b),
-                      // Researched + unaffordable can't be selected; locked
-                      // cards are always tappable so the research flow can
-                      // explain when the player can't afford the 🔬.
-                      onTap: entry.researched
-                          ? (affordable ? () => onSelect(b) : null)
-                          : () => onResearch(b),
+                      onTap: affordable ? () => onSelect(b) : null,
                     );
                   },
                 ),
@@ -1570,14 +1507,14 @@ class _BuildCatalogBar extends StatelessWidget {
 
 class _CatalogCard extends StatelessWidget {
   const _CatalogCard({
-    required this.entry,
+    required this.building,
     required this.isSelected,
     required this.affordable,
     required this.color,
     required this.onTap,
   });
 
-  final CatalogEntry entry;
+  final BuildingType building;
   final bool isSelected;
   final bool affordable;
   final Color color;
@@ -1586,11 +1523,10 @@ class _CatalogCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final b = entry.building;
-    final locked = !entry.researched;
-    final costLabel = locked
-        ? '🔬 ${b.researchCost}'
-        : (b.brickCost == 0 ? 'Free' : '🧱 ${b.brickCost}');
+    final b = building;
+    final costStyle = theme.textTheme.labelSmall?.copyWith(
+      fontWeight: FontWeight.bold,
+    );
 
     final card = AnimatedContainer(
       duration: const Duration(milliseconds: 150),
@@ -1619,45 +1555,17 @@ class _CatalogCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 2),
-          Text(
-            costLabel,
-            style: theme.textTheme.labelSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          if (b.coinCost == 0)
+            Text('Free', style: costStyle)
+          else
+            CoinAmount(amount: b.coinCost, iconSize: 12, style: costStyle),
         ],
       ),
     );
 
     return Opacity(
       opacity: affordable ? 1 : 0.4,
-      child: GestureDetector(
-        onTap: onTap,
-        child: locked
-            ? Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  card,
-                  Positioned(
-                    top: 4,
-                    right: 4,
-                    child: Container(
-                      padding: const EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                        color: theme.colorScheme.surface,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.lock,
-                        size: 14,
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            : card,
-      ),
+      child: GestureDetector(onTap: onTap, child: card),
     );
   }
 }
