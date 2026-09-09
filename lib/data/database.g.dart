@@ -45,46 +45,35 @@ class $PlayersTable extends Players with TableInfo<$PlayersTable, Player> {
     type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _brickBalanceMeta = const VerificationMeta(
-    'brickBalance',
+  static const VerificationMeta _coinBalanceMeta = const VerificationMeta(
+    'coinBalance',
   );
   @override
-  late final GeneratedColumn<int> brickBalance = GeneratedColumn<int>(
-    'brick_balance',
+  late final GeneratedColumn<int> coinBalance = GeneratedColumn<int>(
+    'coin_balance',
     aliasedName,
     false,
     type: DriftSqlType.int,
     requiredDuringInsert: false,
     defaultValue: const Constant(0),
   );
-  static const VerificationMeta _lifetimeBricksEarnedMeta =
-      const VerificationMeta('lifetimeBricksEarned');
+  static const VerificationMeta _lifetimeCoinsEarnedMeta =
+      const VerificationMeta('lifetimeCoinsEarned');
   @override
-  late final GeneratedColumn<int> lifetimeBricksEarned = GeneratedColumn<int>(
-    'lifetime_bricks_earned',
+  late final GeneratedColumn<int> lifetimeCoinsEarned = GeneratedColumn<int>(
+    'lifetime_coins_earned',
     aliasedName,
     false,
     type: DriftSqlType.int,
     requiredDuringInsert: false,
     defaultValue: const Constant(0),
   );
-  static const VerificationMeta _researchBalanceMeta = const VerificationMeta(
-    'researchBalance',
+  static const VerificationMeta _streakLevelMeta = const VerificationMeta(
+    'streakLevel',
   );
   @override
-  late final GeneratedColumn<int> researchBalance = GeneratedColumn<int>(
-    'research_balance',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultValue: const Constant(0),
-  );
-  static const VerificationMeta _lifetimeResearchEarnedMeta =
-      const VerificationMeta('lifetimeResearchEarned');
-  @override
-  late final GeneratedColumn<int> lifetimeResearchEarned = GeneratedColumn<int>(
-    'lifetime_research_earned',
+  late final GeneratedColumn<int> streakLevel = GeneratedColumn<int>(
+    'streak_level',
     aliasedName,
     false,
     type: DriftSqlType.int,
@@ -130,10 +119,9 @@ class $PlayersTable extends Players with TableInfo<$PlayersTable, Player> {
     id,
     name,
     gradeLevel,
-    brickBalance,
-    lifetimeBricksEarned,
-    researchBalance,
-    lifetimeResearchEarned,
+    coinBalance,
+    lifetimeCoinsEarned,
+    streakLevel,
     roundsPlayed,
     createdAt,
     avatarConfig,
@@ -169,39 +157,30 @@ class $PlayersTable extends Players with TableInfo<$PlayersTable, Player> {
     } else if (isInserting) {
       context.missing(_gradeLevelMeta);
     }
-    if (data.containsKey('brick_balance')) {
+    if (data.containsKey('coin_balance')) {
       context.handle(
-        _brickBalanceMeta,
-        brickBalance.isAcceptableOrUnknown(
-          data['brick_balance']!,
-          _brickBalanceMeta,
+        _coinBalanceMeta,
+        coinBalance.isAcceptableOrUnknown(
+          data['coin_balance']!,
+          _coinBalanceMeta,
         ),
       );
     }
-    if (data.containsKey('lifetime_bricks_earned')) {
+    if (data.containsKey('lifetime_coins_earned')) {
       context.handle(
-        _lifetimeBricksEarnedMeta,
-        lifetimeBricksEarned.isAcceptableOrUnknown(
-          data['lifetime_bricks_earned']!,
-          _lifetimeBricksEarnedMeta,
+        _lifetimeCoinsEarnedMeta,
+        lifetimeCoinsEarned.isAcceptableOrUnknown(
+          data['lifetime_coins_earned']!,
+          _lifetimeCoinsEarnedMeta,
         ),
       );
     }
-    if (data.containsKey('research_balance')) {
+    if (data.containsKey('streak_level')) {
       context.handle(
-        _researchBalanceMeta,
-        researchBalance.isAcceptableOrUnknown(
-          data['research_balance']!,
-          _researchBalanceMeta,
-        ),
-      );
-    }
-    if (data.containsKey('lifetime_research_earned')) {
-      context.handle(
-        _lifetimeResearchEarnedMeta,
-        lifetimeResearchEarned.isAcceptableOrUnknown(
-          data['lifetime_research_earned']!,
-          _lifetimeResearchEarnedMeta,
+        _streakLevelMeta,
+        streakLevel.isAcceptableOrUnknown(
+          data['streak_level']!,
+          _streakLevelMeta,
         ),
       );
     }
@@ -252,21 +231,17 @@ class $PlayersTable extends Players with TableInfo<$PlayersTable, Player> {
         DriftSqlType.int,
         data['${effectivePrefix}grade_level'],
       )!,
-      brickBalance: attachedDatabase.typeMapping.read(
+      coinBalance: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}brick_balance'],
+        data['${effectivePrefix}coin_balance'],
       )!,
-      lifetimeBricksEarned: attachedDatabase.typeMapping.read(
+      lifetimeCoinsEarned: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}lifetime_bricks_earned'],
+        data['${effectivePrefix}lifetime_coins_earned'],
       )!,
-      researchBalance: attachedDatabase.typeMapping.read(
+      streakLevel: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}research_balance'],
-      )!,
-      lifetimeResearchEarned: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}lifetime_research_earned'],
+        data['${effectivePrefix}streak_level'],
       )!,
       roundsPlayed: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -294,19 +269,19 @@ class Player extends DataClass implements Insertable<Player> {
   final String name;
   final int gradeLevel;
 
-  /// 🧱 spending balance — decremented on placements, map unlocks, events.
-  final int brickBalance;
+  /// Coin spending balance — decremented on placements, land, map unlocks,
+  /// events. One coin ≈ one expected second of study (see
+  /// `lib/domain/economy/coin_economy.dart`).
+  final int coinBalance;
 
-  /// 🧱 lifetime earned — never decreases; available as a gate input on
-  /// `BuildingType.unlockRule.minLifetimeBricks`.
-  final int lifetimeBricksEarned;
+  /// Coins lifetime earned — never decreases; literally "total seconds
+  /// studied". Gate input on `BuildingType.unlockRule.minLifetimeCoins`.
+  final int lifetimeCoinsEarned;
 
-  /// 🔬 spending balance — decremented when the player spends research to
-  /// move a building type from "available" into `BuildingTypesResearched`.
-  final int researchBalance;
-
-  /// 🔬 lifetime earned — never decreases; bookkeeping.
-  final int lifetimeResearchEarned;
+  /// Answer-streak level (0..`kStreakCap`): climbs one per correct answer,
+  /// resets to 0 on a wrong one, scales coin pay. Global per player and
+  /// persistent across sessions — the opening ramp doubles as a tutorial.
+  final int streakLevel;
 
   /// The game's "round" clock: a monotonic count of questions this player has
   /// answered. Persists across sessions and never decreases. Drives building
@@ -319,10 +294,9 @@ class Player extends DataClass implements Insertable<Player> {
     required this.id,
     required this.name,
     required this.gradeLevel,
-    required this.brickBalance,
-    required this.lifetimeBricksEarned,
-    required this.researchBalance,
-    required this.lifetimeResearchEarned,
+    required this.coinBalance,
+    required this.lifetimeCoinsEarned,
+    required this.streakLevel,
     required this.roundsPlayed,
     required this.createdAt,
     this.avatarConfig,
@@ -333,10 +307,9 @@ class Player extends DataClass implements Insertable<Player> {
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
     map['grade_level'] = Variable<int>(gradeLevel);
-    map['brick_balance'] = Variable<int>(brickBalance);
-    map['lifetime_bricks_earned'] = Variable<int>(lifetimeBricksEarned);
-    map['research_balance'] = Variable<int>(researchBalance);
-    map['lifetime_research_earned'] = Variable<int>(lifetimeResearchEarned);
+    map['coin_balance'] = Variable<int>(coinBalance);
+    map['lifetime_coins_earned'] = Variable<int>(lifetimeCoinsEarned);
+    map['streak_level'] = Variable<int>(streakLevel);
     map['rounds_played'] = Variable<int>(roundsPlayed);
     map['created_at'] = Variable<DateTime>(createdAt);
     if (!nullToAbsent || avatarConfig != null) {
@@ -350,10 +323,9 @@ class Player extends DataClass implements Insertable<Player> {
       id: Value(id),
       name: Value(name),
       gradeLevel: Value(gradeLevel),
-      brickBalance: Value(brickBalance),
-      lifetimeBricksEarned: Value(lifetimeBricksEarned),
-      researchBalance: Value(researchBalance),
-      lifetimeResearchEarned: Value(lifetimeResearchEarned),
+      coinBalance: Value(coinBalance),
+      lifetimeCoinsEarned: Value(lifetimeCoinsEarned),
+      streakLevel: Value(streakLevel),
       roundsPlayed: Value(roundsPlayed),
       createdAt: Value(createdAt),
       avatarConfig: avatarConfig == null && nullToAbsent
@@ -371,14 +343,11 @@ class Player extends DataClass implements Insertable<Player> {
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       gradeLevel: serializer.fromJson<int>(json['gradeLevel']),
-      brickBalance: serializer.fromJson<int>(json['brickBalance']),
-      lifetimeBricksEarned: serializer.fromJson<int>(
-        json['lifetimeBricksEarned'],
+      coinBalance: serializer.fromJson<int>(json['coinBalance']),
+      lifetimeCoinsEarned: serializer.fromJson<int>(
+        json['lifetimeCoinsEarned'],
       ),
-      researchBalance: serializer.fromJson<int>(json['researchBalance']),
-      lifetimeResearchEarned: serializer.fromJson<int>(
-        json['lifetimeResearchEarned'],
-      ),
+      streakLevel: serializer.fromJson<int>(json['streakLevel']),
       roundsPlayed: serializer.fromJson<int>(json['roundsPlayed']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       avatarConfig: serializer.fromJson<String?>(json['avatarConfig']),
@@ -391,10 +360,9 @@ class Player extends DataClass implements Insertable<Player> {
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
       'gradeLevel': serializer.toJson<int>(gradeLevel),
-      'brickBalance': serializer.toJson<int>(brickBalance),
-      'lifetimeBricksEarned': serializer.toJson<int>(lifetimeBricksEarned),
-      'researchBalance': serializer.toJson<int>(researchBalance),
-      'lifetimeResearchEarned': serializer.toJson<int>(lifetimeResearchEarned),
+      'coinBalance': serializer.toJson<int>(coinBalance),
+      'lifetimeCoinsEarned': serializer.toJson<int>(lifetimeCoinsEarned),
+      'streakLevel': serializer.toJson<int>(streakLevel),
       'roundsPlayed': serializer.toJson<int>(roundsPlayed),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'avatarConfig': serializer.toJson<String?>(avatarConfig),
@@ -405,10 +373,9 @@ class Player extends DataClass implements Insertable<Player> {
     int? id,
     String? name,
     int? gradeLevel,
-    int? brickBalance,
-    int? lifetimeBricksEarned,
-    int? researchBalance,
-    int? lifetimeResearchEarned,
+    int? coinBalance,
+    int? lifetimeCoinsEarned,
+    int? streakLevel,
     int? roundsPlayed,
     DateTime? createdAt,
     Value<String?> avatarConfig = const Value.absent(),
@@ -416,11 +383,9 @@ class Player extends DataClass implements Insertable<Player> {
     id: id ?? this.id,
     name: name ?? this.name,
     gradeLevel: gradeLevel ?? this.gradeLevel,
-    brickBalance: brickBalance ?? this.brickBalance,
-    lifetimeBricksEarned: lifetimeBricksEarned ?? this.lifetimeBricksEarned,
-    researchBalance: researchBalance ?? this.researchBalance,
-    lifetimeResearchEarned:
-        lifetimeResearchEarned ?? this.lifetimeResearchEarned,
+    coinBalance: coinBalance ?? this.coinBalance,
+    lifetimeCoinsEarned: lifetimeCoinsEarned ?? this.lifetimeCoinsEarned,
+    streakLevel: streakLevel ?? this.streakLevel,
     roundsPlayed: roundsPlayed ?? this.roundsPlayed,
     createdAt: createdAt ?? this.createdAt,
     avatarConfig: avatarConfig.present ? avatarConfig.value : this.avatarConfig,
@@ -432,18 +397,15 @@ class Player extends DataClass implements Insertable<Player> {
       gradeLevel: data.gradeLevel.present
           ? data.gradeLevel.value
           : this.gradeLevel,
-      brickBalance: data.brickBalance.present
-          ? data.brickBalance.value
-          : this.brickBalance,
-      lifetimeBricksEarned: data.lifetimeBricksEarned.present
-          ? data.lifetimeBricksEarned.value
-          : this.lifetimeBricksEarned,
-      researchBalance: data.researchBalance.present
-          ? data.researchBalance.value
-          : this.researchBalance,
-      lifetimeResearchEarned: data.lifetimeResearchEarned.present
-          ? data.lifetimeResearchEarned.value
-          : this.lifetimeResearchEarned,
+      coinBalance: data.coinBalance.present
+          ? data.coinBalance.value
+          : this.coinBalance,
+      lifetimeCoinsEarned: data.lifetimeCoinsEarned.present
+          ? data.lifetimeCoinsEarned.value
+          : this.lifetimeCoinsEarned,
+      streakLevel: data.streakLevel.present
+          ? data.streakLevel.value
+          : this.streakLevel,
       roundsPlayed: data.roundsPlayed.present
           ? data.roundsPlayed.value
           : this.roundsPlayed,
@@ -460,10 +422,9 @@ class Player extends DataClass implements Insertable<Player> {
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('gradeLevel: $gradeLevel, ')
-          ..write('brickBalance: $brickBalance, ')
-          ..write('lifetimeBricksEarned: $lifetimeBricksEarned, ')
-          ..write('researchBalance: $researchBalance, ')
-          ..write('lifetimeResearchEarned: $lifetimeResearchEarned, ')
+          ..write('coinBalance: $coinBalance, ')
+          ..write('lifetimeCoinsEarned: $lifetimeCoinsEarned, ')
+          ..write('streakLevel: $streakLevel, ')
           ..write('roundsPlayed: $roundsPlayed, ')
           ..write('createdAt: $createdAt, ')
           ..write('avatarConfig: $avatarConfig')
@@ -476,10 +437,9 @@ class Player extends DataClass implements Insertable<Player> {
     id,
     name,
     gradeLevel,
-    brickBalance,
-    lifetimeBricksEarned,
-    researchBalance,
-    lifetimeResearchEarned,
+    coinBalance,
+    lifetimeCoinsEarned,
+    streakLevel,
     roundsPlayed,
     createdAt,
     avatarConfig,
@@ -491,10 +451,9 @@ class Player extends DataClass implements Insertable<Player> {
           other.id == this.id &&
           other.name == this.name &&
           other.gradeLevel == this.gradeLevel &&
-          other.brickBalance == this.brickBalance &&
-          other.lifetimeBricksEarned == this.lifetimeBricksEarned &&
-          other.researchBalance == this.researchBalance &&
-          other.lifetimeResearchEarned == this.lifetimeResearchEarned &&
+          other.coinBalance == this.coinBalance &&
+          other.lifetimeCoinsEarned == this.lifetimeCoinsEarned &&
+          other.streakLevel == this.streakLevel &&
           other.roundsPlayed == this.roundsPlayed &&
           other.createdAt == this.createdAt &&
           other.avatarConfig == this.avatarConfig);
@@ -504,10 +463,9 @@ class PlayersCompanion extends UpdateCompanion<Player> {
   final Value<int> id;
   final Value<String> name;
   final Value<int> gradeLevel;
-  final Value<int> brickBalance;
-  final Value<int> lifetimeBricksEarned;
-  final Value<int> researchBalance;
-  final Value<int> lifetimeResearchEarned;
+  final Value<int> coinBalance;
+  final Value<int> lifetimeCoinsEarned;
+  final Value<int> streakLevel;
   final Value<int> roundsPlayed;
   final Value<DateTime> createdAt;
   final Value<String?> avatarConfig;
@@ -515,10 +473,9 @@ class PlayersCompanion extends UpdateCompanion<Player> {
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.gradeLevel = const Value.absent(),
-    this.brickBalance = const Value.absent(),
-    this.lifetimeBricksEarned = const Value.absent(),
-    this.researchBalance = const Value.absent(),
-    this.lifetimeResearchEarned = const Value.absent(),
+    this.coinBalance = const Value.absent(),
+    this.lifetimeCoinsEarned = const Value.absent(),
+    this.streakLevel = const Value.absent(),
     this.roundsPlayed = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.avatarConfig = const Value.absent(),
@@ -527,10 +484,9 @@ class PlayersCompanion extends UpdateCompanion<Player> {
     this.id = const Value.absent(),
     required String name,
     required int gradeLevel,
-    this.brickBalance = const Value.absent(),
-    this.lifetimeBricksEarned = const Value.absent(),
-    this.researchBalance = const Value.absent(),
-    this.lifetimeResearchEarned = const Value.absent(),
+    this.coinBalance = const Value.absent(),
+    this.lifetimeCoinsEarned = const Value.absent(),
+    this.streakLevel = const Value.absent(),
     this.roundsPlayed = const Value.absent(),
     required DateTime createdAt,
     this.avatarConfig = const Value.absent(),
@@ -541,10 +497,9 @@ class PlayersCompanion extends UpdateCompanion<Player> {
     Expression<int>? id,
     Expression<String>? name,
     Expression<int>? gradeLevel,
-    Expression<int>? brickBalance,
-    Expression<int>? lifetimeBricksEarned,
-    Expression<int>? researchBalance,
-    Expression<int>? lifetimeResearchEarned,
+    Expression<int>? coinBalance,
+    Expression<int>? lifetimeCoinsEarned,
+    Expression<int>? streakLevel,
     Expression<int>? roundsPlayed,
     Expression<DateTime>? createdAt,
     Expression<String>? avatarConfig,
@@ -553,12 +508,10 @@ class PlayersCompanion extends UpdateCompanion<Player> {
       if (id != null) 'id': id,
       if (name != null) 'name': name,
       if (gradeLevel != null) 'grade_level': gradeLevel,
-      if (brickBalance != null) 'brick_balance': brickBalance,
-      if (lifetimeBricksEarned != null)
-        'lifetime_bricks_earned': lifetimeBricksEarned,
-      if (researchBalance != null) 'research_balance': researchBalance,
-      if (lifetimeResearchEarned != null)
-        'lifetime_research_earned': lifetimeResearchEarned,
+      if (coinBalance != null) 'coin_balance': coinBalance,
+      if (lifetimeCoinsEarned != null)
+        'lifetime_coins_earned': lifetimeCoinsEarned,
+      if (streakLevel != null) 'streak_level': streakLevel,
       if (roundsPlayed != null) 'rounds_played': roundsPlayed,
       if (createdAt != null) 'created_at': createdAt,
       if (avatarConfig != null) 'avatar_config': avatarConfig,
@@ -569,10 +522,9 @@ class PlayersCompanion extends UpdateCompanion<Player> {
     Value<int>? id,
     Value<String>? name,
     Value<int>? gradeLevel,
-    Value<int>? brickBalance,
-    Value<int>? lifetimeBricksEarned,
-    Value<int>? researchBalance,
-    Value<int>? lifetimeResearchEarned,
+    Value<int>? coinBalance,
+    Value<int>? lifetimeCoinsEarned,
+    Value<int>? streakLevel,
     Value<int>? roundsPlayed,
     Value<DateTime>? createdAt,
     Value<String?>? avatarConfig,
@@ -581,11 +533,9 @@ class PlayersCompanion extends UpdateCompanion<Player> {
       id: id ?? this.id,
       name: name ?? this.name,
       gradeLevel: gradeLevel ?? this.gradeLevel,
-      brickBalance: brickBalance ?? this.brickBalance,
-      lifetimeBricksEarned: lifetimeBricksEarned ?? this.lifetimeBricksEarned,
-      researchBalance: researchBalance ?? this.researchBalance,
-      lifetimeResearchEarned:
-          lifetimeResearchEarned ?? this.lifetimeResearchEarned,
+      coinBalance: coinBalance ?? this.coinBalance,
+      lifetimeCoinsEarned: lifetimeCoinsEarned ?? this.lifetimeCoinsEarned,
+      streakLevel: streakLevel ?? this.streakLevel,
       roundsPlayed: roundsPlayed ?? this.roundsPlayed,
       createdAt: createdAt ?? this.createdAt,
       avatarConfig: avatarConfig ?? this.avatarConfig,
@@ -604,19 +554,14 @@ class PlayersCompanion extends UpdateCompanion<Player> {
     if (gradeLevel.present) {
       map['grade_level'] = Variable<int>(gradeLevel.value);
     }
-    if (brickBalance.present) {
-      map['brick_balance'] = Variable<int>(brickBalance.value);
+    if (coinBalance.present) {
+      map['coin_balance'] = Variable<int>(coinBalance.value);
     }
-    if (lifetimeBricksEarned.present) {
-      map['lifetime_bricks_earned'] = Variable<int>(lifetimeBricksEarned.value);
+    if (lifetimeCoinsEarned.present) {
+      map['lifetime_coins_earned'] = Variable<int>(lifetimeCoinsEarned.value);
     }
-    if (researchBalance.present) {
-      map['research_balance'] = Variable<int>(researchBalance.value);
-    }
-    if (lifetimeResearchEarned.present) {
-      map['lifetime_research_earned'] = Variable<int>(
-        lifetimeResearchEarned.value,
-      );
+    if (streakLevel.present) {
+      map['streak_level'] = Variable<int>(streakLevel.value);
     }
     if (roundsPlayed.present) {
       map['rounds_played'] = Variable<int>(roundsPlayed.value);
@@ -636,10 +581,9 @@ class PlayersCompanion extends UpdateCompanion<Player> {
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('gradeLevel: $gradeLevel, ')
-          ..write('brickBalance: $brickBalance, ')
-          ..write('lifetimeBricksEarned: $lifetimeBricksEarned, ')
-          ..write('researchBalance: $researchBalance, ')
-          ..write('lifetimeResearchEarned: $lifetimeResearchEarned, ')
+          ..write('coinBalance: $coinBalance, ')
+          ..write('lifetimeCoinsEarned: $lifetimeCoinsEarned, ')
+          ..write('streakLevel: $streakLevel, ')
           ..write('roundsPlayed: $roundsPlayed, ')
           ..write('createdAt: $createdAt, ')
           ..write('avatarConfig: $avatarConfig')
@@ -3677,299 +3621,6 @@ class BuildingPlacementsCompanion extends UpdateCompanion<BuildingPlacement> {
   }
 }
 
-class $BuildingTypesResearchedTable extends BuildingTypesResearched
-    with TableInfo<$BuildingTypesResearchedTable, BuildingTypesResearchedData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $BuildingTypesResearchedTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _playerIdMeta = const VerificationMeta(
-    'playerId',
-  );
-  @override
-  late final GeneratedColumn<int> playerId = GeneratedColumn<int>(
-    'player_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES players (id)',
-    ),
-  );
-  static const VerificationMeta _buildingTypeIdMeta = const VerificationMeta(
-    'buildingTypeId',
-  );
-  @override
-  late final GeneratedColumn<String> buildingTypeId = GeneratedColumn<String>(
-    'building_type_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _researchedAtMeta = const VerificationMeta(
-    'researchedAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> researchedAt = GeneratedColumn<DateTime>(
-    'researched_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [
-    playerId,
-    buildingTypeId,
-    researchedAt,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'building_types_researched';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<BuildingTypesResearchedData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('player_id')) {
-      context.handle(
-        _playerIdMeta,
-        playerId.isAcceptableOrUnknown(data['player_id']!, _playerIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_playerIdMeta);
-    }
-    if (data.containsKey('building_type_id')) {
-      context.handle(
-        _buildingTypeIdMeta,
-        buildingTypeId.isAcceptableOrUnknown(
-          data['building_type_id']!,
-          _buildingTypeIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_buildingTypeIdMeta);
-    }
-    if (data.containsKey('researched_at')) {
-      context.handle(
-        _researchedAtMeta,
-        researchedAt.isAcceptableOrUnknown(
-          data['researched_at']!,
-          _researchedAtMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_researchedAtMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {playerId, buildingTypeId};
-  @override
-  BuildingTypesResearchedData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return BuildingTypesResearchedData(
-      playerId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}player_id'],
-      )!,
-      buildingTypeId: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}building_type_id'],
-      )!,
-      researchedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}researched_at'],
-      )!,
-    );
-  }
-
-  @override
-  $BuildingTypesResearchedTable createAlias(String alias) {
-    return $BuildingTypesResearchedTable(attachedDatabase, alias);
-  }
-}
-
-class BuildingTypesResearchedData extends DataClass
-    implements Insertable<BuildingTypesResearchedData> {
-  final int playerId;
-  final String buildingTypeId;
-  final DateTime researchedAt;
-  const BuildingTypesResearchedData({
-    required this.playerId,
-    required this.buildingTypeId,
-    required this.researchedAt,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['player_id'] = Variable<int>(playerId);
-    map['building_type_id'] = Variable<String>(buildingTypeId);
-    map['researched_at'] = Variable<DateTime>(researchedAt);
-    return map;
-  }
-
-  BuildingTypesResearchedCompanion toCompanion(bool nullToAbsent) {
-    return BuildingTypesResearchedCompanion(
-      playerId: Value(playerId),
-      buildingTypeId: Value(buildingTypeId),
-      researchedAt: Value(researchedAt),
-    );
-  }
-
-  factory BuildingTypesResearchedData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return BuildingTypesResearchedData(
-      playerId: serializer.fromJson<int>(json['playerId']),
-      buildingTypeId: serializer.fromJson<String>(json['buildingTypeId']),
-      researchedAt: serializer.fromJson<DateTime>(json['researchedAt']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'playerId': serializer.toJson<int>(playerId),
-      'buildingTypeId': serializer.toJson<String>(buildingTypeId),
-      'researchedAt': serializer.toJson<DateTime>(researchedAt),
-    };
-  }
-
-  BuildingTypesResearchedData copyWith({
-    int? playerId,
-    String? buildingTypeId,
-    DateTime? researchedAt,
-  }) => BuildingTypesResearchedData(
-    playerId: playerId ?? this.playerId,
-    buildingTypeId: buildingTypeId ?? this.buildingTypeId,
-    researchedAt: researchedAt ?? this.researchedAt,
-  );
-  BuildingTypesResearchedData copyWithCompanion(
-    BuildingTypesResearchedCompanion data,
-  ) {
-    return BuildingTypesResearchedData(
-      playerId: data.playerId.present ? data.playerId.value : this.playerId,
-      buildingTypeId: data.buildingTypeId.present
-          ? data.buildingTypeId.value
-          : this.buildingTypeId,
-      researchedAt: data.researchedAt.present
-          ? data.researchedAt.value
-          : this.researchedAt,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('BuildingTypesResearchedData(')
-          ..write('playerId: $playerId, ')
-          ..write('buildingTypeId: $buildingTypeId, ')
-          ..write('researchedAt: $researchedAt')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(playerId, buildingTypeId, researchedAt);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is BuildingTypesResearchedData &&
-          other.playerId == this.playerId &&
-          other.buildingTypeId == this.buildingTypeId &&
-          other.researchedAt == this.researchedAt);
-}
-
-class BuildingTypesResearchedCompanion
-    extends UpdateCompanion<BuildingTypesResearchedData> {
-  final Value<int> playerId;
-  final Value<String> buildingTypeId;
-  final Value<DateTime> researchedAt;
-  final Value<int> rowid;
-  const BuildingTypesResearchedCompanion({
-    this.playerId = const Value.absent(),
-    this.buildingTypeId = const Value.absent(),
-    this.researchedAt = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  BuildingTypesResearchedCompanion.insert({
-    required int playerId,
-    required String buildingTypeId,
-    required DateTime researchedAt,
-    this.rowid = const Value.absent(),
-  }) : playerId = Value(playerId),
-       buildingTypeId = Value(buildingTypeId),
-       researchedAt = Value(researchedAt);
-  static Insertable<BuildingTypesResearchedData> custom({
-    Expression<int>? playerId,
-    Expression<String>? buildingTypeId,
-    Expression<DateTime>? researchedAt,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (playerId != null) 'player_id': playerId,
-      if (buildingTypeId != null) 'building_type_id': buildingTypeId,
-      if (researchedAt != null) 'researched_at': researchedAt,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  BuildingTypesResearchedCompanion copyWith({
-    Value<int>? playerId,
-    Value<String>? buildingTypeId,
-    Value<DateTime>? researchedAt,
-    Value<int>? rowid,
-  }) {
-    return BuildingTypesResearchedCompanion(
-      playerId: playerId ?? this.playerId,
-      buildingTypeId: buildingTypeId ?? this.buildingTypeId,
-      researchedAt: researchedAt ?? this.researchedAt,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (playerId.present) {
-      map['player_id'] = Variable<int>(playerId.value);
-    }
-    if (buildingTypeId.present) {
-      map['building_type_id'] = Variable<String>(buildingTypeId.value);
-    }
-    if (researchedAt.present) {
-      map['researched_at'] = Variable<DateTime>(researchedAt.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('BuildingTypesResearchedCompanion(')
-          ..write('playerId: $playerId, ')
-          ..write('buildingTypeId: $buildingTypeId, ')
-          ..write('researchedAt: $researchedAt, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $ConceptBandMilestonesTable extends ConceptBandMilestones
     with TableInfo<$ConceptBandMilestonesTable, ConceptBandMilestone> {
   @override
@@ -4356,12 +4007,12 @@ class $StoryBeatStatesTable extends StoryBeatStates
     requiredDuringInsert: false,
     defaultValue: const Constant(0),
   );
-  static const VerificationMeta _lifetimeBricksAtLastFireMeta =
-      const VerificationMeta('lifetimeBricksAtLastFire');
+  static const VerificationMeta _lifetimeCoinsAtLastFireMeta =
+      const VerificationMeta('lifetimeCoinsAtLastFire');
   @override
-  late final GeneratedColumn<int> lifetimeBricksAtLastFire =
+  late final GeneratedColumn<int> lifetimeCoinsAtLastFire =
       GeneratedColumn<int>(
-        'lifetime_bricks_at_last_fire',
+        'lifetime_coins_at_last_fire',
         aliasedName,
         true,
         type: DriftSqlType.int,
@@ -4385,7 +4036,7 @@ class $StoryBeatStatesTable extends StoryBeatStates
     state,
     lastFiredAtRound,
     fireCount,
-    lifetimeBricksAtLastFire,
+    lifetimeCoinsAtLastFire,
     ackedAtRound,
   ];
   @override
@@ -4439,12 +4090,12 @@ class $StoryBeatStatesTable extends StoryBeatStates
         fireCount.isAcceptableOrUnknown(data['fire_count']!, _fireCountMeta),
       );
     }
-    if (data.containsKey('lifetime_bricks_at_last_fire')) {
+    if (data.containsKey('lifetime_coins_at_last_fire')) {
       context.handle(
-        _lifetimeBricksAtLastFireMeta,
-        lifetimeBricksAtLastFire.isAcceptableOrUnknown(
-          data['lifetime_bricks_at_last_fire']!,
-          _lifetimeBricksAtLastFireMeta,
+        _lifetimeCoinsAtLastFireMeta,
+        lifetimeCoinsAtLastFire.isAcceptableOrUnknown(
+          data['lifetime_coins_at_last_fire']!,
+          _lifetimeCoinsAtLastFireMeta,
         ),
       );
     }
@@ -4486,9 +4137,9 @@ class $StoryBeatStatesTable extends StoryBeatStates
         DriftSqlType.int,
         data['${effectivePrefix}fire_count'],
       )!,
-      lifetimeBricksAtLastFire: attachedDatabase.typeMapping.read(
+      lifetimeCoinsAtLastFire: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}lifetime_bricks_at_last_fire'],
+        data['${effectivePrefix}lifetime_coins_at_last_fire'],
       ),
       ackedAtRound: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -4509,7 +4160,10 @@ class StoryBeatState extends DataClass implements Insertable<StoryBeatState> {
   final String state;
   final int? lastFiredAtRound;
   final int fireCount;
-  final int? lifetimeBricksAtLastFire;
+
+  /// Player's lifetime coins when this beat last fired — feeds the
+  /// coin-spacing trigger (`minCoinsEarnedSinceLastBeat`).
+  final int? lifetimeCoinsAtLastFire;
 
   /// Round clock at which the player read this bubble (tapped through to its
   /// full text), or null if still unread. A read bubble stays on screen for a
@@ -4522,7 +4176,7 @@ class StoryBeatState extends DataClass implements Insertable<StoryBeatState> {
     required this.state,
     this.lastFiredAtRound,
     required this.fireCount,
-    this.lifetimeBricksAtLastFire,
+    this.lifetimeCoinsAtLastFire,
     this.ackedAtRound,
   });
   @override
@@ -4535,9 +4189,9 @@ class StoryBeatState extends DataClass implements Insertable<StoryBeatState> {
       map['last_fired_at_round'] = Variable<int>(lastFiredAtRound);
     }
     map['fire_count'] = Variable<int>(fireCount);
-    if (!nullToAbsent || lifetimeBricksAtLastFire != null) {
-      map['lifetime_bricks_at_last_fire'] = Variable<int>(
-        lifetimeBricksAtLastFire,
+    if (!nullToAbsent || lifetimeCoinsAtLastFire != null) {
+      map['lifetime_coins_at_last_fire'] = Variable<int>(
+        lifetimeCoinsAtLastFire,
       );
     }
     if (!nullToAbsent || ackedAtRound != null) {
@@ -4555,9 +4209,9 @@ class StoryBeatState extends DataClass implements Insertable<StoryBeatState> {
           ? const Value.absent()
           : Value(lastFiredAtRound),
       fireCount: Value(fireCount),
-      lifetimeBricksAtLastFire: lifetimeBricksAtLastFire == null && nullToAbsent
+      lifetimeCoinsAtLastFire: lifetimeCoinsAtLastFire == null && nullToAbsent
           ? const Value.absent()
-          : Value(lifetimeBricksAtLastFire),
+          : Value(lifetimeCoinsAtLastFire),
       ackedAtRound: ackedAtRound == null && nullToAbsent
           ? const Value.absent()
           : Value(ackedAtRound),
@@ -4575,8 +4229,8 @@ class StoryBeatState extends DataClass implements Insertable<StoryBeatState> {
       state: serializer.fromJson<String>(json['state']),
       lastFiredAtRound: serializer.fromJson<int?>(json['lastFiredAtRound']),
       fireCount: serializer.fromJson<int>(json['fireCount']),
-      lifetimeBricksAtLastFire: serializer.fromJson<int?>(
-        json['lifetimeBricksAtLastFire'],
+      lifetimeCoinsAtLastFire: serializer.fromJson<int?>(
+        json['lifetimeCoinsAtLastFire'],
       ),
       ackedAtRound: serializer.fromJson<int?>(json['ackedAtRound']),
     );
@@ -4590,8 +4244,8 @@ class StoryBeatState extends DataClass implements Insertable<StoryBeatState> {
       'state': serializer.toJson<String>(state),
       'lastFiredAtRound': serializer.toJson<int?>(lastFiredAtRound),
       'fireCount': serializer.toJson<int>(fireCount),
-      'lifetimeBricksAtLastFire': serializer.toJson<int?>(
-        lifetimeBricksAtLastFire,
+      'lifetimeCoinsAtLastFire': serializer.toJson<int?>(
+        lifetimeCoinsAtLastFire,
       ),
       'ackedAtRound': serializer.toJson<int?>(ackedAtRound),
     };
@@ -4603,7 +4257,7 @@ class StoryBeatState extends DataClass implements Insertable<StoryBeatState> {
     String? state,
     Value<int?> lastFiredAtRound = const Value.absent(),
     int? fireCount,
-    Value<int?> lifetimeBricksAtLastFire = const Value.absent(),
+    Value<int?> lifetimeCoinsAtLastFire = const Value.absent(),
     Value<int?> ackedAtRound = const Value.absent(),
   }) => StoryBeatState(
     playerId: playerId ?? this.playerId,
@@ -4613,9 +4267,9 @@ class StoryBeatState extends DataClass implements Insertable<StoryBeatState> {
         ? lastFiredAtRound.value
         : this.lastFiredAtRound,
     fireCount: fireCount ?? this.fireCount,
-    lifetimeBricksAtLastFire: lifetimeBricksAtLastFire.present
-        ? lifetimeBricksAtLastFire.value
-        : this.lifetimeBricksAtLastFire,
+    lifetimeCoinsAtLastFire: lifetimeCoinsAtLastFire.present
+        ? lifetimeCoinsAtLastFire.value
+        : this.lifetimeCoinsAtLastFire,
     ackedAtRound: ackedAtRound.present ? ackedAtRound.value : this.ackedAtRound,
   );
   StoryBeatState copyWithCompanion(StoryBeatStatesCompanion data) {
@@ -4627,9 +4281,9 @@ class StoryBeatState extends DataClass implements Insertable<StoryBeatState> {
           ? data.lastFiredAtRound.value
           : this.lastFiredAtRound,
       fireCount: data.fireCount.present ? data.fireCount.value : this.fireCount,
-      lifetimeBricksAtLastFire: data.lifetimeBricksAtLastFire.present
-          ? data.lifetimeBricksAtLastFire.value
-          : this.lifetimeBricksAtLastFire,
+      lifetimeCoinsAtLastFire: data.lifetimeCoinsAtLastFire.present
+          ? data.lifetimeCoinsAtLastFire.value
+          : this.lifetimeCoinsAtLastFire,
       ackedAtRound: data.ackedAtRound.present
           ? data.ackedAtRound.value
           : this.ackedAtRound,
@@ -4644,7 +4298,7 @@ class StoryBeatState extends DataClass implements Insertable<StoryBeatState> {
           ..write('state: $state, ')
           ..write('lastFiredAtRound: $lastFiredAtRound, ')
           ..write('fireCount: $fireCount, ')
-          ..write('lifetimeBricksAtLastFire: $lifetimeBricksAtLastFire, ')
+          ..write('lifetimeCoinsAtLastFire: $lifetimeCoinsAtLastFire, ')
           ..write('ackedAtRound: $ackedAtRound')
           ..write(')'))
         .toString();
@@ -4657,7 +4311,7 @@ class StoryBeatState extends DataClass implements Insertable<StoryBeatState> {
     state,
     lastFiredAtRound,
     fireCount,
-    lifetimeBricksAtLastFire,
+    lifetimeCoinsAtLastFire,
     ackedAtRound,
   );
   @override
@@ -4669,7 +4323,7 @@ class StoryBeatState extends DataClass implements Insertable<StoryBeatState> {
           other.state == this.state &&
           other.lastFiredAtRound == this.lastFiredAtRound &&
           other.fireCount == this.fireCount &&
-          other.lifetimeBricksAtLastFire == this.lifetimeBricksAtLastFire &&
+          other.lifetimeCoinsAtLastFire == this.lifetimeCoinsAtLastFire &&
           other.ackedAtRound == this.ackedAtRound);
 }
 
@@ -4679,7 +4333,7 @@ class StoryBeatStatesCompanion extends UpdateCompanion<StoryBeatState> {
   final Value<String> state;
   final Value<int?> lastFiredAtRound;
   final Value<int> fireCount;
-  final Value<int?> lifetimeBricksAtLastFire;
+  final Value<int?> lifetimeCoinsAtLastFire;
   final Value<int?> ackedAtRound;
   final Value<int> rowid;
   const StoryBeatStatesCompanion({
@@ -4688,7 +4342,7 @@ class StoryBeatStatesCompanion extends UpdateCompanion<StoryBeatState> {
     this.state = const Value.absent(),
     this.lastFiredAtRound = const Value.absent(),
     this.fireCount = const Value.absent(),
-    this.lifetimeBricksAtLastFire = const Value.absent(),
+    this.lifetimeCoinsAtLastFire = const Value.absent(),
     this.ackedAtRound = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -4698,7 +4352,7 @@ class StoryBeatStatesCompanion extends UpdateCompanion<StoryBeatState> {
     required String state,
     this.lastFiredAtRound = const Value.absent(),
     this.fireCount = const Value.absent(),
-    this.lifetimeBricksAtLastFire = const Value.absent(),
+    this.lifetimeCoinsAtLastFire = const Value.absent(),
     this.ackedAtRound = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : playerId = Value(playerId),
@@ -4710,7 +4364,7 @@ class StoryBeatStatesCompanion extends UpdateCompanion<StoryBeatState> {
     Expression<String>? state,
     Expression<int>? lastFiredAtRound,
     Expression<int>? fireCount,
-    Expression<int>? lifetimeBricksAtLastFire,
+    Expression<int>? lifetimeCoinsAtLastFire,
     Expression<int>? ackedAtRound,
     Expression<int>? rowid,
   }) {
@@ -4720,8 +4374,8 @@ class StoryBeatStatesCompanion extends UpdateCompanion<StoryBeatState> {
       if (state != null) 'state': state,
       if (lastFiredAtRound != null) 'last_fired_at_round': lastFiredAtRound,
       if (fireCount != null) 'fire_count': fireCount,
-      if (lifetimeBricksAtLastFire != null)
-        'lifetime_bricks_at_last_fire': lifetimeBricksAtLastFire,
+      if (lifetimeCoinsAtLastFire != null)
+        'lifetime_coins_at_last_fire': lifetimeCoinsAtLastFire,
       if (ackedAtRound != null) 'acked_at_round': ackedAtRound,
       if (rowid != null) 'rowid': rowid,
     });
@@ -4733,7 +4387,7 @@ class StoryBeatStatesCompanion extends UpdateCompanion<StoryBeatState> {
     Value<String>? state,
     Value<int?>? lastFiredAtRound,
     Value<int>? fireCount,
-    Value<int?>? lifetimeBricksAtLastFire,
+    Value<int?>? lifetimeCoinsAtLastFire,
     Value<int?>? ackedAtRound,
     Value<int>? rowid,
   }) {
@@ -4743,8 +4397,8 @@ class StoryBeatStatesCompanion extends UpdateCompanion<StoryBeatState> {
       state: state ?? this.state,
       lastFiredAtRound: lastFiredAtRound ?? this.lastFiredAtRound,
       fireCount: fireCount ?? this.fireCount,
-      lifetimeBricksAtLastFire:
-          lifetimeBricksAtLastFire ?? this.lifetimeBricksAtLastFire,
+      lifetimeCoinsAtLastFire:
+          lifetimeCoinsAtLastFire ?? this.lifetimeCoinsAtLastFire,
       ackedAtRound: ackedAtRound ?? this.ackedAtRound,
       rowid: rowid ?? this.rowid,
     );
@@ -4768,9 +4422,9 @@ class StoryBeatStatesCompanion extends UpdateCompanion<StoryBeatState> {
     if (fireCount.present) {
       map['fire_count'] = Variable<int>(fireCount.value);
     }
-    if (lifetimeBricksAtLastFire.present) {
-      map['lifetime_bricks_at_last_fire'] = Variable<int>(
-        lifetimeBricksAtLastFire.value,
+    if (lifetimeCoinsAtLastFire.present) {
+      map['lifetime_coins_at_last_fire'] = Variable<int>(
+        lifetimeCoinsAtLastFire.value,
       );
     }
     if (ackedAtRound.present) {
@@ -4790,7 +4444,7 @@ class StoryBeatStatesCompanion extends UpdateCompanion<StoryBeatState> {
           ..write('state: $state, ')
           ..write('lastFiredAtRound: $lastFiredAtRound, ')
           ..write('fireCount: $fireCount, ')
-          ..write('lifetimeBricksAtLastFire: $lifetimeBricksAtLastFire, ')
+          ..write('lifetimeCoinsAtLastFire: $lifetimeCoinsAtLastFire, ')
           ..write('ackedAtRound: $ackedAtRound, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -5089,8 +4743,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   );
   late final $BuildingPlacementsTable buildingPlacements =
       $BuildingPlacementsTable(this);
-  late final $BuildingTypesResearchedTable buildingTypesResearched =
-      $BuildingTypesResearchedTable(this);
   late final $ConceptBandMilestonesTable conceptBandMilestones =
       $ConceptBandMilestonesTable(this);
   late final $StoryBeatStatesTable storyBeatStates = $StoryBeatStatesTable(
@@ -5110,7 +4762,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     cities,
     ownedLandBlocks,
     buildingPlacements,
-    buildingTypesResearched,
     conceptBandMilestones,
     storyBeatStates,
     appSettings,
@@ -5122,10 +4773,9 @@ typedef $$PlayersTableCreateCompanionBuilder =
       Value<int> id,
       required String name,
       required int gradeLevel,
-      Value<int> brickBalance,
-      Value<int> lifetimeBricksEarned,
-      Value<int> researchBalance,
-      Value<int> lifetimeResearchEarned,
+      Value<int> coinBalance,
+      Value<int> lifetimeCoinsEarned,
+      Value<int> streakLevel,
       Value<int> roundsPlayed,
       required DateTime createdAt,
       Value<String?> avatarConfig,
@@ -5135,10 +4785,9 @@ typedef $$PlayersTableUpdateCompanionBuilder =
       Value<int> id,
       Value<String> name,
       Value<int> gradeLevel,
-      Value<int> brickBalance,
-      Value<int> lifetimeBricksEarned,
-      Value<int> researchBalance,
-      Value<int> lifetimeResearchEarned,
+      Value<int> coinBalance,
+      Value<int> lifetimeCoinsEarned,
+      Value<int> streakLevel,
       Value<int> roundsPlayed,
       Value<DateTime> createdAt,
       Value<String?> avatarConfig,
@@ -5220,34 +4869,6 @@ final class $$PlayersTableReferences
   }
 
   static MultiTypedResultKey<
-    $BuildingTypesResearchedTable,
-    List<BuildingTypesResearchedData>
-  >
-  _buildingTypesResearchedRefsTable(_$AppDatabase db) =>
-      MultiTypedResultKey.fromTable(
-        db.buildingTypesResearched,
-        aliasName: $_aliasNameGenerator(
-          db.players.id,
-          db.buildingTypesResearched.playerId,
-        ),
-      );
-
-  $$BuildingTypesResearchedTableProcessedTableManager
-  get buildingTypesResearchedRefs {
-    final manager = $$BuildingTypesResearchedTableTableManager(
-      $_db,
-      $_db.buildingTypesResearched,
-    ).filter((f) => f.playerId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _buildingTypesResearchedRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<
     $ConceptBandMilestonesTable,
     List<ConceptBandMilestone>
   >
@@ -5320,23 +4941,18 @@ class $$PlayersTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get brickBalance => $composableBuilder(
-    column: $table.brickBalance,
+  ColumnFilters<int> get coinBalance => $composableBuilder(
+    column: $table.coinBalance,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get lifetimeBricksEarned => $composableBuilder(
-    column: $table.lifetimeBricksEarned,
+  ColumnFilters<int> get lifetimeCoinsEarned => $composableBuilder(
+    column: $table.lifetimeCoinsEarned,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get researchBalance => $composableBuilder(
-    column: $table.researchBalance,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get lifetimeResearchEarned => $composableBuilder(
-    column: $table.lifetimeResearchEarned,
+  ColumnFilters<int> get streakLevel => $composableBuilder(
+    column: $table.streakLevel,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -5430,32 +5046,6 @@ class $$PlayersTableFilterComposer
     return f(composer);
   }
 
-  Expression<bool> buildingTypesResearchedRefs(
-    Expression<bool> Function($$BuildingTypesResearchedTableFilterComposer f) f,
-  ) {
-    final $$BuildingTypesResearchedTableFilterComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.buildingTypesResearched,
-          getReferencedColumn: (t) => t.playerId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$BuildingTypesResearchedTableFilterComposer(
-                $db: $db,
-                $table: $db.buildingTypesResearched,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-
   Expression<bool> conceptBandMilestonesRefs(
     Expression<bool> Function($$ConceptBandMilestonesTableFilterComposer f) f,
   ) {
@@ -5532,23 +5122,18 @@ class $$PlayersTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get brickBalance => $composableBuilder(
-    column: $table.brickBalance,
+  ColumnOrderings<int> get coinBalance => $composableBuilder(
+    column: $table.coinBalance,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get lifetimeBricksEarned => $composableBuilder(
-    column: $table.lifetimeBricksEarned,
+  ColumnOrderings<int> get lifetimeCoinsEarned => $composableBuilder(
+    column: $table.lifetimeCoinsEarned,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get researchBalance => $composableBuilder(
-    column: $table.researchBalance,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get lifetimeResearchEarned => $composableBuilder(
-    column: $table.lifetimeResearchEarned,
+  ColumnOrderings<int> get streakLevel => $composableBuilder(
+    column: $table.streakLevel,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -5588,23 +5173,18 @@ class $$PlayersTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<int> get brickBalance => $composableBuilder(
-    column: $table.brickBalance,
+  GeneratedColumn<int> get coinBalance => $composableBuilder(
+    column: $table.coinBalance,
     builder: (column) => column,
   );
 
-  GeneratedColumn<int> get lifetimeBricksEarned => $composableBuilder(
-    column: $table.lifetimeBricksEarned,
+  GeneratedColumn<int> get lifetimeCoinsEarned => $composableBuilder(
+    column: $table.lifetimeCoinsEarned,
     builder: (column) => column,
   );
 
-  GeneratedColumn<int> get researchBalance => $composableBuilder(
-    column: $table.researchBalance,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<int> get lifetimeResearchEarned => $composableBuilder(
-    column: $table.lifetimeResearchEarned,
+  GeneratedColumn<int> get streakLevel => $composableBuilder(
+    column: $table.streakLevel,
     builder: (column) => column,
   );
 
@@ -5698,33 +5278,6 @@ class $$PlayersTableAnnotationComposer
     return f(composer);
   }
 
-  Expression<T> buildingTypesResearchedRefs<T extends Object>(
-    Expression<T> Function($$BuildingTypesResearchedTableAnnotationComposer a)
-    f,
-  ) {
-    final $$BuildingTypesResearchedTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.buildingTypesResearched,
-          getReferencedColumn: (t) => t.playerId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$BuildingTypesResearchedTableAnnotationComposer(
-                $db: $db,
-                $table: $db.buildingTypesResearched,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-
   Expression<T> conceptBandMilestonesRefs<T extends Object>(
     Expression<T> Function($$ConceptBandMilestonesTableAnnotationComposer a) f,
   ) {
@@ -5794,7 +5347,6 @@ class $$PlayersTableTableManager
             bool conceptProficienciesRefs,
             bool introducedConceptsRefs,
             bool citiesRefs,
-            bool buildingTypesResearchedRefs,
             bool conceptBandMilestonesRefs,
             bool storyBeatStatesRefs,
           })
@@ -5815,10 +5367,9 @@ class $$PlayersTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
                 Value<int> gradeLevel = const Value.absent(),
-                Value<int> brickBalance = const Value.absent(),
-                Value<int> lifetimeBricksEarned = const Value.absent(),
-                Value<int> researchBalance = const Value.absent(),
-                Value<int> lifetimeResearchEarned = const Value.absent(),
+                Value<int> coinBalance = const Value.absent(),
+                Value<int> lifetimeCoinsEarned = const Value.absent(),
+                Value<int> streakLevel = const Value.absent(),
                 Value<int> roundsPlayed = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<String?> avatarConfig = const Value.absent(),
@@ -5826,10 +5377,9 @@ class $$PlayersTableTableManager
                 id: id,
                 name: name,
                 gradeLevel: gradeLevel,
-                brickBalance: brickBalance,
-                lifetimeBricksEarned: lifetimeBricksEarned,
-                researchBalance: researchBalance,
-                lifetimeResearchEarned: lifetimeResearchEarned,
+                coinBalance: coinBalance,
+                lifetimeCoinsEarned: lifetimeCoinsEarned,
+                streakLevel: streakLevel,
                 roundsPlayed: roundsPlayed,
                 createdAt: createdAt,
                 avatarConfig: avatarConfig,
@@ -5839,10 +5389,9 @@ class $$PlayersTableTableManager
                 Value<int> id = const Value.absent(),
                 required String name,
                 required int gradeLevel,
-                Value<int> brickBalance = const Value.absent(),
-                Value<int> lifetimeBricksEarned = const Value.absent(),
-                Value<int> researchBalance = const Value.absent(),
-                Value<int> lifetimeResearchEarned = const Value.absent(),
+                Value<int> coinBalance = const Value.absent(),
+                Value<int> lifetimeCoinsEarned = const Value.absent(),
+                Value<int> streakLevel = const Value.absent(),
                 Value<int> roundsPlayed = const Value.absent(),
                 required DateTime createdAt,
                 Value<String?> avatarConfig = const Value.absent(),
@@ -5850,10 +5399,9 @@ class $$PlayersTableTableManager
                 id: id,
                 name: name,
                 gradeLevel: gradeLevel,
-                brickBalance: brickBalance,
-                lifetimeBricksEarned: lifetimeBricksEarned,
-                researchBalance: researchBalance,
-                lifetimeResearchEarned: lifetimeResearchEarned,
+                coinBalance: coinBalance,
+                lifetimeCoinsEarned: lifetimeCoinsEarned,
+                streakLevel: streakLevel,
                 roundsPlayed: roundsPlayed,
                 createdAt: createdAt,
                 avatarConfig: avatarConfig,
@@ -5871,7 +5419,6 @@ class $$PlayersTableTableManager
                 conceptProficienciesRefs = false,
                 introducedConceptsRefs = false,
                 citiesRefs = false,
-                buildingTypesResearchedRefs = false,
                 conceptBandMilestonesRefs = false,
                 storyBeatStatesRefs = false,
               }) {
@@ -5881,7 +5428,6 @@ class $$PlayersTableTableManager
                     if (conceptProficienciesRefs) db.conceptProficiencies,
                     if (introducedConceptsRefs) db.introducedConcepts,
                     if (citiesRefs) db.cities,
-                    if (buildingTypesResearchedRefs) db.buildingTypesResearched,
                     if (conceptBandMilestonesRefs) db.conceptBandMilestones,
                     if (storyBeatStatesRefs) db.storyBeatStates,
                   ],
@@ -5941,27 +5487,6 @@ class $$PlayersTableTableManager
                                 table,
                                 p0,
                               ).citiesRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.playerId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                      if (buildingTypesResearchedRefs)
-                        await $_getPrefetchedData<
-                          Player,
-                          $PlayersTable,
-                          BuildingTypesResearchedData
-                        >(
-                          currentTable: table,
-                          referencedTable: $$PlayersTableReferences
-                              ._buildingTypesResearchedRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$PlayersTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).buildingTypesResearchedRefs,
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
                                 (e) => e.playerId == item.id,
@@ -6034,7 +5559,6 @@ typedef $$PlayersTableProcessedTableManager =
         bool conceptProficienciesRefs,
         bool introducedConceptsRefs,
         bool citiesRefs,
-        bool buildingTypesResearchedRefs,
         bool conceptBandMilestonesRefs,
         bool storyBeatStatesRefs,
       })
@@ -8484,319 +8008,6 @@ typedef $$BuildingPlacementsTableProcessedTableManager =
       BuildingPlacement,
       PrefetchHooks Function({bool cityId})
     >;
-typedef $$BuildingTypesResearchedTableCreateCompanionBuilder =
-    BuildingTypesResearchedCompanion Function({
-      required int playerId,
-      required String buildingTypeId,
-      required DateTime researchedAt,
-      Value<int> rowid,
-    });
-typedef $$BuildingTypesResearchedTableUpdateCompanionBuilder =
-    BuildingTypesResearchedCompanion Function({
-      Value<int> playerId,
-      Value<String> buildingTypeId,
-      Value<DateTime> researchedAt,
-      Value<int> rowid,
-    });
-
-final class $$BuildingTypesResearchedTableReferences
-    extends
-        BaseReferences<
-          _$AppDatabase,
-          $BuildingTypesResearchedTable,
-          BuildingTypesResearchedData
-        > {
-  $$BuildingTypesResearchedTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static $PlayersTable _playerIdTable(_$AppDatabase db) =>
-      db.players.createAlias(
-        $_aliasNameGenerator(
-          db.buildingTypesResearched.playerId,
-          db.players.id,
-        ),
-      );
-
-  $$PlayersTableProcessedTableManager get playerId {
-    final $_column = $_itemColumn<int>('player_id')!;
-
-    final manager = $$PlayersTableTableManager(
-      $_db,
-      $_db.players,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_playerIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$BuildingTypesResearchedTableFilterComposer
-    extends Composer<_$AppDatabase, $BuildingTypesResearchedTable> {
-  $$BuildingTypesResearchedTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get buildingTypeId => $composableBuilder(
-    column: $table.buildingTypeId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get researchedAt => $composableBuilder(
-    column: $table.researchedAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$PlayersTableFilterComposer get playerId {
-    final $$PlayersTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.playerId,
-      referencedTable: $db.players,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$PlayersTableFilterComposer(
-            $db: $db,
-            $table: $db.players,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$BuildingTypesResearchedTableOrderingComposer
-    extends Composer<_$AppDatabase, $BuildingTypesResearchedTable> {
-  $$BuildingTypesResearchedTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get buildingTypeId => $composableBuilder(
-    column: $table.buildingTypeId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get researchedAt => $composableBuilder(
-    column: $table.researchedAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$PlayersTableOrderingComposer get playerId {
-    final $$PlayersTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.playerId,
-      referencedTable: $db.players,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$PlayersTableOrderingComposer(
-            $db: $db,
-            $table: $db.players,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$BuildingTypesResearchedTableAnnotationComposer
-    extends Composer<_$AppDatabase, $BuildingTypesResearchedTable> {
-  $$BuildingTypesResearchedTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get buildingTypeId => $composableBuilder(
-    column: $table.buildingTypeId,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<DateTime> get researchedAt => $composableBuilder(
-    column: $table.researchedAt,
-    builder: (column) => column,
-  );
-
-  $$PlayersTableAnnotationComposer get playerId {
-    final $$PlayersTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.playerId,
-      referencedTable: $db.players,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$PlayersTableAnnotationComposer(
-            $db: $db,
-            $table: $db.players,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$BuildingTypesResearchedTableTableManager
-    extends
-        RootTableManager<
-          _$AppDatabase,
-          $BuildingTypesResearchedTable,
-          BuildingTypesResearchedData,
-          $$BuildingTypesResearchedTableFilterComposer,
-          $$BuildingTypesResearchedTableOrderingComposer,
-          $$BuildingTypesResearchedTableAnnotationComposer,
-          $$BuildingTypesResearchedTableCreateCompanionBuilder,
-          $$BuildingTypesResearchedTableUpdateCompanionBuilder,
-          (
-            BuildingTypesResearchedData,
-            $$BuildingTypesResearchedTableReferences,
-          ),
-          BuildingTypesResearchedData,
-          PrefetchHooks Function({bool playerId})
-        > {
-  $$BuildingTypesResearchedTableTableManager(
-    _$AppDatabase db,
-    $BuildingTypesResearchedTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$BuildingTypesResearchedTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$BuildingTypesResearchedTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$BuildingTypesResearchedTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> playerId = const Value.absent(),
-                Value<String> buildingTypeId = const Value.absent(),
-                Value<DateTime> researchedAt = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => BuildingTypesResearchedCompanion(
-                playerId: playerId,
-                buildingTypeId: buildingTypeId,
-                researchedAt: researchedAt,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required int playerId,
-                required String buildingTypeId,
-                required DateTime researchedAt,
-                Value<int> rowid = const Value.absent(),
-              }) => BuildingTypesResearchedCompanion.insert(
-                playerId: playerId,
-                buildingTypeId: buildingTypeId,
-                researchedAt: researchedAt,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$BuildingTypesResearchedTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({playerId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (playerId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.playerId,
-                                referencedTable:
-                                    $$BuildingTypesResearchedTableReferences
-                                        ._playerIdTable(db),
-                                referencedColumn:
-                                    $$BuildingTypesResearchedTableReferences
-                                        ._playerIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$BuildingTypesResearchedTableProcessedTableManager =
-    ProcessedTableManager<
-      _$AppDatabase,
-      $BuildingTypesResearchedTable,
-      BuildingTypesResearchedData,
-      $$BuildingTypesResearchedTableFilterComposer,
-      $$BuildingTypesResearchedTableOrderingComposer,
-      $$BuildingTypesResearchedTableAnnotationComposer,
-      $$BuildingTypesResearchedTableCreateCompanionBuilder,
-      $$BuildingTypesResearchedTableUpdateCompanionBuilder,
-      (BuildingTypesResearchedData, $$BuildingTypesResearchedTableReferences),
-      BuildingTypesResearchedData,
-      PrefetchHooks Function({bool playerId})
-    >;
 typedef $$ConceptBandMilestonesTableCreateCompanionBuilder =
     ConceptBandMilestonesCompanion Function({
       required int playerId,
@@ -9126,7 +8337,7 @@ typedef $$StoryBeatStatesTableCreateCompanionBuilder =
       required String state,
       Value<int?> lastFiredAtRound,
       Value<int> fireCount,
-      Value<int?> lifetimeBricksAtLastFire,
+      Value<int?> lifetimeCoinsAtLastFire,
       Value<int?> ackedAtRound,
       Value<int> rowid,
     });
@@ -9137,7 +8348,7 @@ typedef $$StoryBeatStatesTableUpdateCompanionBuilder =
       Value<String> state,
       Value<int?> lastFiredAtRound,
       Value<int> fireCount,
-      Value<int?> lifetimeBricksAtLastFire,
+      Value<int?> lifetimeCoinsAtLastFire,
       Value<int?> ackedAtRound,
       Value<int> rowid,
     });
@@ -9200,8 +8411,8 @@ class $$StoryBeatStatesTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get lifetimeBricksAtLastFire => $composableBuilder(
-    column: $table.lifetimeBricksAtLastFire,
+  ColumnFilters<int> get lifetimeCoinsAtLastFire => $composableBuilder(
+    column: $table.lifetimeCoinsAtLastFire,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -9263,8 +8474,8 @@ class $$StoryBeatStatesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get lifetimeBricksAtLastFire => $composableBuilder(
-    column: $table.lifetimeBricksAtLastFire,
+  ColumnOrderings<int> get lifetimeCoinsAtLastFire => $composableBuilder(
+    column: $table.lifetimeCoinsAtLastFire,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -9320,8 +8531,8 @@ class $$StoryBeatStatesTableAnnotationComposer
   GeneratedColumn<int> get fireCount =>
       $composableBuilder(column: $table.fireCount, builder: (column) => column);
 
-  GeneratedColumn<int> get lifetimeBricksAtLastFire => $composableBuilder(
-    column: $table.lifetimeBricksAtLastFire,
+  GeneratedColumn<int> get lifetimeCoinsAtLastFire => $composableBuilder(
+    column: $table.lifetimeCoinsAtLastFire,
     builder: (column) => column,
   );
 
@@ -9389,7 +8600,7 @@ class $$StoryBeatStatesTableTableManager
                 Value<String> state = const Value.absent(),
                 Value<int?> lastFiredAtRound = const Value.absent(),
                 Value<int> fireCount = const Value.absent(),
-                Value<int?> lifetimeBricksAtLastFire = const Value.absent(),
+                Value<int?> lifetimeCoinsAtLastFire = const Value.absent(),
                 Value<int?> ackedAtRound = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => StoryBeatStatesCompanion(
@@ -9398,7 +8609,7 @@ class $$StoryBeatStatesTableTableManager
                 state: state,
                 lastFiredAtRound: lastFiredAtRound,
                 fireCount: fireCount,
-                lifetimeBricksAtLastFire: lifetimeBricksAtLastFire,
+                lifetimeCoinsAtLastFire: lifetimeCoinsAtLastFire,
                 ackedAtRound: ackedAtRound,
                 rowid: rowid,
               ),
@@ -9409,7 +8620,7 @@ class $$StoryBeatStatesTableTableManager
                 required String state,
                 Value<int?> lastFiredAtRound = const Value.absent(),
                 Value<int> fireCount = const Value.absent(),
-                Value<int?> lifetimeBricksAtLastFire = const Value.absent(),
+                Value<int?> lifetimeCoinsAtLastFire = const Value.absent(),
                 Value<int?> ackedAtRound = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => StoryBeatStatesCompanion.insert(
@@ -9418,7 +8629,7 @@ class $$StoryBeatStatesTableTableManager
                 state: state,
                 lastFiredAtRound: lastFiredAtRound,
                 fireCount: fireCount,
-                lifetimeBricksAtLastFire: lifetimeBricksAtLastFire,
+                lifetimeCoinsAtLastFire: lifetimeCoinsAtLastFire,
                 ackedAtRound: ackedAtRound,
                 rowid: rowid,
               ),
@@ -9671,11 +8882,6 @@ class $AppDatabaseManager {
       $$OwnedLandBlocksTableTableManager(_db, _db.ownedLandBlocks);
   $$BuildingPlacementsTableTableManager get buildingPlacements =>
       $$BuildingPlacementsTableTableManager(_db, _db.buildingPlacements);
-  $$BuildingTypesResearchedTableTableManager get buildingTypesResearched =>
-      $$BuildingTypesResearchedTableTableManager(
-        _db,
-        _db.buildingTypesResearched,
-      );
   $$ConceptBandMilestonesTableTableManager get conceptBandMilestones =>
       $$ConceptBandMilestonesTableTableManager(_db, _db.conceptBandMilestones);
   $$StoryBeatStatesTableTableManager get storyBeatStates =>

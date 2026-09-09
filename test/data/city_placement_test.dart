@@ -26,12 +26,6 @@ void main() {
       expect(city.cityMapId, isNotEmpty);
     });
 
-    test('researchedBuildingTypeIds includes pre-researched mayor', () async {
-      final (db, player, _) = await freshCity();
-      final ids = await db.researchedBuildingTypeIds(player.id);
-      expect(ids, {'mayors_office'});
-    });
-
     test('placementsForCity is empty for a fresh city', () async {
       final (db, _, city) = await freshCity();
       expect(await db.placementsForCity(city.id), isEmpty);
@@ -47,7 +41,7 @@ void main() {
         buildingTypeId: 'mayors_office',
         gridX: 4,
         gridY: 6,
-        brickCost: 0,
+        coinCost: 0,
       );
 
       final rows = await db.placementsForCity(city.id);
@@ -58,10 +52,10 @@ void main() {
       expect(rows.first.placedAtRound, 0);
     });
 
-    test('spends bricks, keeping lifetime monotone', () async {
+    test('spends coins, keeping lifetime monotone', () async {
       final (db, player, city) = await freshCity();
-      // Give the player some bricks to spend.
-      await db.incrementPlayerBricks(player.id, 25);
+      // Give the player some coins to spend.
+      await db.incrementPlayerCoins(player.id, 25);
 
       await db.placeBuilding(
         cityId: city.id,
@@ -69,17 +63,17 @@ void main() {
         buildingTypeId: 'apartment',
         gridX: 1,
         gridY: 1,
-        brickCost: 10,
+        coinCost: 10,
       );
 
       final after = await db.getPlayerById(player.id);
-      expect(after.brickBalance, 15); // 25 - 10
-      expect(after.lifetimeBricksEarned, 25); // unchanged by spend
+      expect(after.coinBalance, 15); // 25 - 10
+      expect(after.lifetimeCoinsEarned, 25); // unchanged by spend
     });
 
-    test('free placements do not touch the brick balance', () async {
+    test('free placements do not touch the coin balance', () async {
       final (db, player, city) = await freshCity();
-      await db.incrementPlayerBricks(player.id, 5);
+      await db.incrementPlayerCoins(player.id, 5);
 
       await db.placeBuilding(
         cityId: city.id,
@@ -87,11 +81,11 @@ void main() {
         buildingTypeId: 'mayors_office',
         gridX: 0,
         gridY: 0,
-        brickCost: 0,
+        coinCost: 0,
       );
 
       final after = await db.getPlayerById(player.id);
-      expect(after.brickBalance, 5);
+      expect(after.coinBalance, 5);
     });
 
     test('moveBuildingPlacement relocates an existing row in place', () async {
@@ -102,7 +96,7 @@ void main() {
         buildingTypeId: 'mayors_office',
         gridX: 2,
         gridY: 3,
-        brickCost: 0,
+        coinCost: 0,
       );
       final original = (await db.placementsForCity(city.id)).single;
 
@@ -132,7 +126,7 @@ void main() {
           buildingTypeId: 'mayors_office',
           gridX: i,
           gridY: 0,
-          brickCost: 0,
+          coinCost: 0,
         );
       }
       final rows = await db.placementsForCity(city.id);
@@ -140,46 +134,6 @@ void main() {
         rows.map((r) => r.placedAtRound).toList()..sort(),
         [1, 2, 3],
       );
-    });
-  });
-
-  group('researchBuilding', () {
-    test('records the type and spends research, lifetime monotone', () async {
-      final (db, player, _) = await freshCity();
-      await db.incrementPlayerResearch(player.id, 3);
-
-      await db.researchBuilding(
-        playerId: player.id,
-        buildingTypeId: 'clinic',
-        researchCost: 1,
-      );
-
-      expect(await db.researchedBuildingTypeIds(player.id), {
-        'mayors_office',
-        'clinic',
-      });
-      final after = await db.getPlayerById(player.id);
-      expect(after.researchBalance, 2); // 3 - 1
-      expect(after.lifetimeResearchEarned, 3); // unchanged by spend
-    });
-
-    test('is idempotent — re-researching does not double-charge', () async {
-      final (db, player, _) = await freshCity();
-      await db.incrementPlayerResearch(player.id, 3);
-
-      await db.researchBuilding(
-        playerId: player.id,
-        buildingTypeId: 'clinic',
-        researchCost: 1,
-      );
-      await db.researchBuilding(
-        playerId: player.id,
-        buildingTypeId: 'clinic',
-        researchCost: 1,
-      );
-
-      final after = await db.getPlayerById(player.id);
-      expect(after.researchBalance, 2); // charged once, not twice
     });
   });
 }
