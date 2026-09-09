@@ -77,6 +77,9 @@ class _CoinFlightState extends State<CoinFlight>
                       color: palette.coinGoldDeep,
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
+                      // Overlay entries sit outside the Scaffold's
+                      // DefaultTextStyle, which would otherwise underline.
+                      decoration: TextDecoration.none,
                       shadows: const [
                         Shadow(color: Color(0x66000000), blurRadius: 4),
                       ],

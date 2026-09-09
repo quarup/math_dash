@@ -92,6 +92,10 @@ class _QuestionScreenState extends ConsumerState<QuestionScreen>
   /// jumps when the coin lands.
   int? _frozenCoins;
 
+  /// 1-based position of this question in its block, fixed at build time so
+  /// the header doesn't tick over while the coin is still flying.
+  late final int _questionNumber = widget.block?.currentIndex ?? 1;
+
   late final AnimationController _pulseCtrl;
   late final Animation<double> _pulseScale;
   final List<OverlayEntry> _liveOverlays = <OverlayEntry>[];
@@ -359,7 +363,7 @@ class _QuestionScreenState extends ConsumerState<QuestionScreen>
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                'Question ${block.currentIndex} of ${block.size}',
+                'Question $_questionNumber of ${block.size}',
                 style: theme.textTheme.labelSmall,
               ),
             ],
