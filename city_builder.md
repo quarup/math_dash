@@ -12,7 +12,7 @@
 - **Last updated:** 2026-06-14 (Phase-9 catalog completed — all 54 anchors wired + sprite-backed; `train_station` dropped, the rail can't be drawn coherently in 2:1 dimetric)
 - **Phase:** Phase 8 — City Builder: Research & Rich Design. Content-authoring only, **no code changes**. Deliverable is this document; Phase 9 implements it.
 - **Drafting mode:** *fill pass complete (first draft)*. §1 (references), §2 (categories), §3 (full building specs — 54 anchors), §4 (beat catalog), §5 (asset checklist), and §7 (open questions) are drafted. §6 (implementation status) is auto-managed by [tools/city_builder/sync_implementation_status.py](tools/city_builder/sync_implementation_status.py); as of 2026-06-14 all 54 anchors are wired and sprite-backed. Three structure decisions are locked (2026-05-31): education (`school`/`high_school`) lives under `services`; `water` is a hard-gating service; the housing spine keeps all 7 rungs. **Still expects Phase-9 iteration** — costs and service ratios are designed-coherent placeholders, finalized by playtest.
-- **Framework:** extends the Phase-7 model unchanged — two currencies (🧱 bricks + 🔬 research), four categories, the service-ratio + variety-multiplier growth model, and the typed `UnlockRule` / `TriggerRule` gates. No schema or domain-shape changes proposed. (Per the Phase-8 planning decision: *extend, don't redesign*.)
+- **Framework:** extends the Phase-7 model — four categories, the service-ratio + variety-multiplier growth model, and the typed `UnlockRule` / `TriggerRule` gates. **Currency revised 2026-09-08:** the two-currency 🧱/🔬 design this document was drafted against was replaced by a single currency, **coins** (1 coin ≈ 1 expected second of study); §3's cost columns and §3.5 were re-denominated accordingly, and the research step is gone — a building whose unlock rule passes is bought straight away. See prd.md *Cosmetics System*.
 - **Scope of this pass:** *representative breadth* — full coherent arcs across all four categories with ~54 anchor buildings individually specced; the long-tail variants (cosmetic re-skins, minor tier infills) are described as patterned templates rather than itemized. This keeps the design coherent and reviewable and gives Phase 9 a clear queue without committing to hundreds of hand-authored rows up front.
 - **Source of truth note:** once Phase 9 starts wiring content, the building/beat **IDs here become the source of truth**, mirrored by [building_registry.dart](lib/domain/city/building_registry.dart) and [beat_registry.dart](lib/domain/city/beat_registry.dart) — exactly as `curriculum.md` is mirrored by `generator_registry.dart`.
 
@@ -77,27 +77,27 @@ answer→earn→place→see-it-grow loop short and always-positive; no fail stat
 ### 1.2 What Math City borrows
 
 1. **Need-driven discovery (Anno + SC4 "unlock by need").** The citizen demand
-   bubble *is* the need signal. A building's research card only appears after the
+   bubble *is* the need signal. A building's catalog card only appears after the
    player reads the demand beat that asks for it (already true in Phase 7 via
    `requiredBeatsRead`). Phase 8 scales this into **arcs**: satisfying one tier's
    need surfaces the next tier's demand ("the apartments are full — what about a
    high-rise?").
 2. **Within-category upgrade arcs (Cities: Skylines).** Every category is a
    legible ladder (housing: single home → duplex → apartment → high-rise → …),
-   each rung gated on the previous rung + a population / lifetime-brick threshold.
+   each rung gated on the previous rung + a population / lifetime-coin threshold.
    The player always has a visible "next rung."
-3. **Steady drip + active bursts (CS2 Expansion Points).** Maps onto our two
-   currencies for free: 🧱 **bricks** drip from *every* correct answer (steady);
-   🔬 **research** arrives in bursts on per-concept mastery band-crossings
-   (active). Math practice is the XP source — the kid earns progression by
-   *learning*, which is the whole point of the app.
+3. **Steady drip + active bursts (CS2 Expansion Points).** Maps onto the coin
+   economy for free: coins drip from *every* correct answer (steady, scaled by
+   the answer streak); the **band-crossing bonus** arrives in bursts on
+   per-concept band-crossings (active). Math practice is the XP source — the
+   kid earns progression by *learning*, which is the whole point of the app.
 4. **Category-balance feedback (SC4 RCI / Anno ratios).** Already modeled in
    [population_model.dart](lib/domain/city/population_model.dart): service-ratio
    ceilings + a variety multiplier + a lopsidedness penalty. Beats *narrate* the
    imbalance ("trash everywhere!", "all shops and nowhere to live") so the kid
    understands *why* growth stalled and what to build next.
 5. **Short, visible, always-positive reinvestment loop (cozy games).** Answer
-   math → earn bricks → place a building → watch population tick up and a praise
+   math → earn coins → place a building → watch population tick up and a praise
    bubble pop. Keep it short; keep it kind.
 
 ### 1.3 What Math City rejects
@@ -163,22 +163,24 @@ machinery. *(`water` joins the gating set; `police`/`fire`/`transit` are soft.)*
 The full DAG. Each category below is a within-category arc rooted (directly or
 indirectly) at `mayors_office`. Tier (Early / Mid / Late / Capstone) is a
 narrative pacing label, not a schema field — it maps loosely to the rising
-population / lifetime-brick gates in the unlock rule.
+population / lifetime-coin gates in the unlock rule.
 
-**Reading the spec tables.** Columns: 🧱 = `brickCost` (per placement), 🔬 =
-`researchCost` (one-shot, to add the type to the build menu), **Pop** =
+**Reading the spec tables.** Columns: **Coins** = `coinCost` (per placement;
+one coin ≈ one expected second of study, so the parenthesis is the price in
+minutes of math — see prd.md *Cosmetics System*, revised 2026-09-08), **Pop** =
 `populationContribution`, **Service** = `serviceProvision` (`id:capacity`), **V** =
 `varietyContribution`, **Foot** = `footprint` (`w×h` tiles). The **Unlock rule**
 column is the typed `UnlockRule`, written in shorthand:
 
 - `B` (bare building id) → `requiredBuildingsPlaced` includes B
 - `pop≥N` → `minPopulation: N`
-- `life🧱≥N` → `minLifetimeBricks: N`
+- `life🪙≥N` → `minLifetimeCoins: N` (lifetime coins = total seconds studied)
 - `reads:beat_id` → `requiredBeatsRead` includes that demand beat (the discovery
   gate — the card stays hidden until the player opens that bubble; see §4)
 
 Every non-starter building names exactly one demand beat in `reads:` — that beat
-is what reveals its research card. `✓P7` marks the ten buildings already shipped
+is what reveals its catalog card; once revealed it is bought straight away for its
+coin price (there is no separate research/unlock step any more). `✓P7` marks the ten buildings already shipped
 in the Phase-7 registry (IDs and Phase-7 numbers preserved).
 
 **Footprint scale.** `1×1` is the base unit — a single house lot. Sizes scale with
@@ -214,26 +216,26 @@ so footprints aim for *plausibility*, not economy). Guidelines used below:
 
 **Civic-core line** (unique narrative anchors; gate later arcs):
 
-| Building | 🧱 | 🔬 | Pop | Service | V | Foot | Unlock rule |
-|---|---|---|---|---|---|---|---|
-| ✅ `mayors_office` 🏛️ ✓P7 | 0 | 0 | 0 | — | – | 2×2 | *open* (starter, **unique**) |
-| ✅ `town_hall` 🏤 | 30 | 2 | 0 | — | – | 3×2 | `mayors_office` + pop≥20 · reads:`demand_town_hall` (**unique**) |
-| ✅ `city_hall` 🏙️ | 80 | 3 | 0 | — | – | 3×3 | `town_hall` + pop≥80 · reads:`demand_city_hall` (**unique**) |
-| ✅ `library` 📚 | 20 | 2 | 0 | — | – | 2×2 | `school` · reads:`demand_library` |
-| ✅ `post_office` 📮 | 20 | 2 | 0 | — | – | 2×1 | `town_hall` · reads:`demand_post_office` |
+| Building | Coins | Pop | Service | V | Foot | Unlock rule |
+|---|---|---|---|---|---|---|
+| ✅ `mayors_office` 🏛️ ✓P7 | 0 | 0 | — | – | 2×2 | *open* (starter, **unique**) |
+| ✅ `town_hall` 🏤 | 720 (12 min) | 0 | — | – | 3×2 | `mayors_office` + pop≥20 · reads:`demand_town_hall` (**unique**) |
+| ✅ `city_hall` 🏙️ | 2400 (40 min) | 0 | — | – | 3×3 | `town_hall` + pop≥80 · reads:`demand_city_hall` (**unique**) |
+| ✅ `library` 📚 | 300 (5 min) | 0 | — | – | 2×2 | `school` · reads:`demand_library` |
+| ✅ `post_office` 📮 | 300 (5 min) | 0 | — | – | 2×1 | `town_hall` · reads:`demand_post_office` |
 
 **Housing line** (the population spine — 7-rung ladder, rising `Pop`):
 
-| Building | 🧱 | 🔬 | Pop | Service | V | Foot | Unlock rule |
-|---|---|---|---|---|---|---|---|
-| ✅ `single_home` 🏠 ✓P7 | 5 | 1 | 4 | — | – | 1×1 | `mayors_office` · reads:`demand_first_home` |
-| ✅ `duplex` 🏘️ | 10 | 1 | 8 | — | – | 2×1 | `single_home` · reads:`demand_duplex` |
-| ✅ `townhouse_row` 🏘️ | 20 | 2 | 12 | — | – | 1×3 | `duplex` + pop≥12 · reads:`demand_townhouse_row` |
-| ✅ `apartment` 🏢 ✓P7 | 10 | 1 | 16 | — | – | 2×2 | `single_home` + pop≥8 · reads:`demand_apartment` |
-| ✅ `mid_rise_apartment` 🏢 | 30 | 2 | 30 | — | – | 2×3 | `apartment` + pop≥30 · reads:`demand_mid_rise` |
-| ✅ `high_rise` 🌆 | 60 | 3 | 60 | — | – | 3×3 | `mid_rise_apartment` + pop≥60 + life🧱≥300 · reads:`demand_high_rise` |
-| ✅ `luxury_condo` 🏨 | 100 | 3 | 50 | — | ✅ | 3×3 | `high_rise` + life🧱≥500 · reads:`demand_luxury_condo` |
-| ✅ `farmhouse` 🏡 | 8 | 1 | 3 | — | – | 2×2 | `single_home` · reads:`demand_farmhouse` (countryside flavor) |
+| Building | Coins | Pop | Service | V | Foot | Unlock rule |
+|---|---|---|---|---|---|---|
+| ✅ `single_home` 🏠 ✓P7 | 60 (1 min) | 4 | — | – | 1×1 | `mayors_office` · reads:`demand_first_home` |
+| ✅ `duplex` 🏘️ | 120 (2 min) | 8 | — | – | 2×1 | `single_home` · reads:`demand_duplex` |
+| ✅ `townhouse_row` 🏘️ | 300 (5 min) | 12 | — | – | 1×3 | `duplex` + pop≥12 · reads:`demand_townhouse_row` |
+| ✅ `apartment` 🏢 ✓P7 | 120 (2 min) | 16 | — | – | 2×2 | `single_home` + pop≥8 · reads:`demand_apartment` |
+| ✅ `mid_rise_apartment` 🏢 | 720 (12 min) | 30 | — | – | 2×3 | `apartment` + pop≥30 · reads:`demand_mid_rise` |
+| ✅ `high_rise` 🌆 | 1500 (25 min) | 60 | — | – | 3×3 | `mid_rise_apartment` + pop≥60 + life🪙≥3600 · reads:`demand_high_rise` |
+| ✅ `luxury_condo` 🏨 | 3000 (50 min) | 50 | — | ✅ | 3×3 | `high_rise` + life🪙≥7200 · reads:`demand_luxury_condo` |
+| ✅ `farmhouse` 🏡 | 90 (1.5 min) | 3 | — | – | 2×2 | `single_home` · reads:`demand_farmhouse` (countryside flavor) |
 
 ### 3.2 Services (`services`)
 
@@ -244,59 +246,59 @@ services are `false`. **Education moved here from `civicHousing`** per the
 
 **Power** (`power`, gating):
 
-| Building | 🧱 | 🔬 | Service | V | Foot | Unlock rule |
-|---|---|---|---|---|---|---|
-| ✅ `power_plant` ⚡ ✓P7 | 10 | 1 | `power:200` | ✅ | 2×2 | `single_home` · reads:`demand_power` |
-| ✅ `power_station` 🏭 | 40 | 3 | `power:500` | ✅ | 3×3 | `power_plant` + pop≥40 · reads:`demand_power_station` |
-| ✅ `solar_farm` ☀️ | 70 | 3 | `power:800` | ✅ | 4×4 | `power_station` + life🧱≥400 · reads:`demand_solar_farm` |
+| Building | Coins | Service | V | Foot | Unlock rule |
+|---|---|---|---|---|---|
+| ✅ `power_plant` ⚡ ✓P7 | 120 (2 min) | `power:200` | ✅ | 2×2 | `single_home` · reads:`demand_power` |
+| ✅ `power_station` 🏭 | 900 (15 min) | `power:500` | ✅ | 3×3 | `power_plant` + pop≥40 · reads:`demand_power_station` |
+| ✅ `solar_farm` ☀️ | 1800 (30 min) | `power:800` | ✅ | 4×4 | `power_station` + life🪙≥5400 · reads:`demand_solar_farm` |
 
 **Water** (`water`, gating — **new service ID**):
 
-| Building | 🧱 | 🔬 | Service | V | Foot | Unlock rule |
-|---|---|---|---|---|---|---|
-| ✅ `water_tower` 🚰 | 10 | 1 | `water:150` | ✅ | 1×1 | `single_home` · reads:`demand_water` |
-| ✅ `water_treatment` 💧 | 40 | 3 | `water:500` | ✅ | 3×3 | `water_tower` + pop≥40 · reads:`demand_water_treatment` |
+| Building | Coins | Service | V | Foot | Unlock rule |
+|---|---|---|---|---|---|
+| ✅ `water_tower` 🚰 | 120 (2 min) | `water:150` | ✅ | 1×1 | `single_home` · reads:`demand_water` |
+| ✅ `water_treatment` 💧 | 900 (15 min) | `water:500` | ✅ | 3×3 | `water_tower` + pop≥40 · reads:`demand_water_treatment` |
 
 **Waste** (`waste`, gating):
 
-| Building | 🧱 | 🔬 | Service | V | Foot | Unlock rule |
-|---|---|---|---|---|---|---|
-| ✅ `waste_management` 🚮 ✓P7 | 10 | 1 | `waste:150` | ✅ | 2×2 | `single_home` + pop≥12 · reads:`demand_waste` |
-| ✅ `recycling_center` ♻️ | 40 | 3 | `waste:400` | ✅ | 2×3 | `waste_management` + pop≥40 · reads:`demand_recycling` |
+| Building | Coins | Service | V | Foot | Unlock rule |
+|---|---|---|---|---|---|
+| ✅ `waste_management` 🚮 ✓P7 | 120 (2 min) | `waste:150` | ✅ | 2×2 | `single_home` + pop≥12 · reads:`demand_waste` |
+| ✅ `recycling_center` ♻️ | 900 (15 min) | `waste:400` | ✅ | 2×3 | `waste_management` + pop≥40 · reads:`demand_recycling` |
 
 **Health** (`clinic`, gating):
 
-| Building | 🧱 | 🔬 | Service | V | Foot | Unlock rule |
-|---|---|---|---|---|---|---|
-| ✅ `clinic` 🏥 ✓P7 | 10 | 1 | `clinic:50` | ✅ | 2×1 | `single_home` · reads:`demand_clinic` |
-| ✅ `hospital` 🚑 | 60 | 3 | `clinic:200` | ✅ | 3×3 | `clinic` + pop≥60 · reads:`demand_hospital` |
+| Building | Coins | Service | V | Foot | Unlock rule |
+|---|---|---|---|---|---|
+| ✅ `clinic` 🏥 ✓P7 | 120 (2 min) | `clinic:50` | ✅ | 2×1 | `single_home` · reads:`demand_clinic` |
+| ✅ `hospital` 🚑 | 1500 (25 min) | `clinic:200` | ✅ | 3×3 | `clinic` + pop≥60 · reads:`demand_hospital` |
 
 **Education** (`school`, soft):
 
-| Building | 🧱 | 🔬 | Service | V | Foot | Unlock rule |
-|---|---|---|---|---|---|---|
-| ✅ `school` 🏫 ✓P7 | 10 | 1 | `school:60` | – | 2×3 | `single_home` · reads:`demand_school` *(was `civicHousing` in P7)* |
-| ✅ `high_school` 🎓 | 40 | 2 | `school:150` | – | 3×3 | `school` + pop≥40 · reads:`demand_high_school` |
+| Building | Coins | Service | V | Foot | Unlock rule |
+|---|---|---|---|---|---|
+| ✅ `school` 🏫 ✓P7 | 120 (2 min) | `school:60` | – | 2×3 | `single_home` · reads:`demand_school` *(was `civicHousing` in P7)* |
+| ✅ `high_school` 🎓 | 900 (15 min) | `school:150` | – | 3×3 | `school` + pop≥40 · reads:`demand_high_school` |
 
 **Safety** (soft — **new service IDs `police` / `fire`**):
 
-| Building | 🧱 | 🔬 | Service | V | Foot | Unlock rule |
-|---|---|---|---|---|---|---|
-| ✅ `fire_station` 🚒 | 25 | 2 | `fire:100` | – | 2×2 | `town_hall` · reads:`demand_fire` |
-| ✅ `police_station` 🚓 | 25 | 2 | `police:100` | – | 2×2 | `town_hall` · reads:`demand_police` |
+| Building | Coins | Service | V | Foot | Unlock rule |
+|---|---|---|---|---|---|
+| ✅ `fire_station` 🚒 | 600 (10 min) | `fire:100` | – | 2×2 | `town_hall` · reads:`demand_fire` |
+| ✅ `police_station` 🚓 | 600 (10 min) | `police:100` | – | 2×2 | `town_hall` · reads:`demand_police` |
 
 **Transit** (soft — **new service ID `transit`**):
 
-| Building | 🧱 | 🔬 | Service | V | Foot | Unlock rule |
-|---|---|---|---|---|---|---|
-| ✅ `bus_depot` 🚌 | 40 | 3 | `transit:200` | – | 2×3 | `city_hall` · reads:`demand_bus_depot` |
+| Building | Coins | Service | V | Foot | Unlock rule |
+|---|---|---|---|---|---|
+| ✅ `bus_depot` 🚌 | 900 (15 min) | `transit:200` | – | 2×3 | `city_hall` · reads:`demand_bus_depot` |
 
 **Wellness** (soft — a variety amenity with no gating service; `V ✅` so it
 feeds the desirability multiplier):
 
-| Building | 🧱 | 🔬 | Service | V | Foot | Unlock rule |
-|---|---|---|---|---|---|---|
-| ✅ `gym` 🏋️ | 25 | 2 | — | ✅ | 2×2 | `sports_field` · reads:`demand_gym` |
+| Building | Coins | Service | V | Foot | Unlock rule |
+|---|---|---|---|---|---|
+| ✅ `gym` 🏋️ | 600 (10 min) | — | ✅ | 2×2 | `sports_field` · reads:`demand_gym` |
 
 ### 3.3 Commercial (`commercial`)
 
@@ -305,26 +307,26 @@ Shops / food / offices — the desirability-multiplier and "town life" channel. 
 
 **Food & daily goods:**
 
-| Building | 🧱 | 🔬 | Foot | Unlock rule |
-|---|---|---|---|---|
-| ✅ `market_stall` 🍎 | 8 | 1 | 1×1 | `single_home` · reads:`demand_market_stall` |
-| ✅ `grocery` 🛒 ✓P7 | 10 | 1 | 1×2 | `single_home` · reads:`demand_grocery` |
-| ✅ `supermarket` 🏪 | 30 | 2 | 2×3 | `grocery` + pop≥20 · reads:`demand_supermarket` |
-| ✅ `bakery` 🥐 | 20 | 2 | 1×2 | `grocery` · reads:`demand_bakery` |
-| ✅ `coffee_shop` ☕ ✓P7 | 10 | 1 | 1×1 | `single_home` · reads:`demand_coffee_shop` |
-| ✅ `restaurant` 🍽️ | 25 | 2 | 1×2 | `coffee_shop` · reads:`demand_restaurant` |
-| ✅ `farmers_market` 🧺 | 20 | 2 | 2×2 | `farmhouse` · reads:`demand_farmers_market` |
+| Building | Coins | Foot | Unlock rule |
+|---|---|---|---|
+| ✅ `market_stall` 🍎 | 90 (1.5 min) | 1×1 | `single_home` · reads:`demand_market_stall` |
+| ✅ `grocery` 🛒 ✓P7 | 120 (2 min) | 1×2 | `single_home` · reads:`demand_grocery` |
+| ✅ `supermarket` 🏪 | 720 (12 min) | 2×3 | `grocery` + pop≥20 · reads:`demand_supermarket` |
+| ✅ `bakery` 🥐 | 300 (5 min) | 1×2 | `grocery` · reads:`demand_bakery` |
+| ✅ `coffee_shop` ☕ ✓P7 | 120 (2 min) | 1×1 | `single_home` · reads:`demand_coffee_shop` |
+| ✅ `restaurant` 🍽️ | 600 (10 min) | 1×2 | `coffee_shop` · reads:`demand_restaurant` |
+| ✅ `farmers_market` 🧺 | 300 (5 min) | 2×2 | `farmhouse` · reads:`demand_farmers_market` |
 
 **Retail & offices:**
 
-| Building | 🧱 | 🔬 | Foot | Unlock rule |
-|---|---|---|---|---|
-| ✅ `bookshop` 📖 | 20 | 2 | 1×1 | `library` · reads:`demand_bookshop` |
-| ✅ `toy_store` 🧸 | 20 | 2 | 1×2 | `grocery` · reads:`demand_toy_store` |
-| ✅ `clothing_store` 👕 | 25 | 2 | 1×2 | `supermarket` · reads:`demand_clothing_store` |
-| ✅ `office_building` 🏬 | 40 | 3 | 2×2 | `town_hall` · reads:`demand_office` |
-| ✅ `shopping_mall` 🛍️ | 80 | 3 | 4×4 | `supermarket` + `clothing_store` + pop≥80 · reads:`demand_shopping_mall` *(multi-parent)* |
-| ✅ `business_tower` 🏢 | 100 | 3 | 2×2 | `office_building` + pop≥80 + life🧱≥400 · reads:`demand_business_tower` |
+| Building | Coins | Foot | Unlock rule |
+|---|---|---|---|
+| ✅ `bookshop` 📖 | 300 (5 min) | 1×1 | `library` · reads:`demand_bookshop` |
+| ✅ `toy_store` 🧸 | 300 (5 min) | 1×2 | `grocery` · reads:`demand_toy_store` |
+| ✅ `clothing_store` 👕 | 600 (10 min) | 1×2 | `supermarket` · reads:`demand_clothing_store` |
+| ✅ `office_building` 🏬 | 900 (15 min) | 2×2 | `town_hall` · reads:`demand_office` |
+| ✅ `shopping_mall` 🛍️ | 2400 (40 min) | 4×4 | `supermarket` + `clothing_store` + pop≥80 · reads:`demand_shopping_mall` *(multi-parent)* |
+| ✅ `business_tower` 🏢 | 3000 (50 min) | 2×2 | `office_building` + pop≥80 + life🪙≥5400 · reads:`demand_business_tower` |
 
 ### 3.4 Entertainment (`entertainment`)
 
@@ -333,46 +335,58 @@ Parks / culture / recreation — the cozy, praise-heavy delight channel. All
 
 **Green & cozy:**
 
-| Building | 🧱 | 🔬 | Foot | Unlock rule |
-|---|---|---|---|---|
-| ✅ `park` 🌳 ✓P7 | 10 | 1 | 2×2 | `single_home` · reads:`demand_more_parks` *(recurring — see §4)* |
-| ✅ `playground` 🛝 | 10 | 1 | 1×2 | `park` · reads:`demand_playground` |
-| ✅ `community_garden` 🌻 | 15 | 2 | 2×2 | `park` · reads:`demand_community_garden` |
-| ✅ `fountain_plaza` ⛲ | 25 | 2 | 2×2 | `town_hall` · reads:`demand_fountain_plaza` |
-| ✅ `botanical_garden` 🌺 | 50 | 3 | 3×3 | `community_garden` + pop≥50 · reads:`demand_botanical_garden` |
+| Building | Coins | Foot | Unlock rule |
+|---|---|---|---|
+| ✅ `park` 🌳 ✓P7 | 120 (2 min) | 2×2 | `single_home` · reads:`demand_more_parks` *(recurring — see §4)* |
+| ✅ `playground` 🛝 | 120 (2 min) | 1×2 | `park` · reads:`demand_playground` |
+| ✅ `community_garden` 🌻 | 180 (3 min) | 2×2 | `park` · reads:`demand_community_garden` |
+| ✅ `fountain_plaza` ⛲ | 600 (10 min) | 2×2 | `town_hall` · reads:`demand_fountain_plaza` |
+| ✅ `botanical_garden` 🌺 | 1200 (20 min) | 3×3 | `community_garden` + pop≥50 · reads:`demand_botanical_garden` |
 
 **Recreation & culture:**
 
-| Building | 🧱 | 🔬 | Foot | Unlock rule |
-|---|---|---|---|---|
-| ✅ `sports_field` ⚽ | 25 | 2 | 3×2 | `school` · reads:`demand_sports_field` |
-| ✅ `swimming_pool` 🏊 | 30 | 2 | 2×2 | `sports_field` · reads:`demand_swimming_pool` |
-| ✅ `movie_theater` 🎬 | 40 | 3 | 2×3 | `restaurant` · reads:`demand_movie_theater` |
-| ✅ `museum` 🏛️ | 50 | 3 | 3×3 | `library` · reads:`demand_museum` |
-| ✅ `stadium` 🏟️ | 90 | 3 | 4×4 | `sports_field` + pop≥80 · reads:`demand_stadium` |
+| Building | Coins | Foot | Unlock rule |
+|---|---|---|---|
+| ✅ `sports_field` ⚽ | 600 (10 min) | 3×2 | `school` · reads:`demand_sports_field` |
+| ✅ `swimming_pool` 🏊 | 720 (12 min) | 2×2 | `sports_field` · reads:`demand_swimming_pool` |
+| ✅ `movie_theater` 🎬 | 900 (15 min) | 2×3 | `restaurant` · reads:`demand_movie_theater` |
+| ✅ `museum` 🏛️ | 1200 (20 min) | 3×3 | `library` · reads:`demand_museum` |
+| ✅ `stadium` 🏟️ | 2700 (45 min) | 4×4 | `sports_field` + pop≥80 · reads:`demand_stadium` |
 
 **Capstone attractions** (aspirational, late-game, signature praise beats):
 
-| Building | 🧱 | 🔬 | Foot | Unlock rule |
-|---|---|---|---|---|
-| ✅ `zoo` 🦁 | 120 | 5 | 5×5 | `botanical_garden` + pop≥100 · reads:`demand_zoo` |
-| ✅ `aquarium` 🐠 | 120 | 5 | 4×3 | `museum` + pop≥100 · reads:`demand_aquarium` |
-| ✅ `amusement_park` 🎢 | 200 | 5 | 6×6 | `stadium` + pop≥120 + life🧱≥800 · reads:`demand_amusement_park` |
-| ✅ `observation_tower` 🗼 | 250 | 5 | 2×2 | `city_hall` + life🧱≥1000 · reads:`demand_observation_tower` |
+| Building | Coins | Foot | Unlock rule |
+|---|---|---|---|
+| ✅ `zoo` 🦁 | 3600 (1 h) | 5×5 | `botanical_garden` + pop≥100 · reads:`demand_zoo` |
+| ✅ `aquarium` 🐠 | 3600 (1 h) | 4×3 | `museum` + pop≥100 · reads:`demand_aquarium` |
+| ✅ `amusement_park` 🎢 | 5400 (1.5 h) | 6×6 | `stadium` + pop≥120 + life🪙≥10800 · reads:`demand_amusement_park` |
+| ✅ `observation_tower` 🗼 | 7200 (2 h) | 2×2 | `city_hall` + life🪙≥14400 · reads:`demand_observation_tower` |
 
 ### 3.5 Economy sanity check
 
-- **Total 🔬 to research the whole catalog ≈ 117** (early ≈1, mid ≈2, late ≈3,
-  capstone ≈5 each). The lifetime 🔬 ceiling is ~732 (≈366 sub-concepts × 2 award
-  bands — see [plan.md](plan.md) *Research-currency earning*), so the full city is
-  comfortably affordable through normal play with research to spare. No artificial
-  scarcity (the §1.3 reject).
-- **🧱 curve** runs 5–30 (early/mid) → 40–120 (late) → 200–250 (capstone). At
-  3–5 🧱 per correct answer, a capstone (~200 🧱) is ~40–60 correct answers of
-  saving — a satisfying long-arc trophy, not a wall.
-- **`life🧱` gates** (300 / 400 / 500 / 600 / 800 / 1000) read as "you've played a
-  lot" milestones; 1000 lifetime bricks ≈ 250 correct answers. Capstones gate on
-  lifetime bricks so they feel earned by *total practice*, not just city state.
+*(Re-denominated 2026-09-08 for the single-currency coin economy — coins =
+expected seconds of study, so every price reads as minutes of math. These are
+first-draft numbers for playtest tuning; the old 🧱 tiers mapped 1:1 onto a
+minutes ladder, see the table in the rework PR.)*
+
+- **Coin curve** runs 60–120 (1–2 min; starters) → 300–720 (5–12 min; the
+  median building is 600 = 10 min) → 900–1800 (15–30 min; late) → 2400–7200
+  (40 min–2 h; landmarks). At full streak a correct answer pays its concept's
+  expected seconds (×1.5 on the keypad), so a 600-coin building is ~10 minutes
+  of accurate work at any grade — a kindergartner and an 8th grader afford the
+  same building after the same study time.
+- **Whole catalog once over ≈ 57,700 coins ≈ 16 h of study.** Housing
+  repeats (several homes/apartments per city) and land (600 × ring, i.e. 1200
+  for the first new block) push the long arc well past that. No artificial
+  scarcity (the §1.3 reject) — everything is reachable through normal play.
+- **`life🪙` gates** (3600 / 5400 / 7200 / 10800 / 14400 = 1 / 1.5 / 2 / 3 / 4 h
+  of lifetime study) read as "you've practiced a lot" milestones. Capstones gate
+  on lifetime coins so they feel earned by *total practice*, not just city
+  state. Each gate is below the cumulative spend needed to reach it through the
+  DAG, so it never binds harder than the prices already do.
+- **Research is gone.** The band-crossing coin bonus (2× the concept's expected
+  seconds, once per concept per threshold) is the single-currency descendant of
+  the old +1 🔬 award — a burst on top of the steady per-answer drip.
 
 ### 3.6 Long-tail variants (patterned, not itemized)
 
@@ -411,8 +425,8 @@ discovery gate via `requiredBeatsRead`), **praise** (placement celebration), and
 **warning** (an imbalance the growth model is producing). Tone ∈ silly / civic /
 cozy. Each beat below is `id` · tone · emoji `shortLabel` · longText · trigger
 summary. Trigger shorthand: `+B` present, `−B` absent, `pop≥N`, `age(B)≥N`
-(building age in rounds), `fired:X` (`requiredBeatsFired`), `🧱since≥N`
-(`minBricksEarnedSinceLastBeat`). The exact `TriggerRule` encodes in Phase 9.
+(building age in rounds), `fired:X` (`requiredBeatsFired`), `🪙since≥N`
+(`minCoinsEarnedSinceLastBeat`, coins ≈ seconds of study). The exact `TriggerRule` encodes in Phase 9.
 
 > **Authoring convention.** A demand beat fires when its prereq is present and its
 > target building is still absent (`+prereq −self`, plus any pop gate matching the
@@ -480,7 +494,7 @@ summary. Trigger shorthand: `+B` present, `−B` absent, `pop≥N`, `age(B)≥N`
 
 | Beat | Tone | Sticker | Text | Trigger |
 |---|---|---|---|---|
-| ✅ `demand_more_parks` ✓P7 | cozy | 🌳 a park? | "The town's feeling a little grey — a new park would brighten everyone's day." | `+single_home 🧱since≥150` *(recurring)* |
+| ✅ `demand_more_parks` ✓P7 | cozy | 🌳 a park? | "The town's feeling a little grey — a new park would brighten everyone's day." | `+single_home 🪙since≥600` *(recurring)* |
 | ✅ `demand_playground` | cozy | 🛝 playground | "The little ones need somewhere to climb and slide — a playground!" | `+park −playground` |
 | ✅ `demand_community_garden` | cozy | 🌻 grow together | "Neighbors want to grow tomatoes together — a community garden?" | `+park −community_garden` |
 | ✅ `demand_fountain_plaza` | cozy | ⛲ town square | "The town square feels empty — a fountain plaza would make it sparkle." | `+town_hall −fountain_plaza` |
@@ -532,7 +546,7 @@ ratio-driven cases below have no single target building, so they need a small
 
 | Beat | Kind | Tone | Text | Trigger |
 |---|---|---|---|---|
-| ✅ `demand_more_parks` ✓P7 | demand | cozy | (see §4.1 — re-fires with 🧱 spacing even after a park exists) | `+single_home 🧱since≥150` |
+| ✅ `demand_more_parks` ✓P7 | demand | cozy | (see §4.1 — re-fires with coin spacing even after a park exists) | `+single_home 🪙since≥600` |
 | ✅ `praise_established_town` ✓P7 | praise | civic | "The town's really taking shape — folks are proud to call it home. Nice work, Mayor!" | `+single_home age(mayors_office)≥10 fired:praise_first_home` |
 | ✅ `milestone_big_city` | praise | civic | "From a single office to a whole skyline — what an incredible journey, Mayor." | `+high_rise age(mayors_office)≥40 fired:praise_established_town` |
 
@@ -807,9 +821,9 @@ below and the per-row marks refresh idempotently.
 - **Water** → a **hard-gating** service (`water` joins `gatingServiceIds`), arc
   `water_tower` → `water_treatment`.
 - **Housing depth** → keep all **7 rungs**; tune pacing by playtest.
-- **Capstone gating** → capstones gate on **lifetime bricks** (300–1000) so they
-  read as "you've practiced a lot" trophies. Applied in §3; confirm feel in
-  playtest.
+- **Capstone gating** → capstones gate on **lifetime coins** (1–4 h of total
+  study, re-denominated 2026-09-08) so they read as "you've practiced a lot"
+  trophies. Applied in §3; confirm feel in playtest.
 
 **Resolved 2026-06-04 (art-pipeline session):**
 - **Sprite facing** → one sprite per building variant, all generated in the
@@ -846,12 +860,12 @@ below and the per-row marks refresh idempotently.
   late/capstone builds (a `6×6` amusement park is a quarter of it). Phase 9's
   **land expansion** is therefore a prerequisite for the late game, not optional
   polish — and the beginner map may want a modest bump. The big capstone unlock
-  rules (`pop≥100`+, `life🧱≥800`+) already pace these well past the point where a
+  rules (`pop≥100`+, `life🪙≥10800`+) already pace these well past the point where a
   player would have expanded. Confirm the starting size + expansion cadence in
   Phase 9.
 - **`TriggerRule` extension for ratio warnings.** `warn_lopsided` and
   `warn_growth_stalled` (§4.3) can't be expressed with the current
-  buildingsPresent/absent/pop/age/beats/bricks fields — they need the growth
+  buildingsPresent/absent/pop/age/beats/coins fields — they need the growth
   model to surface a `lopsided` boolean and a `growthStalled` boolean into
   `TriggerContext`. Small, additive; the only mechanic touch Phase 9 needs beyond
   content. Everything else in this doc fits the existing typed rules.
