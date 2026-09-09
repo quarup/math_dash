@@ -207,8 +207,8 @@ def probe_one(
 
     The wrong-answer screen is captured **once**, whatever the bands. The
     band never reaches `ResultScreen`: it renders from the question, the
-    submitted answer, and the outcome, and in debug mode bricks are always
-    0 and the unlock event always null. Same seed -> same question -> same
+    submitted answer, and the outcome, and in debug mode no coins are paid
+    and no question block is running. Same seed -> same question -> same
     distractor -> byte-identical red screen (verified on device; only the
     status-bar clock differs).
     """

@@ -1,34 +1,37 @@
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:math_city/domain/concepts/dag_engine.dart';
+import 'package:math_city/domain/economy/question_block.dart';
 import 'package:math_city/domain/questions/answer_check.dart';
 import 'package:math_city/domain/questions/diagram_spec.dart';
 import 'package:math_city/domain/questions/generated_question.dart';
 import 'package:math_city/domain/questions/is_word_problem.dart';
-import 'package:math_city/presentation/city/city_screen.dart';
+import 'package:math_city/presentation/block/block_summary_screen.dart';
 import 'package:math_city/presentation/diagrams/diagram_renderer.dart';
-import 'package:math_city/presentation/spin/spin_screen.dart';
+import 'package:math_city/presentation/question/question_screen.dart';
 import 'package:math_city/presentation/theme/app_palette.dart';
 import 'package:math_city/presentation/widgets/math_text.dart';
 import 'package:math_city/presentation/widgets/speech_toggle_button.dart';
 import 'package:math_city/services/debug_harness.dart';
 import 'package:math_city/services/tts_service.dart';
-import 'package:math_city/state/game_session_provider.dart';
 import 'package:math_city/state/tts_provider.dart';
 
+/// The wrong-answer explanation screen — the teaching moment, kept as a full
+/// screen on purpose. In real play it appears only for a wrong answer inside
+/// a [QuestionBlock] (a correct answer plays a coin animation and moves
+/// straight on); in debug mode (`ConceptDebugScreen`, the UX-sweep harness)
+/// it still renders the green "Correct!" state too, so a generator can be
+/// checked end-to-end without a block.
 class ResultScreen extends ConsumerStatefulWidget {
   const ResultScreen({
     required this.question,
     required this.selectedAnswer,
     required this.outcome,
-    required this.bricksEarned,
-    this.unlockEvent,
+    this.block,
     this.debugMode = false,
     super.key,
-  });
+  }) : assert(debugMode || block != null, 'real play always runs in a block');
 
   final GeneratedQuestion question;
   final String selectedAnswer;
@@ -38,16 +41,13 @@ class ResultScreen extends ConsumerStatefulWidget {
   /// `equivalentNonCanonical` both render the success state; the latter
   /// also surfaces a friendly nudge with the canonical form.
   final AnswerOutcome outcome;
-  final int bricksEarned;
 
-  /// Drip-feed unlock to celebrate. Caller is responsible for ensuring
-  /// this is null on wrong answers — the result screen does not double-
-  /// check (we trust the caller per plan.md Phase 5).
-  final UnlockEvent? unlockEvent;
+  /// The block this question belonged to (already updated with this
+  /// answer's reward). Drives the button: next question, or the summary.
+  final QuestionBlock? block;
 
-  /// When true, "Next round" pops back to the debug picker instead of
-  /// pushing the spin wheel. Caller is also responsible for passing
-  /// `bricksEarned: 0` so no stars are written to the player profile.
+  /// When true, "Try another" pops back to the debug picker instead of
+  /// continuing a block.
   final bool debugMode;
 
   @override
@@ -55,9 +55,6 @@ class ResultScreen extends ConsumerStatefulWidget {
 }
 
 class _ResultScreenState extends ConsumerState<ResultScreen> {
-  final GlobalKey _starKey = GlobalKey();
-  bool _starVisible = true;
-
   /// Cached in `initState`: `ref` is unsafe once the widget has been
   /// deactivated, so `dispose` cannot look the service up itself.
   late final TtsService _tts;
@@ -79,16 +76,9 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
     super.initState();
     _tts = ref.read(ttsServiceProvider);
     DebugHarness.instance.attachResult(outcome: widget.outcome);
-    if (widget.bricksEarned > 0) {
-      // Defer so we're not mutating provider state during a build.
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        ref.read(totalBricksProvider.notifier).add(widget.bricksEarned);
-      });
-    }
     final text = _speakableText;
     if (text != null) {
-      // Defer so the provider read happens after first frame, matching
-      // the bricks animation hook above.
+      // Defer so the provider read happens after the first frame.
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
         unawaited(speakIfEnabled(ref, text));
@@ -102,68 +92,30 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
     super.dispose();
   }
 
-  Future<void> _onNextRound() async {
+  void _onNext() {
     if (widget.debugMode) {
       Navigator.of(context).pop();
       return;
     }
-
-    if (widget.bricksEarned <= 0) {
-      _pushSpin();
-      return;
-    }
-
-    final box = _starKey.currentContext?.findRenderObject() as RenderBox?;
-    if (box == null) {
-      _pushSpin();
-      return;
-    }
-
-    final starCenter = box.localToGlobal(
-      Offset(box.size.width / 2, box.size.height / 2),
-    );
-    // Target: the star icon in SpinScreen's AppBar (top-right area).
-    final screenWidth = MediaQuery.of(context).size.width;
-    final target = Offset(screenWidth - 44, 60);
-
-    // Hide the original so it looks like it's moving, not cloned.
-    setState(() => _starVisible = false);
-
-    final overlayState = Overlay.of(context);
-    late OverlayEntry entry;
-    entry = OverlayEntry(
-      builder: (overlayCtx) => _FlyingStarOverlay(
-        from: starCenter,
-        to: target,
-        bricksEarned: widget.bricksEarned,
+    final block = widget.block!;
+    unawaited(
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute<void>(
+          builder: (_) => block.isComplete
+              ? BlockSummaryScreen(block: block)
+              : QuestionScreen(
+                  conceptId: block.conceptId,
+                  band: block.band,
+                  block: block,
+                ),
+        ),
       ),
     );
-    overlayState.insert(entry);
-
-    // Navigate mid-flight so the star appears to land on the counter.
-    await Future<void>.delayed(const Duration(milliseconds: 350));
-    if (!mounted) {
-      entry.remove();
-      return;
-    }
-    _pushSpin(pulse: true);
-
-    await Future<void>.delayed(const Duration(milliseconds: 350));
-    entry.remove();
   }
 
-  void _pushSpin({bool pulse = false}) {
-    // Collapse the spin→question→result loop back onto the player's "My City"
-    // hub (or the home screen as a backstop) so a fresh spin sits directly
-    // above the city and back-navigation returns there.
-    unawaited(
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute<void>(
-          builder: (_) => SpinScreen(pulseBricks: pulse),
-        ),
-        (route) => route.settings.name == CityScreen.routeName || route.isFirst,
-      ),
-    );
+  String get _buttonLabel {
+    if (widget.debugMode) return 'Try another';
+    return widget.block!.isComplete ? 'See results' : 'Next question';
   }
 
   @override
@@ -225,27 +177,12 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  if (isCorrect && widget.bricksEarned > 0) ...[
-                    const SizedBox(height: 16),
-                    Opacity(
-                      opacity: _starVisible ? 1.0 : 0.0,
-                      child: _BrickAward(
-                        key: _starKey,
-                        bricks: widget.bricksEarned,
-                        theme: theme,
-                      ),
-                    ),
-                  ],
                   if (isEquivalentNonCanonical) ...[
                     const SizedBox(height: 16),
-                    _EquivalentNudgeCard(
+                    EquivalentNudgeCard(
                       playerAnswer: widget.selectedAnswer,
                       canonical: widget.question.correctAnswer,
                     ),
-                  ],
-                  if (isCorrect && widget.unlockEvent != null) ...[
-                    const SizedBox(height: 24),
-                    _UnlockCard(event: widget.unlockEvent!),
                   ],
                   if (!isCorrect) ...[
                     const SizedBox(height: 24),
@@ -257,14 +194,12 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
                   ],
                   const Spacer(),
                   FilledButton(
-                    onPressed: _onNextRound,
+                    onPressed: _onNext,
                     style: FilledButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 18),
                       textStyle: theme.textTheme.titleLarge,
                     ),
-                    child: Text(
-                      widget.debugMode ? 'Try another' : 'Next Round',
-                    ),
+                    child: Text(_buttonLabel),
                   ),
                   const SizedBox(height: 12),
                 ],
@@ -273,32 +208,6 @@ class _ResultScreenState extends ConsumerState<ResultScreen> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _BrickAward extends StatelessWidget {
-  const _BrickAward({required this.bricks, required this.theme, super.key});
-
-  final int bricks;
-  final ThemeData theme;
-
-  @override
-  Widget build(BuildContext context) {
-    final palette = theme.extension<AppPalette>()!;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text('🧱', style: TextStyle(fontSize: 32)),
-        const SizedBox(width: 8),
-        Text(
-          '+$bricks',
-          style: theme.textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: palette.coinGoldDeep,
-          ),
-        ),
-      ],
     );
   }
 }
@@ -356,11 +265,13 @@ class _ExplanationCard extends StatelessWidget {
 /// Friendly nudge when the player's answer is mathematically equivalent
 /// but not in canonical (lowest-terms / textbook) form. Resolves [GitHub
 /// issue #2 option (c)] — we accepted the answer, now teach the
-/// simplification.
-class _EquivalentNudgeCard extends StatelessWidget {
-  const _EquivalentNudgeCard({
+/// simplification. Shown on the debug green screen and, in a block, as a
+/// brief overlay while the coin flies (see `QuestionScreen`).
+class EquivalentNudgeCard extends StatelessWidget {
+  const EquivalentNudgeCard({
     required this.playerAnswer,
     required this.canonical,
+    super.key,
   });
 
   final String playerAnswer;
@@ -397,149 +308,6 @@ class _EquivalentNudgeCard extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _UnlockCard extends StatelessWidget {
-  const _UnlockCard({required this.event});
-
-  final UnlockEvent event;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final palette = theme.extension<AppPalette>()!;
-    return Card(
-      color: theme.colorScheme.surfaceContainer,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: palette.coinGold, width: 2),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(18),
-        child: Row(
-          children: [
-            Icon(
-              Icons.lock_open_rounded,
-              color: palette.coinGold,
-              size: 36,
-            ),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'New concept unlocked!',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: palette.coinGoldDeep,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    event.newConcept.name,
-                    style: theme.textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _FlyingStarOverlay extends StatefulWidget {
-  const _FlyingStarOverlay({
-    required this.from,
-    required this.to,
-    required this.bricksEarned,
-  });
-
-  final Offset from;
-  final Offset to;
-  final int bricksEarned;
-
-  @override
-  State<_FlyingStarOverlay> createState() => _FlyingStarOverlayState();
-}
-
-class _FlyingStarOverlayState extends State<_FlyingStarOverlay>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _ctrl;
-  late final Animation<double> _anim;
-
-  @override
-  void initState() {
-    super.initState();
-    _ctrl = AnimationController(
-      duration: const Duration(milliseconds: 700),
-      vsync: this,
-    );
-    unawaited(_ctrl.forward());
-    _anim = CurvedAnimation(parent: _ctrl, curve: Curves.easeInOut);
-  }
-
-  @override
-  void dispose() {
-    _ctrl.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final palette = Theme.of(context).extension<AppPalette>()!;
-    return AnimatedBuilder(
-      animation: _anim,
-      builder: (ctx, child) {
-        final t = _anim.value;
-        final linear = Offset.lerp(widget.from, widget.to, t)!;
-        // Arc upward at the midpoint.
-        final arcY = math.sin(t * math.pi) * -80.0;
-        final pos = Offset(linear.dx, linear.dy + arcY);
-        final scale = 1.0 - 0.55 * t;
-        final opacity = t > 0.75 ? (1.0 - t) / 0.25 : 1.0;
-
-        return Positioned(
-          left: pos.dx,
-          top: pos.dy,
-          child: FractionalTranslation(
-            translation: const Offset(-0.5, -0.5),
-            child: Opacity(
-              opacity: opacity.clamp(0.0, 1.0),
-              child: Transform.scale(
-                scale: scale,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text('🧱', style: TextStyle(fontSize: 30)),
-                    const SizedBox(width: 4),
-                    Text(
-                      '+${widget.bricksEarned}',
-                      style: TextStyle(
-                        color: palette.coinGold,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        shadows: const [
-                          Shadow(
-                            color: Color(0x99000000),
-                            blurRadius: 4,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 }

@@ -100,12 +100,13 @@ read.
 
 1. **Player picker** (first screen): tap a player **card body** (e.g. avatar
    face ~`380,770` for the left card) — not the green edit pencil at the
-   card's top-right. Prefer a player that already has a 🧱/🔬 balance so you
+   card's top-right. Prefer a player that already has a coin balance so you
    can place buildings without grinding questions first.
 2. **"My City" screen** opens with the isometric board. The bottom strip is
    the build catalog (Mayor's office, Single home, Apartment, School, …).
 3. **Place a building:** tap a catalog card (it gets a teal border) → tap an
-   empty grass tile. Cost is deducted from the 🧱 balance shown top-right.
+   empty grass tile. Cost is deducted from the coin balance shown top-right
+   (the city debug sheet's `+600 coins` / `+3600 coins` buttons fund this).
    Buildings with sprite art render the PNG; the rest show the colored
    box + emoji placeholder.
 4. Different tiles of the same building type show different sprite variants

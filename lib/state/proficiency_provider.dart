@@ -2,10 +2,13 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:math_city/domain/city/research_awards.dart';
 import 'package:math_city/domain/concepts/concept.dart';
 import 'package:math_city/domain/concepts/concept_registry.dart';
 import 'package:math_city/domain/concepts/dag_engine.dart';
+import 'package:math_city/domain/economy/band_crossings.dart';
+import 'package:math_city/domain/economy/coin_economy.dart';
+import 'package:math_city/domain/economy/expected_seconds.dart';
+import 'package:math_city/domain/economy/question_block.dart';
 import 'package:math_city/domain/proficiency/proficiency_band.dart';
 import 'package:math_city/state/city_provider.dart';
 import 'package:math_city/state/introduced_concepts_provider.dart';
@@ -24,17 +27,20 @@ class ProficiencyNotifier extends AsyncNotifier<Map<String, double>> {
     return db.proficiencyMapForPlayer(player.id);
   }
 
-  /// Records an answer and returns an [UnlockEvent] if the answer triggered
-  /// a mastery transition that the drip-feed converted into a new concept
-  /// introduction. Returns null otherwise.
+  /// Records an answer: updates proficiency, advances the round clock, moves
+  /// the answer streak, pays coins (answer + any band-crossing bonus) and
+  /// runs the drip-feed. Returns everything the UI needs to animate as one
+  /// [AnswerReward]. All persistence happens here, before the caller sees
+  /// the reward, so a payout can't be lost to a mid-animation exit.
   ///
   /// Per plan.md Phase 5: unlock events fire only on *correct* answers
   /// (mastery is unreachable from a wrong answer anyway because the EMA
-  /// update moves p toward 0). The unlock UI is thus naturally suppressed
-  /// when the player gets a question wrong.
-  Future<UnlockEvent?> recordAnswer(
+  /// update moves p toward 0). Band-crossing bonuses likewise only fire on
+  /// upward moves.
+  Future<AnswerReward> recordAnswer(
     String conceptId, {
     required bool correct,
+    required bool usesKeypad,
   }) async {
     final player = await ref.read(activePlayerProvider.future);
     final db = ref.read(appDatabaseProvider);
@@ -59,23 +65,43 @@ class ProficiencyNotifier extends AsyncNotifier<Map<String, double>> {
       correct: correct,
     );
 
-    // 🔬 research-currency awards: +1 per first-time band crossing on this
-    // concept. `newlyCrossedBands` only returns crossings the player hasn't
-    // yet been awarded for (per `ConceptBandMilestones`), so re-crossings
-    // after a dip don't double-award.
-    final awarded = await db.awardedBandIndicesFor(player.id, conceptId);
-    final crossed = newlyCrossedBands(
-      oldP: current,
-      newP: updated,
-      alreadyAwardedBandIndices: awarded,
-    );
-    for (final bandIndex in crossed) {
-      await db.recordBandMilestone(player.id, conceptId, bandIndex);
-      await db.incrementPlayerResearch(player.id, 1);
-    }
-    if (crossed.isNotEmpty) {
-      // Refresh the player chip in HomeScreen / spin screen.
-      ref.invalidate(allPlayersProvider);
+    // Streak: one step up per correct answer (capped), reset on a miss. Pay
+    // is computed at the *new* level, so the first correct after a miss
+    // earns 20%.
+    final streak = nextStreakLevel(player.streakLevel, correct: correct);
+    await db.setPlayerStreakLevel(player.id, streak);
+
+    final seconds = expectedSecondsFor(conceptId);
+    var coins = 0;
+    final bonuses = <BandCrossingBonus>[];
+    if (correct) {
+      coins = coinsForCorrectAnswer(
+        expectedSeconds: seconds,
+        usesKeypad: usesKeypad,
+        streakLevel: streak,
+      );
+      // Band-crossing bonus: paid once per concept per threshold.
+      // `newlyCrossedBands` only returns crossings the player hasn't yet
+      // been paid for (per `ConceptBandMilestones`), so re-crossings after
+      // a dip don't double-pay.
+      final awarded = await db.awardedBandIndicesFor(player.id, conceptId);
+      final crossed = newlyCrossedBands(
+        oldP: current,
+        newP: updated,
+        alreadyAwardedBandIndices: awarded,
+      );
+      for (final bandIndex in crossed) {
+        await db.recordBandMilestone(player.id, conceptId, bandIndex);
+        bonuses.add(
+          BandCrossingBonus(
+            conceptId: conceptId,
+            band: bandReachedAt(bandIndex),
+            coins: bandCrossingBonus(seconds),
+          ),
+        );
+      }
+      final total = coins + bonuses.fold<int>(0, (sum, b) => sum + b.coins);
+      await db.incrementPlayerCoins(player.id, total);
     }
 
     UnlockEvent? unlock;
@@ -100,20 +126,26 @@ class ProficiencyNotifier extends AsyncNotifier<Map<String, double>> {
 
     // Playing math grows your city: nudge the population one tick toward the
     // capacity its buildings support, then re-evaluate story beats (population
-    // and brick-spacing gates can newly pass). No-op until the player has
+    // and coin-spacing gates can newly pass). No-op until the player has
     // placed something.
     final cityActions = ref.read(cityActionsProvider);
     await cityActions.tickPopulation();
     await cityActions.fireBeats();
 
-    // The round clock advanced above, and 🔬 may have too. Refetch the active
-    // player so the city screen's currency bar and the unlock catalog — both
-    // of which read straight off activePlayerProvider — don't keep serving the
-    // balances cached before this round.
+    // The round clock, streak and coin balance all moved. Refetch the active
+    // player so every counter (AppBar coins, city currency bar, unlock
+    // catalog, home-screen chips) reads the balance this answer produced.
     ref
       ..invalidate(activePlayerProvider)
+      ..invalidate(allPlayersProvider)
       ..invalidateSelf();
-    return unlock;
+    return AnswerReward(
+      correct: correct,
+      coins: coins,
+      streakLevel: streak,
+      bandBonuses: bonuses,
+      unlock: unlock,
+    );
   }
 }
 
@@ -124,7 +156,9 @@ final proficiencyProvider =
 
 // ---------------------------------------------------------------------------
 // Wheel concepts — introduced ∩ generator-registered, in challenging or
-// comfortable band, sized between [kMinWheelSegments] and [kMaxWheelSegments].
+// comfortable band, minus concepts the player has outgrown (≥2 grades below
+// and already comfortable — see `isRetiredFromWheel`), sized between
+// [kMinWheelSegments] and [kMaxWheelSegments].
 //
 // Below the max, every eligible concept is on the wheel (sorted ascending
 // by difficulty for a stable layout). At or above the max, we randomly
@@ -143,12 +177,22 @@ final wheelConceptsProvider = FutureProvider<List<Concept>>((ref) async {
   final engine = ref.watch(dagEngineProvider);
   final effectiveGrade = engine.effectiveGradeFor(player.gradeLevel);
 
+  bool playable(Concept c) =>
+      introduced.contains(c.id) && registry.isImplemented(c.id);
+
+  ProficiencyBand bandOf(Concept c) => bandForProficiency(
+    profMap[c.id] ?? initialProficiency(c.primaryGrade, effectiveGrade),
+  );
+
+  bool retired(Concept c) => isRetiredFromWheel(
+    conceptGrade: c.primaryGrade,
+    playerGrade: effectiveGrade,
+    band: bandOf(c),
+  );
+
   bool eligible(Concept c) {
-    if (!introduced.contains(c.id)) return false;
-    if (!registry.isImplemented(c.id)) return false;
-    final p =
-        profMap[c.id] ?? initialProficiency(c.primaryGrade, effectiveGrade);
-    final band = bandForProficiency(p);
+    if (!playable(c) || retired(c)) return false;
+    final band = bandOf(c);
     return band == ProficiencyBand.challenging ||
         band == ProficiencyBand.comfortable;
   }
@@ -157,11 +201,12 @@ final wheelConceptsProvider = FutureProvider<List<Concept>>((ref) async {
     ..sort(compareConceptDifficulty);
 
   // Fallback: if no concepts qualify (e.g. all introduced are mastered),
-  // surface the full introduced+implemented set so the wheel still spins.
+  // surface the introduced+implemented set so the wheel still spins —
+  // still skipping outgrown concepts unless they're literally all there is.
   if (concepts.isEmpty) {
-    return allConcepts
-        .where((c) => introduced.contains(c.id) && registry.isImplemented(c.id))
-        .toList()
+    final all = allConcepts.where(playable).toList();
+    final unretired = all.where((c) => !retired(c)).toList();
+    return (unretired.isEmpty ? all : unretired)
       ..sort(compareConceptDifficulty);
   }
 

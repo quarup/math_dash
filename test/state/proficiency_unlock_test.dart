@@ -53,9 +53,15 @@ void main() {
         // Force the proficiency provider to load the seeded value.
         await container.read(proficiencyProvider.future);
 
-        final unlock = await container
-            .read(proficiencyProvider.notifier)
-            .recordAnswer('add_within_5', correct: true);
+        final unlock =
+            (await container
+                    .read(proficiencyProvider.notifier)
+                    .recordAnswer(
+                      'add_within_5',
+                      correct: true,
+                      usesKeypad: false,
+                    ))
+                .unlock;
 
         expect(unlock, isNotNull);
         expect(unlock!.masteredConcept?.id, 'add_within_5');
@@ -88,9 +94,15 @@ void main() {
         addTearDown(container.dispose);
         await container.read(proficiencyProvider.future);
 
-        final unlock = await container
-            .read(proficiencyProvider.notifier)
-            .recordAnswer('add_within_5', correct: false);
+        final unlock =
+            (await container
+                    .read(proficiencyProvider.notifier)
+                    .recordAnswer(
+                      'add_within_5',
+                      correct: false,
+                      usesKeypad: false,
+                    ))
+                .unlock;
 
         expect(unlock, isNull);
 
@@ -113,9 +125,15 @@ void main() {
         addTearDown(container.dispose);
         await container.read(proficiencyProvider.future);
 
-        final unlock = await container
-            .read(proficiencyProvider.notifier)
-            .recordAnswer('add_within_5', correct: true);
+        final unlock =
+            (await container
+                    .read(proficiencyProvider.notifier)
+                    .recordAnswer(
+                      'add_within_5',
+                      correct: true,
+                      usesKeypad: false,
+                    ))
+                .unlock;
 
         expect(unlock, isNull);
       },
@@ -133,9 +151,15 @@ void main() {
         addTearDown(container.dispose);
         await container.read(proficiencyProvider.future);
 
-        final unlock = await container
-            .read(proficiencyProvider.notifier)
-            .recordAnswer('add_within_5', correct: true);
+        final unlock =
+            (await container
+                    .read(proficiencyProvider.notifier)
+                    .recordAnswer(
+                      'add_within_5',
+                      correct: true,
+                      usesKeypad: false,
+                    ))
+                .unlock;
 
         // Already mastered before this answer → no unlock event fires.
         expect(unlock, isNull);
@@ -222,17 +246,17 @@ void main() {
     test('does not touch player bricks or avatar', () async {
       final db = AppDatabase(NativeDatabase.memory());
       final pid = await _seedPlayer(db);
-      await db.updatePlayerBricks(
+      await db.updatePlayerCoins(
         pid,
-        brickBalance: 42,
-        lifetimeBricksEarned: 99,
+        coinBalance: 42,
+        lifetimeCoinsEarned: 99,
       );
 
       await db.resetSkillsForPlayer(pid);
 
       final p = await db.getPlayerById(pid);
-      expect(p.brickBalance, 42);
-      expect(p.lifetimeBricksEarned, 99);
+      expect(p.coinBalance, 42);
+      expect(p.lifetimeCoinsEarned, 99);
     });
   });
 }
