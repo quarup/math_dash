@@ -1,0 +1,15 @@
+{"id": "sub_multiples_of_10", "verdict": "ok", "notes": ""}
+{"id": "add_within_100", "verdict": "improve", "notes": "Wrong-answer explanation is just \"27 + 68 = 95\" with no method (no make-a-ten or place-value step), unlike sub_within_100 which shows count-up jumps. datasetPool 195, so this probe covers only the generator path."}
+{"id": "sub_within_100", "verdict": "ok", "notes": "Generator sample clean; datasetPool 126 means dataset-sourced questions were not exercised by this probe."}
+{"id": "add_2digit_carry", "verdict": "ok", "notes": "Generator sample clean; datasetPool 49 means dataset-sourced questions were not exercised by this probe."}
+{"id": "sub_2digit_borrow", "verdict": "ok", "notes": "Generator sample clean; datasetPool 38 means dataset-sourced questions were not exercised by this probe."}
+{"id": "add_up_to_4_2digit", "verdict": "ok", "notes": ""}
+{"id": "add_within_1000", "verdict": "improve", "notes": "Explanation jumps from \"60+60 = 120; 3+4 = 7\" to \"100 + 120 + 7\" without ever saying where the 100 comes from (the hundreds place of 164), so the partial-sums method is incomplete for a grade-2 reader. datasetPool 200, so this probe covers only the generator path."}
+{"id": "sub_within_1000", "verdict": "improve", "notes": "Wrong-answer explanation is just \"569 − 43 = 526\" under the completed column; no place-by-place step, unlike add_within_1000 which at least attempts one. datasetPool 199, so this probe covers only the generator path."}
+{"id": "mental_add_10_or_100", "verdict": "ok", "notes": ""}
+{"id": "add_word_problems_within_100", "verdict": "ok", "notes": ""}
+{"id": "add_sub_2step_word_problems", "verdict": "ok", "notes": "Generator sample clean; datasetPool 300 means dataset-sourced questions were not exercised by this probe."}
+{"id": "add_multidigit_standard_alg", "verdict": "improve", "notes": "For a concept named \"standard algorithm\", the wrong-answer column diagram shows the sum with no carry marks and the text just restates \"3626 + 6859 = 10485\"; showing the carries (or the per-column steps like add_2digit_carry does) would teach the method."}
+{"id": "sub_multidigit_standard_alg", "verdict": "improve", "notes": "Wrong-answer screen shows the finished column with no borrow marks and the text just restates \"69452 − 23036 = 46416\"; the per-column borrow steps used in sub_2digit_borrow would fit here."}
+{"id": "add_sub_fluency_within_20", "verdict": "ok", "notes": ""}
+{"id": "number_line_add_sub", "verdict": "improve", "notes": "The number line already lands the −14 arc exactly on 17 in both modes, so the answer can be read straight off the tick; the wrong-answer screen then drops the diagram and only restates \"31 − 14 = 17\" instead of pointing at the landing tick or splitting the jump (31 − 1 − 10 − 3)."}

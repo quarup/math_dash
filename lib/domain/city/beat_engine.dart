@@ -15,7 +15,7 @@ class BeatEngine {
 
   /// Returns every beat whose [TriggerRule] is satisfied by the current
   /// state. The caller passes per-beat context via [contextFor]; this lets
-  /// the engine handle beat-specific spacing (`bricksEarnedSinceBeatLastFired`)
+  /// the engine handle beat-specific spacing (`coinsEarnedSinceBeatLastFired`)
   /// without needing the full beat-state map here.
   List<StoryBeat> eligibleBeats({
     required TriggerContext Function(StoryBeat beat) contextFor,

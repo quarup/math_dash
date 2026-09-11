@@ -9,6 +9,7 @@ import 'package:math_city/presentation/debug/concept_debug_screen.dart';
 import 'package:math_city/presentation/player/adventurer_avatar_widget.dart';
 import 'package:math_city/presentation/player/player_creation_screen.dart';
 import 'package:math_city/presentation/theme/app_palette.dart';
+import 'package:math_city/presentation/widgets/coin_icon.dart';
 import 'package:math_city/services/debug_harness.dart';
 import 'package:math_city/state/player_provider.dart';
 
@@ -271,28 +272,14 @@ class _PlayerChip extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 2),
-                  // Scale the currency row down to fit the fixed-width card so
-                  // large balances (🧱 1322 …) don't overflow the right edge.
+                  // Scale the coin row down to fit the fixed-width card so
+                  // large balances (12,345 …) don't overflow the right edge.
                   FittedBox(
                     fit: BoxFit.scaleDown,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text('🧱', style: TextStyle(fontSize: 11)),
-                        const SizedBox(width: 2),
-                        Text(
-                          '${player.brickBalance}',
-                          style: theme.textTheme.labelSmall,
-                        ),
-                        const SizedBox(width: 4),
-                        const Text('🔬', style: TextStyle(fontSize: 11)),
-                        const SizedBox(width: 2),
-                        Text(
-                          '${player.researchBalance}',
-                          style: theme.textTheme.labelSmall,
-                        ),
-                      ],
+                    child: CoinAmount(
+                      amount: player.coinBalance,
+                      iconSize: 12,
+                      style: theme.textTheme.labelSmall,
                     ),
                   ),
                 ],

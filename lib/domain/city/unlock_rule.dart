@@ -1,10 +1,12 @@
 /// AND-combination of optional gate conditions for whether a building type is
-/// *available to research*. All non-null fields must be satisfied
-/// simultaneously. A rule with every field null is trivially true (used for
-/// the mayor's office and other ungated starter buildings).
+/// *available to buy*. All non-null fields must be satisfied simultaneously.
+/// A rule with every field null is trivially true (used for the mayor's
+/// office and other ungated starter buildings). Once the rule passes the
+/// building appears in the build catalog and can be bought straight away for
+/// its coin price.
 class UnlockRule {
   const UnlockRule({
-    this.minLifetimeBricks,
+    this.minLifetimeCoins,
     this.requiredBuildingsPlaced = const <String>{},
     this.minPopulation,
     this.requiredBeatsRead = const <String>{},
@@ -13,19 +15,21 @@ class UnlockRule {
   /// Empty rule — always satisfied. Use for ungated starter buildings.
   static const open = UnlockRule();
 
-  final int? minLifetimeBricks;
+  /// Lifetime coins earned to date. Coins are study-seconds, so this reads
+  /// as "unlocks after ~N minutes of total study".
+  final int? minLifetimeCoins;
   final Set<String> requiredBuildingsPlaced;
   final int? minPopulation;
 
   /// Story beats the player must have *opened* (tapped to read) before this
-  /// building shows as available-to-research. This is how a "we want a clinic!"
+  /// building shows in the catalog. This is how a "we want a clinic!"
   /// demand bubble gates the clinic card: the building stays hidden until the
   /// citizen actually asks for it and the player reads the ask.
   final Set<String> requiredBeatsRead;
 
   bool evaluate(UnlockContext ctx) {
-    if (minLifetimeBricks != null &&
-        ctx.lifetimeBricksEarned < minLifetimeBricks!) {
+    if (minLifetimeCoins != null &&
+        ctx.lifetimeCoinsEarned < minLifetimeCoins!) {
       return false;
     }
     if (minPopulation != null && ctx.population < minPopulation!) {
@@ -44,13 +48,13 @@ class UnlockRule {
 /// Snapshot of the player + city state that an [UnlockRule] evaluates against.
 class UnlockContext {
   const UnlockContext({
-    required this.lifetimeBricksEarned,
+    required this.lifetimeCoinsEarned,
     required this.population,
     required this.placedBuildingTypeIds,
     required this.readBeatIds,
   });
 
-  final int lifetimeBricksEarned;
+  final int lifetimeCoinsEarned;
   final int population;
 
   /// The set of `BuildingType.id` values currently placed on the city map

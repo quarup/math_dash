@@ -37,29 +37,17 @@ final ownedBlocksProvider = FutureProvider<Set<(int, int)>>((ref) async {
   return db.ownedBlocksForCity(city.id);
 });
 
-/// One row in the build-mode catalog. Researched entries are placeable;
-/// unresearched ones are *available to research* (their unlock rule passes
-/// against the current city state) and render as locked cards the player can
-/// spend 🔬 to unlock.
-class CatalogEntry {
-  const CatalogEntry({required this.building, required this.researched});
-
-  final BuildingType building;
-  final bool researched;
-}
-
-/// The build-mode catalog: every researched building plus every building
-/// that's currently available to research, in registry order (stable display;
-/// a card flips from locked to placeable in place when researched). Drives the
-/// bottom catalog bar on the city screen.
-final cityCatalogProvider = FutureProvider<List<CatalogEntry>>((ref) async {
+/// The build-mode catalog: every building whose unlock rule currently passes,
+/// in registry order (stable display). Each is buyable straight away for its
+/// coin price — there is no separate unlock step. Drives the bottom catalog
+/// bar on the city screen.
+final cityCatalogProvider = FutureProvider<List<BuildingType>>((ref) async {
   final playerId = ref.watch(activePlayerIdProvider);
   if (playerId == null) throw StateError('No active player');
   final db = ref.read(appDatabaseProvider);
   final player = await ref.watch(activePlayerProvider.future);
   final city = await ref.watch(activeCityProvider.future);
   final placements = await ref.watch(placementsProvider.future);
-  final researchedIds = await db.researchedBuildingTypeIds(playerId);
   final readBeats = await db.readBeatIds(playerId);
 
   // A building's card only appears once the player has opened the demand beat
@@ -67,23 +55,13 @@ final cityCatalogProvider = FutureProvider<List<CatalogEntry>>((ref) async {
   // gates. Population is stepped by `tickPopulation`; read beats by
   // `markBeatRead`.
   final ctx = UnlockContext(
-    lifetimeBricksEarned: player.lifetimeBricksEarned,
+    lifetimeCoinsEarned: player.lifetimeCoinsEarned,
     population: city.population,
     placedBuildingTypeIds: placements.map((p) => p.buildingTypeId).toSet(),
     readBeatIds: readBeats,
   );
   const engine = BuildingDagEngine();
-  final availableIds = engine.availableToResearch(ctx).map((b) => b.id).toSet();
-
-  final entries = <CatalogEntry>[];
-  for (final b in buildingRegistry) {
-    if (researchedIds.contains(b.id)) {
-      entries.add(CatalogEntry(building: b, researched: true));
-    } else if (availableIds.contains(b.id)) {
-      entries.add(CatalogEntry(building: b, researched: false));
-    }
-  }
-  return entries;
+  return engine.availableToBuy(ctx);
 });
 
 /// Number of rounds (answered questions) an *un-read* bubble stays on screen
@@ -155,7 +133,7 @@ final onScreenBeatsProvider = FutureProvider<List<OnScreenBeat>>((ref) async {
 });
 
 /// Side-effecting city operations. Kept off the widget so the placement
-/// orchestration (spend 🧱 → insert row → invalidate) lives in one place.
+/// orchestration (spend coins → insert row → invalidate) lives in one place.
 final cityActionsProvider = Provider<CityActions>(CityActions.new);
 
 class CityActions {
@@ -163,7 +141,7 @@ class CityActions {
 
   final Ref _ref;
 
-  /// Spends the building's `brickCost` and records the placement at
+  /// Spends the building's `coinCost` and records the placement at
   /// `(col, row)`. Returns the new placement's id (so the caller can keep it
   /// selected for repositioning), or null if there's no active player.
   /// Invalidates the placement, player, and player-list providers so every
@@ -179,7 +157,7 @@ class CityActions {
       buildingTypeId: type.id,
       gridX: col,
       gridY: row,
-      brickCost: type.brickCost,
+      coinCost: type.coinCost,
     );
     _ref
       ..invalidate(placementsProvider)
@@ -242,15 +220,15 @@ class CityActions {
 
     TriggerContext contextFor(StoryBeat beat) {
       final st = states[beat.id];
-      final lastBricks = st?.lifetimeBricksAtLastFire;
+      final lastBricks = st?.lifetimeCoinsAtLastFire;
       return TriggerContext(
         placedBuildingTypeIds: placedIds,
         population: city.population,
         maxBuildingAgeByTypeId: ageByType,
         firedBeatIds: firedIds,
-        bricksEarnedSinceBeatLastFired: lastBricks == null
+        coinsEarnedSinceBeatLastFired: lastBricks == null
             ? null
-            : player.lifetimeBricksEarned - lastBricks,
+            : player.lifetimeCoinsEarned - lastBricks,
       );
     }
 
@@ -296,7 +274,7 @@ class CityActions {
         await db.recordBeatFired(
           playerId,
           beat.id,
-          player.lifetimeBricksEarned,
+          player.lifetimeCoinsEarned,
           player.roundsPlayed,
         );
         fired = true;
@@ -337,28 +315,10 @@ class CityActions {
     }
   }
 
-  /// Spends [type]'s `researchCost` 🔬 and adds it to the player's catalog.
-  /// Invalidates the catalog (so the card flips from locked to placeable) and
-  /// the player (so the 🔬 balance updates). No-op if there's no active player.
-  /// The caller must have verified affordability.
-  Future<void> researchBuilding(BuildingType type) async {
-    final playerId = _ref.read(activePlayerIdProvider);
-    if (playerId == null) return;
-    final db = _ref.read(appDatabaseProvider);
-    await db.researchBuilding(
-      playerId: playerId,
-      buildingTypeId: type.id,
-      researchCost: type.researchCost,
-    );
-    _ref
-      ..invalidate(cityCatalogProvider)
-      ..invalidate(activePlayerProvider)
-      ..invalidate(allPlayersProvider);
-  }
-
   /// Buys land block `(blockX, blockY)` for the active city: spends its
-  /// ring-priced 🧱 and records ownership. Re-validates against persisted state
-  /// (block not already owned, on the purchasable edge frontier, affordable),
+  /// ring-priced coins and records ownership. Re-validates against persisted
+  /// state (block not already owned, on the purchasable edge frontier,
+  /// affordable),
   /// so it's a safe no-op backstop behind the UI's own checks.
   Future<void> buyLandBlock(int blockX, int blockY) async {
     final playerId = _ref.read(activePlayerIdProvider);
@@ -371,13 +331,13 @@ class CityActions {
     if (owned.contains(block)) return; // already owned
     if (!purchasableBlocks(owned).contains(block)) return; // off the frontier
     final cost = blockCost(blockX, blockY);
-    if (player.brickBalance < cost) return;
+    if (player.coinBalance < cost) return;
     await db.buyCityLandBlock(
       cityId: city.id,
       playerId: playerId,
       blockX: blockX,
       blockY: blockY,
-      brickCost: cost,
+      coinCost: cost,
     );
     _ref
       ..invalidate(ownedBlocksProvider)
@@ -402,7 +362,7 @@ class CityActions {
   /// Marks an on-screen citizen bubble as read (opened) by the player. The
   /// bubble does NOT vanish immediately — it lingers for [kReadHideRounds] more
   /// rounds of math play before [fireBeats] retires it off screen (after which
-  /// it can re-fire once its trigger passes again, subject to its brick-spacing
+  /// it can re-fire once its trigger passes again, subject to its coin-spacing
   /// cooldown). Opening a demand beat is also what unlocks the building it asks
   /// for, so this refreshes the catalog too. No-op when there's no active
   /// player.
@@ -435,28 +395,14 @@ class CityActions {
   // questions for currency. Tree-shaken out of release with the UI that calls
   // them; each also asserts it isn't reached in a non-debug build.
 
-  /// Grants [amount] 🧱. Lifetime bricks bump too (so brick-gated unlock
+  /// Grants [amount] coins. Lifetime coins bump too (so lifetime-gated unlock
   /// rules also advance, exactly as earning would).
-  Future<void> debugGrantBricks(int amount) async {
+  Future<void> debugGrantCoins(int amount) async {
     assert(kDebugMode, 'debug helper called in a non-debug build');
     final playerId = _ref.read(activePlayerIdProvider);
     if (playerId == null) return;
     final db = _ref.read(appDatabaseProvider);
-    await db.incrementPlayerBricks(playerId, amount);
-    _ref
-      ..invalidate(activePlayerProvider)
-      ..invalidate(allPlayersProvider)
-      ..invalidate(cityCatalogProvider);
-  }
-
-  /// Grants [amount] 🔬 (lifetime research bumps too).
-  Future<void> debugGrantResearch(int amount) async {
-    assert(kDebugMode, 'debug helper called in a non-debug build');
-    final playerId = _ref.read(activePlayerIdProvider);
-    if (playerId == null) return;
-    await _ref
-        .read(appDatabaseProvider)
-        .incrementPlayerResearch(playerId, amount);
+    await db.incrementPlayerCoins(playerId, amount);
     _ref
       ..invalidate(activePlayerProvider)
       ..invalidate(allPlayersProvider)
@@ -475,23 +421,6 @@ class CityActions {
     await db.setCityPopulation(city.id, value);
     _ref.invalidate(activeCityProvider);
     await fireBeats();
-  }
-
-  /// Researches every building type in the registry for free, bypassing both
-  /// the 🔬 cost and the unlock DAG, so the whole catalog is placeable.
-  Future<void> debugResearchAll() async {
-    assert(kDebugMode, 'debug helper called in a non-debug build');
-    final playerId = _ref.read(activePlayerIdProvider);
-    if (playerId == null) return;
-    final db = _ref.read(appDatabaseProvider);
-    for (final b in buildingRegistry) {
-      await db.researchBuilding(
-        playerId: playerId,
-        buildingTypeId: b.id,
-        researchCost: 0,
-      );
-    }
-    _ref.invalidate(cityCatalogProvider);
   }
 
   /// Advances the round clock by [by] (normally one answered question adds 1)
@@ -522,7 +451,7 @@ class CityActions {
     await db.recordBeatFired(
       playerId,
       beatId,
-      player.lifetimeBricksEarned,
+      player.lifetimeCoinsEarned,
       player.roundsPlayed,
     );
     _ref
@@ -530,9 +459,9 @@ class CityActions {
       ..invalidate(cityCatalogProvider);
   }
 
-  /// Wipes the city back to a brand-new-player baseline (placements,
-  /// research, beats, milestones, population, and both currencies) and
-  /// re-seeds the pre-researched set. See [AppDatabase.resetCityForPlayer].
+  /// Wipes the city back to a brand-new-player baseline (placements, beats,
+  /// milestones, population, coins, and the streak). See
+  /// [AppDatabase.resetCityForPlayer].
   Future<void> debugResetCity() async {
     assert(kDebugMode, 'debug helper called in a non-debug build');
     final playerId = _ref.read(activePlayerIdProvider);

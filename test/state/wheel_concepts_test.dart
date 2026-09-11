@@ -130,6 +130,60 @@ void main() {
       final wheel = await container.read(wheelConceptsProvider.future);
       expect(wheel, hasLength(6));
     });
+
+    test(
+      'a concept ≥2 grades below the player retires once comfortable, '
+      'but stays while still challenging',
+      () async {
+        final db = AppDatabase(NativeDatabase.memory());
+        // Grade-3 player; add_within_5 is K (3 below), add_within_100 is G2.
+        final p = await db.createPlayer(
+          name: 'retire_tester',
+          gradeLevel: 3,
+          avatarConfigJson: '{}',
+        );
+        final pid = p.id;
+        for (final id in ['add_within_5', 'sub_within_5', 'add_within_100']) {
+          await db.introduceConcept(pid, id);
+        }
+        // K concept, comfortable → retired. K concept, challenging → stays.
+        // G2 (one below), comfortable → stays.
+        await db.upsertProficiency(pid, 'add_within_5', 0.7, correct: true);
+        await db.upsertProficiency(pid, 'sub_within_5', 0.4, correct: true);
+        await db.upsertProficiency(pid, 'add_within_100', 0.7, correct: true);
+
+        final container = await _setupContainer(db, pid);
+        addTearDown(container.dispose);
+
+        final wheel = await container.read(wheelConceptsProvider.future);
+        final ids = wheel.map((c) => c.id).toSet();
+        expect(ids, isNot(contains('add_within_5')));
+        expect(ids, contains('sub_within_5'));
+        expect(ids, contains('add_within_100'));
+      },
+    );
+
+    test('retired concepts stay off even the all-mastered fallback', () async {
+      final db = AppDatabase(NativeDatabase.memory());
+      final p = await db.createPlayer(
+        name: 'fallback_tester',
+        gradeLevel: 3,
+        avatarConfigJson: '{}',
+      );
+      final pid = p.id;
+      // Everything introduced is either mastered or outgrown; the fallback
+      // still prefers the merely-mastered G2 concept over the retired K one.
+      await db.introduceConcept(pid, 'add_within_5');
+      await db.introduceConcept(pid, 'add_within_100');
+      await db.upsertProficiency(pid, 'add_within_5', 0.7, correct: true);
+      await db.upsertProficiency(pid, 'add_within_100', 0.9, correct: true);
+
+      final container = await _setupContainer(db, pid);
+      addTearDown(container.dispose);
+
+      final wheel = await container.read(wheelConceptsProvider.future);
+      expect(wheel.map((c) => c.id), ['add_within_100']);
+    });
   });
 }
 

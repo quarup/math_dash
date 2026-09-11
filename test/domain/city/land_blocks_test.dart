@@ -25,9 +25,9 @@ void main() {
 
   group('blockCost', () {
     test('linear base × ring', () {
-      expect(blockCost(2, 0), 80);
-      expect(blockCost(3, 0), 120);
-      expect(blockCost(2, 2), 80); // keys off ring, not distance
+      expect(blockCost(2, 0), 1200); // ~20 min of study
+      expect(blockCost(3, 0), 1800);
+      expect(blockCost(2, 2), 1200); // keys off ring, not distance
       expect(blockCost(0, 0), 0);
     });
   });

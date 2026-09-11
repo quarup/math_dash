@@ -17,7 +17,7 @@ class StoryBeat {
     required this.shortLabel,
     required this.longText,
     required this.triggerRule,
-    this.cooldownAfterAckBricks = 100,
+    this.cooldownAfterAckCoins = 600,
   });
 
   final String id;
@@ -33,8 +33,8 @@ class StoryBeat {
 
   final TriggerRule triggerRule;
 
-  /// After the player dismisses the bubble, this many bricks must be earned
-  /// before the beat can re-fire. Prevents the same praise beat repeating
-  /// immediately on the next answered question.
-  final int cooldownAfterAckBricks;
+  /// After the player dismisses the bubble, this many coins (≈ seconds of
+  /// study) must be earned before the beat can re-fire. Prevents the same
+  /// praise beat repeating immediately on the next answered question.
+  final int cooldownAfterAckCoins;
 }

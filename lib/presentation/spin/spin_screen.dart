@@ -6,10 +6,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:math_city/data/database.dart';
 import 'package:math_city/domain/avatar/adventurer_config.dart';
 import 'package:math_city/domain/concepts/concept.dart';
+import 'package:math_city/domain/economy/coin_economy.dart';
+import 'package:math_city/domain/economy/expected_seconds.dart';
+import 'package:math_city/domain/economy/question_block.dart';
 import 'package:math_city/game/spin_wheel/spin_wheel_component.dart';
 import 'package:math_city/game/spin_wheel/spin_wheel_game.dart';
+import 'package:math_city/presentation/city/city_screen.dart';
 import 'package:math_city/presentation/player/adventurer_avatar_widget.dart';
 import 'package:math_city/presentation/question/question_screen.dart';
+import 'package:math_city/presentation/widgets/coin_icon.dart';
 import 'package:math_city/state/game_session_provider.dart';
 import 'package:math_city/state/introduced_concepts_provider.dart';
 import 'package:math_city/state/player_provider.dart';
@@ -56,49 +61,27 @@ List<WheelSegment> _buildSegments(List<Concept> concepts) => concepts
 // ---------------------------------------------------------------------------
 
 class SpinScreen extends ConsumerStatefulWidget {
-  const SpinScreen({this.pulseBricks = false, super.key});
+  const SpinScreen({super.key});
 
-  final bool pulseBricks;
+  /// Collapses the spin → question → summary loop back onto the player's
+  /// "My City" hub (or the home screen as a backstop) and pushes a fresh
+  /// wheel, so a new spin sits directly above the city and back-navigation
+  /// returns there.
+  static void pushFresh(BuildContext context) {
+    unawaited(
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute<void>(builder: (_) => const SpinScreen()),
+        (route) => route.settings.name == CityScreen.routeName || route.isFirst,
+      ),
+    );
+  }
 
   @override
   ConsumerState<SpinScreen> createState() => _SpinScreenState();
 }
 
-class _SpinScreenState extends ConsumerState<SpinScreen>
-    with TickerProviderStateMixin {
+class _SpinScreenState extends ConsumerState<SpinScreen> {
   SpinWheelGame? _game;
-  late final AnimationController _pulseCtrl;
-  late final Animation<double> _pulseScale;
-
-  @override
-  void initState() {
-    super.initState();
-    _pulseCtrl = AnimationController(
-      duration: const Duration(milliseconds: 500),
-      vsync: this,
-    );
-    _pulseScale = TweenSequence<double>([
-      TweenSequenceItem(tween: Tween(begin: 1, end: 1.6), weight: 35),
-      TweenSequenceItem(tween: Tween(begin: 1.6, end: 1), weight: 65),
-    ]).animate(CurvedAnimation(parent: _pulseCtrl, curve: Curves.easeOut));
-
-    if (widget.pulseBricks) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted) return;
-        unawaited(
-          Future<void>.delayed(const Duration(milliseconds: 280), () {
-            if (mounted) unawaited(_pulseCtrl.forward());
-          }),
-        );
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    _pulseCtrl.dispose();
-    super.dispose();
-  }
 
   void _onConceptSelected(String conceptId) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -111,10 +94,20 @@ class _SpinScreenState extends ConsumerState<SpinScreen>
       final effectiveGrade = engine.effectiveGradeFor(statedGrade);
       final band = bandForConcept(conceptId, profMap, effectiveGrade);
 
+      // One spin = one block of questions on the landed concept, sized so
+      // the block adds up to ~25 s of expected work (five quick K sums, or
+      // a single long-division problem).
+      final block = QuestionBlock(
+        conceptId: conceptId,
+        band: band,
+        size: blockSizeFor(expectedSecondsFor(conceptId)),
+      );
+
       unawaited(
         Navigator.of(context).pushReplacement(
           MaterialPageRoute<void>(
-            builder: (_) => QuestionScreen(conceptId: conceptId, band: band),
+            builder: (_) =>
+                QuestionScreen(conceptId: conceptId, band: band, block: block),
           ),
         ),
       );
@@ -123,7 +116,7 @@ class _SpinScreenState extends ConsumerState<SpinScreen>
 
   @override
   Widget build(BuildContext context) {
-    final bricks = ref.watch(totalBricksProvider);
+    final coins = ref.watch(totalCoinsProvider);
     final wheelAsync = ref.watch(wheelConceptsProvider);
     final playerAsync = ref.watch(activePlayerProvider);
     final theme = Theme.of(context);
@@ -160,19 +153,11 @@ class _SpinScreenState extends ConsumerState<SpinScreen>
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
-            child: ScaleTransition(
-              scale: _pulseScale,
-              child: Row(
-                children: [
-                  const Text('🧱', style: TextStyle(fontSize: 20)),
-                  const SizedBox(width: 4),
-                  Text(
-                    '$bricks',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+            child: CoinAmount(
+              amount: coins,
+              iconSize: 22,
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),

@@ -2,15 +2,14 @@ import 'package:math_city/domain/city/category.dart';
 import 'package:math_city/domain/city/unlock_rule.dart';
 
 /// Pure-Dart description of a building type. Static catalog — see
-/// `buildingRegistry` for the v1 set of ~10 types.
+/// `buildingRegistry` (55 types, authored against `city_builder.md §3`).
 class BuildingType {
   const BuildingType({
     required this.id,
     required this.name,
     required this.emoji,
     required this.category,
-    required this.brickCost,
-    required this.researchCost,
+    required this.coinCost,
     required this.unlockRule,
     this.populationContribution = 0,
     this.serviceProvision = const <String, int>{},
@@ -29,8 +28,13 @@ class BuildingType {
   final String emoji;
 
   final BuildingCategory category;
-  final int brickCost;
-  final int researchCost;
+
+  /// Coins to place one instance. One coin ≈ one expected second of study,
+  /// so this reads as minutes of math (60 = one minute).
+  final int coinCost;
+
+  /// AND-combination of gates; once it passes the building is immediately
+  /// buyable for [coinCost] — there is no separate unlock step.
   final UnlockRule unlockRule;
 
   /// Residents this building houses. Non-housing buildings are 0.

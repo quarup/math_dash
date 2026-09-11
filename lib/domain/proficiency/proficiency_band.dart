@@ -5,8 +5,8 @@ enum ProficiencyBand { notYet, challenging, comfortable, mastered }
 ///
 /// Thresholds (from plan.md Domain Specs):
 ///   p < 0.20              → notYet     (off wheel)
-///   0.20 ≤ p < 0.50       → challenging (multiple choice, 5 stars)
-///   0.50 ≤ p < 0.85       → comfortable (number pad, 3 stars)
+///   0.20 ≤ p < 0.50       → challenging (multiple choice)
+///   0.50 ≤ p < 0.85       → comfortable (number pad)
 ///   p ≥ 0.85              → mastered    (off wheel)
 ProficiencyBand bandForProficiency(double p) {
   if (p < 0.20) return ProficiencyBand.notYet;
@@ -15,13 +15,22 @@ ProficiencyBand bandForProficiency(double p) {
   return ProficiencyBand.mastered;
 }
 
-/// Stars awarded for a correct answer in [band].
-/// Wrong answers always earn 0.
-int bricksForBand(ProficiencyBand band) => switch (band) {
-  ProficiencyBand.challenging => 5,
-  ProficiencyBand.comfortable => 3,
-  _ => 0,
-};
+/// A concept this many grades (or more) below the player's grade retires from
+/// the wheel once it reaches the comfortable band — mastered baby-steps
+/// disappear, while shaky old material still resurfaces.
+const int kWheelRetirementGradeGap = 2;
+
+/// Whether a concept should be kept off the wheel as "outgrown": it sits at
+/// least [kWheelRetirementGradeGap] grades below [playerGrade] AND the player
+/// is already comfortable (or better) with it. Below-comfortable old material
+/// stays on the wheel so gaps still get practised.
+bool isRetiredFromWheel({
+  required int conceptGrade,
+  required int playerGrade,
+  required ProficiencyBand band,
+}) =>
+    playerGrade - conceptGrade >= kWheelRetirementGradeGap &&
+    (band == ProficiencyBand.comfortable || band == ProficiencyBand.mastered);
 
 /// EMA proficiency update: p_new = clamp(p + α·(target − p), 0, 1)
 ///

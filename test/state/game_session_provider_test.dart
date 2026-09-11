@@ -13,39 +13,11 @@ AppDatabase _testDb() {
 }
 
 void main() {
-  group('TotalBricksNotifier', () {
-    late ProviderContainer container;
-
-    setUp(
-      () => container = ProviderContainer(
-        overrides: [appDatabaseProvider.overrideWithValue(_testDb())],
-      ),
-    );
-    tearDown(() => container.dispose());
-
-    test('starts at zero', () {
-      expect(container.read(totalBricksProvider), 0);
-    });
-
-    test('add increments the total', () {
-      container.read(totalBricksProvider.notifier).add(3);
-      expect(container.read(totalBricksProvider), 3);
-    });
-
-    test('multiple adds accumulate', () {
-      container.read(totalBricksProvider.notifier).add(3);
-      container.read(totalBricksProvider.notifier).add(5);
-      container.read(totalBricksProvider.notifier).add(1);
-      expect(container.read(totalBricksProvider), 9);
-    });
-  });
-
-  // Regression: bricks earned in the math loop were persisted but only
-  // `allPlayersProvider` was invalidated, so the city screen — which reads
-  // `brickBalance` off `activePlayerProvider` — kept serving the balance
-  // cached at player-select time (0 for a new account) and nothing was
-  // affordable. See CityActions.placeBuilding / _CurrencyBar.
-  group('earning bricks refreshes the city screen', () {
+  // The coin counter mirrors the persisted balance: every screen that shows
+  // coins (spin/question AppBars, city currency bar, home chips) must agree
+  // after an earn or a spend, which is what once broke when only one
+  // provider was invalidated.
+  group('totalCoinsProvider', () {
     late AppDatabase db;
     late ProviderContainer container;
     late int playerId;
@@ -66,47 +38,46 @@ void main() {
     });
     tearDown(() => container.dispose());
 
-    // `add` persists off the main path (unawaited) and invalidates once the
-    // write lands, so let the event queue drain before asserting.
-    Future<void> settle() async {
-      await pumpEventQueue();
+    Future<void> refresh() async {
+      container.invalidate(activePlayerProvider);
       await container.read(activePlayerProvider.future);
     }
 
-    test('activePlayerProvider reflects the new balance', () async {
-      expect(container.read(activePlayerProvider).value!.brickBalance, 0);
-
-      container.read(totalBricksProvider.notifier).add(7);
-      await settle();
-
-      expect(container.read(activePlayerProvider).value!.brickBalance, 7);
+    test('starts at zero for a new player', () {
+      expect(container.read(totalCoinsProvider), 0);
     });
 
-    test('lifetime bricks keep climbing across rounds', () async {
-      for (var i = 0; i < 3; i++) {
-        container.read(totalBricksProvider.notifier).add(4);
-        await settle();
-      }
-
-      final player = await db.getPlayerById(playerId);
-      expect(player.brickBalance, 12);
-      expect(player.lifetimeBricksEarned, 12);
-      expect(container.read(totalBricksProvider), 12);
+    test('reflects an earn once the player row is refetched', () async {
+      await db.incrementPlayerCoins(playerId, 7);
+      await refresh();
+      expect(container.read(totalCoinsProvider), 7);
+      expect(container.read(activePlayerProvider).value!.coinBalance, 7);
     });
 
-    test('a spend after an earn nets out correctly', () async {
-      container.read(totalBricksProvider.notifier).add(10);
-      await settle();
+    test('a spend after an earn nets out; lifetime stays monotone', () async {
+      await db.incrementPlayerCoins(playerId, 10);
+      await db.incrementPlayerCoins(playerId, -6);
+      await refresh();
 
-      await db.incrementPlayerBricks(playerId, -6);
-      container.invalidate(activePlayerProvider);
-      await settle();
-
-      expect(container.read(totalBricksProvider), 4);
+      expect(container.read(totalCoinsProvider), 4);
       final player = await db.getPlayerById(playerId);
-      expect(player.brickBalance, 4);
-      // Lifetime is monotone — spending must not claw it back.
-      expect(player.lifetimeBricksEarned, 10);
+      expect(player.coinBalance, 4);
+      expect(player.lifetimeCoinsEarned, 10);
+    });
+
+    test('resets when a different player is selected', () async {
+      await db.incrementPlayerCoins(playerId, 50);
+      await refresh();
+      expect(container.read(totalCoinsProvider), 50);
+
+      final other = await db.createPlayer(
+        name: 'Kim',
+        gradeLevel: 1,
+        avatarConfigJson: '{}',
+      );
+      container.read(activePlayerIdProvider.notifier).selected = other.id;
+      await container.read(activePlayerProvider.future);
+      expect(container.read(totalCoinsProvider), 0);
     });
   });
 }

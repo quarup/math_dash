@@ -38,21 +38,63 @@ void main() {
     });
   });
 
-  group('bricksForBand', () {
-    test('challenging → 5 stars', () {
-      expect(bricksForBand(ProficiencyBand.challenging), 5);
+  group('isRetiredFromWheel', () {
+    test('two grades below and comfortable → retired', () {
+      expect(
+        isRetiredFromWheel(
+          conceptGrade: 1,
+          playerGrade: 3,
+          band: ProficiencyBand.comfortable,
+        ),
+        isTrue,
+      );
     });
 
-    test('comfortable → 3 stars', () {
-      expect(bricksForBand(ProficiencyBand.comfortable), 3);
+    test('far below and mastered → retired too', () {
+      expect(
+        isRetiredFromWheel(
+          conceptGrade: 0,
+          playerGrade: 5,
+          band: ProficiencyBand.mastered,
+        ),
+        isTrue,
+      );
     });
 
-    test('notYet → 0 stars', () {
-      expect(bricksForBand(ProficiencyBand.notYet), 0);
+    test('two grades below but still challenging → stays (shaky old material '
+        'resurfaces)', () {
+      expect(
+        isRetiredFromWheel(
+          conceptGrade: 1,
+          playerGrade: 3,
+          band: ProficiencyBand.challenging,
+        ),
+        isFalse,
+      );
     });
 
-    test('mastered → 0 stars', () {
-      expect(bricksForBand(ProficiencyBand.mastered), 0);
+    test('only one grade below → stays even when comfortable', () {
+      expect(
+        isRetiredFromWheel(
+          conceptGrade: 2,
+          playerGrade: 3,
+          band: ProficiencyBand.comfortable,
+        ),
+        isFalse,
+      );
+    });
+
+    test('at or above grade → never retired', () {
+      for (final band in ProficiencyBand.values) {
+        expect(
+          isRetiredFromWheel(conceptGrade: 3, playerGrade: 3, band: band),
+          isFalse,
+        );
+        expect(
+          isRetiredFromWheel(conceptGrade: 4, playerGrade: 3, band: band),
+          isFalse,
+        );
+      }
     });
   });
 

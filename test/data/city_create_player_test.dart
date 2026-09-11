@@ -41,20 +41,6 @@ void main() {
       expect(owned, hasLength(9));
     });
 
-    test("pre-researches the mayor's office for the new player", () async {
-      final db = AppDatabase(NativeDatabase.memory());
-      final player = await db.createPlayer(
-        name: 'Sam',
-        gradeLevel: 4,
-        avatarConfigJson: '{}',
-      );
-
-      final rows = await (db.select(
-        db.buildingTypesResearched,
-      )..where((t) => t.playerId.equals(player.id))).get();
-      expect(rows.map((r) => r.buildingTypeId), ['mayors_office']);
-    });
-
     test('two players each get their own beginner city', () async {
       final db = AppDatabase(NativeDatabase.memory());
       final a = await db.createPlayer(
@@ -76,21 +62,20 @@ void main() {
       );
     });
 
-    test('Players default 🧱 and 🔬 balances to zero', () async {
+    test('Players default coins and streak to zero', () async {
       final db = AppDatabase(NativeDatabase.memory());
       final p = await db.createPlayer(
         name: 'Z',
         gradeLevel: 3,
         avatarConfigJson: '{}',
       );
-      expect(p.brickBalance, 0);
-      expect(p.lifetimeBricksEarned, 0);
-      expect(p.researchBalance, 0);
-      expect(p.lifetimeResearchEarned, 0);
+      expect(p.coinBalance, 0);
+      expect(p.lifetimeCoinsEarned, 0);
+      expect(p.streakCount, 0);
     });
   });
 
-  group('incrementPlayerResearch', () {
+  group('incrementPlayerCoins', () {
     test('adds to spending balance and bumps lifetime monotonically', () async {
       final db = AppDatabase(NativeDatabase.memory());
       final p = await db.createPlayer(
@@ -99,21 +84,36 @@ void main() {
         avatarConfigJson: '{}',
       );
 
-      await db.incrementPlayerResearch(p.id, 3);
+      await db.incrementPlayerCoins(p.id, 30);
       var fetched = await db.getPlayerById(p.id);
-      expect(fetched.researchBalance, 3);
-      expect(fetched.lifetimeResearchEarned, 3);
+      expect(fetched.coinBalance, 30);
+      expect(fetched.lifetimeCoinsEarned, 30);
 
-      await db.incrementPlayerResearch(p.id, 2);
+      await db.incrementPlayerCoins(p.id, 20);
       fetched = await db.getPlayerById(p.id);
-      expect(fetched.researchBalance, 5);
-      expect(fetched.lifetimeResearchEarned, 5);
+      expect(fetched.coinBalance, 50);
+      expect(fetched.lifetimeCoinsEarned, 50);
 
-      // Spend 2 (negative delta) — balance drops; lifetime stays.
-      await db.incrementPlayerResearch(p.id, -2);
+      // Spend 20 (negative delta) — balance drops; lifetime stays.
+      await db.incrementPlayerCoins(p.id, -20);
       fetched = await db.getPlayerById(p.id);
-      expect(fetched.researchBalance, 3);
-      expect(fetched.lifetimeResearchEarned, 5);
+      expect(fetched.coinBalance, 30);
+      expect(fetched.lifetimeCoinsEarned, 50);
+    });
+  });
+
+  group('setPlayerStreakCount', () {
+    test('persists the streak across reads', () async {
+      final db = AppDatabase(NativeDatabase.memory());
+      final p = await db.createPlayer(
+        name: 'S',
+        gradeLevel: 2,
+        avatarConfigJson: '{}',
+      );
+      await db.setPlayerStreakCount(p.id, 3);
+      expect((await db.getPlayerById(p.id)).streakCount, 3);
+      await db.setPlayerStreakCount(p.id, 0);
+      expect((await db.getPlayerById(p.id)).streakCount, 0);
     });
   });
 

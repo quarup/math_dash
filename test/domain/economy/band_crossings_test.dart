@@ -1,21 +1,29 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:math_city/domain/city/research_awards.dart';
+import 'package:math_city/domain/economy/band_crossings.dart';
+import 'package:math_city/domain/proficiency/proficiency_band.dart';
 
 void main() {
-  group('researchAwardThresholds', () {
+  group('bandCrossingThresholds', () {
     test('v1 ships exactly 2 bands', () {
       // Sanity-check the v1 contract — if this changes, update curriculum
       // budget math in plan.md / prd.md.
-      expect(researchAwardThresholds, [0.5, 0.85]);
+      expect(bandCrossingThresholds, [0.5, 0.85]);
     });
 
     test('thresholds are sorted ascending', () {
-      for (var i = 1; i < researchAwardThresholds.length; i++) {
+      for (var i = 1; i < bandCrossingThresholds.length; i++) {
         expect(
-          researchAwardThresholds[i] > researchAwardThresholds[i - 1],
+          bandCrossingThresholds[i] > bandCrossingThresholds[i - 1],
           isTrue,
         );
       }
+    });
+  });
+
+  group('bandReachedAt', () {
+    test('index 0 enters comfortable, index 1 enters mastered', () {
+      expect(bandReachedAt(0), ProficiencyBand.comfortable);
+      expect(bandReachedAt(1), ProficiencyBand.mastered);
     });
   });
 
@@ -88,7 +96,7 @@ void main() {
 
     test('re-crossing an already-awarded band returns empty', () {
       // Player crossed 0.5 before, then dipped below 0.5, now climbs above
-      // 0.5 again. Should NOT award again.
+      // 0.5 again. Should NOT pay again.
       expect(
         newlyCrossedBands(
           oldP: 0.4,

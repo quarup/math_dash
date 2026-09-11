@@ -9,7 +9,7 @@ import 'package:math_city/domain/city/trigger_rule.dart';
 ///
 /// Each "demand" beat doubles as the unlock gate for the building it asks for:
 /// a building's `requiredBeatsRead` lists its demand beat, so the building's
-/// research card only appears once the player has opened (read) that ask. See
+/// catalog card only appears once the player has opened (read) that ask. See
 /// `building_registry.dart`.
 const beatRegistry = <StoryBeat>[
   // -- Housing --------------------------------------------------------------
@@ -71,7 +71,7 @@ const beatRegistry = <StoryBeat>[
   ),
 
   // -- Service demands (fire once there are residents but the service is
-  //    missing — these nudge the player to research + build it) -------------
+  //    missing — these nudge the player to save up for + build it) ---------
   StoryBeat(
     id: 'demand_clinic',
     kind: BeatKind.demand,
@@ -146,7 +146,7 @@ const beatRegistry = <StoryBeat>[
     ),
   ),
 
-  // -- Recurring demand (re-fires with brick spacing, even after a park
+  // -- Recurring demand (re-fires with coin spacing, even after a park
   //    exists — see prd.md: beats can recur post-build) ----------------------
   StoryBeat(
     id: 'demand_more_parks',
@@ -159,7 +159,8 @@ const beatRegistry = <StoryBeat>[
         "everyone's day.",
     triggerRule: TriggerRule(
       buildingsPresent: <String>{'single_home'},
-      minBricksEarnedSinceLastBeat: 150,
+      // ≈10 minutes of study between repeats.
+      minCoinsEarnedSinceLastBeat: 600,
     ),
   ),
 

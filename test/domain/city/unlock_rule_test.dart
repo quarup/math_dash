@@ -3,7 +3,7 @@ import 'package:math_city/domain/city/unlock_rule.dart';
 
 void main() {
   const emptyCtx = UnlockContext(
-    lifetimeBricksEarned: 0,
+    lifetimeCoinsEarned: 0,
     population: 0,
     placedBuildingTypeIds: <String>{},
     readBeatIds: <String>{},
@@ -15,8 +15,8 @@ void main() {
     });
   });
 
-  group('minLifetimeBricks', () {
-    const rule = UnlockRule(minLifetimeBricks: 100);
+  group('minLifetimeCoins', () {
+    const rule = UnlockRule(minLifetimeCoins: 100);
 
     test('blocks when balance below threshold', () {
       expect(rule.evaluate(emptyCtx), isFalse);
@@ -26,7 +26,7 @@ void main() {
       expect(
         rule.evaluate(
           const UnlockContext(
-            lifetimeBricksEarned: 100,
+            lifetimeCoinsEarned: 100,
             population: 0,
             placedBuildingTypeIds: <String>{},
             readBeatIds: <String>{},
@@ -50,7 +50,7 @@ void main() {
       expect(
         rule.evaluate(
           const UnlockContext(
-            lifetimeBricksEarned: 0,
+            lifetimeCoinsEarned: 0,
             population: 0,
             placedBuildingTypeIds: <String>{'mayors_office'},
             readBeatIds: <String>{},
@@ -64,7 +64,7 @@ void main() {
       expect(
         rule.evaluate(
           const UnlockContext(
-            lifetimeBricksEarned: 0,
+            lifetimeCoinsEarned: 0,
             population: 0,
             placedBuildingTypeIds: <String>{
               'mayors_office',
@@ -86,7 +86,7 @@ void main() {
       expect(
         rule.evaluate(
           const UnlockContext(
-            lifetimeBricksEarned: 0,
+            lifetimeCoinsEarned: 0,
             population: 49,
             placedBuildingTypeIds: <String>{},
             readBeatIds: <String>{},
@@ -100,7 +100,7 @@ void main() {
       expect(
         rule.evaluate(
           const UnlockContext(
-            lifetimeBricksEarned: 0,
+            lifetimeCoinsEarned: 0,
             population: 50,
             placedBuildingTypeIds: <String>{},
             readBeatIds: <String>{},
@@ -124,7 +124,7 @@ void main() {
       expect(
         rule.evaluate(
           const UnlockContext(
-            lifetimeBricksEarned: 0,
+            lifetimeCoinsEarned: 0,
             population: 0,
             placedBuildingTypeIds: <String>{},
             readBeatIds: <String>{'demand_first_home'},
@@ -137,7 +137,7 @@ void main() {
 
   group('AND combination', () {
     const rule = UnlockRule(
-      minLifetimeBricks: 100,
+      minLifetimeCoins: 100,
       minPopulation: 20,
       requiredBuildingsPlaced: <String>{'mayors_office'},
     );
@@ -147,7 +147,7 @@ void main() {
       expect(
         rule.evaluate(
           const UnlockContext(
-            lifetimeBricksEarned: 200,
+            lifetimeCoinsEarned: 200,
             population: 10,
             placedBuildingTypeIds: <String>{'mayors_office'},
             readBeatIds: <String>{},
@@ -159,7 +159,7 @@ void main() {
       expect(
         rule.evaluate(
           const UnlockContext(
-            lifetimeBricksEarned: 200,
+            lifetimeCoinsEarned: 200,
             population: 100,
             placedBuildingTypeIds: <String>{},
             readBeatIds: <String>{},
@@ -173,7 +173,7 @@ void main() {
       expect(
         rule.evaluate(
           const UnlockContext(
-            lifetimeBricksEarned: 200,
+            lifetimeCoinsEarned: 200,
             population: 100,
             placedBuildingTypeIds: <String>{'mayors_office'},
             readBeatIds: <String>{},

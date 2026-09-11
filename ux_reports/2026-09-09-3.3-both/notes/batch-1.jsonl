@@ -1,0 +1,15 @@
+{"id": "add_within_5", "verdict": "improve", "notes": "Wrong screen just restates '0 + 1 = 1' with no method (e.g. 'start at 0 and count on 1'); datasetPool=1 so this single generator sample may not be representative. Probe also logged a Riverpod pausedActiveSubscriptionCount assertion on the City FutureProvider during render (first probe of the run only, unrelated to the question content)."}
+{"id": "sub_within_5", "verdict": "improve", "notes": "Wrong screen just restates '4 - 4 = 0' without a method such as 'take away all 4 and nothing is left'; datasetPool=5 so dataset items were not sampled."}
+{"id": "add_within_10", "verdict": "improve", "notes": "Wrong screen just restates '6 + 3 = 9'; a count-on hint ('start at 6: 7, 8, 9') would teach the method. datasetPool=5, single generator sample."}
+{"id": "sub_within_10", "verdict": "improve", "notes": "Wrong screen just restates '6 - 2 = 4' with no count-back hint. datasetPool=3, single generator sample."}
+{"id": "make_10_pair", "verdict": "ok", "notes": ""}
+{"id": "decompose_10", "verdict": "ok", "notes": ""}
+{"id": "add_3_addends_within_20", "verdict": "ok", "notes": ""}
+{"id": "add_within_20", "verdict": "improve", "notes": "Sampled '17 + 0' is a trivial identity for a within-20 concept and the wrong screen just restates '17 + 0 = 17'; datasetPool=20 so most of this concept's items were not seen."}
+{"id": "sub_within_20", "verdict": "improve", "notes": "Wrong screen just restates '14 - 3 = 11' with no method (e.g. 'take 3 from the 4 ones: 14 -> 11'); datasetPool=23 so most items were not seen."}
+{"id": "add_sub_unknown_position", "verdict": "ok", "notes": ""}
+{"id": "equal_sign_meaning", "verdict": "ok", "notes": ""}
+{"id": "commutative_add", "verdict": "ok", "notes": ""}
+{"id": "associative_add", "verdict": "improve", "notes": "Wrong-screen explanation opens with the bare term 'Associative:' which a grade-1 reader will not know; lead with the plain wording from the title ('grouping the addends differently gives the same sum') instead."}
+{"id": "add_2digit_1digit", "verdict": "improve", "notes": "Wrong screen just restates '69 + 2 = 71.' even though this sample crosses a ten; a make-a-ten step ('69 + 1 = 70, then 70 + 1 = 71') would show the method."}
+{"id": "add_2digit_multiple_of_10", "verdict": "ok", "notes": ""}

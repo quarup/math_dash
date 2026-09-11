@@ -6,13 +6,13 @@ TriggerContext _ctx({
   int population = 0,
   Map<String, int> ages = const <String, int>{},
   Set<String> fired = const <String>{},
-  int? bricksSince,
+  int? coinsSince,
 }) => TriggerContext(
   placedBuildingTypeIds: placed,
   population: population,
   maxBuildingAgeByTypeId: ages,
   firedBeatIds: fired,
-  bricksEarnedSinceBeatLastFired: bricksSince,
+  coinsEarnedSinceBeatLastFired: coinsSince,
 );
 
 void main() {
@@ -74,19 +74,19 @@ void main() {
     });
   });
 
-  group('minBricksEarnedSinceLastBeat', () {
-    const rule = TriggerRule(minBricksEarnedSinceLastBeat: 50);
+  group('minCoinsEarnedSinceLastBeat', () {
+    const rule = TriggerRule(minCoinsEarnedSinceLastBeat: 50);
 
     test('first-fire (null) is always allowed', () {
       expect(rule.evaluate(_ctx()), isTrue);
     });
 
     test('blocks if not enough bricks earned since last fire', () {
-      expect(rule.evaluate(_ctx(bricksSince: 40)), isFalse);
+      expect(rule.evaluate(_ctx(coinsSince: 40)), isFalse);
     });
 
     test('passes once enough bricks have been earned', () {
-      expect(rule.evaluate(_ctx(bricksSince: 50)), isTrue);
+      expect(rule.evaluate(_ctx(coinsSince: 50)), isTrue);
     });
   });
 }

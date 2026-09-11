@@ -4,40 +4,59 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:math_city/domain/concepts/concept_registry.dart';
+import 'package:math_city/domain/economy/question_block.dart';
 import 'package:math_city/domain/proficiency/proficiency_band.dart';
 import 'package:math_city/domain/questions/answer_check.dart';
 import 'package:math_city/domain/questions/generated_question.dart';
 import 'package:math_city/domain/questions/is_word_problem.dart';
+import 'package:math_city/presentation/block/block_summary_screen.dart';
 import 'package:math_city/presentation/diagrams/diagram_renderer.dart';
 import 'package:math_city/presentation/question/number_pad_widget.dart';
 import 'package:math_city/presentation/result/result_screen.dart';
+import 'package:math_city/presentation/theme/app_palette.dart';
+import 'package:math_city/presentation/widgets/coin_flight.dart';
+import 'package:math_city/presentation/widgets/coin_icon.dart';
 import 'package:math_city/presentation/widgets/math_text.dart';
 import 'package:math_city/presentation/widgets/speech_toggle_button.dart';
+import 'package:math_city/presentation/widgets/streak_flame.dart';
 import 'package:math_city/services/debug_harness.dart';
 import 'package:math_city/services/tts_service.dart';
+import 'package:math_city/state/game_session_provider.dart';
 import 'package:math_city/state/introduced_concepts_provider.dart';
+import 'package:math_city/state/player_provider.dart';
 import 'package:math_city/state/proficiency_provider.dart';
 import 'package:math_city/state/tts_provider.dart';
 
+/// One question. In real play it's one step of a [QuestionBlock]: a correct
+/// answer plays a coin animation into the AppBar counter and moves straight
+/// on to the next question (or the block summary) — no green screen; a wrong
+/// answer goes to the red explanation screen, which then continues the
+/// block. In debug mode (no block) it keeps the original single-question
+/// semantics — answer → [ResultScreen] → pop — which is what the UX-sweep
+/// harness drives.
 class QuestionScreen extends ConsumerStatefulWidget {
   const QuestionScreen({
     required this.conceptId,
     required this.band,
+    this.block,
     this.debugMode = false,
     this.seed,
     super.key,
-  });
+  }) : assert(debugMode || block != null, 'real play always runs in a block');
 
   final String conceptId;
 
-  /// The proficiency band at the time the wheel landed.
-  /// Determines input mode (MC vs number pad) and stars awarded.
+  /// The proficiency band at the time the wheel landed. Determines input
+  /// mode (MC vs number pad), which in turn sets the pay rate.
   final ProficiencyBand band;
 
-  /// When true (kDebugMode-only entry from `ConceptDebugScreen`):
-  /// proficiency tracking is skipped, no stars are awarded, and the
-  /// result screen pops back to the picker instead of returning to the
-  /// spin wheel. Player profile state stays untouched.
+  /// The block this question belongs to (null in debug mode).
+  final QuestionBlock? block;
+
+  /// When true (kDebugMode-only entry from `ConceptDebugScreen` and the
+  /// UX-sweep harness): proficiency tracking is skipped, no coins are paid,
+  /// and the result screen pops back to the picker instead of continuing a
+  /// block. Player profile state stays untouched.
   final bool debugMode;
 
   /// When set, the question and its choice order are drawn from
@@ -50,7 +69,8 @@ class QuestionScreen extends ConsumerStatefulWidget {
   ConsumerState<QuestionScreen> createState() => _QuestionScreenState();
 }
 
-class _QuestionScreenState extends ConsumerState<QuestionScreen> {
+class _QuestionScreenState extends ConsumerState<QuestionScreen>
+    with SingleTickerProviderStateMixin {
   GeneratedQuestion? _question;
   List<String> _shuffledChoices = const [];
   bool _useNumberPad = false;
@@ -60,10 +80,38 @@ class _QuestionScreenState extends ConsumerState<QuestionScreen> {
   /// deactivated, so `dispose` cannot look the service up itself.
   late final TtsService _tts;
 
+  /// Where the last touch landed — the coin takes off from there, so it
+  /// visibly leaves the choice (or keypad) the player just pressed.
+  Offset? _lastPointerDown;
+
+  /// The AppBar coin counter, for the coin flight's landing spot.
+  final GlobalKey _counterKey = GlobalKey();
+
+  /// While a payout is in flight the counter shows this instead of the live
+  /// balance (which the notifier has already persisted), so the number only
+  /// jumps when the coin lands.
+  int? _frozenCoins;
+
+  /// 1-based position of this question in its block, fixed at build time so
+  /// the header doesn't tick over while the coin is still flying.
+  late final int _questionNumber = widget.block?.currentIndex ?? 1;
+
+  late final AnimationController _pulseCtrl;
+  late final Animation<double> _pulseScale;
+  final List<OverlayEntry> _liveOverlays = <OverlayEntry>[];
+
   @override
   void initState() {
     super.initState();
     _tts = ref.read(ttsServiceProvider);
+    _pulseCtrl = AnimationController(
+      duration: const Duration(milliseconds: 450),
+      vsync: this,
+    );
+    _pulseScale = TweenSequence<double>([
+      TweenSequenceItem(tween: Tween(begin: 1, end: 1.5), weight: 35),
+      TweenSequenceItem(tween: Tween(begin: 1.5, end: 1), weight: 65),
+    ]).animate(CurvedAnimation(parent: _pulseCtrl, curve: Curves.easeOut));
     unawaited(_loadQuestion());
   }
 
@@ -97,6 +145,10 @@ class _QuestionScreenState extends ConsumerState<QuestionScreen> {
   void dispose() {
     // Silence anything still in flight when the player leaves the screen.
     unawaited(_tts.stop());
+    for (final e in _liveOverlays) {
+      e.remove();
+    }
+    _pulseCtrl.dispose();
     super.dispose();
   }
 
@@ -122,33 +174,158 @@ class _QuestionScreenState extends ConsumerState<QuestionScreen> {
     final isCorrect = outcome != AnswerOutcome.wrong;
 
     // Debug mode: skip every persisted side-effect (proficiency, drip-feed,
-    // stars) so testing a generator doesn't pollute player state.
-    final unlock = widget.debugMode
-        ? null
-        : await ref
-              .read(proficiencyProvider.notifier)
-              .recordAnswer(widget.conceptId, correct: isCorrect);
+    // coins) so testing a generator doesn't pollute player state, and keep
+    // the single-question flow the harness expects.
+    if (widget.debugMode) {
+      unawaited(
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute<void>(
+            builder: (_) => ResultScreen(
+              question: question,
+              selectedAnswer: answer,
+              outcome: outcome,
+              debugMode: true,
+            ),
+          ),
+        ),
+      );
+      return;
+    }
 
+    final block = widget.block!;
+    // Hold the counter at the pre-answer balance until the coin lands.
+    final balanceBefore = ref.read(totalCoinsProvider);
+    setState(() => _frozenCoins = balanceBefore);
+
+    final reward = await ref
+        .read(proficiencyProvider.notifier)
+        .recordAnswer(
+          widget.conceptId,
+          correct: isCorrect,
+          usesKeypad: _useNumberPad,
+        );
     if (!mounted) return;
+    block.record(reward);
 
-    final stars = (isCorrect && !widget.debugMode)
-        ? bricksForBand(widget.band)
-        : 0;
+    if (!isCorrect) {
+      // The red screen is the teaching moment: it stays, and it counts as
+      // one of the block's questions.
+      unawaited(
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute<void>(
+            builder: (_) => ResultScreen(
+              question: question,
+              selectedAnswer: answer,
+              outcome: outcome,
+              block: block,
+            ),
+          ),
+        ),
+      );
+      return;
+    }
 
+    await _celebrate(reward, outcome, answer, balanceBefore);
+    if (!mounted) return;
     unawaited(
       Navigator.of(context).pushReplacement(
         MaterialPageRoute<void>(
-          builder: (_) => ResultScreen(
-            question: question,
-            selectedAnswer: answer,
-            outcome: outcome,
-            bricksEarned: stars,
-            unlockEvent: isCorrect ? unlock : null,
-            debugMode: widget.debugMode,
-          ),
+          builder: (_) => block.isComplete
+              ? BlockSummaryScreen(block: block)
+              : QuestionScreen(
+                  conceptId: widget.conceptId,
+                  band: widget.band,
+                  block: block,
+                ),
         ),
       ),
     );
+  }
+
+  /// Correct-answer feedback, in place of the old green screen: the coin
+  /// flies from the tapped answer into the counter (which then pulses to
+  /// the new balance), a nudge shows if the answer was equivalent but not
+  /// canonical, and a band crossing gets its own bigger card plus a second
+  /// coin flight for the bonus.
+  Future<void> _celebrate(
+    AnswerReward reward,
+    AnswerOutcome outcome,
+    String answer,
+    int balanceBefore,
+  ) async {
+    final size = MediaQuery.of(context).size;
+    final from = _lastPointerDown ?? Offset(size.width / 2, size.height * 0.75);
+
+    await _flyCoins(from: from, amount: reward.coins);
+    if (!mounted) return;
+    // Land: reveal the answer pay (but hold back any bonus until its card).
+    setState(
+      () => _frozenCoins = reward.bandBonuses.isEmpty
+          ? null
+          : balanceBefore + reward.coins,
+    );
+    unawaited(_pulseCtrl.forward(from: 0));
+
+    if (outcome == AnswerOutcome.equivalentNonCanonical) {
+      await _showCard(
+        EquivalentNudgeCard(
+          playerAnswer: answer,
+          canonical: _question!.correctAnswer,
+        ),
+        const Duration(milliseconds: 1800),
+      );
+      if (!mounted) return;
+    }
+
+    for (final bonus in reward.bandBonuses) {
+      await _showCard(
+        _BandBonusBurst(bonus: bonus),
+        const Duration(milliseconds: 1600),
+      );
+      if (!mounted) return;
+      await _flyCoins(
+        from: Offset(size.width / 2, size.height / 2),
+        amount: bonus.coins,
+      );
+      if (!mounted) return;
+    }
+    setState(() => _frozenCoins = null);
+    if (reward.bandBonuses.isNotEmpty) unawaited(_pulseCtrl.forward(from: 0));
+  }
+
+  Offset _counterCenter() {
+    final box = _counterKey.currentContext?.findRenderObject() as RenderBox?;
+    if (box == null) {
+      final size = MediaQuery.of(context).size;
+      return Offset(size.width - 44, 60);
+    }
+    return box.localToGlobal(Offset(box.size.width / 2, box.size.height / 2));
+  }
+
+  Future<void> _flyCoins({required Offset from, required int amount}) async {
+    const duration = Duration(milliseconds: 650);
+    final entry = OverlayEntry(
+      builder: (_) => CoinFlight(
+        from: from,
+        to: _counterCenter(),
+        amount: amount,
+      ),
+    );
+    await _hold(entry, duration);
+  }
+
+  Future<void> _showCard(Widget card, Duration hold) async {
+    final entry = OverlayEntry(
+      builder: (_) => _CenteredCard(child: card),
+    );
+    await _hold(entry, hold);
+  }
+
+  Future<void> _hold(OverlayEntry entry, Duration duration) async {
+    Overlay.of(context).insert(entry);
+    _liveOverlays.add(entry);
+    await Future<void>.delayed(duration);
+    if (_liveOverlays.remove(entry)) entry.remove();
   }
 
   @override
@@ -168,121 +345,170 @@ class _QuestionScreenState extends ConsumerState<QuestionScreen> {
       unawaited(ref.read(ttsServiceProvider).speak(q.prompt));
     });
 
+    final theme = Theme.of(context);
     final conceptName =
         findConceptById(widget.conceptId)?.name ?? widget.conceptId;
     final question = _question;
+    final block = widget.block;
+
+    final title = block == null || block.size == 1
+        ? Text(conceptName, overflow: TextOverflow.ellipsis)
+        : Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                conceptName,
+                style: theme.textTheme.titleMedium,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(
+                'Question $_questionNumber of ${block.size}',
+                style: theme.textTheme.labelSmall,
+              ),
+            ],
+          );
+
+    final actions = <Widget>[
+      if (question != null && isWordProblem(question.prompt))
+        const SpeechToggleIconButton(),
+      if (block != null) ...[
+        StreakBadge(count: _streakCount(block)),
+        const SizedBox(width: 12),
+        Padding(
+          padding: const EdgeInsets.only(right: 16),
+          child: ScaleTransition(
+            scale: _pulseScale,
+            child: CoinAmount(
+              key: _counterKey,
+              amount: _frozenCoins ?? ref.watch(totalCoinsProvider),
+              iconSize: 22,
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ],
+    ];
 
     if (question == null) {
-      // Hide the speaker until we know whether the prompt is speakable —
-      // we don't yet know if this generator emits a word problem.
       return Scaffold(
         appBar: AppBar(
-          title: Text(conceptName),
+          title: title,
           automaticallyImplyLeading: false,
+          actions: actions,
         ),
         body: const SafeArea(
           child: Center(child: CircularProgressIndicator()),
         ),
       );
     }
-    final speakablePrompt = isWordProblem(question.prompt);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(conceptName),
+        title: title,
         automaticallyImplyLeading: false,
-        actions: [
-          if (speakablePrompt) const SpeechToggleIconButton(),
-        ],
+        actions: actions,
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // With a diagram: the diagram is measured FIRST at its
-              // natural size (capped at 45% of the space, so a long
-              // prompt can never crush it into a speck), and the prompt
-              // card gets the true remainder — a short diagram (ruler,
-              // number line) hands its unused space to the card instead
-              // of reserving a fixed slot that left the card clipped
-              // mid-glyph while empty space sat above it. The card
-              // scrolls only when the prompt genuinely exceeds what's
-              // left.
-              //
-              // Without one: the card scrolls if a long word problem
-              // exceeds the space above the keypad (an unflexed card
-              // overflowed there by design of the diagram path).
-              Expanded(
-                child: question.diagram == null
-                    ? Center(
-                        child: SingleChildScrollView(
-                          child: _PromptCard(prompt: question.prompt),
-                        ),
-                      )
-                    : CustomMultiChildLayout(
-                        delegate: _DiagramThenCardLayout(),
-                        children: [
-                          LayoutId(
-                            id: _QuestionSlot.diagram,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                              ),
-                              child: LayoutBuilder(
-                                builder: (context, constraints) => FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: ConstrainedBox(
-                                    // Bound the width so self-sizing
-                                    // diagram widgets lay out at phone
-                                    // width; FittedBox then scales the
-                                    // result down if the 45% cap binds.
-                                    constraints: BoxConstraints(
-                                      maxWidth: constraints.maxWidth,
-                                    ),
-                                    child: DiagramRenderer(
-                                      spec: question.diagram!,
+        child: Listener(
+          behavior: HitTestBehavior.translucent,
+          onPointerDown: (e) => _lastPointerDown = e.position,
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // With a diagram: the diagram is measured FIRST at its
+                // natural size (capped at 45% of the space, so a long
+                // prompt can never crush it into a speck), and the prompt
+                // card gets the true remainder — a short diagram (ruler,
+                // number line) hands its unused space to the card instead
+                // of reserving a fixed slot that left the card clipped
+                // mid-glyph while empty space sat above it. The card
+                // scrolls only when the prompt genuinely exceeds what's
+                // left.
+                //
+                // Without one: the card scrolls if a long word problem
+                // exceeds the space above the keypad (an unflexed card
+                // overflowed there by design of the diagram path).
+                Expanded(
+                  child: question.diagram == null
+                      ? Center(
+                          child: SingleChildScrollView(
+                            child: _PromptCard(prompt: question.prompt),
+                          ),
+                        )
+                      : CustomMultiChildLayout(
+                          delegate: _DiagramThenCardLayout(),
+                          children: [
+                            LayoutId(
+                              id: _QuestionSlot.diagram,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                ),
+                                child: LayoutBuilder(
+                                  builder: (context, constraints) => FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: ConstrainedBox(
+                                      // Bound the width so self-sizing
+                                      // diagram widgets lay out at phone
+                                      // width; FittedBox then scales the
+                                      // result down if the 45% cap binds.
+                                      constraints: BoxConstraints(
+                                        maxWidth: constraints.maxWidth,
+                                      ),
+                                      child: DiagramRenderer(
+                                        spec: question.diagram!,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          LayoutId(
-                            id: _QuestionSlot.card,
-                            child: SingleChildScrollView(
-                              child: _PromptCard(
-                                prompt: question.prompt,
-                                compact: true,
+                            LayoutId(
+                              id: _QuestionSlot.card,
+                              child: SingleChildScrollView(
+                                child: _PromptCard(
+                                  prompt: question.prompt,
+                                  compact: true,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
+                ),
+                const SizedBox(height: 16),
+                if (_useNumberPad)
+                  NumberPadWidget(
+                    onSubmit: _onAnswerSubmitted,
+                    extraChars: _extraCharsFor(question),
+                  )
+                else
+                  ..._shuffledChoices.map(
+                    (choice) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: _ChoiceButton(
+                        label: choice,
+                        onTap: () => _onAnswerSubmitted(choice),
                       ),
-              ),
-              const SizedBox(height: 16),
-              if (_useNumberPad)
-                NumberPadWidget(
-                  onSubmit: _onAnswerSubmitted,
-                  extraChars: _extraCharsFor(question),
-                )
-              else
-                ..._shuffledChoices.map(
-                  (choice) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 6),
-                    child: _ChoiceButton(
-                      label: choice,
-                      onTap: () => _onAnswerSubmitted(choice),
                     ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
+
+  /// Streak to show in the AppBar: the count after the block's last answer,
+  /// else the persisted count the player walked in with.
+  int _streakCount(QuestionBlock block) =>
+      block.streakCount ??
+      (ref.watch(activePlayerProvider).value?.streakCount ?? 0);
 }
 
 /// Whether the on-screen number pad can produce a valid answer for this
@@ -335,6 +561,108 @@ List<String> extraKeypadCharsFor(GeneratedQuestion q) {
 }
 
 List<String> _extraCharsFor(GeneratedQuestion q) => extraKeypadCharsFor(q);
+
+// ---------------------------------------------------------------------------
+// Celebration overlays
+// ---------------------------------------------------------------------------
+
+/// Centres a card over the question with a dim scrim and a springy scale-in.
+class _CenteredCard extends StatelessWidget {
+  const _CenteredCard({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned.fill(
+      child: IgnorePointer(
+        child: ColoredBox(
+          color: Colors.black.withValues(alpha: 0.25),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 28),
+              child: TweenAnimationBuilder<double>(
+                tween: Tween(begin: 0.6, end: 1),
+                duration: const Duration(milliseconds: 450),
+                curve: Curves.elasticOut,
+                builder: (_, scale, child) =>
+                    Transform.scale(scale: scale, child: child),
+                child: Material(
+                  color: Colors.transparent,
+                  child: child,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The band-crossing celebration — bigger than a routine payout: a star
+/// badge, the "you learned something new" headline, and the bonus amount.
+class _BandBonusBurst extends StatelessWidget {
+  const _BandBonusBurst({required this.bonus});
+
+  final BandCrossingBonus bonus;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final palette = theme.extension<AppPalette>()!;
+    final name = findConceptById(bonus.conceptId)?.name ?? bonus.conceptId;
+    return Card(
+      color: theme.colorScheme.surfaceContainerLowest,
+      elevation: 12,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+        side: BorderSide(color: palette.coinGold, width: 3),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.stars_rounded, color: palette.coinGold, size: 64),
+            const SizedBox(height: 8),
+            Text(
+              bandBonusHeadline(bonus.band),
+              style: theme.textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: palette.coinGoldDeep,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              name,
+              style: theme.textTheme.titleMedium,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 14),
+            CoinAmount(
+              amount: bonus.coins,
+              prefix: '+',
+              iconSize: 34,
+              style: theme.textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: palette.coinGoldDeep,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'bonus coins',
+              style: theme.textTheme.labelLarge?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Diagram + prompt-card layout

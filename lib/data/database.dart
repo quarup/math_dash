@@ -6,7 +6,6 @@ import 'package:drift/native.dart';
 import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter/services.dart' show AssetManifest, rootBundle;
 import 'package:math_city/domain/avatar/adventurer_config.dart';
-import 'package:math_city/domain/city/building_registry.dart';
 import 'package:math_city/domain/city/city_map_registry.dart';
 import 'package:math_city/domain/city/land_blocks.dart';
 import 'package:math_city/domain/concepts/concept.dart' as dom;
@@ -26,21 +25,21 @@ class Players extends Table {
   TextColumn get name => text().withLength(min: 1, max: 50)();
   IntColumn get gradeLevel => integer()();
 
-  /// 🧱 spending balance — decremented on placements, map unlocks, events.
-  IntColumn get brickBalance => integer().withDefault(const Constant(0))();
+  /// Coin spending balance — decremented on placements, land, map unlocks,
+  /// events. One coin ≈ one expected second of study (see
+  /// `lib/domain/economy/coin_economy.dart`).
+  IntColumn get coinBalance => integer().withDefault(const Constant(0))();
 
-  /// 🧱 lifetime earned — never decreases; available as a gate input on
-  /// `BuildingType.unlockRule.minLifetimeBricks`.
-  IntColumn get lifetimeBricksEarned =>
+  /// Coins lifetime earned — never decreases; literally "total seconds
+  /// studied". Gate input on `BuildingType.unlockRule.minLifetimeCoins`.
+  IntColumn get lifetimeCoinsEarned =>
       integer().withDefault(const Constant(0))();
 
-  /// 🔬 spending balance — decremented when the player spends research to
-  /// move a building type from "available" into `BuildingTypesResearched`.
-  IntColumn get researchBalance => integer().withDefault(const Constant(0))();
-
-  /// 🔬 lifetime earned — never decreases; bookkeeping.
-  IntColumn get lifetimeResearchEarned =>
-      integer().withDefault(const Constant(0))();
+  /// Consecutive correct answers: +1 per correct, reset to 0 on a wrong one.
+  /// Uncapped (shown as "N in a row!"); coin pay tops out at `kStreakCap`.
+  /// Global per player and persistent across sessions — the opening ramp
+  /// doubles as a tutorial.
+  IntColumn get streakCount => integer().withDefault(const Constant(0))();
 
   /// The game's "round" clock: a monotonic count of questions this player has
   /// answered. Persists across sessions and never decreases. Drives building
@@ -155,7 +154,8 @@ class Cities extends Table {
 /// One row per owned 4×4 land block in a city. Land is a *set of blocks* on an
 /// effectively-infinite plane (see `lib/domain/city/land_blocks.dart`): the
 /// center block is `(0,0)` and the starting 3×3 (rings 0–1) is seeded free at
-/// city creation, the rest bought with 🧱. A block is owned iff a row exists.
+/// city creation, the rest bought with coins. A block is owned iff a row
+/// exists.
 class OwnedLandBlocks extends Table {
   IntColumn get cityId => integer().references(Cities, #id)();
   IntColumn get blockX => integer()();
@@ -180,21 +180,10 @@ class BuildingPlacements extends Table {
   IntColumn get placedAtRound => integer()();
 }
 
-/// Building types the player has spent 🔬 to unlock. Presence => the type
-/// appears in the build menu (subject to 🧱 cost per placement).
-class BuildingTypesResearched extends Table {
-  IntColumn get playerId => integer().references(Players, #id)();
-  TextColumn get buildingTypeId => text()();
-  DateTimeColumn get researchedAt => dateTime()();
-
-  @override
-  Set<Column<Object>> get primaryKey => {playerId, buildingTypeId};
-}
-
-/// Award log for the 🔬 research-currency earning rule (see
-/// `lib/domain/city/research_awards.dart`). Presence of a row means +1 🔬
-/// has already been awarded for that (player, concept, band-index) triple
-/// — so re-crossings after a dip don't double-award.
+/// Award log for the band-crossing coin bonus (see
+/// `lib/domain/economy/band_crossings.dart`). Presence of a row means the
+/// bonus has already been paid for that (player, concept, band-index)
+/// triple — so re-crossings after a dip don't double-pay.
 class ConceptBandMilestones extends Table {
   IntColumn get playerId => integer().references(Players, #id)();
   TextColumn get conceptId => text()();
@@ -236,7 +225,10 @@ class StoryBeatStates extends Table {
       text()(); // 'onScreen' | 'completed' | 'dismissed' | 'acked'
   IntColumn get lastFiredAtRound => integer().nullable()();
   IntColumn get fireCount => integer().withDefault(const Constant(0))();
-  IntColumn get lifetimeBricksAtLastFire => integer().nullable()();
+
+  /// Player's lifetime coins when this beat last fired — feeds the
+  /// coin-spacing trigger (`minCoinsEarnedSinceLastBeat`).
+  IntColumn get lifetimeCoinsAtLastFire => integer().nullable()();
 
   /// Round clock at which the player read this bubble (tapped through to its
   /// full text), or null if still unread. A read bubble stays on screen for a
@@ -262,7 +254,6 @@ class StoryBeatStates extends Table {
     Cities,
     OwnedLandBlocks,
     BuildingPlacements,
-    BuildingTypesResearched,
     ConceptBandMilestones,
     StoryBeatStates,
     AppSettings,
@@ -272,7 +263,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
   @override
-  int get schemaVersion => 13;
+  int get schemaVersion => 15;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -361,6 +352,34 @@ class AppDatabase extends _$AppDatabase {
         // installs. The old rows carry a NULL fingerprint, which never
         // matches, so the next read refreshes them automatically.
         await m.addColumn(appSettings, appSettings.datasetFingerprint);
+      }
+      if (from < 14) {
+        // v14: single-currency coin economy (plan.md, 2026-09-08). Players
+        //   columns renamed (brick → coin), the research pair dropped,
+        //   streakCount added; building_types_researched dropped (a building
+        //   whose unlock rule passes is now bought directly). Renaming
+        //   columns means a table rebuild anyway, and we're pre-launch, so
+        //   this wipes and recreates everything — the same precedent as
+        //   v9/v11. AppSettings is kept (it holds the TTS toggle).
+        await customStatement('DROP TABLE IF EXISTS story_beat_states');
+        await customStatement('DROP TABLE IF EXISTS concept_band_milestones');
+        await customStatement('DROP TABLE IF EXISTS building_types_researched');
+        await customStatement('DROP TABLE IF EXISTS building_placements');
+        await customStatement('DROP TABLE IF EXISTS owned_land_blocks');
+        await customStatement('DROP TABLE IF EXISTS cities');
+        await customStatement('DROP TABLE IF EXISTS dataset_questions');
+        await customStatement('DROP TABLE IF EXISTS introduced_concepts');
+        await customStatement('DROP TABLE IF EXISTS concepts');
+        await customStatement('DROP TABLE IF EXISTS concept_proficiencies');
+        await customStatement('DROP TABLE IF EXISTS players');
+        await m.createAll();
+        await _seedConceptCatalog();
+      }
+      if (from < 15) {
+        // v15: the streak is shown as an uncapped "N in a row" count rather
+        // than a 0..5 pay level, so the column is renamed to say what it
+        // holds. Pure rename — values carry over.
+        await m.renameColumn(players, 'streak_level', players.streakCount);
       }
     },
   );
@@ -476,13 +495,11 @@ class AppDatabase extends _$AppDatabase {
     return getPlayerById(id);
   }
 
-  /// Seeds a player's Phase 7 city-builder baseline:
-  /// (a) one City row tied to the beginner map (more maps unlock later and each
-  ///     gets its own City row), with its starting 3×3 owned land, and
-  /// (b) pre-researched entries for every building type that's free to research
-  ///     and ungated (the mayor's office in v1).
-  /// Used both at player creation and by the v11 migration to give existing
-  /// players a fresh city after the land model change.
+  /// Seeds a player's city-builder baseline: one City row tied to the
+  /// beginner map (more maps unlock later and each gets its own City row),
+  /// with its starting 3×3 owned land. The build catalog needs no seeding —
+  /// the mayor's office has an open unlock rule, so it's buyable from turn
+  /// one. Used both at player creation and by the v11 migration.
   Future<void> _seedCityBuilderState(int playerId) async {
     final cityId = await into(cities).insert(
       CitiesCompanion.insert(
@@ -492,16 +509,6 @@ class AppDatabase extends _$AppDatabase {
       ),
     );
     await _seedStartingLand(cityId);
-    final now = DateTime.now();
-    for (final b in preResearchedBuildings) {
-      await into(buildingTypesResearched).insert(
-        BuildingTypesResearchedCompanion.insert(
-          playerId: playerId,
-          buildingTypeId: b.id,
-          researchedAt: now,
-        ),
-      );
-    }
   }
 
   Future<void> updatePlayer(
@@ -519,48 +526,40 @@ class AppDatabase extends _$AppDatabase {
     ),
   );
 
-  /// Sets a player's brick balances directly. Used by the spending UI; for
-  /// per-correct-answer increments use [incrementPlayerBricks].
-  Future<void> updatePlayerBricks(
+  /// Sets a player's coin balances directly. For per-correct-answer
+  /// increments use [incrementPlayerCoins].
+  Future<void> updatePlayerCoins(
     int playerId, {
-    required int brickBalance,
-    required int lifetimeBricksEarned,
+    required int coinBalance,
+    required int lifetimeCoinsEarned,
   }) => (update(players)..where((t) => t.id.equals(playerId))).write(
     PlayersCompanion(
-      brickBalance: Value(brickBalance),
-      lifetimeBricksEarned: Value(lifetimeBricksEarned),
+      coinBalance: Value(coinBalance),
+      lifetimeCoinsEarned: Value(lifetimeCoinsEarned),
     ),
   );
 
-  /// Adds `by` 🧱 to the player's spending and lifetime brick balances.
-  /// Use this on every correct answer. Negative values (refunds) are
-  /// allowed on `brickBalance` only; lifetime stays monotone.
-  Future<void> incrementPlayerBricks(int playerId, int by) async {
+  /// Adds `by` coins to the player's spending and lifetime balances. Use
+  /// this on every payout. Negative values (spends) are allowed on
+  /// `coinBalance` only; lifetime stays monotone.
+  Future<void> incrementPlayerCoins(int playerId, int by) async {
     final p = await getPlayerById(playerId);
     await (update(players)..where((t) => t.id.equals(playerId))).write(
       PlayersCompanion(
-        brickBalance: Value(p.brickBalance + by),
-        lifetimeBricksEarned: Value(
-          p.lifetimeBricksEarned + (by > 0 ? by : 0),
+        coinBalance: Value(p.coinBalance + by),
+        lifetimeCoinsEarned: Value(
+          p.lifetimeCoinsEarned + (by > 0 ? by : 0),
         ),
       ),
     );
   }
 
-  /// Adds `by` 🔬 to the player's spending and lifetime research balances.
-  /// Negative values are allowed on `researchBalance` only (e.g. spending);
-  /// lifetime stays monotone.
-  Future<void> incrementPlayerResearch(int playerId, int by) async {
-    final p = await getPlayerById(playerId);
-    await (update(players)..where((t) => t.id.equals(playerId))).write(
-      PlayersCompanion(
-        researchBalance: Value(p.researchBalance + by),
-        lifetimeResearchEarned: Value(
-          p.lifetimeResearchEarned + (by > 0 ? by : 0),
-        ),
-      ),
-    );
-  }
+  /// Persists the player's consecutive-correct count (see
+  /// `coin_economy.dart` `nextStreakCount`).
+  Future<void> setPlayerStreakCount(int playerId, int count) =>
+      (update(players)..where((t) => t.id.equals(playerId))).write(
+        PlayersCompanion(streakCount: Value(count)),
+      );
 
   /// Advances the player's round clock by one (one answered question = one
   /// round) and returns the new value. Call once per answered question; a
@@ -574,11 +573,11 @@ class AppDatabase extends _$AppDatabase {
     return next;
   }
 
-  // ---- Concept band milestones (research-award log) ----
+  // ---- Concept band milestones (band-crossing bonus log) ----
 
-  /// Returns the set of band indices already awarded for this
-  /// (player, concept) pair. Used by the research-award rule to filter out
-  /// re-crossings after a dip.
+  /// Returns the set of band indices already paid for this
+  /// (player, concept) pair. Used by the band-crossing bonus rule to filter
+  /// out re-crossings after a dip.
   Future<Set<int>> awardedBandIndicesFor(
     int playerId,
     String conceptId,
@@ -656,15 +655,15 @@ class AppDatabase extends _$AppDatabase {
   }
 
   /// Buys land block `(blockX, blockY)` for [cityId]: records the ownership row
-  /// and spends [brickCost] 🧱 (lifetime stays monotone). The caller must have
-  /// verified the block is on the purchasable frontier and affordable.
+  /// and spends [coinCost] coins (lifetime stays monotone). The caller must
+  /// have verified the block is on the purchasable frontier and affordable.
   /// Transactional, so a failed spend can't leave a free block behind.
   Future<void> buyCityLandBlock({
     required int cityId,
     required int playerId,
     required int blockX,
     required int blockY,
-    required int brickCost,
+    required int coinCost,
   }) => transaction(() async {
     await into(ownedLandBlocks).insert(
       OwnedLandBlocksCompanion.insert(
@@ -673,14 +672,14 @@ class AppDatabase extends _$AppDatabase {
         blockY: blockY,
       ),
     );
-    if (brickCost > 0) await incrementPlayerBricks(playerId, -brickCost);
+    if (coinCost > 0) await incrementPlayerCoins(playerId, -coinCost);
   });
 
   /// Debug-only: wipes a player's city-builder state back to the
-  /// just-created baseline — clears placements, researched buildings (then
-  /// re-seeds the pre-researched set), beat states, and band-milestone
-  /// awards; sets population to 0; and zeroes both currency balances and
-  /// their lifetime counters. Driven by the kDebugMode-only city debug sheet.
+  /// just-created baseline — clears placements, beat states, and
+  /// band-milestone awards; sets population to 0; and zeroes the coin
+  /// balance, its lifetime counter, and the streak. Driven by the
+  /// kDebugMode-only city debug sheet.
   Future<void> resetCityForPlayer(int playerId) => transaction(() async {
     final city = await cityForPlayer(playerId);
     await (delete(
@@ -691,9 +690,6 @@ class AppDatabase extends _$AppDatabase {
     )..where((t) => t.cityId.equals(city.id))).go();
     await _seedStartingLand(city.id);
     await (delete(
-      buildingTypesResearched,
-    )..where((t) => t.playerId.equals(playerId))).go();
-    await (delete(
       storyBeatStates,
     )..where((t) => t.playerId.equals(playerId))).go();
     await (delete(
@@ -702,55 +698,12 @@ class AppDatabase extends _$AppDatabase {
     await setCityPopulation(city.id, 0);
     await (update(players)..where((t) => t.id.equals(playerId))).write(
       const PlayersCompanion(
-        brickBalance: Value(0),
-        lifetimeBricksEarned: Value(0),
-        researchBalance: Value(0),
-        lifetimeResearchEarned: Value(0),
+        coinBalance: Value(0),
+        lifetimeCoinsEarned: Value(0),
+        streakCount: Value(0),
       ),
     );
-    final now = DateTime.now();
-    for (final b in preResearchedBuildings) {
-      await into(buildingTypesResearched).insert(
-        BuildingTypesResearchedCompanion.insert(
-          playerId: playerId,
-          buildingTypeId: b.id,
-          researchedAt: now,
-        ),
-      );
-    }
   });
-
-  /// IDs of the building types the player has unlocked (spent 🔬 on, or
-  /// pre-researched). Presence => the type appears in the build menu.
-  Future<Set<String>> researchedBuildingTypeIds(int playerId) async {
-    final rows = await (select(
-      buildingTypesResearched,
-    )..where((t) => t.playerId.equals(playerId))).get();
-    return rows.map((r) => r.buildingTypeId).toSet();
-  }
-
-  /// Unlocks [buildingTypeId]: records a `BuildingTypesResearched` row and
-  /// spends [researchCost] 🔬 from the player. Idempotent — if the type is
-  /// already researched this is a no-op (so the spend never double-charges).
-  /// The caller must have verified the player can afford the cost.
-  Future<void> researchBuilding({
-    required int playerId,
-    required String buildingTypeId,
-    required int researchCost,
-  }) async {
-    final already = await researchedBuildingTypeIds(playerId);
-    if (already.contains(buildingTypeId)) return;
-    await into(buildingTypesResearched).insert(
-      BuildingTypesResearchedCompanion.insert(
-        playerId: playerId,
-        buildingTypeId: buildingTypeId,
-        researchedAt: DateTime.now(),
-      ),
-    );
-    if (researchCost > 0) {
-      await incrementPlayerResearch(playerId, -researchCost);
-    }
-  }
 
   // ---- Story-beat state helpers ----
 
@@ -792,14 +745,14 @@ class AppDatabase extends _$AppDatabase {
   }
 
   /// Fires [beatId] for [playerId]: puts it on screen, bumps its fire count,
-  /// stamps the player's lifetime bricks at this fire so brick-based spacing
-  /// (`minBricksEarnedSinceLastBeat`) can be evaluated on the next eligibility
+  /// stamps the player's lifetime coins at this fire so coin-based spacing
+  /// (`minCoinsEarnedSinceLastBeat`) can be evaluated on the next eligibility
   /// pass, and records the round it fired at ([atRound]) so the overlay can
   /// rotate the bubble off screen after a few rounds.
   Future<void> recordBeatFired(
     int playerId,
     String beatId,
-    int lifetimeBricksAtFire, [
+    int lifetimeCoinsAtFire, [
     int atRound = 0,
   ]) async {
     final existing =
@@ -813,7 +766,7 @@ class AppDatabase extends _$AppDatabase {
         beatId: beatId,
         state: 'onScreen',
         fireCount: Value((existing?.fireCount ?? 0) + 1),
-        lifetimeBricksAtLastFire: Value(lifetimeBricksAtFire),
+        lifetimeCoinsAtLastFire: Value(lifetimeCoinsAtFire),
         lastFiredAtRound: Value(atRound),
         // A fresh fire is unread, even if a prior fire had been read.
         ackedAtRound: const Value(null),
@@ -848,9 +801,9 @@ class AppDatabase extends _$AppDatabase {
           ))
           .write(const StoryBeatStatesCompanion(state: Value('completed')));
 
-  /// Places one building: inserts the placement row and spends [brickCost]
+  /// Places one building: inserts the placement row and spends [coinCost]
   /// from the player's balance (lifetime stays monotone via
-  /// [incrementPlayerBricks]). The caller must have already verified tile
+  /// [incrementPlayerCoins]). The caller must have already verified tile
   /// vacancy and affordability.
   ///
   /// `placedAtRound` is stamped with the player's current round clock
@@ -864,7 +817,7 @@ class AppDatabase extends _$AppDatabase {
     required String buildingTypeId,
     required int gridX,
     required int gridY,
-    required int brickCost,
+    required int coinCost,
   }) async {
     final player = await getPlayerById(playerId);
     final id = await into(buildingPlacements).insert(
@@ -876,7 +829,7 @@ class AppDatabase extends _$AppDatabase {
         placedAtRound: player.roundsPlayed,
       ),
     );
-    if (brickCost > 0) await incrementPlayerBricks(playerId, -brickCost);
+    if (coinCost > 0) await incrementPlayerCoins(playerId, -coinCost);
     return id;
   }
 
@@ -990,8 +943,8 @@ class AppDatabase extends _$AppDatabase {
   /// [introducedConceptIdsForPlayer] will be empty, which causes the
   /// drip-feed to seed a new starter pack at the player's *current* grade.
   ///
-  /// 🧱 and 🔬 balances (current and lifetime) are intentionally NOT touched
-  /// — those represent earned currency, not curriculum state.
+  /// Coin balances (current and lifetime) and the streak are intentionally
+  /// NOT touched — those represent earned currency, not curriculum state.
   ///
   /// Called when a player's grade is changed so the wheel recalibrates
   /// to the new grade rather than continuing to surface stale lower-grade

@@ -12,7 +12,7 @@ void main() {
     driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
   });
 
-  testWidgets('My City mounts and shows the pre-researched build catalog', (
+  testWidgets('My City mounts and shows the starter build catalog', (
     tester,
   ) async {
     final db = AppDatabase(NativeDatabase.memory());

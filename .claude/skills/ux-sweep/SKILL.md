@@ -47,8 +47,8 @@ Up to three screenshots per concept, all report deliverables:
 
 **Only one wrong-answer screenshot, even in `both` mode.** The band never
 reaches `ResultScreen` — it renders from the question, the submitted
-answer and the outcome, and in debug mode bricks are always 0 and the
-unlock event null. Same seed → same question → same distractor → the same
+answer and the outcome, and in debug mode no coins are paid and no
+block is running. Same seed → same question → same distractor → the same
 red screen (verified on device: only the status-bar clock differed).
 
 **Concepts that force multiple choice get no second screenshot.** A
@@ -58,7 +58,10 @@ band. `uxctl` detects this, records `keypadForcedMc`, and skips the
 duplicate; the report shows _keypad → MC_.
 
 The green "Correct!" screen is asserted programmatically, not captured —
-it's identical for every concept.
+it's identical for every concept. (Real play has no green screen any more —
+a correct answer plays a coin animation and moves on inside the question
+block — but the debug/harness path keeps the single-question
+answer → `ResultScreen` flow so the sweep can assert both outcomes.)
 
 `RenderFlex` overflows and build exceptions are captured by the port and
 returned as data, so you do not have to hunt for them in pixels.

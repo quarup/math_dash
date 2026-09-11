@@ -7,7 +7,7 @@ class TriggerRule {
     this.minPopulation,
     this.minBuildingAgeForId,
     this.requiredBeatsFired = const <String>{},
-    this.minBricksEarnedSinceLastBeat,
+    this.minCoinsEarnedSinceLastBeat,
   });
 
   static const open = TriggerRule();
@@ -23,10 +23,11 @@ class TriggerRule {
 
   final Set<String> requiredBeatsFired;
 
-  /// Spacing: at least N bricks must have been earned since this beat last
-  /// fired before it can fire again. Null means no spacing requirement.
-  /// First-fire is always allowed regardless of this value.
-  final int? minBricksEarnedSinceLastBeat;
+  /// Spacing: at least N coins (≈ seconds of study) must have been earned
+  /// since this beat last fired before it can fire again. Null means no
+  /// spacing requirement. First-fire is always allowed regardless of this
+  /// value.
+  final int? minCoinsEarnedSinceLastBeat;
 
   bool evaluate(TriggerContext ctx) {
     if (!ctx.placedBuildingTypeIds.containsAll(buildingsPresent)) return false;
@@ -40,24 +41,24 @@ class TriggerRule {
       if (age < required.minRounds) return false;
     }
     if (!ctx.firedBeatIds.containsAll(requiredBeatsFired)) return false;
-    if (minBricksEarnedSinceLastBeat != null) {
-      final since = ctx.bricksEarnedSinceBeatLastFired;
+    if (minCoinsEarnedSinceLastBeat != null) {
+      final since = ctx.coinsEarnedSinceBeatLastFired;
       // First-fire (no prior fire => null) is always allowed.
-      if (since != null && since < minBricksEarnedSinceLastBeat!) return false;
+      if (since != null && since < minCoinsEarnedSinceLastBeat!) return false;
     }
     return true;
   }
 }
 
 /// Snapshot the [TriggerRule] evaluates against. Built per-beat at evaluation
-/// time so the `bricksEarnedSinceBeatLastFired` field can be beat-specific.
+/// time so the `coinsEarnedSinceBeatLastFired` field can be beat-specific.
 class TriggerContext {
   const TriggerContext({
     required this.placedBuildingTypeIds,
     required this.population,
     required this.maxBuildingAgeByTypeId,
     required this.firedBeatIds,
-    required this.bricksEarnedSinceBeatLastFired,
+    required this.coinsEarnedSinceBeatLastFired,
   });
 
   final Set<String> placedBuildingTypeIds;
@@ -69,7 +70,7 @@ class TriggerContext {
 
   final Set<String> firedBeatIds;
 
-  /// Bricks earned since this specific beat last fired, or `null` if it has
+  /// Coins earned since this specific beat last fired, or `null` if it has
   /// never fired.
-  final int? bricksEarnedSinceBeatLastFired;
+  final int? coinsEarnedSinceBeatLastFired;
 }
