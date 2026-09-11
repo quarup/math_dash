@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:math_city/domain/concepts/concept_registry.dart';
 import 'package:math_city/domain/concepts/dag_engine.dart';
-import 'package:math_city/domain/economy/coin_economy.dart';
 import 'package:math_city/domain/economy/question_block.dart';
 import 'package:math_city/domain/proficiency/proficiency_band.dart';
 import 'package:math_city/presentation/spin/spin_screen.dart';
 import 'package:math_city/presentation/theme/app_palette.dart';
 import 'package:math_city/presentation/widgets/coin_icon.dart';
-import 'package:math_city/presentation/widgets/streak_pips.dart';
+import 'package:math_city/presentation/widgets/streak_flame.dart';
 
 /// End-of-block celebration: coins earned, streak state, any band-crossing
 /// bonuses and drip-feed unlocks that fired mid-block (this took over the
@@ -24,7 +23,7 @@ class BlockSummaryScreen extends StatelessWidget {
     final palette = theme.extension<AppPalette>()!;
     final conceptName =
         findConceptById(block.conceptId)?.name ?? block.conceptId;
-    final streak = block.streakLevel ?? 0;
+    final streak = block.streakCount ?? 0;
     final allRight = block.correctCount == block.size;
     final headline = block.coinsEarned == 0
         ? 'Keep going!'
@@ -67,7 +66,7 @@ class BlockSummaryScreen extends StatelessWidget {
                       palette: palette,
                     ),
                     const SizedBox(height: 12),
-                    _StreakCard(level: streak, theme: theme, palette: palette),
+                    _StreakCard(count: streak, theme: theme),
                     for (final bonus in block.bandBonuses) ...[
                       const SizedBox(height: 12),
                       _BandBonusCard(bonus: bonus),
@@ -146,47 +145,35 @@ class _CoinsCard extends StatelessWidget {
   }
 }
 
+/// The streak as one flame whose heat tracks the count, plus "N in a row!".
+/// A fresh miss shows the cold flame and an invitation rather than "0 in a
+/// row". Pay tops out at five in a row but the count keeps climbing so the
+/// player can see how far they've gone.
 class _StreakCard extends StatelessWidget {
-  const _StreakCard({
-    required this.level,
-    required this.theme,
-    required this.palette,
-  });
+  const _StreakCard({required this.count, required this.theme});
 
-  final int level;
+  final int count;
   final ThemeData theme;
-  final AppPalette palette;
 
   @override
   Widget build(BuildContext context) {
-    final pct = (streakMultiplier(level) * 100).round();
-    final label = level >= kStreakCap
-        ? 'Full streak — every answer pays 100%'
-        : level == 0
-        ? 'Streak reset — the next correct answer starts it again'
-        : 'Streak $level of $kStreakCap — answers pay $pct%';
     return Card(
       color: theme.colorScheme.surfaceContainerLowest,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
         child: Row(
           children: [
-            Icon(
-              Icons.local_fire_department_rounded,
-              color: level == 0
-                  ? theme.colorScheme.onSurfaceVariant
-                  : palette.streakOrange,
-              size: 30,
-            ),
-            const SizedBox(width: 12),
+            StreakFlame(count: count, size: 52),
+            const SizedBox(width: 14),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  StreakPips(level: level, dotSize: 12),
-                  const SizedBox(height: 6),
-                  Text(label, style: theme.textTheme.bodyMedium),
-                ],
+              child: Text(
+                streakHeadline(count),
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: count == 0
+                      ? theme.colorScheme.onSurfaceVariant
+                      : theme.colorScheme.onSurface,
+                ),
               ),
             ),
           ],

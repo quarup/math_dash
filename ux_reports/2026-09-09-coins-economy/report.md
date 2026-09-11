@@ -25,6 +25,15 @@ Player: grade 2, fresh profile (streak level 0, 0 coins).
 | 13 | ![](shots/31_bought.png) | Tap-to-place buys it instantly: 204 → 144, demand flips to ✓, population ticks. |
 | 14 | ![](shots/32_home_card.png) | Home player card shows the coin balance only. |
 
+**Streak flame (2026-09-11 follow-up, replaces the pips):** the streak is one flame whose heat tracks the count, and the label is "N in a row!" — the count keeps climbing past five (pay caps there), and a fresh miss says "Start a new streak!" instead of "0 in a row". Captured after the v15 column rename migrated the existing streak (5 → 7 on the next block).
+
+| # | Screen | What it shows |
+|---|---|---|
+| 15 | ![](shots/42_q3_flame.png) | AppBar badge at 5 in a row: red flame with side tongues and the count. |
+| 16 | ![](shots/45_q_after_miss.png) | Right after a miss: cold grey flame, no number. |
+| 17 | ![](shots/48_summary_hot_v2.png) | Summary at 5 in a row: hot flame with a soft glow, "5 in a row!". |
+| 18 | ![](shots/47_summary_cold.png) | Summary after missing the last question: "Start a new streak!". |
+
 Not exercised on device: wheel retirement (a concept ≥2 grades below the
 player at the comfortable band). A fresh grade-2 profile starts its K
 concepts at p = 0.95 (mastered), so they never reach the wheel in the first

@@ -23,7 +23,7 @@ class AnswerReward {
   const AnswerReward({
     required this.correct,
     required this.coins,
-    required this.streakLevel,
+    required this.streakCount,
     this.bandBonuses = const <BandCrossingBonus>[],
     this.unlock,
   });
@@ -33,8 +33,9 @@ class AnswerReward {
   /// Coins from the answer itself (0 on a wrong answer).
   final int coins;
 
-  /// The player's streak level *after* this answer.
-  final int streakLevel;
+  /// The player's consecutive-correct count *after* this answer (uncapped;
+  /// pay tops out at `kStreakCap`).
+  final int streakCount;
 
   /// Band-crossing bonuses this answer triggered (normally 0 or 1).
   final List<BandCrossingBonus> bandBonuses;
@@ -96,9 +97,9 @@ class QuestionBlock {
       if (r.unlock != null) r.unlock!,
   ];
 
-  /// Streak level after the last answered question, or null if nothing has
+  /// Streak count after the last answered question, or null if nothing has
   /// been answered yet.
-  int? get streakLevel => rewards.isEmpty ? null : rewards.last.streakLevel;
+  int? get streakCount => rewards.isEmpty ? null : rewards.last.streakCount;
 
   void record(AnswerReward reward) {
     assert(!isComplete, 'block already complete');

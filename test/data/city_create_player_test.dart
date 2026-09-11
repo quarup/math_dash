@@ -71,7 +71,7 @@ void main() {
       );
       expect(p.coinBalance, 0);
       expect(p.lifetimeCoinsEarned, 0);
-      expect(p.streakLevel, 0);
+      expect(p.streakCount, 0);
     });
   });
 
@@ -102,7 +102,7 @@ void main() {
     });
   });
 
-  group('setPlayerStreakLevel', () {
+  group('setPlayerStreakCount', () {
     test('persists the streak across reads', () async {
       final db = AppDatabase(NativeDatabase.memory());
       final p = await db.createPlayer(
@@ -110,10 +110,10 @@ void main() {
         gradeLevel: 2,
         avatarConfigJson: '{}',
       );
-      await db.setPlayerStreakLevel(p.id, 3);
-      expect((await db.getPlayerById(p.id)).streakLevel, 3);
-      await db.setPlayerStreakLevel(p.id, 0);
-      expect((await db.getPlayerById(p.id)).streakLevel, 0);
+      await db.setPlayerStreakCount(p.id, 3);
+      expect((await db.getPlayerById(p.id)).streakCount, 3);
+      await db.setPlayerStreakCount(p.id, 0);
+      expect((await db.getPlayerById(p.id)).streakCount, 0);
     });
   });
 

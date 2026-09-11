@@ -22,7 +22,7 @@ void main() {
 
       // Dirty every kind of city-builder state.
       await db.incrementPlayerCoins(player.id, 500);
-      await db.setPlayerStreakLevel(player.id, 4);
+      await db.setPlayerStreakCount(player.id, 4);
       await db.placeBuilding(
         cityId: city.id,
         playerId: player.id,
@@ -40,7 +40,7 @@ void main() {
       final after = await db.getPlayerById(player.id);
       expect(after.coinBalance, 0);
       expect(after.lifetimeCoinsEarned, 0);
-      expect(after.streakLevel, 0);
+      expect(after.streakCount, 0);
       expect(await db.placementsForCity(city.id), isEmpty);
       expect(await db.storyBeatStatesForPlayer(player.id), isEmpty);
       expect(

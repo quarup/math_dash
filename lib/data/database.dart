@@ -35,10 +35,11 @@ class Players extends Table {
   IntColumn get lifetimeCoinsEarned =>
       integer().withDefault(const Constant(0))();
 
-  /// Answer-streak level (0..`kStreakCap`): climbs one per correct answer,
-  /// resets to 0 on a wrong one, scales coin pay. Global per player and
-  /// persistent across sessions — the opening ramp doubles as a tutorial.
-  IntColumn get streakLevel => integer().withDefault(const Constant(0))();
+  /// Consecutive correct answers: +1 per correct, reset to 0 on a wrong one.
+  /// Uncapped (shown as "N in a row!"); coin pay tops out at `kStreakCap`.
+  /// Global per player and persistent across sessions — the opening ramp
+  /// doubles as a tutorial.
+  IntColumn get streakCount => integer().withDefault(const Constant(0))();
 
   /// The game's "round" clock: a monotonic count of questions this player has
   /// answered. Persists across sessions and never decreases. Drives building
@@ -262,7 +263,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
   @override
-  int get schemaVersion => 14;
+  int get schemaVersion => 15;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -355,7 +356,7 @@ class AppDatabase extends _$AppDatabase {
       if (from < 14) {
         // v14: single-currency coin economy (plan.md, 2026-09-08). Players
         //   columns renamed (brick → coin), the research pair dropped,
-        //   streakLevel added; building_types_researched dropped (a building
+        //   streakCount added; building_types_researched dropped (a building
         //   whose unlock rule passes is now bought directly). Renaming
         //   columns means a table rebuild anyway, and we're pre-launch, so
         //   this wipes and recreates everything — the same precedent as
@@ -373,6 +374,12 @@ class AppDatabase extends _$AppDatabase {
         await customStatement('DROP TABLE IF EXISTS players');
         await m.createAll();
         await _seedConceptCatalog();
+      }
+      if (from < 15) {
+        // v15: the streak is shown as an uncapped "N in a row" count rather
+        // than a 0..5 pay level, so the column is renamed to say what it
+        // holds. Pure rename — values carry over.
+        await m.renameColumn(players, 'streak_level', players.streakCount);
       }
     },
   );
@@ -547,11 +554,11 @@ class AppDatabase extends _$AppDatabase {
     );
   }
 
-  /// Persists the player's answer-streak level (see
-  /// `coin_economy.dart` `nextStreakLevel`).
-  Future<void> setPlayerStreakLevel(int playerId, int level) =>
+  /// Persists the player's consecutive-correct count (see
+  /// `coin_economy.dart` `nextStreakCount`).
+  Future<void> setPlayerStreakCount(int playerId, int count) =>
       (update(players)..where((t) => t.id.equals(playerId))).write(
-        PlayersCompanion(streakLevel: Value(level)),
+        PlayersCompanion(streakCount: Value(count)),
       );
 
   /// Advances the player's round clock by one (one answered question = one
@@ -693,7 +700,7 @@ class AppDatabase extends _$AppDatabase {
       const PlayersCompanion(
         coinBalance: Value(0),
         lifetimeCoinsEarned: Value(0),
-        streakLevel: Value(0),
+        streakCount: Value(0),
       ),
     );
   });

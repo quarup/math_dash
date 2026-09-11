@@ -52,18 +52,18 @@ void main() {
             .recordAnswer(concept, correct: true, usesKeypad: false);
 
         expect(reward.correct, isTrue);
-        expect(reward.streakLevel, 1);
+        expect(reward.streakCount, 1);
         expect(
           reward.coins,
           coinsForCorrectAnswer(
             expectedSeconds: seconds,
             usesKeypad: false,
-            streakLevel: 1,
+            streakCount: 1,
           ),
         );
         expect(reward.bandBonuses, isEmpty);
         final player = await db.getPlayerById(pid);
-        expect(player.streakLevel, 1);
+        expect(player.streakCount, 1);
         expect(player.coinBalance, reward.coins);
         expect(player.lifetimeCoinsEarned, reward.coins);
       },
@@ -87,27 +87,27 @@ void main() {
           correct: true,
           usesKeypad: true,
         );
-        expect(r.streakLevel, i.clamp(1, kStreakCap));
+        expect(r.streakCount, i);
         expect(
           r.coins,
           coinsForCorrectAnswer(
             expectedSeconds: seconds,
             usesKeypad: true,
-            streakLevel: i.clamp(1, kStreakCap),
+            streakCount: i,
           ),
         );
         totalAnswerCoins += r.coins;
         bonus += r.bonusCoins;
       }
       final player = await db.getPlayerById(pid);
-      expect(player.streakLevel, kStreakCap);
+      expect(player.streakCount, 7); // uncapped; pay capped from the 5th on
       expect(player.coinBalance, totalAnswerCoins + bonus);
     });
 
     test('a wrong answer pays nothing and resets the streak', () async {
       final db = AppDatabase(NativeDatabase.memory());
       final pid = await _seedPlayer(db);
-      await db.setPlayerStreakLevel(pid, 4);
+      await db.setPlayerStreakCount(pid, 4);
       await db.incrementPlayerCoins(pid, 100);
       final container = await _setupContainer(db, pid);
       addTearDown(container.dispose);
@@ -119,9 +119,9 @@ void main() {
       expect(reward.correct, isFalse);
       expect(reward.coins, 0);
       expect(reward.totalCoins, 0);
-      expect(reward.streakLevel, 0);
+      expect(reward.streakCount, 0);
       final player = await db.getPlayerById(pid);
-      expect(player.streakLevel, 0);
+      expect(player.streakCount, 0);
       expect(player.coinBalance, 100);
     });
 
@@ -142,7 +142,7 @@ void main() {
       final r = await c2
           .read(proficiencyProvider.notifier)
           .recordAnswer(concept, correct: true, usesKeypad: false);
-      expect(r.streakLevel, 3);
+      expect(r.streakCount, 3);
     });
   });
 

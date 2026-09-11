@@ -18,28 +18,28 @@ void main() {
       expect(b.remaining, 3);
       expect(b.currentIndex, 1);
       expect(b.isComplete, isFalse);
-      expect(b.streakLevel, isNull);
+      expect(b.streakCount, isNull);
 
-      b.record(const AnswerReward(correct: true, coins: 1, streakLevel: 1));
+      b.record(const AnswerReward(correct: true, coins: 1, streakCount: 1));
       expect(b.answered, 1);
       expect(b.currentIndex, 2);
       b
-        ..record(const AnswerReward(correct: false, coins: 0, streakLevel: 0))
-        ..record(const AnswerReward(correct: true, coins: 1, streakLevel: 1));
+        ..record(const AnswerReward(correct: false, coins: 0, streakCount: 0))
+        ..record(const AnswerReward(correct: true, coins: 1, streakCount: 1));
       expect(b.isComplete, isTrue);
       expect(b.remaining, 0);
       expect(b.correctCount, 2);
-      expect(b.streakLevel, 1);
+      expect(b.streakCount, 1);
     });
 
     test('tallies answer coins, bonuses, and the total separately', () {
       final b = block()
-        ..record(const AnswerReward(correct: true, coins: 4, streakLevel: 1))
+        ..record(const AnswerReward(correct: true, coins: 4, streakCount: 1))
         ..record(
           const AnswerReward(
             correct: true,
             coins: 8,
-            streakLevel: 2,
+            streakCount: 2,
             bandBonuses: [
               BandCrossingBonus(
                 conceptId: 'add_within_10',
@@ -64,11 +64,11 @@ void main() {
           AnswerReward(
             correct: true,
             coins: 5,
-            streakLevel: 5,
+            streakCount: 5,
             unlock: UnlockEvent(newConcept: next),
           ),
         )
-        ..record(const AnswerReward(correct: true, coins: 5, streakLevel: 5));
+        ..record(const AnswerReward(correct: true, coins: 5, streakCount: 5));
       expect(b.unlocks.map((u) => u.newConcept.id), ['add_within_20']);
     });
 
@@ -76,7 +76,7 @@ void main() {
       const r = AnswerReward(
         correct: true,
         coins: 3,
-        streakLevel: 2,
+        streakCount: 2,
         bandBonuses: [
           BandCrossingBonus(
             conceptId: 'x',

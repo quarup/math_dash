@@ -68,12 +68,12 @@ class $PlayersTable extends Players with TableInfo<$PlayersTable, Player> {
     requiredDuringInsert: false,
     defaultValue: const Constant(0),
   );
-  static const VerificationMeta _streakLevelMeta = const VerificationMeta(
-    'streakLevel',
+  static const VerificationMeta _streakCountMeta = const VerificationMeta(
+    'streakCount',
   );
   @override
-  late final GeneratedColumn<int> streakLevel = GeneratedColumn<int>(
-    'streak_level',
+  late final GeneratedColumn<int> streakCount = GeneratedColumn<int>(
+    'streak_count',
     aliasedName,
     false,
     type: DriftSqlType.int,
@@ -121,7 +121,7 @@ class $PlayersTable extends Players with TableInfo<$PlayersTable, Player> {
     gradeLevel,
     coinBalance,
     lifetimeCoinsEarned,
-    streakLevel,
+    streakCount,
     roundsPlayed,
     createdAt,
     avatarConfig,
@@ -175,12 +175,12 @@ class $PlayersTable extends Players with TableInfo<$PlayersTable, Player> {
         ),
       );
     }
-    if (data.containsKey('streak_level')) {
+    if (data.containsKey('streak_count')) {
       context.handle(
-        _streakLevelMeta,
-        streakLevel.isAcceptableOrUnknown(
-          data['streak_level']!,
-          _streakLevelMeta,
+        _streakCountMeta,
+        streakCount.isAcceptableOrUnknown(
+          data['streak_count']!,
+          _streakCountMeta,
         ),
       );
     }
@@ -239,9 +239,9 @@ class $PlayersTable extends Players with TableInfo<$PlayersTable, Player> {
         DriftSqlType.int,
         data['${effectivePrefix}lifetime_coins_earned'],
       )!,
-      streakLevel: attachedDatabase.typeMapping.read(
+      streakCount: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}streak_level'],
+        data['${effectivePrefix}streak_count'],
       )!,
       roundsPlayed: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -278,10 +278,11 @@ class Player extends DataClass implements Insertable<Player> {
   /// studied". Gate input on `BuildingType.unlockRule.minLifetimeCoins`.
   final int lifetimeCoinsEarned;
 
-  /// Answer-streak level (0..`kStreakCap`): climbs one per correct answer,
-  /// resets to 0 on a wrong one, scales coin pay. Global per player and
-  /// persistent across sessions — the opening ramp doubles as a tutorial.
-  final int streakLevel;
+  /// Consecutive correct answers: +1 per correct, reset to 0 on a wrong one.
+  /// Uncapped (shown as "N in a row!"); coin pay tops out at `kStreakCap`.
+  /// Global per player and persistent across sessions — the opening ramp
+  /// doubles as a tutorial.
+  final int streakCount;
 
   /// The game's "round" clock: a monotonic count of questions this player has
   /// answered. Persists across sessions and never decreases. Drives building
@@ -296,7 +297,7 @@ class Player extends DataClass implements Insertable<Player> {
     required this.gradeLevel,
     required this.coinBalance,
     required this.lifetimeCoinsEarned,
-    required this.streakLevel,
+    required this.streakCount,
     required this.roundsPlayed,
     required this.createdAt,
     this.avatarConfig,
@@ -309,7 +310,7 @@ class Player extends DataClass implements Insertable<Player> {
     map['grade_level'] = Variable<int>(gradeLevel);
     map['coin_balance'] = Variable<int>(coinBalance);
     map['lifetime_coins_earned'] = Variable<int>(lifetimeCoinsEarned);
-    map['streak_level'] = Variable<int>(streakLevel);
+    map['streak_count'] = Variable<int>(streakCount);
     map['rounds_played'] = Variable<int>(roundsPlayed);
     map['created_at'] = Variable<DateTime>(createdAt);
     if (!nullToAbsent || avatarConfig != null) {
@@ -325,7 +326,7 @@ class Player extends DataClass implements Insertable<Player> {
       gradeLevel: Value(gradeLevel),
       coinBalance: Value(coinBalance),
       lifetimeCoinsEarned: Value(lifetimeCoinsEarned),
-      streakLevel: Value(streakLevel),
+      streakCount: Value(streakCount),
       roundsPlayed: Value(roundsPlayed),
       createdAt: Value(createdAt),
       avatarConfig: avatarConfig == null && nullToAbsent
@@ -347,7 +348,7 @@ class Player extends DataClass implements Insertable<Player> {
       lifetimeCoinsEarned: serializer.fromJson<int>(
         json['lifetimeCoinsEarned'],
       ),
-      streakLevel: serializer.fromJson<int>(json['streakLevel']),
+      streakCount: serializer.fromJson<int>(json['streakCount']),
       roundsPlayed: serializer.fromJson<int>(json['roundsPlayed']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       avatarConfig: serializer.fromJson<String?>(json['avatarConfig']),
@@ -362,7 +363,7 @@ class Player extends DataClass implements Insertable<Player> {
       'gradeLevel': serializer.toJson<int>(gradeLevel),
       'coinBalance': serializer.toJson<int>(coinBalance),
       'lifetimeCoinsEarned': serializer.toJson<int>(lifetimeCoinsEarned),
-      'streakLevel': serializer.toJson<int>(streakLevel),
+      'streakCount': serializer.toJson<int>(streakCount),
       'roundsPlayed': serializer.toJson<int>(roundsPlayed),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'avatarConfig': serializer.toJson<String?>(avatarConfig),
@@ -375,7 +376,7 @@ class Player extends DataClass implements Insertable<Player> {
     int? gradeLevel,
     int? coinBalance,
     int? lifetimeCoinsEarned,
-    int? streakLevel,
+    int? streakCount,
     int? roundsPlayed,
     DateTime? createdAt,
     Value<String?> avatarConfig = const Value.absent(),
@@ -385,7 +386,7 @@ class Player extends DataClass implements Insertable<Player> {
     gradeLevel: gradeLevel ?? this.gradeLevel,
     coinBalance: coinBalance ?? this.coinBalance,
     lifetimeCoinsEarned: lifetimeCoinsEarned ?? this.lifetimeCoinsEarned,
-    streakLevel: streakLevel ?? this.streakLevel,
+    streakCount: streakCount ?? this.streakCount,
     roundsPlayed: roundsPlayed ?? this.roundsPlayed,
     createdAt: createdAt ?? this.createdAt,
     avatarConfig: avatarConfig.present ? avatarConfig.value : this.avatarConfig,
@@ -403,9 +404,9 @@ class Player extends DataClass implements Insertable<Player> {
       lifetimeCoinsEarned: data.lifetimeCoinsEarned.present
           ? data.lifetimeCoinsEarned.value
           : this.lifetimeCoinsEarned,
-      streakLevel: data.streakLevel.present
-          ? data.streakLevel.value
-          : this.streakLevel,
+      streakCount: data.streakCount.present
+          ? data.streakCount.value
+          : this.streakCount,
       roundsPlayed: data.roundsPlayed.present
           ? data.roundsPlayed.value
           : this.roundsPlayed,
@@ -424,7 +425,7 @@ class Player extends DataClass implements Insertable<Player> {
           ..write('gradeLevel: $gradeLevel, ')
           ..write('coinBalance: $coinBalance, ')
           ..write('lifetimeCoinsEarned: $lifetimeCoinsEarned, ')
-          ..write('streakLevel: $streakLevel, ')
+          ..write('streakCount: $streakCount, ')
           ..write('roundsPlayed: $roundsPlayed, ')
           ..write('createdAt: $createdAt, ')
           ..write('avatarConfig: $avatarConfig')
@@ -439,7 +440,7 @@ class Player extends DataClass implements Insertable<Player> {
     gradeLevel,
     coinBalance,
     lifetimeCoinsEarned,
-    streakLevel,
+    streakCount,
     roundsPlayed,
     createdAt,
     avatarConfig,
@@ -453,7 +454,7 @@ class Player extends DataClass implements Insertable<Player> {
           other.gradeLevel == this.gradeLevel &&
           other.coinBalance == this.coinBalance &&
           other.lifetimeCoinsEarned == this.lifetimeCoinsEarned &&
-          other.streakLevel == this.streakLevel &&
+          other.streakCount == this.streakCount &&
           other.roundsPlayed == this.roundsPlayed &&
           other.createdAt == this.createdAt &&
           other.avatarConfig == this.avatarConfig);
@@ -465,7 +466,7 @@ class PlayersCompanion extends UpdateCompanion<Player> {
   final Value<int> gradeLevel;
   final Value<int> coinBalance;
   final Value<int> lifetimeCoinsEarned;
-  final Value<int> streakLevel;
+  final Value<int> streakCount;
   final Value<int> roundsPlayed;
   final Value<DateTime> createdAt;
   final Value<String?> avatarConfig;
@@ -475,7 +476,7 @@ class PlayersCompanion extends UpdateCompanion<Player> {
     this.gradeLevel = const Value.absent(),
     this.coinBalance = const Value.absent(),
     this.lifetimeCoinsEarned = const Value.absent(),
-    this.streakLevel = const Value.absent(),
+    this.streakCount = const Value.absent(),
     this.roundsPlayed = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.avatarConfig = const Value.absent(),
@@ -486,7 +487,7 @@ class PlayersCompanion extends UpdateCompanion<Player> {
     required int gradeLevel,
     this.coinBalance = const Value.absent(),
     this.lifetimeCoinsEarned = const Value.absent(),
-    this.streakLevel = const Value.absent(),
+    this.streakCount = const Value.absent(),
     this.roundsPlayed = const Value.absent(),
     required DateTime createdAt,
     this.avatarConfig = const Value.absent(),
@@ -499,7 +500,7 @@ class PlayersCompanion extends UpdateCompanion<Player> {
     Expression<int>? gradeLevel,
     Expression<int>? coinBalance,
     Expression<int>? lifetimeCoinsEarned,
-    Expression<int>? streakLevel,
+    Expression<int>? streakCount,
     Expression<int>? roundsPlayed,
     Expression<DateTime>? createdAt,
     Expression<String>? avatarConfig,
@@ -511,7 +512,7 @@ class PlayersCompanion extends UpdateCompanion<Player> {
       if (coinBalance != null) 'coin_balance': coinBalance,
       if (lifetimeCoinsEarned != null)
         'lifetime_coins_earned': lifetimeCoinsEarned,
-      if (streakLevel != null) 'streak_level': streakLevel,
+      if (streakCount != null) 'streak_count': streakCount,
       if (roundsPlayed != null) 'rounds_played': roundsPlayed,
       if (createdAt != null) 'created_at': createdAt,
       if (avatarConfig != null) 'avatar_config': avatarConfig,
@@ -524,7 +525,7 @@ class PlayersCompanion extends UpdateCompanion<Player> {
     Value<int>? gradeLevel,
     Value<int>? coinBalance,
     Value<int>? lifetimeCoinsEarned,
-    Value<int>? streakLevel,
+    Value<int>? streakCount,
     Value<int>? roundsPlayed,
     Value<DateTime>? createdAt,
     Value<String?>? avatarConfig,
@@ -535,7 +536,7 @@ class PlayersCompanion extends UpdateCompanion<Player> {
       gradeLevel: gradeLevel ?? this.gradeLevel,
       coinBalance: coinBalance ?? this.coinBalance,
       lifetimeCoinsEarned: lifetimeCoinsEarned ?? this.lifetimeCoinsEarned,
-      streakLevel: streakLevel ?? this.streakLevel,
+      streakCount: streakCount ?? this.streakCount,
       roundsPlayed: roundsPlayed ?? this.roundsPlayed,
       createdAt: createdAt ?? this.createdAt,
       avatarConfig: avatarConfig ?? this.avatarConfig,
@@ -560,8 +561,8 @@ class PlayersCompanion extends UpdateCompanion<Player> {
     if (lifetimeCoinsEarned.present) {
       map['lifetime_coins_earned'] = Variable<int>(lifetimeCoinsEarned.value);
     }
-    if (streakLevel.present) {
-      map['streak_level'] = Variable<int>(streakLevel.value);
+    if (streakCount.present) {
+      map['streak_count'] = Variable<int>(streakCount.value);
     }
     if (roundsPlayed.present) {
       map['rounds_played'] = Variable<int>(roundsPlayed.value);
@@ -583,7 +584,7 @@ class PlayersCompanion extends UpdateCompanion<Player> {
           ..write('gradeLevel: $gradeLevel, ')
           ..write('coinBalance: $coinBalance, ')
           ..write('lifetimeCoinsEarned: $lifetimeCoinsEarned, ')
-          ..write('streakLevel: $streakLevel, ')
+          ..write('streakCount: $streakCount, ')
           ..write('roundsPlayed: $roundsPlayed, ')
           ..write('createdAt: $createdAt, ')
           ..write('avatarConfig: $avatarConfig')
@@ -4775,7 +4776,7 @@ typedef $$PlayersTableCreateCompanionBuilder =
       required int gradeLevel,
       Value<int> coinBalance,
       Value<int> lifetimeCoinsEarned,
-      Value<int> streakLevel,
+      Value<int> streakCount,
       Value<int> roundsPlayed,
       required DateTime createdAt,
       Value<String?> avatarConfig,
@@ -4787,7 +4788,7 @@ typedef $$PlayersTableUpdateCompanionBuilder =
       Value<int> gradeLevel,
       Value<int> coinBalance,
       Value<int> lifetimeCoinsEarned,
-      Value<int> streakLevel,
+      Value<int> streakCount,
       Value<int> roundsPlayed,
       Value<DateTime> createdAt,
       Value<String?> avatarConfig,
@@ -4951,8 +4952,8 @@ class $$PlayersTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get streakLevel => $composableBuilder(
-    column: $table.streakLevel,
+  ColumnFilters<int> get streakCount => $composableBuilder(
+    column: $table.streakCount,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -5132,8 +5133,8 @@ class $$PlayersTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get streakLevel => $composableBuilder(
-    column: $table.streakLevel,
+  ColumnOrderings<int> get streakCount => $composableBuilder(
+    column: $table.streakCount,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -5183,8 +5184,8 @@ class $$PlayersTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<int> get streakLevel => $composableBuilder(
-    column: $table.streakLevel,
+  GeneratedColumn<int> get streakCount => $composableBuilder(
+    column: $table.streakCount,
     builder: (column) => column,
   );
 
@@ -5369,7 +5370,7 @@ class $$PlayersTableTableManager
                 Value<int> gradeLevel = const Value.absent(),
                 Value<int> coinBalance = const Value.absent(),
                 Value<int> lifetimeCoinsEarned = const Value.absent(),
-                Value<int> streakLevel = const Value.absent(),
+                Value<int> streakCount = const Value.absent(),
                 Value<int> roundsPlayed = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<String?> avatarConfig = const Value.absent(),
@@ -5379,7 +5380,7 @@ class $$PlayersTableTableManager
                 gradeLevel: gradeLevel,
                 coinBalance: coinBalance,
                 lifetimeCoinsEarned: lifetimeCoinsEarned,
-                streakLevel: streakLevel,
+                streakCount: streakCount,
                 roundsPlayed: roundsPlayed,
                 createdAt: createdAt,
                 avatarConfig: avatarConfig,
@@ -5391,7 +5392,7 @@ class $$PlayersTableTableManager
                 required int gradeLevel,
                 Value<int> coinBalance = const Value.absent(),
                 Value<int> lifetimeCoinsEarned = const Value.absent(),
-                Value<int> streakLevel = const Value.absent(),
+                Value<int> streakCount = const Value.absent(),
                 Value<int> roundsPlayed = const Value.absent(),
                 required DateTime createdAt,
                 Value<String?> avatarConfig = const Value.absent(),
@@ -5401,7 +5402,7 @@ class $$PlayersTableTableManager
                 gradeLevel: gradeLevel,
                 coinBalance: coinBalance,
                 lifetimeCoinsEarned: lifetimeCoinsEarned,
-                streakLevel: streakLevel,
+                streakCount: streakCount,
                 roundsPlayed: roundsPlayed,
                 createdAt: createdAt,
                 avatarConfig: avatarConfig,

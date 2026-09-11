@@ -20,24 +20,25 @@ void main() {
     });
   });
 
-  group('nextStreakLevel', () {
+  group('nextStreakCount', () {
     test('a fresh player climbs 0 → 1 → 2 … on correct answers', () {
       var level = 0;
       for (final expected in [1, 2, 3, 4, 5]) {
-        level = nextStreakLevel(level, correct: true);
+        level = nextStreakCount(level, correct: true);
         expect(level, expected);
       }
     });
 
-    test('caps at kStreakCap', () {
-      expect(nextStreakLevel(kStreakCap, correct: true), kStreakCap);
-      expect(nextStreakLevel(kStreakCap + 3, correct: true), kStreakCap);
+    test('keeps counting past kStreakCap (only the pay caps)', () {
+      expect(nextStreakCount(kStreakCap, correct: true), kStreakCap + 1);
+      expect(nextStreakCount(12, correct: true), 13);
+      expect(streakMultiplier(13), closeTo(1.0, 1e-9));
     });
 
     test('any wrong answer resets to 0', () {
-      expect(nextStreakLevel(0, correct: false), 0);
-      expect(nextStreakLevel(3, correct: false), 0);
-      expect(nextStreakLevel(kStreakCap, correct: false), 0);
+      expect(nextStreakCount(0, correct: false), 0);
+      expect(nextStreakCount(3, correct: false), 0);
+      expect(nextStreakCount(40, correct: false), 0);
     });
   });
 
@@ -61,7 +62,7 @@ void main() {
         coinsForCorrectAnswer(
           expectedSeconds: 40,
           usesKeypad: false,
-          streakLevel: 5,
+          streakCount: 5,
         ),
         40,
       );
@@ -72,7 +73,7 @@ void main() {
         coinsForCorrectAnswer(
           expectedSeconds: 40,
           usesKeypad: true,
-          streakLevel: 5,
+          streakCount: 5,
         ),
         60,
       );
@@ -90,7 +91,7 @@ void main() {
           coinsForCorrectAnswer(
             expectedSeconds: 40,
             usesKeypad: false,
-            streakLevel: level,
+            streakCount: level,
           ),
           coins,
           reason: 'level $level',
@@ -104,7 +105,7 @@ void main() {
         coinsForCorrectAnswer(
           expectedSeconds: 7,
           usesKeypad: false,
-          streakLevel: 1,
+          streakCount: 1,
         ),
         1,
       );
@@ -112,7 +113,7 @@ void main() {
         coinsForCorrectAnswer(
           expectedSeconds: 7,
           usesKeypad: true,
-          streakLevel: 1,
+          streakCount: 1,
         ),
         2,
       );
@@ -120,7 +121,7 @@ void main() {
         coinsForCorrectAnswer(
           expectedSeconds: 7,
           usesKeypad: false,
-          streakLevel: 3,
+          streakCount: 3,
         ),
         4,
       );
@@ -132,7 +133,7 @@ void main() {
         coinsForCorrectAnswer(
           expectedSeconds: 4,
           usesKeypad: false,
-          streakLevel: 1,
+          streakCount: 1,
         ),
         kMinCoinsPerCorrect,
       );
@@ -141,7 +142,7 @@ void main() {
         coinsForCorrectAnswer(
           expectedSeconds: 40,
           usesKeypad: false,
-          streakLevel: 0,
+          streakCount: 0,
         ),
         kMinCoinsPerCorrect,
       );
@@ -152,7 +153,7 @@ void main() {
         coinsForCorrectAnswer(
           expectedSeconds: 5,
           usesKeypad: false,
-          streakLevel: 5,
+          streakCount: 5,
         ),
         5,
       );
@@ -160,7 +161,7 @@ void main() {
         coinsForCorrectAnswer(
           expectedSeconds: 45,
           usesKeypad: false,
-          streakLevel: 5,
+          streakCount: 5,
         ),
         greaterThanOrEqualTo(40),
       );

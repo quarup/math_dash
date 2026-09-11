@@ -68,8 +68,8 @@ class ProficiencyNotifier extends AsyncNotifier<Map<String, double>> {
     // Streak: one step up per correct answer (capped), reset on a miss. Pay
     // is computed at the *new* level, so the first correct after a miss
     // earns 20%.
-    final streak = nextStreakLevel(player.streakLevel, correct: correct);
-    await db.setPlayerStreakLevel(player.id, streak);
+    final streak = nextStreakCount(player.streakCount, correct: correct);
+    await db.setPlayerStreakCount(player.id, streak);
 
     final seconds = expectedSecondsFor(conceptId);
     var coins = 0;
@@ -78,7 +78,7 @@ class ProficiencyNotifier extends AsyncNotifier<Map<String, double>> {
       coins = coinsForCorrectAnswer(
         expectedSeconds: seconds,
         usesKeypad: usesKeypad,
-        streakLevel: streak,
+        streakCount: streak,
       );
       // Band-crossing bonus: paid once per concept per threshold.
       // `newlyCrossedBands` only returns crossings the player hasn't yet
@@ -142,7 +142,7 @@ class ProficiencyNotifier extends AsyncNotifier<Map<String, double>> {
     return AnswerReward(
       correct: correct,
       coins: coins,
-      streakLevel: streak,
+      streakCount: streak,
       bandBonuses: bonuses,
       unlock: unlock,
     );

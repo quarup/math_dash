@@ -7,13 +7,15 @@ library;
 
 import 'dart:math' as math;
 
-/// Streak multiplier step: pay is `kStreakStep × streakLevel` of full
-/// credit, so the first correct after a miss pays 20%, the next 40%, and so
-/// on (chess-puzzle style).
+/// Streak multiplier step: pay is `kStreakStep × min(streak, kStreakCap)` of
+/// full credit, so the first correct after a miss pays 20%, the next 40%,
+/// and so on (chess-puzzle style).
 const double kStreakStep = 0.2;
 
-/// Streak level cap. At the cap the multiplier is `kStreakStep × kStreakCap`
-/// = 1.0, i.e. full credit.
+/// Where the pay ramp tops out: at [kStreakCap] in a row the multiplier is
+/// `kStreakStep × kStreakCap` = 1.0, i.e. full credit. The streak itself
+/// keeps counting past this — it's shown to the player as "N in a row!" —
+/// only the pay stops climbing.
 const int kStreakCap = 5;
 
 /// Free-form (keypad) answers pay this much more than multiple choice for the
@@ -41,30 +43,31 @@ const int kMaxBlockQuestions = 6;
 /// no streak or format scaling — because it celebrates learning, not speed.
 const int kBandBonusMultiplier = 2;
 
-/// Streak level after an answer. Correct answers climb one step up to
-/// [kStreakCap]; a wrong answer resets to 0. Fresh players start at 0, so the
-/// opening ramp doubles as a tutorial.
-int nextStreakLevel(int current, {required bool correct}) =>
-    correct ? math.min(current + 1, kStreakCap) : 0;
+/// Consecutive-correct count after an answer: +1 on a correct answer
+/// (uncapped — the player sees how far they've gone), 0 on a wrong one.
+/// Fresh players start at 0, so the opening pay ramp doubles as a tutorial.
+int nextStreakCount(int current, {required bool correct}) =>
+    correct ? current + 1 : 0;
 
-/// Multiplier applied to full credit at [streakLevel] (0 → 0.0, cap → 1.0).
-double streakMultiplier(int streakLevel) =>
-    kStreakStep * streakLevel.clamp(0, kStreakCap);
+/// Multiplier applied to full credit at [streakCount] (0 → 0.0, anything
+/// at or past [kStreakCap] → 1.0).
+double streakMultiplier(int streakCount) =>
+    kStreakStep * streakCount.clamp(0, kStreakCap);
 
 /// Coins paid for a correct answer.
 ///
-/// [streakLevel] is the player's streak *after* counting this answer (see
-/// [nextStreakLevel]) — so the first correct after a miss is paid at level 1.
-/// `round(expectedSeconds × formatMult × kStreakStep × streakLevel)`, floored
-/// at [kMinCoinsPerCorrect]. Wrong answers pay nothing (callers don't call
-/// this for them).
+/// [streakCount] is the player's streak *after* counting this answer (see
+/// [nextStreakCount]) — so the first correct after a miss is paid at 20%.
+/// `round(expectedSeconds × formatMult × kStreakStep × min(streak, cap))`,
+/// floored at [kMinCoinsPerCorrect]. Wrong answers pay nothing (callers
+/// don't call this for them).
 int coinsForCorrectAnswer({
   required int expectedSeconds,
   required bool usesKeypad,
-  required int streakLevel,
+  required int streakCount,
 }) {
   final formatMult = usesKeypad ? kKeypadMultiplier : kMultipleChoiceMultiplier;
-  final raw = expectedSeconds * formatMult * streakMultiplier(streakLevel);
+  final raw = expectedSeconds * formatMult * streakMultiplier(streakCount);
   return math.max(kMinCoinsPerCorrect, raw.round());
 }
 
